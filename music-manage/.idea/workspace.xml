@@ -11,7 +11,7 @@
       <change afterPath="$PROJECT_DIR$/src/components/page/SongListPage.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/page/SongPage.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/mixins/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/README_EN.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/favicon.ico" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
@@ -102,7 +102,7 @@
         <entry file="file://$PROJECT_DIR$/src/main.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="225">
-              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -212,7 +212,7 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="397" />
+    <option name="x" value="102" />
     <option name="y" value="23" />
     <option name="width" value="1034" />
     <option name="height" value="877" />
@@ -223,6 +223,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -234,7 +235,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -371,16 +371,17 @@
       <workItem from="1560488954460" duration="737000" />
       <workItem from="1560499938497" duration="851000" />
       <workItem from="1560509377416" duration="295000" />
+      <workItem from="1560521497661" duration="959000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="191063000" />
+    <option name="totallyTimeSpent" value="192022000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="397" y="23" width="1034" height="877" extended-state="0" />
+    <frame x="102" y="23" width="1034" height="877" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30241936" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30846775" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Learn" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -494,16 +495,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="210">
-            <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/static/css/theme-green/color-green.css" />
     <entry file="file://$PROJECT_DIR$/static/css/theme-green/index.css" />
     <entry file="file://$PROJECT_DIR$/static/img/img.jpg">
@@ -672,7 +664,7 @@
     <entry file="file://$PROJECT_DIR$/src/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
