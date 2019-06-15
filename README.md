@@ -1,4 +1,4 @@
-# vue-spring-music
+# 🎵vue-spring-music
 
 ## 概述
 
@@ -29,9 +29,35 @@ vue + vue-router + vuex + axios + spring boot + layui-src + element-ui + mint-ui
 
 ## 项目截图：
 
+> 前台模块
+
 <img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/denglu.png" width="400"/><br/>
 
 <img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/shouye.png" width="400"/><br/>
+
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/gedan.png" width="400"/><br/>
+
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/geshou.png" width="400"/><br/>
+
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/my.png" width="400"/><br/>
+
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/gedanxiangqing.png" width="400"/><br/>
+
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/geshouxiangqing.png" width="400"/><br/>
+
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/geci.png" width="400"/><br/>
+
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/sousuo.png" width="400"/><br/>
+
+> 后台模块
+
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/y.png" width="400"/><br/>
+
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/s.png" width="400"/><br/>
+
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/g.png" width="400"/><br/>
+
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/gd.png" width="400"/><br/>
 
 
 
@@ -56,4 +82,4 @@ https://github.com/Yin-Hongwei/vue-spring-music
 
 启动服务器前要修改蓝色显示的文件名中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/Explain.png" width="400"/><br/> 
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/Explain.png" width="600"/><br/> 
