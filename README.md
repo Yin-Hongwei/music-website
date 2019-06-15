@@ -23,7 +23,7 @@
 
 ## 技术栈：
 
-vue + vue-router + vuex + axios + spring boot + layui-src + element-ui + mint-ui + muse-ui + swiper + vue-aplayer
+vue + vue-router + vuex + axios + spring boot + element-ui + mint-ui + muse-ui + swiper + vue-aplayer
 
 
 

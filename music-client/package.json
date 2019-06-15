@@ -16,7 +16,6 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.4.11",
-    "layui-src": "^2.4.5",
     "mint-ui": "^2.2.13",
     "muse-ui": "^3.0.1",
     "swiper": "^4.4.6",
