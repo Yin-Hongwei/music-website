@@ -29,25 +29,9 @@ vue + vue-router + vuex + axios + spring boot + layui-src + element-ui + mint-ui
 
 ## 项目截图：
 
-![denglu](/Users/yhw/Documents/github-workspace/vue-spring-music/Explain/denglu.png)
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/denglu.png" width="400"/><br/>
 
-![shouye](/Users/yhw/Documents/github-workspace/vue-spring-music/Explain/shouye.png)
-
-![gedan](/Users/yhw/Documents/github-workspace/vue-spring-music/Explain/gedan.png)
-
-![geshou](/Users/yhw/Documents/github-workspace/vue-spring-music/Explain/geshou.png)
-
-![my](/Users/yhw/Documents/github-workspace/vue-spring-music/Explain/my.png)
-
-![gedanxiangqing](/Users/yhw/Documents/github-workspace/vue-spring-music/Explain/gedanxiangqing.png)
-
-![geshouxiangqing](/Users/yhw/Documents/github-workspace/vue-spring-music/Explain/geshouxiangqing.png)
-
-![geci](/Users/yhw/Documents/github-workspace/vue-spring-music/Explain/geci.png)
-
-![sousuo](/Users/yhw/Documents/github-workspace/vue-spring-music/Explain/sousuo.png)
-
-
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/shouye.png" width="400"/><br/>
 
 
 
@@ -72,4 +56,4 @@ https://github.com/Yin-Hongwei/vue-spring-music
 
 启动服务器前要修改蓝色显示的文件名中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music./blob/master/Explain.png" width="400"/><br/> 
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/Explain.png" width="400"/><br/> 
