@@ -13,15 +13,9 @@
     "axios": "^0.19.0",
     "babel-polyfill": "^6.23.0",
     "element-ui": "2.3.3",
-    "hls.js": "^0.12.4",
-    "mavon-editor": "^2.5.4",
     "vue": "^2.5.16",
     "vue-aplayer": "^1.6.1",
-    "vue-cropperjs": "^2.2.0",
-    "vue-quill-editor": "3.0.6",
-    "vue-router": "^3.0.1",
-    "vue-schart": "^1.0.0",
-    "vuedraggable": "^2.16.0"
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
