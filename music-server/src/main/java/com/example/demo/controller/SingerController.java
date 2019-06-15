@@ -159,7 +159,7 @@ public class SingerController {
     public class MyPicConfig implements WebMvcConfigurer {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/singerPic/**").addResourceLocations("file:/Users/yhw/Documents/IdeaProjects/Item/music-server/img/singerPic/");
+            registry.addResourceHandler("/img/singerPic/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/vue-spring-music/music-server/img/singerPic/");
         }
     }
 //    返回所有歌手
