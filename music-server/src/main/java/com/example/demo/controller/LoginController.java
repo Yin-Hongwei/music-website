@@ -223,7 +223,7 @@ public class LoginController {
     public class MyPicConfig implements WebMvcConfigurer {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/avatorImages/**").addResourceLocations("file:/Users/yhw/Documents/IdeaProjects/Item/music-server/avatorImages/");
+            registry.addResourceHandler("/avatorImages/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/vue-spring-music/music-server/avatorImages/");
         }
     }
 

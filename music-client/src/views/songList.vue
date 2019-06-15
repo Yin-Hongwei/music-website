@@ -9,7 +9,6 @@
       <span @click="handleChangeView('Six', 5)">轻音乐</span>
       <span @click="handleChangeView('Seven', 6)">BGM</span>
       <span @click="handleChangeView('Eight', 7)">乐器</span>
-      <span @click="handleChangeView('Nmsl', 8)">儿童</span>
     </nav>
     <component :is="currentView"></component>
   </div>
@@ -24,7 +23,6 @@ import pageFive from '../components/page/pageFive'
 import pageSix from '../components/page/pageSix'
 import pageSeven from '../components/page/pageSeven'
 import pageEight from '../components/page/pageEight'
-import pageNmsl from '../components/page/pageNmsl'
 export default {
   name: 'song-list',
   data () {
@@ -40,8 +38,7 @@ export default {
     pageFive,
     pageSix,
     pageSeven,
-    pageEight,
-    pageNmsl
+    pageEight
   },
   methods: {
     handleChangeView: function (component, index) {
@@ -49,7 +46,7 @@ export default {
       this.changeIndex(index)
     },
     changeIndex (index) {
-      for (let i = 1; i < 9; i++) {
+      for (let i = 1; i < 8; i++) {
         this.$refs.change.children[i].style.color = '#67757f'
         this.$refs.change.children[i].style.fontWeight = '300'
         this.$refs.change.children[i].style.borderBottom = 'none'

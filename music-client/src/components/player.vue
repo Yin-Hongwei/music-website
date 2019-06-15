@@ -137,7 +137,7 @@ export default {
   },
   mounted () {
     this.progressLength = this.$refs.progress.getBoundingClientRect().width
-    this.downMusic()
+    // this.downMusic()
   },
   mixins: [mixin],
   methods: {
