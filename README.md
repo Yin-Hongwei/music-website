@@ -31,33 +31,33 @@ vue + vue-router + vuex + axios + spring boot + element-ui + mint-ui + muse-ui +
 
 > 前台模块
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/denglu.png" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/denglu.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/shouye.png" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/shouye.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/gedan.png" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/gedan.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/geshou.png" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/geshou.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/my.png" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/my.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/gedanxiangqing.png" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/gedanxiangqing.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/geshouxiangqing.png" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/geshouxiangqing.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/geci.png" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/geci.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/sousuo.png" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/sousuo.png"/><br/>
 
 > 后台模块
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/y.png" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/y.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/s.png" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/s.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/g.png" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/g.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/gd.png" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/gd.png"/><br/>
 
 
 
