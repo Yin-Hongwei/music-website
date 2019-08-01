@@ -71,7 +71,7 @@ https://github.com/Yin-Hongwei/vue-spring-music
 
 1. git clone https://github.com/Yin-Hongwei/vue-spring-music.git 下载本项目到本地
 2. 将 tp_music.sql 文件导入数据库
-3. 去.https://pan.baidu.com/s/1PjdvJ8SCJ0kUwrL1m7Dp7Q 下载网站依赖的歌曲及图片，将 data 夹里的文件直接放到 music-server 文件夹下
+3. 去.https://pan.baidu.com/s/1PjdvJ8SCJ0kUwrL1m7Dp7Q 下载网站依赖的歌曲及图片，将 data 夹里的文件直接放到 music-server 文件夹下。下载资源可能有点儿慢，这是百度云破解版[https://pan.baidu.com/disk/home#/all?vmode=list&path=%2F%E8%BD%AF%E4%BB%B6%2FPanDownload](https://pan.baidu.com/disk/home#/all?vmode=list&path=%2F软件%2FPanDownload)（适合win用户，Mac上还没发现。
 4. 进入 music-server 文件夹，运行 ./mvnw spring-boot:run 启动服务器
 5. 进入 music-client 文件夹，运行 npm install 安装依赖，运行npm run dev 启动前台项目
 6. 进入 music-manage 文件夹，运行 npm install 安装依赖，运行npm run dev 启动后台管理项目
