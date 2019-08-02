@@ -1,7 +1,7 @@
-
 * {
   padding: 0;
   margin: 0;
+  /*box-sizing: border-box;*/
 }
 
 ul, li {
@@ -10,13 +10,13 @@ ul, li {
 }
 
 html {
-  /*background-color: #e6ecf0;*/
-  /*color: #67757f;*/
   min-width: 1200px;
 }
 div{
   box-sizing: content-box;
 }
+
+
 /*表单*/
 .el-form-item {
   width: 100%;
@@ -42,3 +42,4 @@ div{
   display: inline-block;
   margin-left: 500px !important;
 }
+

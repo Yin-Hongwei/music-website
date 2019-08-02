@@ -4,7 +4,10 @@
       关于 | 帮助 | 条款 | 反馈
     </p>
     <p>
-      Copyright &copy; Yin-Hongwei
+      Copyright &copy; 2019
+    </p>
+    <p>
+      Designed by Yin-Hongwei
     </p>
   </div>
 </template>
@@ -17,7 +20,7 @@ export default {
 
 <style scoped>
 .foot{
-  /*width: 100%;*/
+  width: 100%;
   background-color: white;
   height: 180px;
   display: flex;
@@ -26,6 +29,6 @@ export default {
   flex-direction: column;
 }
 .foot p {
-  height: 40px;
+  height: 30px;
 }
 </style>

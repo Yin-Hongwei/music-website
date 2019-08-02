@@ -1,0 +1,24 @@
+.song-content {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 30px;
+}
+.content-item {
+  width: 12vw;
+  min-width: 170px;
+}
+.kuo {
+  width: 12vw;
+  height: 12vw;
+  min-width: 170px;
+  min-height: 170px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.kuo .mask{
+  width: 12vw;
+  height: 12vw;
+  min-width: 170px;
+  min-height: 170px;
+  border-radius: 6px;
+}

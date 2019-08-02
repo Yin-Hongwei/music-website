@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import '../../assets/css/mask.css'
+import '../../assets/css/page.css'
 import { mapGetters } from 'vuex'
 import {mixin} from '../../mixins'
 export default {
@@ -46,64 +48,4 @@ export default {
 </script>
 
 <style scoped>
-  .song-content {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0 30px;
-    /*justify-content: center;*/
-  }
-  .content-item {
-    padding: 0 20px;
-    width: 12vw;
-    min-width: 170px;
-    position: relative;
-  }
-  .kuo {
-    width: 12vw;
-    height: 12vw;
-    min-width: 170px;
-    min-height: 170px;
-    border-radius: 6px;
-    overflow: hidden;
-    -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.6);
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.6);
-  }
-  .item-img {
-    width: 100%;
-  }
-  .item-name {
-    overflow:hidden;
-    text-overflow:ellipsis;
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:2;
-    margin: 10px 8px;
-  }
-  .mask{
-    position: absolute;
-    width: 12vw;
-    height: 12vw;
-    min-width: 170px;
-    min-height: 170px;
-    border-radius: 6px;
-    top:0;
-    background-color: rgba(52,47,41,.4);
-    transition:all .3s ease-in-out;
-    opacity: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .mask:hover{
-    opacity: 1;
-    cursor: pointer;
-  }
-  .icon {
-    width: 2em;
-    height: 2em;
-    fill: currentColor;
-    color: rgba(240,240,240,1);
-    font-size: 1.6em;
-  }
 </style>
