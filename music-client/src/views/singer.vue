@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import '../assets/css/mask.css'
 import { mapGetters } from 'vuex'
 import {mixin} from '../mixins'
 export default {
@@ -52,13 +53,10 @@ export default {
     padding: 0 30px;
     display: flex;
     flex-wrap: wrap;
-    /*justify-content: center;*/
   }
   .content-item {
-    padding: 0 20px;
     width: 12vw;
     min-width: 170px;
-    position: relative;
   }
   .kuo {
     width: 12vw;
@@ -66,24 +64,6 @@ export default {
     min-width: 170px;
     min-height: 170px;
     border-radius: 50%;
-    overflow: hidden;
-    -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.6);
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.6);
-  }
-  .item-img {
-    width: 100%;
-  }
-  .item-name {
-    overflow:hidden;
-    text-overflow:ellipsis;
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:2;
-    margin: 10px 8px;
-  }
-  .item-img:hover {
-    cursor: pointer;
   }
   .item-name {
     text-align: center;

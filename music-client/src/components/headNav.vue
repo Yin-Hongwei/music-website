@@ -7,7 +7,7 @@
           <use xlink:href="#icon-erji"></use>
         </svg>
       </div>
-      LLMusic
+      Y-Music
     </div>
     <ul class="navbar" ref="change">
       <li class="item" @click="goHomePage()">首页</li>
@@ -145,18 +145,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .item-logo-hd{
-    position: absolute;
-    top:15px;
-    left: 30px;
-  }
-  .item-logo-hd .icon {
-    width: 50px;
-    height: 50px;
-    fill: currentColor;
-    color: black;
-  }
-  .head {
+.item-logo-hd{
+  position: absolute;
+  top:15px;
+  left: 30px;
+}
+.item-logo-hd .icon {
+  width: 50px;
+  height: 50px;
+  fill: currentColor;
+  color: black;
+}
+.head {
   background-color: #fefefe;
   width: 100%;
   height: 80px;

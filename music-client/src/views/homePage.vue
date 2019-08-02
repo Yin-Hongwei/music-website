@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import '../assets/css/mask.css'
 import axios from 'axios'
 import {mixin} from '../mixins'
 import swiper from '../components/swiper'
@@ -130,54 +131,5 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
-.content-item {
-  padding: 0 20px;
-  width: 13vw;
-  min-width: 140px;
-  position: relative;
-}
-.kuo {
-  overflow: hidden;
-}
-.kuo, .mask {
-  width: 13vw;
-  height: 13vw;
-  min-width: 140px;
-  min-height: 140px;
-  border-radius: 6px;
-}
-.mask{
-  position: absolute;
-  top:0;
-  background-color: rgba(52,47,41,.4);
-  transition:all .3s ease-in-out;
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.mask:hover{
-  opacity: 1;
-  cursor: pointer;
-}
-.item-img {
-  width: 100%;
-}
-.item-name {
-  overflow:hidden;
-  text-overflow:ellipsis;
-  display:-webkit-box;
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:2;
-  margin: 10px 8px;
-}
-
-.icon {
-  width: 2em;
-  height: 2em;
-  fill: currentColor;
-  color: rgba(240,240,240,1);
-  font-size: 1.6em;
 }
 </style>
