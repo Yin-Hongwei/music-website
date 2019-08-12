@@ -3,7 +3,7 @@
 
 ## Describe
 
-本音乐网站的开发主要利用前端框架VUE开发用户和管理员界面，后端接口用Spring Boot来实现。数据用MySQL来进行存储。具体实现可以参考[这里](https://yin-hongwei.github.io/2019/06/06/music/)。
+本音乐网站的开发主要利用前端框架VUE开发用户和管理员界面，后端接口用Spring Boot来实现。数据用MySQL来进行存储。具体实现可以参考[这里](https://yin-hongwei.github.io/2019/03/04/music/)。
 
 <br/>
 
