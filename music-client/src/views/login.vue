@@ -84,6 +84,7 @@ export default {
       var params = new URLSearchParams()
       params.append('username', _this.loginForm.username)
       params.append('password', _this.loginForm.password)
+      console.log(params)
       axios.post(_this.$store.state.HOST + '/api/loginVerify', params)
         .then(response => {
           // console.log('-----------获取登录信息---------------')
