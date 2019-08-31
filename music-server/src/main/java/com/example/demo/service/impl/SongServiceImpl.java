@@ -23,6 +23,7 @@ public class SongServiceImpl implements SongService {
     @Override
     public boolean ifAdd(Song song)
     {
+
         return songMapper.insertSelective(song) > 0?true:false;
     }
 

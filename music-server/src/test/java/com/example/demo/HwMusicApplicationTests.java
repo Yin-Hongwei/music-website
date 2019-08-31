@@ -15,18 +15,16 @@ import java.util.Date;
 public class HwMusicApplicationTests {
 
     @Autowired
-    private SongServiceImpl songService;
+//    private SongServiceImpl songService;
 //    private SingerServiceImpl singerService;
 //    private SongListServiceImpl songListService;
-//    private ConsumerServiceImpl consumerService;
+    private ConsumerServiceImpl consumerService;
+//    private RankServiceImpl rankService;
 
-
-    @Autowired
-    private RankServiceImpl rankService;
-
-    @Test
-    public void contextLoads() {
-    }
+//    @Test
+//    public void contextLoads() {
+//
+//    }
 
 //    @Test
 //    public void testRank(){
@@ -39,19 +37,19 @@ public class HwMusicApplicationTests {
 //    }
 
 //歌曲
-    @Test
-    public void songTest(){
-            Song song = new Song();
-            song.setName("Sanna Nielsen-Undo");
-            song.setPic("/img/songPic/1775711278864263.jpg");
-            song.setSingerId(42);
-            song.setCreateTime(new Date());
-            song.setUpdateTime(new Date());
-            song.setIntroduction("Undo");
-            song.setLyric("[00:00:00]暂无歌词");
-            song.setUrl("/song/Sanna Nielsen-Undo.mp3");
-            songService.ifAdd(song);
-    }
+//    @Test
+//    public void songTest(){
+//            Song song = new Song();
+//            song.setName("Sanna Nielsen-Undo");
+//            song.setPic("/img/songPic/1775711278864263.jpg");
+//            song.setSingerId(42);
+//            song.setCreateTime(new Date());
+//            song.setUpdateTime(new Date());
+//            song.setIntroduction("Undo");
+//            song.setLyric("[00:00:00]暂无歌词");
+//            song.setUrl("/song/Sanna Nielsen-Undo.mp3");
+//            songService.ifAdd(song);
+//    }
 
 //    @Test
 //    public void songTest2(){
@@ -95,23 +93,23 @@ public class HwMusicApplicationTests {
 //    }
 
 //用户
-//@Test
-//public void consumerTest(){
-//
-//    Consumer consumer = new Consumer();
-//    consumer.setUsername("123");
-//    consumer.setPassword("123");
-//    consumer.setSex(new Byte("1"));
-//    consumer.setPhoneNum("13776412237");
-//    consumer.setEmail("123@qq.com");
-//    consumer.setBirth(new Date());
-//    consumer.setIntroduction("");
-//    consumer.setLocation("");
-//    consumer.setAvator("/img/user.jpg");
-//    consumer.setCreateTime(new Date());
-//    consumer.setUpdateTime(new Date());
-//    consumerService.ifAdd(consumer);
-//}
+@Test
+public void consumerTest(){
+
+    Consumer consumer = new Consumer();
+    consumer.setUsername("12333");
+    consumer.setPassword("123");
+    consumer.setSex(new Byte("1"));
+    consumer.setPhoneNum("13776412237");
+    consumer.setEmail("123@qq.com");
+    consumer.setBirth(new Date());
+    consumer.setIntroduction("");
+    consumer.setLocation("");
+    consumer.setAvator("/img/user.jpg");
+    consumer.setCreateTime(new Date());
+    consumer.setUpdateTime(new Date());
+    consumerService.ifAdd(consumer);
+}
 //    @Test
 //    public void consumerTest2()
 //    {
