@@ -1,6 +1,5 @@
 <h1 align="center">music-website</h1>
 
-
 ## Describe
 
 本音乐网站的开发主要利用前端框架VUE开发用户和管理员界面，后端接口用Spring Boot来实现。数据用MySQL来进行存储。具体实现可以参考[这里](https://yin-hongwei.github.io/2019/06/06/music/)。
@@ -11,33 +10,33 @@
 
 > 前台模块
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/denglu.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/denglu.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/shouye.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/shouye.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/gedan.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gedan.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/geshou.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geshou.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/my.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/my.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/gedanxiangqing.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gedanxiangqing.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/geshouxiangqing.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geshouxiangqing.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/geci.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geci.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/sousuo.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/sousuo.png"/><br/>
 
 > 后台模块
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/y.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/y.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/s.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/s.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/g.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/g.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/gd.png"/><br/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gd.png"/><br/><br/>
 
 ## Function
 
@@ -67,7 +66,7 @@ vue + vue-router + vuex + axios + spring boot + element-ui + mint-ui + muse-ui +
 git clone https://github.com/Yin-Hongwei/music-website.git
 ```
 
-将 tp_music.sql 文件导入数据库
+将sql文件夹中的 tp_music.sql 文件导入数据库。
 
 去https://pan.baidu.com/s/1PjdvJ8SCJ0kUwrL1m7Dp7Q 下载网站依赖的歌曲及图片，将 data 夹里的文件直接放到 music-server 文件夹下。下载资源可能有点儿慢，这是百度云破解版[https://pan.baidu.com/disk/home#/all?vmode=list&path=%2F%E8%BD%AF%E4%BB%B6%2FPanDownload](https://pan.baidu.com/disk/home#/all?vmode=list&path=%2F软件%2FPanDownload)（适合win用户，Mac上还没发现。
 
@@ -101,7 +100,7 @@ npm run dev // 启动后台管理项目
 
 启动服务器前要修改蓝色显示的文件名中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/Explain/Explain.png" width="600"/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/Explain.png" width="600"/>
 
 <br/>
 

@@ -293,7 +293,6 @@ export default {
             var form = new FormData(document.getElementById("tf"))
             form.append("singerId", id)
             var req = new XMLHttpRequest()
-            req.open("post", "http://localhost:8080/api/addSong", false)
             req.onreadystatechange=function(){
                 if(req.readyState===4 && req.status===200){
                     _this.getData()
@@ -309,6 +308,7 @@ export default {
                     });
                 }
             };
+            req.open("post", "http://localhost:8080/api/addSong", false)
             req.send(form);
             _this.centerDialogVisible = false
         },

@@ -56,6 +56,7 @@ public class ConsumerServiceImpl implements ConsumerService {
     @Override
     public boolean ifAdd(Consumer consumer)
     {
+
         return consumerMapper.addUser(consumer) > 0?true:false;
     }
 

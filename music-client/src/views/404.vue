@@ -22,6 +22,7 @@ export default {
 </script>
 <style scoped>
   .error-page{
+    padding-top: 10rem;
     display: flex;
     justify-content: center;
     align-items: center;
