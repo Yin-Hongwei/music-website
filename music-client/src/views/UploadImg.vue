@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-img">
+  <div id="upload-img">
     <div class="my-bg"></div>
     <div class="kuang">
       <el-upload
@@ -17,7 +17,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  name: 'uploadImg',
+  name: 'upload-img',
   data () {
     return {
       imageUrl: ''
@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style scoped>
-  .upload-img {
+  #upload-img {
     width: 100%;
   }
   .kuang {

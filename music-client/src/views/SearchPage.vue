@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="search-page">
     <div class="my-bg"></div>
     <div class="my-body">
       <div class="content">
@@ -14,12 +14,12 @@
 </template>
 
 <script>
-import searchSongs from '../components/search/searchSongs'
-import searchSongLists from '../components/search/searchSongLists'
+import searchSongs from '../components/search/SearchSongs'
+import searchSongLists from '../components/search/SearchSongLists'
 import { mapGetters } from 'vuex'
 import {mixin} from '../mixins'
 export default {
-  name: 'search',
+  name: 'search-page',
   data () {
     return {
       currentView: 'searchSongs'

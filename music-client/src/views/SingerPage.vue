@@ -17,7 +17,7 @@ import '../assets/css/mask.css'
 import { mapGetters } from 'vuex'
 import {mixin} from '../mixins'
 export default {
-  name: 'singer',
+  name: 'singer-page',
   computed: {
     ...mapGetters([
       'singersList'
@@ -28,7 +28,7 @@ export default {
     goSingerAblum (id, index) {
       this.$store.commit('setIndex', index)
       window.sessionStorage.setItem('index', JSON.stringify(index))
-      this.$router.push({path: '/singerAlbum/' + id})
+      this.$router.push({path: '/singer-album-page/' + id})
     }
   }
 }

@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import login from '@/views/login'
-import register from '@/views/register'
-import homePage from '@/views/homePage'
-import songList from '@/views/songList'
-import singer from '@/views/singer'
-import mySong from '@/views/mySong'
-import songAlbum from '@/views/songAlbum'
-import singerAlbum from '@/views/singerAlbum'
-import search from '@/views/search'
-import personal from '@/views/personal'
-import upLoadImg from '@/views/upLoadImg'
-import playerPage from '@/views/playerPage'
+import LoginPage from '@/views/LoginPage'
+import RegisterPage from '@/views/RegisterPage'
+import HomePage from '@/views/HomePage'
+import SongListPage from '@/views/SongListPage'
+import SingerPage from '@/views/SingerPage'
+import MySong from '@/views/MySong'
+import SongListAlbumPage from '@/views/SongListAlbumPage'
+import SingerAlbumPage from '@/views/SingerAlbumPage'
+import SearchPage from '@/views/SearchPage'
+import Personal from '@/views/Personal'
+import UpLoadImg from '@/views/UpLoadImg'
+import PlayerPage from '@/views/PlayerPage'
 
 Vue.use(Router)
 
@@ -27,63 +27,63 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'login',
-      component: login
+      name: 'login-page',
+      component: LoginPage
     },
     {
-      path: '/register',
-      name: 'register',
-      component: register
+      path: '/register-page',
+      name: 'register-page',
+      component: RegisterPage
     },
     {
-      path: '/homePage',
-      name: 'homePage',
-      component: homePage
+      path: '/home-page',
+      name: 'home-page',
+      component: HomePage
     },
     {
-      path: '/songList',
-      name: 'song-list',
-      component: songList
+      path: '/song-list-page',
+      name: 'song-list-page',
+      component: SongListPage
     },
     {
-      path: '/mySong',
+      path: '/my-song',
       name: 'my-song',
-      component: mySong
+      component: MySong
     },
     {
-      path: '/songAlbum/:id',
-      name: 'songAlbum',
-      component: songAlbum
+      path: '/song-list-album-page/:id',
+      name: 'song-list-album-page',
+      component: SongListAlbumPage
     },
     {
-      path: '/singer',
-      name: 'singer',
-      component: singer
+      path: '/singer-page',
+      name: 'singer-page',
+      component: SingerPage
     },
     {
-      path: '/singerAlbum/:id',
-      name: 'singerAlbum',
-      component: singerAlbum
+      path: '/singer-album-page/:id',
+      name: 'singer-album-page',
+      component: SingerAlbumPage
     },
     {
-      path: '/playerPage/:id',
-      name: 'playerPage',
-      component: playerPage
+      path: '/player-page/:id',
+      name: 'player-page',
+      component: PlayerPage
     },
     {
-      path: '/search',
-      name: 'search',
-      component: search
+      path: '/search-page',
+      name: 'search-page',
+      component: SearchPage
     },
     {
       path: '/personal',
       name: 'personal',
-      component: personal
+      component: Personal
     },
     {
-      path: '/upLoadImg',
-      name: 'upLoadImg',
-      component: upLoadImg
+      path: '/upLoad-img',
+      name: 'upLoad-img',
+      component: UpLoadImg
     }
   ]
 })

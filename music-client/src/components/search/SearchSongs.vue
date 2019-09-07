@@ -1,5 +1,5 @@
 <template>
-  <div class="song-content">
+  <div id="search-songs">
     <div class="song-item">
       <div class="item-kong"></div>
       <div class="item-n">歌曲名</div>
@@ -24,7 +24,7 @@
 import { mapGetters } from 'vuex'
 import {mixin} from '../../mixins'
 export default {
-  name: 'searchSongLists',
+  name: 'search-songs',
   computed: {
     ...mapGetters([
       'listOfSongs' // 存放的音乐
@@ -38,7 +38,7 @@ export default {
 </script>
 
 <style scoped>
-  .song-content{
+  #search-songs{
     min-height: 300px;
   }
   ul {

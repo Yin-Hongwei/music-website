@@ -1,5 +1,5 @@
 <template>
-  <div class="song-content">
+  <div id="search-song-Lists">
     <div class="content-item" v-for="(item, index) in albumDatas" :key="index">
       <div class="kuo">
         <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
@@ -18,7 +18,7 @@
 import { mapGetters } from 'vuex'
 import {mixin} from '../../mixins'
 export default {
-  name: 'searchSongLists',
+  name: 'search-song-Lists',
   data () {
     return {
       albumDatas: []
@@ -60,14 +60,14 @@ export default {
     goSongAlbum (id, index) {
       this.$store.commit('setIndex', index)
       window.sessionStorage.setItem('index', JSON.stringify(index))
-      this.$router.push({path: '/songAlbum/' + id})
+      this.$router.push({path: '/song-list-album-page/' + id})
     }
   }
 }
 </script>
 
 <style scoped>
-  .song-content {
+  #search-song-Lists{
     min-height: 300px;
     display: flex;
     flex-wrap: wrap;

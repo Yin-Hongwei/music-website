@@ -45,9 +45,9 @@
 
 <script>
 import axios from 'axios'
-import loginLogo from '../components/loginLogo'
+import loginLogo from '../components/LoginLogo'
 export default {
-  name: 'register',
+  name: 'register-page',
   data: function () {
     return {
       showSuccess: false, // 提示成功

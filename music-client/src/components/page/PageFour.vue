@@ -34,14 +34,14 @@ export default {
   mounted: function () {
     let pattern = /欧美/
     this.getAlbumDatas(pattern)
-    console.log(this.albumDatas)
+    // console.log(this.albumDatas)
   },
   mixins: [mixin],
   methods: {
     goSongAlbum (id, index) {
       this.$store.commit('setIndex', index)
       window.sessionStorage.setItem('index', JSON.stringify(index))
-      this.$router.push({path: '/songAlbum/' + id})
+      this.$router.push({path: '/song-list-album-page/' + id})
     }
   }
 }

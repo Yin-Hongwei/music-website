@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home-page">
     <!--轮播图-->
     <swiper/>
     <!--热门歌单-->
@@ -44,9 +44,9 @@
 import '../assets/css/mask.css'
 import axios from 'axios'
 import {mixin} from '../mixins'
-import swiper from '../components/swiper'
+import Swiper from '../components/Swiper'
 export default {
-  name: 'discover',
+  name: 'Home-page',
   data () {
     return {
       PopularListSings: [], // 热门歌单
@@ -54,7 +54,7 @@ export default {
     }
   },
   components: {
-    swiper
+    Swiper
   },
   mounted: function () {
     this.getSongLists()
@@ -66,12 +66,12 @@ export default {
     goRouter (id, index) {
       this.$store.commit('setIndex', index)
       window.sessionStorage.setItem('index', JSON.stringify(index))
-      this.$router.push({path: '/songAlbum/' + id})
+      this.$router.push({path: '/song-list-album-page/' + id})
     },
     goSingerAblum (id, index) {
       this.$store.commit('setIndex', index)
       window.sessionStorage.setItem('index', JSON.stringify(index))
-      this.$router.push({path: '/singerAlbum/' + id})
+      this.$router.push({path: '/singer-album-page/' + id})
     },
     getSongLists () {
       let _this = this
