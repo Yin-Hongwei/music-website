@@ -1,5 +1,5 @@
 <template>
-  <div class="foot">
+  <div class="footer">
     <p>
       关于 | 帮助 | 条款 | 反馈
     </p>
@@ -14,12 +14,12 @@
 
 <script>
 export default {
-  name: 'foot'
+  name: 'footer'
 }
 </script>
 
 <style scoped>
-.foot{
+.footer{
   width: 100%;
   background-color: white;
   height: 180px;
@@ -28,7 +28,7 @@ export default {
   justify-content: center;
   flex-direction: column;
 }
-.foot p {
+#footer p {
   height: 30px;
 }
 </style>

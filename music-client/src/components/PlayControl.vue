@@ -1,5 +1,5 @@
 <template>
-  <div class="play" :class="{'show':!toggle}">
+  <div id="play-control" :class="{'show':!toggle}">
     <div @click="toggle=!toggle" class="item-up" :class="{turn:toggle}">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-jiantou-xia-cuxiantiao"></use>
@@ -82,7 +82,7 @@ import axios from 'axios'
 import { mapGetters } from 'vuex'
 import {mixin} from '../mixins'
 export default {
-  name: 'player',
+  name: 'play-control',
   data () {
     return {
       tag: false,
@@ -137,14 +137,13 @@ export default {
   },
   mounted () {
     this.progressLength = this.$refs.progress.getBoundingClientRect().width
-    // this.downMusic()
   },
   mixins: [mixin],
   methods: {
     // 下载
     down () {
-      let player = document.querySelector('#player')
-      let url = player.src
+      let playControl = document.querySelector('#play-control')
+      let url = playControl.src
       window.open(url)
     },
     // 控制音乐播放/暂停
@@ -199,8 +198,8 @@ export default {
     },
     //  拖拽开始
     mousedown (e) {
-      console.log(e)
-      console.log(this.$refs.idot.offsetLeft)
+      // console.log(e)
+      // console.log(this.$refs.idot.offsetLeft)
       this.mouseStartX = e.clientX
       this.tag = true
     },
@@ -296,7 +295,7 @@ export default {
       }
     },
     goPlayerPage () {
-      this.$router.push({path: '/playerPage/' + this.id})
+      this.$router.push({path: '/player-page/' + this.id})
     },
     collection () {
       if (this.loginIn) {
@@ -339,7 +338,7 @@ export default {
 </script>
 
 <style scoped>
-.play{
+#play-control{
   position: fixed;
   bottom: 0;
   width: 100%;

@@ -20,7 +20,7 @@ import '../../assets/css/page.css'
 import { mapGetters } from 'vuex'
 import {mixin} from '../../mixins'
 export default {
-  name: 'pageFive',
+  name: 'pageTwo',
   data () {
     return {
       albumDatas: []
@@ -32,16 +32,16 @@ export default {
     ])
   },
   mounted: function () {
-    let pattern = /日韩/
+    let pattern = /华语/
     this.getAlbumDatas(pattern)
-    console.log(this.albumDatas)
+    // console.log(this.albumDatas)
   },
   mixins: [mixin],
   methods: {
     goSongAlbum (id, index) {
       this.$store.commit('setIndex', index)
       window.sessionStorage.setItem('index', JSON.stringify(index))
-      this.$router.push({path: '/songAlbum/' + id})
+      this.$router.push({path: '/song-list-album-page/' + id})
     }
   }
 }

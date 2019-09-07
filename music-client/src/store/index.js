@@ -14,7 +14,7 @@ const song = {
     changeTime: 0, //  指定播放时刻
     title: '', //  歌名
     artist: '', //  歌手名
-    picUrl: 'http://localhost:8080/img/tubiao.jpg', // 歌曲图片
+    picUrl: '', // 歌曲图片
     autoNext: true, // 用于触发自动播放下一首
     lyric: [], // 未处理的歌词数据
     listIndex: -1 // 当前歌曲在歌曲列表的位置
@@ -93,7 +93,7 @@ const song = {
     picUrl: state => {
       let picUrl = state.picUrl
       if (!picUrl) {
-        picUrl = JSON.parse(window.sessionStorage.getItem('picUrl') || null)
+        picUrl = JSON.parse(window.sessionStorage.getItem('picUrl')) || 'http://localhost:8080/img/tubiao.jpg'
       }
       return picUrl
     },
@@ -182,7 +182,7 @@ const store = new Vuex.Store({
   state: {
     HOST: 'http://localhost:8080',
     loginIn: false,
-    headIndex: '',
+    activeName: '',
     searchword: '', // 搜索关键词
     songslistComment: [], // 评论列表
     singersList: [], // 歌手列表
@@ -198,12 +198,12 @@ const store = new Vuex.Store({
       }
       return loginIn
     },
-    headIndex: state => {
-      let headIndex = state.headIndex
-      if (!headIndex) {
-        headIndex = JSON.parse(window.sessionStorage.getItem('headIndex') || null)
+    activeName: state => {
+      let activeName = state.activeName
+      if (!activeName) {
+        activeName = JSON.parse(window.sessionStorage.getItem('activeName') || null)
       }
-      return headIndex
+      return activeName
     },
     index: state => {
       let index = state.index
@@ -244,7 +244,7 @@ const store = new Vuex.Store({
   },
   mutations: {
     setLoginIn: (state, loginIn) => { state.loginIn = loginIn },
-    setHheadIndex: (state, headIndex) => { state.headIndex = headIndex },
+    setActiveName: (state, activeName) => { state.activeName = activeName },
     setIndex: (state, index) => { state.index = index },
     setSongslistComment: (state, songslistComment) => { state.songslistComment = songslistComment },
     setSingersList: (state, singersList) => { state.singersList = singersList },

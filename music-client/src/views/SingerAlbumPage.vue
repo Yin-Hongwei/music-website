@@ -47,7 +47,7 @@ import axios from 'axios'
 import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
 export default {
-  name: 'singerAlbum',
+  name: 'singer-album-page',
   data () {
     return {
       singers: {},
@@ -75,7 +75,6 @@ export default {
         }
       })
         .then(function (response) {
-          console.log(111)
           console.log(response.data)
           _this.$store.commit('setListOfSongs', response.data)
           window.sessionStorage.setItem('listOfSongs', JSON.stringify(response.data))

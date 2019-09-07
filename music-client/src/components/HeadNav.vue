@@ -1,5 +1,5 @@
 <template>
-  <div class="head">
+  <div class="head-nav">
     <!--图标-->
     <div class="head-logo" @click="goHomePage">
       <div class="item-logo-hd">
@@ -7,13 +7,12 @@
           <use xlink:href="#icon-erji"></use>
         </svg>
       </div>
-      Y-Music
+      Yin-music
     </div>
     <ul class="navbar" ref="change">
-      <li class="item" @click="goHomePage()">首页</li>
-      <li class="item" @click="goSongList()">歌单</li>
-      <li class="item" @click="goSinger()">歌手</li>
-      <li class="item" @click="goMySong()">我的</li>
+      <li :class="{active: item.name === activeName}" v-for="item in navMsg" :key="item.type" @click="goPage(item.type, item.name)">
+        {{item.name}}
+      </li>
       <li>
         <div class="head-search">
           <input type="text" placeholder="搜索音乐" @keyup.enter="goSearch()" v-model="keywords">
@@ -24,8 +23,7 @@
           </div>
         </div>
       </li>
-      <li class="item" @click="goLogin()" v-if="!loginIn">登录</li>
-      <li class="item" @click="goRegister()" v-if="!loginIn">注册</li>
+      <li :class="{active: item.name === activeName}" v-for="item in loginMsg" :key="item.type" @click="goPage(item.type, item.name)" v-if="!loginIn">{{item.name}}</li>
     </ul>
     <!--用户-->
     <ul class="menu">
@@ -44,23 +42,40 @@
 import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
 export default {
-  name: 'headNav',
+  name: 'head-nav',
   data () {
     return {
+      navMsg: [{
+        name: '首页',
+        type: 1
+      }, {
+        name: '歌单',
+        type: 2
+      }, {
+        name: '歌手',
+        type: 3
+      }, {
+        name: '我的',
+        type: 4
+      }],
+      loginMsg: [{
+        name: '登录',
+        type: 5
+      }, {
+        name: '注册',
+        type: 6
+      }],
       keywords: ''
     }
   },
   computed: {
     ...mapGetters([
       'userId',
-      'headIndex',
+      'activeName',
       'avator',
       'username',
       'loginIn'
     ])
-  },
-  mounted () {
-    this.changeIndex(this.headIndex)
   },
   mixins: [mixin],
   methods: {
@@ -77,35 +92,41 @@ export default {
         document.querySelector('.menu').classList.remove('show')
       }, false)
     },
-    changeIndex (index) {
-      console.log(index)
-      this.$store.commit('setHheadIndex', index)
-      window.sessionStorage.setItem('headIndex', JSON.stringify(index))
-      let len = this.$refs.change.children.length
-      for (let i = 0; i < len; i++) {
-        this.$refs.change.children[i].style.color = '#67757f'
-        this.$refs.change.children[i].style.borderBottom = 'none'
+    goPage (type, value) {
+      this.changeIndex(value)
+      if (type === 1) {
+        this.$router.push({path: '/home-page'})
+      } else if (type === 2) {
+        this.$router.push({path: '/song-list-page'})
+      } else if (type === 3) {
+        this.$router.push({path: '/singer-page'})
+      } else if (type === 4) {
+        if (this.loginIn) {
+          document.querySelector('.menu').classList.remove('show')
+          this.$router.push({path: '/my-song'})
+        } else {
+          this.$notify({
+            title: '请先登录',
+            type: 'warning'
+          })
+        }
+      } else if (type === 5) {
+        this.$router.push({path: '/'})
+      } else if (type === 6) {
+        this.$router.push({path: '/register-page'})
       }
-      this.$refs.change.children[index].style.color = '#93d2f8'
-      this.$refs.change.children[index].style.borderBottom = '6px solid #93d2f8'
+    },
+    changeIndex (value) {
+      this.$store.commit('setActiveName', value)
+      window.sessionStorage.setItem('activeName', JSON.stringify(value))
     },
     goHomePage () {
-      this.changeIndex(0)
-      this.$router.push({path: '/homePage'})
-    },
-    goSongList () {
-      this.changeIndex(1)
-      this.$router.push({path: '/songList'})
-    },
-    goSinger () {
-      this.changeIndex(2)
-      this.$router.push({path: '/singer'})
+      this.$router.push({path: '/home-page'})
     },
     goMySong () {
       if (this.loginIn) {
-        this.changeIndex(3)
         document.querySelector('.menu').classList.remove('show')
-        this.$router.push({path: '/mySong'})
+        this.$router.push({path: '/my-song'})
       } else {
         this.$notify({
           title: '请先登录',
@@ -113,13 +134,9 @@ export default {
         })
       }
     },
-    goLogin () {
-      this.changeIndex(5)
-      this.$router.push({path: '/'})
-    },
     goRegister () {
-      this.changeIndex(6)
-      this.$router.push({path: '/register'})
+      this.changeIndex('我的')
+      this.$router.push({path: '/register-page'})
     },
     goPersonal () {
       document.querySelector('.menu').classList.remove('show')
@@ -127,7 +144,7 @@ export default {
     },
     goUploadImg () {
       document.querySelector('.menu').classList.remove('show')
-      this.$router.push({path: '/upLoadImg'})
+      this.$router.push({path: '/upLoad-img'})
     },
     goSign () {
       this.$store.commit('setLoginIn', false)
@@ -137,7 +154,7 @@ export default {
     },
     goSearch () {
       this.$store.commit('setSearchword', this.keywords)
-      this.$router.push({path: '/search', query: {keywords: this.keywords}})
+      this.$router.push({path: '/search-page', query: {keywords: this.keywords}})
     }
   }
 }
@@ -156,7 +173,7 @@ export default {
   fill: currentColor;
   color: black;
 }
-.head {
+.head-nav {
   background-color: #fefefe;
   width: 100%;
   height: 80px;
@@ -178,6 +195,8 @@ export default {
   height: 55px;
   font-size: 20px;
   text-align: center;
+  color: #67757f;
+  border-bottom: none;
   cursor: pointer;
 }
 /*搜索*/
@@ -274,5 +293,9 @@ input:focus {
 }
 .show {
   display: block;
+}
+.active{
+  color: #93d2f8 !important;
+  border-bottom: 6px solid #93d2f8 !important;
 }
 </style>

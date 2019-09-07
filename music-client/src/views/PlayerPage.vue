@@ -51,7 +51,7 @@ import axios from 'axios'
 import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
 export default {
-  name: 'player',
+  name: 'player-page',
   data () {
     return {
       lrcTop: 200 + 'px', // 歌词滑动

@@ -1,12 +1,12 @@
 <template>
-  <div id="box" class="box" @click="returnTop">
+  <div id="scroll-top" @click="returnTop">
     <div class="box-in"></div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'scrollTop',
+  name: 'scroll-top',
   methods: {
     returnTop () {
       let timer = null
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style scoped>
-.box{
+#scroll-top{
   position:fixed;
   right:10px;
   bottom: 80px;
@@ -42,13 +42,13 @@ export default {
   overflow: hidden;
   box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
 }
-.box:hover:before{
+#scroll-top:hover:before{
   top:50%
 }
-.box:hover .box-in{
+#scroll-top:hover .box-in{
   visibility: hidden;
 }
-.box:before{
+#scroll-top:before{
   position: absolute;
   top: -50%;
   left: 50%;

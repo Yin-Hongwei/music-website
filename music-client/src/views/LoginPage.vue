@@ -1,30 +1,16 @@
 <template>
-<div class="sign">
-  <loginLogo/>
+<div class="login-page">
+  <login-logo/>
   <div class="login">
     <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="0px" class="demo-ruleForm" >
       <el-form-item prop="username" label="用户名">
-        <el-input v-model="loginForm.username" placeholder="用户名"></el-input>
+        <el-input placeholder="用户名" v-model="loginForm.username"></el-input>
       </el-form-item>
       <el-form-item prop="password" label="密码">
         <el-input type="password" placeholder="密码" v-model="loginForm.password" @keyup.enter.native="login"></el-input>
       </el-form-item>
-      <el-alert
-        v-show="showSuccess"
-        class="local"
-        title="登录成功"
-        type="success"
-        center
-        show-icon>
-      </el-alert>
-      <el-alert
-        v-show="showError"
-        class="local"
-        title="用户名或密码错误"
-        type="error"
-        center
-        show-icon>
-      </el-alert>
+      <el-alert v-show="showSuccess" class="local" title="登录成功" type="success" center show-icon></el-alert>
+      <el-alert v-show="showError" class="local" title="用户名或密码错误" type="error" center show-icon></el-alert>
       <div class="login-btn">
         <el-button type="primary" @click="login">登录</el-button>
         <el-button type="primary" @click="goRegister()">注册</el-button>
@@ -36,9 +22,9 @@
 
 <script>
 import axios from 'axios'
-import loginLogo from '../components/loginLogo'
+import LoginLogo from '../components/LoginLogo'
 export default {
-  name: 'login',
+  name: 'login-page',
   data: function () {
     var validateName = (rule, value, callback) => {
       if (!value) {
@@ -72,19 +58,23 @@ export default {
     }
   },
   components: {
-    loginLogo
+    LoginLogo
   },
   mounted: function () {
+    this.changeIndex('登录')
     this.getSongLists()
     this.getSingerLists()
   },
   methods: {
+    changeIndex (value) {
+      this.$store.commit('setActiveName', value)
+      window.sessionStorage.setItem('activeName', JSON.stringify(value))
+    },
     login () {
       let _this = this
       var params = new URLSearchParams()
       params.append('username', _this.loginForm.username)
       params.append('password', _this.loginForm.password)
-      console.log(params)
       axios.post(_this.$store.state.HOST + '/api/loginVerify', params)
         .then(response => {
           // console.log('-----------获取登录信息---------------')
@@ -96,9 +86,8 @@ export default {
             _this.$store.commit('setLoginIn', true)
             window.sessionStorage.setItem('loginIn', JSON.stringify(true))
             setTimeout(function () {
-              _this.$store.commit('setHheadIndex', 0)
-              window.sessionStorage.setItem('headIndex', JSON.stringify(0))
-              _this.$router.push({path: '/homePage'})
+              _this.changeIndex('首页')
+              _this.$router.push({path: '/home-Page'})
               _this.$router.go(0)
             }, 2000)
           } else {
@@ -118,7 +107,7 @@ export default {
       console.log(item.avator)
     },
     goRegister () {
-      this.$router.push({path: '/register'})
+      this.$router.push({path: '/register-page'})
     },
     getSongLists () {
       let _this = this

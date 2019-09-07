@@ -36,7 +36,7 @@ export const mixin = {
     },
     // 解析歌词
     parseLyric (text) {
-      console.log(typeof text)
+      // console.log(typeof text)
       var lines = text.split('\n'),
         pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g,
         result = []
@@ -88,7 +88,7 @@ export const mixin = {
         let _this = this
         axios.get(_this.$store.state.HOST + '/listSongsOfSearch?name=' + _this.$route.query.keywords)
           .then(function (response) {
-            console.log(response.data)
+            // console.log(response.data)
             if (!response.data.length) {
               _this.$store.commit('setListOfSongs', [])
               _this.$notify({
@@ -111,7 +111,7 @@ export const mixin = {
           var item = this.songsList[i]
           item.list = i
           this.albumDatas.push(item)
-          console.log(item)
+          // console.log(item)
         }
       }
     }
