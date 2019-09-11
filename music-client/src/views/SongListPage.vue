@@ -1,27 +1,27 @@
 <template>
-  <div id="song-list-page">
-    <ul class="song-list-header">
-      <li
-        v-for="(item, index) in songStyle"
-        :key="index"
-        :class="{active: item.name === activeName}"
-        @click="handleChangeView(item.type, item.name)">
-        {{item.name}}
-      </li>
-    </ul>
-    <component :is="currentView"></component>
+  <div class="song-list-page">
+    <div class="song-list-header">
+      <ul>
+        <li
+          v-for="(item, index) in songStyle"
+          :key="index"
+          :class="{active: item.name === activeName}"
+          @click="handleChangeView(item.name)">
+          {{item.name}}
+        </li>
+      </ul>
+    </div>
+    <div class="song-content">
+      <content-list :contentList="albumDatas" :type="1" :styleName="'songList'"></content-list>
+    </div>
   </div>
 </template>
 
 <script>
-import PageOne from '../components/page/PageOne'
-import PageTwo from '../components/page/PageTwo'
-import PageThree from '../components/page/PageThree'
-import PageFour from '../components/page/PageFour'
-import PageFive from '../components/page/PageFive'
-import PageSix from '../components/page/PageSix'
-import PageSeven from '../components/page/PageSeven'
-import PageEight from '../components/page/PageEight'
+import { mixin } from '../mixins'
+import { mapGetters } from 'vuex'
+import ContentList from '../components/ContentList'
+
 export default {
   name: 'song-list-page',
   data () {
@@ -60,31 +60,54 @@ export default {
           type: 'Eight'
         }
       ],
-      currentView: 'pageOne',
-      activeName: '全部歌单'
+      activeName: '全部歌单',
+      albumDatas: []
     }
   },
-  components: {
-    PageOne,
-    PageTwo,
-    PageThree,
-    PageFour,
-    PageFive,
-    PageSix,
-    PageSeven,
-    PageEight
+  computed: {
+    ...mapGetters([
+      'songsList'
+    ])
   },
+  components: {
+    ContentList
+  },
+  mounted () {
+    this.getSongLists()
+    this.handleChangeView('全部歌单')
+  },
+  mixins: [mixin],
   methods: {
-    handleChangeView: function (value, name) {
-      this.currentView = 'page' + value
+    handleChangeView: function (name) {
+      let pattern = new RegExp(name)
       this.activeName = name
+      this.albumDatas = []
+      if (name === '全部歌单') {
+        this.albumDatas = this.songsList
+      } else {
+        this.getAlbumDatas(pattern)
+      }
+    },
+    getAlbumDatas (pattern) {
+      for (let i = 0; i < this.songsList.length; i++) {
+        if (pattern.test(this.songsList[i].style)) {
+          var item = this.songsList[i]
+          item.list = i
+          this.albumDatas.push(item)
+        }
+      }
+    },
+    goSongAlbum (id, index) {
+      this.$store.commit('setIndex', index)
+      window.sessionStorage.setItem('index', JSON.stringify(index))
+      this.$router.push({path: '/song-list-album-page/' + id})
     }
   }
 }
 </script>
 
 <style scoped>
-  #song-list-page {
+  .song-list-page {
     margin: 30px 150px;
     padding-bottom: 50px;
     min-width: 800px;

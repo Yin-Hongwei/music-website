@@ -46,6 +46,7 @@
 <script>
 import axios from 'axios'
 import loginLogo from '../components/LoginLogo'
+
 export default {
   name: 'register-page',
   data: function () {

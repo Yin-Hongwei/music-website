@@ -1,5 +1,5 @@
 <template>
-  <div id="login-logo">
+  <div class="login-logo">
     <div class="item-logo">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-erji"></use>
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style scoped>
-#login-logo{
+.login-logo{
   background-color: #2aa3ef;
   height: 100vh;
   width: 600px;

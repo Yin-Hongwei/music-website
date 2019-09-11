@@ -7,7 +7,7 @@
           <use xlink:href="#icon-erji"></use>
         </svg>
       </div>
-      Yin-music
+      <span>{{music_name}}</span>
     </div>
     <ul class="navbar" ref="change">
       <li :class="{active: item.name === activeName}" v-for="item in navMsg" :key="item.type" @click="goPage(item.type, item.name)">
@@ -41,10 +41,12 @@
 <script>
 import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'head-nav',
   data () {
     return {
+      music_name: 'Yin-music',
       navMsg: [{
         name: '首页',
         type: 1

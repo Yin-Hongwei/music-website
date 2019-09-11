@@ -2,10 +2,10 @@
   <div id="app">
     <song-audio/>
     <head-nav/>
-    <router-view/>
+    <router-view class="music-content"/>
     <play-control/>
     <scroll-top/>
-    <foot/>
+    <music-footer/>
   </div>
 </template>
 
@@ -13,15 +13,16 @@
 import ScrollTop from './components/ScrollTop'
 import SongAudio from './components/SongAudio'
 import HeadNav from './components/HeadNav'
-import Foot from './components/Footer'
+import MusicFooter from './components/MusicFooter'
 import PlayControl from './components/PlayControl'
+
 export default {
   name: 'App',
   components: {
     ScrollTop,
     SongAudio,
     HeadNav,
-    Foot,
+    MusicFooter,
     PlayControl
   }
 }
@@ -30,5 +31,10 @@ export default {
 <style>
 #app{
   background-color: #e6ecf0;
+  display: flex;
+  flex-direction: column;
+}
+.music-content{
+  flex: 1;
 }
 </style>

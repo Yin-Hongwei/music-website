@@ -1,11 +1,12 @@
 <template>
-  <div id="play-control" :class="{'show':!toggle}">
+  <div class="play-control" :class="{show:!toggle}">
     <div @click="toggle=!toggle" class="item-up" :class="{turn:toggle}">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-jiantou-xia-cuxiantiao"></use>
       </svg>
     </div>
     <div class="kongjian" >
+      <!--上一首-->
       <div class="item" @click="prev">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-ziyuanldpi"></use>
@@ -23,9 +24,11 @@
           <use xlink:href="#icon-ziyuanldpi1"></use>
         </svg>
       </div>
+      <!--歌曲图片-->
       <div class="item-img" @click="goPlayerPage()">
          <img :src=picUrl alt="">
       </div>
+      <!--播放进度-->
       <div class="playing-speed">
         <!--播放开始时间-->
         <div class="current-time">{{ nowTime }}</div>
@@ -81,6 +84,7 @@
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 import {mixin} from '../mixins'
+
 export default {
   name: 'play-control',
   data () {
@@ -338,7 +342,7 @@ export default {
 </script>
 
 <style scoped>
-#play-control{
+.play-control{
   position: fixed;
   bottom: 0;
   width: 100%;

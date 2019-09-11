@@ -2,66 +2,46 @@
   <div class="home-page">
     <!--轮播图-->
     <swiper/>
-    <!--热门歌单-->
-    <div class="body-section">
-      <div class="section-head">歌单</div>
-      <div class="section-content">
-        <div class="content-item" v-for="(item, index) in PopularListSings" :key="index">
-          <div class="kuo">
-            <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
-            <div class="mask"  @click="goRouter(item.id, index)">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-bofang"></use>
-              </svg>
-            </div>
-          </div>
-          <p class="item-name">{{item.title}}</p>
-        </div>
-      </div>
-    </div>
-
-    <!--歌手-->
-    <div class="body-section">
-      <div class="section-head">歌手</div>
-      <div class="section-content">
-        <div class="content-item" v-for="(item, index) in PopularSinger" :key="index">
-          <div class="kuo">
-            <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
-            <div class="mask" @click="goSingerAblum(item.id, index)">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-bofang"></use>
-              </svg>
-            </div>
-          </div>
-          <p class="item-name">{{item.name}}</p>
-        </div>
-      </div>
-    </div>
+    <!--热门歌单/歌手-->
+    <content-list :contentList="popularList" :type="0"></content-list>
   </div>
 </template>
 
 <script>
-import '../assets/css/mask.css'
-import axios from 'axios'
+import { mapGetters } from 'vuex'
 import {mixin} from '../mixins'
 import Swiper from '../components/Swiper'
+import ContentList from '../components/ContentList'
+
 export default {
   name: 'Home-page',
   data () {
     return {
-      PopularListSings: [], // 热门歌单
-      PopularSinger: [] // 热门歌手
+      popularList: [{
+        name: '歌单',
+        list: []
+      }, {
+        name: '歌手',
+        list: []
+      }]
     }
   },
-  components: {
-    Swiper
-  },
-  mounted: function () {
+  mounted () {
     this.getSongLists()
     this.getSingerLists()
-    this.getAllComment()
+    this.getList()
   },
   mixins: [mixin],
+  computed: {
+    ...mapGetters([
+      'songsList',
+      'singersList'
+    ])
+  },
+  components: {
+    Swiper,
+    ContentList
+  },
   methods: {
     goRouter (id, index) {
       this.$store.commit('setIndex', index)
@@ -73,63 +53,15 @@ export default {
       window.sessionStorage.setItem('index', JSON.stringify(index))
       this.$router.push({path: '/singer-album-page/' + id})
     },
-    getSongLists () {
-      let _this = this
-      axios.get(_this.$store.state.HOST + '/listSongLists')
-        .then(function (response) {
-          // console.log('-----------获得歌单列表------------')
-          // console.log(response.data)
-          _this.$store.commit('setSongsList', response.data)
-          window.sessionStorage.setItem('songsList', JSON.stringify(response.data))
-          for (let i = 0; i < 10; i++) {
-            if (response.data[i]) {
-              _this.PopularListSings.push(response.data[i])
-            }
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    getSingerLists () {
-      let _this = this
-      axios.get(_this.$store.state.HOST + '/listSingers')
-        .then(function (response) {
-          // console.log('-----------获得歌手列表------------')
-          // console.log(response.data)
-          _this.$store.commit('setSingersList', response.data)
-          window.sessionStorage.setItem('singersList', JSON.stringify(response.data))
-          for (let i = 0; i < 10; i++) {
-            _this.PopularSinger.push(response.data[i])
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+    // 得到歌单和歌曲列表前10项
+    getList () {
+      this.popularList[0].list = this.songsList.slice(0, 10)
+      this.popularList[1].list = this.singersList.slice(0, 10)
     }
   }
 }
 </script>
 
 <style scoped>
-.body-section {
-  margin-bottom: 80px;
-  padding-bottom: 50px;
-  padding-left: 100px;
-  padding-right: 100px;
-  background-color: #ffffff;
-}
-.section-head {
-  height: 100px;
-  font-size: 28px;
-  font-weight: 500;
-  text-align: center;
-  line-height: 100px;
-  color: black;
-}
-.section-content {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+
 </style>

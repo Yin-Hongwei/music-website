@@ -16,6 +16,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'upload-img',
   data () {
@@ -30,7 +31,7 @@ export default {
   },
   methods: {
     uploadUrl () {
-      var url = 'http://localhost:8080/api/updateUserImg?id=' + this.userId // 生产环境和开发环境的判断
+      let url = 'http://localhost:8080/api/updateUserImg?id=' + this.userId // 生产环境和开发环境的判断
       return url
     },
     handleAvatarSuccess (res, file) {

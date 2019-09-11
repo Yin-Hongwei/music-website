@@ -23,6 +23,7 @@
 <script>
 import axios from 'axios'
 import LoginLogo from '../components/LoginLogo'
+
 export default {
   name: 'login-page',
   data: function () {
@@ -62,8 +63,6 @@ export default {
   },
   mounted: function () {
     this.changeIndex('登录')
-    this.getSongLists()
-    this.getSingerLists()
   },
   methods: {
     changeIndex (value) {
@@ -108,28 +107,6 @@ export default {
     },
     goRegister () {
       this.$router.push({path: '/register-page'})
-    },
-    getSongLists () {
-      let _this = this
-      axios.get(_this.$store.state.HOST + '/listSongLists')
-        .then(function (response) {
-          _this.$store.commit('setSongsList', response.data)
-          window.sessionStorage.setItem('songsList', JSON.stringify(response.data))
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    getSingerLists () {
-      let _this = this
-      axios.get(_this.$store.state.HOST + '/listSingers')
-        .then(function (response) {
-          _this.$store.commit('setSingersList', response.data)
-          window.sessionStorage.setItem('singersList', JSON.stringify(response.data))
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
     }
   }
 }

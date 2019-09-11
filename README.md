@@ -1,5 +1,4 @@
 <h1 align="center">music-website</h1>
-
 ## Describe
 
 本音乐网站的开发主要利用前端框架VUE开发用户和管理员界面，后端接口用Spring Boot来实现。数据用MySQL来进行存储。具体实现可以参考[这里](https://yin-hongwei.github.io/2019/03/04/music/)。
@@ -10,23 +9,23 @@
 
 > 前台模块
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/denglu.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/denglu.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/shouye.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/shouye.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gedan.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gedan.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geshou.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geshou.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/my.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/my.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gedanxiangqing.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gedanxiangqing.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geshouxiangqing.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geshouxiangqing.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geci.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geci.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/sousuo.png"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/sousuo.jpg"/><br/>
 
 > 后台模块
 
