@@ -4,8 +4,8 @@
     <div class="my-body">
       <div class="content">
         <nav class="searchList-nav" ref="change">
-          <span @click="handleChangeView('Songs', 0)">歌曲</span>
-          <span @click="handleChangeView('SongLists', 1)">歌单</span>
+          <span :class="{isActive: toggle === 'Songs'}" @click="handleChangeView('Songs', 0)">歌曲</span>
+          <span :class="{isActive: toggle === 'SongLists'}" @click="handleChangeView('SongLists', 1)">歌单</span>
         </nav>
         <component :is="currentView"></component>
       </div>
@@ -18,10 +18,12 @@ import searchSongs from '../components/search/SearchSongs'
 import searchSongLists from '../components/search/SearchSongLists'
 import { mapGetters } from 'vuex'
 import {mixin} from '../mixins'
+
 export default {
   name: 'search-page',
   data () {
     return {
+      toggle: 'Songs',
       currentView: 'searchSongs'
     }
   },
@@ -34,9 +36,6 @@ export default {
       'searchword'
     ])
   },
-  mounted () {
-    this.changeIndex(0)
-  },
   watch: {
     searchword: function () {
       this.getSong()
@@ -45,20 +44,9 @@ export default {
   mixins: [mixin],
   methods: {
     // 切换组件
-    handleChangeView: function (component, index) {
+    handleChangeView: function (component) {
       this.currentView = 'search' + component
-      this.changeIndex(index)
-    },
-    // 标题加样式
-    changeIndex (index) {
-      for (let i = 0; i < 2; i++) {
-        this.$refs.change.children[i].style.color = '#67757f'
-        this.$refs.change.children[i].style.fontWeight = '300'
-        this.$refs.change.children[i].style.borderBottom = 'none'
-      }
-      this.$refs.change.children[index].style.color = 'black'
-      this.$refs.change.children[index].style.fontWeight = '400'
-      this.$refs.change.children[index].style.borderBottom = '5px solid black'
+      this.toggle = component
     }
   }
 }
@@ -82,13 +70,17 @@ export default {
     min-width: 900px;
   }
   .searchList-nav {
-    padding-left: 20px;
-    font-size: 20px;
-    font-weight: 600;
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    font-size: 1.5rem;
     color: black;
   }
   .searchList-nav span {
-    display: inline-block;
-    margin: 10px 20px 20px -10px;
+    line-height: 50px;
+  }
+  .isActive {
+    font-weight: 600;
+    border-bottom:5px solid black;
   }
 </style>

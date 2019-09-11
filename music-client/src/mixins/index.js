@@ -1,6 +1,30 @@
 import axios from 'axios'
 export const mixin = {
   methods: {
+    // 获取歌单列表
+    getSongLists () {
+      let _this = this
+      axios.get(_this.$store.state.HOST + '/listSongLists')
+        .then(function (response) {
+          _this.$store.commit('setSongsList', response.data)
+          window.sessionStorage.setItem('songsList', JSON.stringify(response.data))
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    // 获取歌手
+    getSingerLists () {
+      let _this = this
+      axios.get(_this.$store.state.HOST + '/listSingers')
+        .then(function (response) {
+          _this.$store.commit('setSingersList', response.data)
+          window.sessionStorage.setItem('singersList', JSON.stringify(response.data))
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
     // 获取图片信息
     attachImageUrl (srcUrl) {
       return this.$store.state.HOST + srcUrl || '../assets/img/user.jpg'
@@ -64,18 +88,6 @@ export const mixin = {
       // console.log(result)
       return result
     },
-    // 获取所有评论
-    getAllComment () {
-      let _this = this
-      axios.get(_this.$store.state.HOST + '/songsListComment')
-        .then(function (response) {
-          _this.$store.commit('setSongslistComment', response.data)
-          window.sessionStorage.setItem('songslistComment', JSON.stringify(response.data))
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
     // 搜索音乐
     getSong () {
       if (!this.$route.query.keywords) {
@@ -103,16 +115,6 @@ export const mixin = {
           .catch(function (error) {
             console.log(error)
           })
-      }
-    },
-    getAlbumDatas (pattern) {
-      for (let i = 0; i < this.songsList.length; i++) {
-        if (pattern.test(this.songsList[i].style)) {
-          var item = this.songsList[i]
-          item.list = i
-          this.albumDatas.push(item)
-          // console.log(item)
-        }
       }
     }
   }

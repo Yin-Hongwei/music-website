@@ -55,6 +55,7 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'personal',
   data: function () {
@@ -204,10 +205,8 @@ export default {
     },
     saveMsg () {
       let _this = this
-      // console.log('time:' + _this.registerForm.birth)
       let d = _this.registerForm.birth
       var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      // console.log(datetime)
       var params = new URLSearchParams()
       params.append('id', _this.userId)
       params.append('username', _this.registerForm.username)

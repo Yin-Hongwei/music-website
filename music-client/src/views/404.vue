@@ -1,7 +1,7 @@
 <template>
   <div class="error-page">
     <div class="error-code">4<span>0</span>4</div>
-    <div class="error-desc">啊哦~ 你所访问的页面不存在</div>
+    <div class="error-desc">页面不存在</div>
     <div class="error-handle">
       <router-link to="/">
         <el-button type="primary" size="large">返回首页</el-button>

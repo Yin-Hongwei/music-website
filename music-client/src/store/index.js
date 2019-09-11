@@ -36,9 +36,9 @@ const song = {
     },
     listOfSongs: state => {
       let listOfSongs = state.listOfSongs
-      // if (listOfSongs.length === 0) {
-      //   listOfSongs = JSON.parse(window.sessionStorage.getItem('listOfSongs') || null)
-      // }
+      if (!listOfSongs.length) {
+        listOfSongs = JSON.parse(window.sessionStorage.getItem('listOfSongs') || null)
+      }
       return listOfSongs
     },
     id: state => {
@@ -123,7 +123,7 @@ const song = {
     setIsPlay: (state, isPlay) => { state.isPlay = isPlay },
     setPlayButtonUrl: (state, playButtonUrl) => { state.playButtonUrl = playButtonUrl },
     setListOfSongs: (state, listOfSongs) => { state.listOfSongs = listOfSongs },
-    pushListOfSongs: (state, song) => { state.listOfSongs.unshift(song) },
+    // pushListOfSongs: (state, song) => { state.listOfSongs.unshift(song) },
     setId: (state, id) => { state.id = id },
     setUrl: (state, url) => { state.url = url },
     setDuration: (state, duration) => { state.duration = duration },
@@ -181,14 +181,12 @@ const store = new Vuex.Store({
   },
   state: {
     HOST: 'http://localhost:8080',
-    loginIn: false,
-    activeName: '',
+    loginIn: false, // 是否登录
+    activeName: '', // 歌单类型名
     searchword: '', // 搜索关键词
-    songslistComment: [], // 评论列表
     singersList: [], // 歌手列表
     songsList: [], // 歌单列表
-    index: 0, // 列表中的序号
-    collection: [] // 个人收藏
+    index: 0 // 列表中的序号
   },
   getters: {
     loginIn: state => {
@@ -212,33 +210,19 @@ const store = new Vuex.Store({
       }
       return index
     },
-    songslistComment: state => {
-      let songslistComment = state.songslistComment
-      if (songslistComment.length === 0) {
-        songslistComment = JSON.parse(window.localStorage.getItem('songslistComment') || null)
-      }
-      return songslistComment
-    },
     singersList: state => {
       let singersList = state.singersList
-      if (singersList.length === 0) {
+      if (!singersList.length) {
         singersList = JSON.parse(window.sessionStorage.getItem('singersList') || null)
       }
       return singersList
     },
     songsList: state => {
       let songsList = state.songsList
-      if (songsList.length === 0) {
+      if (!songsList.length) {
         songsList = JSON.parse(window.sessionStorage.getItem('songsList') || null)
       }
       return songsList
-    },
-    collection: state => {
-      let collection = state.collection
-      if (collection.length === 0) {
-        collection = JSON.parse(window.sessionStorage.getItem('collection') || null)
-      }
-      return collection
     },
     searchword: state => state.searchword
   },
@@ -246,10 +230,8 @@ const store = new Vuex.Store({
     setLoginIn: (state, loginIn) => { state.loginIn = loginIn },
     setActiveName: (state, activeName) => { state.activeName = activeName },
     setIndex: (state, index) => { state.index = index },
-    setSongslistComment: (state, songslistComment) => { state.songslistComment = songslistComment },
     setSingersList: (state, singersList) => { state.singersList = singersList },
     setSongsList: (state, songsList) => { state.songsList = songsList },
-    setCollection: (state, collection) => { state.collection = collection },
     setSearchword: (state, searchword) => { state.searchword = searchword }
   },
   actions: {}
