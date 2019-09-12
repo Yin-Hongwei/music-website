@@ -1,20 +1,23 @@
 <template>
   <div class="music-footer">
-    <p>
-      关于 | 帮助 | 条款 | 反馈
-    </p>
-    <p>
-      Copyright &copy; 2019
-    </p>
-    <p>
-      Designed by Yin-Hongwei
+    <p v-for="(item, index) in list" :key="index">
+      {{item}}
     </p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'music-footer'
+  name: 'music-footer',
+  data () {
+    return {
+      list: [
+        `关于 | 帮助 | 条款 | 反馈`,
+        `Copyright © 2019`,
+        `Designed by Yin-Hongwei`
+      ]
+    }
+  }
 }
 </script>
 
