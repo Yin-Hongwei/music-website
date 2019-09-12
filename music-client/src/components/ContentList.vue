@@ -6,7 +6,7 @@
         <li class="content-item" v-for="(item, index) in list.list" :key="index">
           <div class="kuo">
             <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
-            <div class="mask"  @click="goRouter(item.id, index)">
+            <div class="mask"  @click="goAblum(item.id, item.list || index, item.name)">
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-bofang"></use>
               </svg>
@@ -16,20 +16,10 @@
         </li>
       </ul>
     </div>
-    <div v-if="type === 1 && styleName === 'singer'">
-      <ul class="singer-content">
-        <li class="singer-item" v-for="(item, index) in contentList" :key="index">
-          <div @click="goAblum(item.id, item.list || index)">
-            <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
-          </div>
-          <p class="item-name">{{item.name || item.title}}</p>
-        </li>
-      </ul>
-    </div>
-    <div v-if="type === 1 && styleName === 'songList'">
+    <div v-if="type === 1">
       <ul class="section-content">
         <li class="content-item" v-for="(item, index) in contentList" :key="index">
-          <div class="kuo" @click="goAblum(item.id, item.list || index)">
+          <div class="kuo" @click="goAblum(item.id, item.list || index, item.name)">
             <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
           </div>
           <p class="item-name">{{item.name || item.title}}</p>
@@ -46,8 +36,7 @@ export default {
   name: 'content-list',
   props: [
     'contentList',
-    'type',
-    'styleName'
+    'type'
   ],
   mixins: [mixin],
   methods: {
@@ -56,12 +45,12 @@ export default {
       window.sessionStorage.setItem('index', JSON.stringify(index))
       this.$router.push({path: '/song-list-album-page/' + id})
     },
-    goAblum (id, index) {
+    goAblum (id, index, type) {
       this.$store.commit('setIndex', index)
       window.sessionStorage.setItem('index', JSON.stringify(index))
-      if (this.styleName === 'singer') {
+      if (type) {
         this.$router.push({path: '/singer-album-page/' + id})
-      } else if (this.styleName === 'songList') {
+      } else {
         this.$router.push({path: '/song-list-album-page/' + id})
       }
     }
@@ -89,27 +78,6 @@ export default {
     text-align: center;
     line-height: 100px;
     color: black;
-  }
-  .singer-content{
-    -moz-column-count:5; /* Firefox */
-    -webkit-column-count:5; /* Safari 和 Chrome */
-    column-count:5;
-    -moz-column-gap: 2em;
-    -webkit-column-gap: 2em;
-    column-gap: 2em;
-    width: 100%;
-    margin:2em auto;
-  }
-  .singer-item{
-    margin-bottom: 2em;
-    -moz-page-break-inside: avoid;
-    -webkit-column-break-inside: avoid;
-    break-inside: avoid;
-    border-radius: 6px;
-    overflow: hidden;
-    -webkit-box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
   }
   .section-content {
     display: flex;

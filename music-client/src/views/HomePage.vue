@@ -26,9 +26,11 @@ export default {
       }]
     }
   },
-  mounted () {
+  created () {
     this.getSongLists()
     this.getSingerLists()
+  },
+  mounted () {
     this.getList()
   },
   mixins: [mixin],

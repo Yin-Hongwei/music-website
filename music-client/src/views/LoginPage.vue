@@ -22,6 +22,7 @@
 
 <script>
 import axios from 'axios'
+import {mixin} from '../mixins'
 import LoginLogo from '../components/LoginLogo'
 
 export default {
@@ -63,7 +64,10 @@ export default {
   },
   mounted: function () {
     this.changeIndex('登录')
+    this.getSongLists()
+    this.getSingerLists()
   },
+  mixins: [mixin],
   methods: {
     changeIndex (value) {
       this.$store.commit('setActiveName', value)
