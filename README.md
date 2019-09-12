@@ -9,23 +9,23 @@
 
 > 前台模块
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/denglu.jpg"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/denglu.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/shouye.jpg"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/shouye.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gedan.jpg"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gedan.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geshou.jpg"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geshou.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/my.jpg"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/my.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gedanxiangqing.jpg"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gedanxiangqing.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geshouxiangqing.jpg"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geshouxiangqing.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geci.jpg"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geci.png"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/sousuo.jpg"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/sousuo.png"/><br/>
 
 > 后台模块
 
