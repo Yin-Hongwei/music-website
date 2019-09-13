@@ -208,9 +208,10 @@
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="119" />
     <option name="y" value="23" />
-    <option name="width" value="1321" />
+    <option name="width" value="1143" />
     <option name="height" value="877" />
   </component>
   <component name="ProjectView">
@@ -271,7 +272,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1568399787479" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1568400508978" />
     <property name="editor.config.ad.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -429,18 +430,18 @@
       <workItem from="1567576251482" duration="197000" />
       <workItem from="1568127456340" duration="619000" />
       <workItem from="1568337195634" duration="19167000" />
-      <workItem from="1568387636033" duration="8294000" />
+      <workItem from="1568387636033" duration="8563000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="224181000" />
+    <option name="totallyTimeSpent" value="224450000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="119" y="23" width="1143" height="877" extended-state="1" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18884121" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23978202" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Learn" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -455,7 +456,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.2313253" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.24458599" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />

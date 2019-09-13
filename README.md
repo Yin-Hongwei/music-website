@@ -1,8 +1,13 @@
 <h1 align="center">music-website</h1>
+<br/>
+
+<p align="center">
+  <a href=""><img alt="license" src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat"></a>
+</p>
 
 ## Describe
 
-本音乐网站的开发主要利用前端框架VUE开发用户和管理员界面，后端接口用Spring Boot来实现。数据用MySQL来进行存储。具体实现可以参考[这里](https://yin-hongwei.github.io/2019/03/04/music/)。
+本音乐网站的开发主要利用前端框架VUE开发用户和管理员界面，后端接口用Spring Boot来实现，数据持久化用的是 MyBatis，数据用MySQL来进行存储。具体实现可以参考[这里](https://yin-hongwei.github.io/2019/03/04/music/)。
 
 <br/>
 
@@ -54,7 +59,13 @@
 
 ## Technologies
 
-vue + vue-router + vuex + axios + spring boot + element-ui + mint-ui + muse-ui + swiper + vue-aplayer
+#### 后端
+
+spring boot + MyBatis
+
+#### 前端
+
+vue + vue-router + vuex + axios +  element-ui + mint-ui + muse-ui + swiper
 
 <br/>
 
