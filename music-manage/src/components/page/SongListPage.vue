@@ -216,12 +216,38 @@ export default {
             this.form = {
                 id: item.id,
                 title: item.title,
+                pic: item.pic,
                 introduction: item.introduction,
                 style: item.style,
             }
             this.editVisible = true;
         },
-
+        // 保存编辑
+        saveEdit() {
+            var params = new URLSearchParams()
+            params.append('id', this.form.id)
+            params.append('title', this.form.title)
+            params.append('pic', this.form.pic)
+            params.append('introduction', this.form.introduction)
+            params.append('style', this.form.style)
+            this.$axios.post('http://localhost:8080/api/updateSongListMsgs', params)
+                .then(response => {
+                    if (response.data.code === 1) {
+                        this.getData()
+                        this.$notify({
+                            title: '编辑成功',
+                            type: 'success'
+                        });
+                    } else {
+                        this.$notify({
+                            title: '编辑失败',
+                            type: 'error'
+                        });
+                    }
+                })
+                .catch(failResponse => {})
+            this.editVisible = false;
+        },
         // 添加歌单
         addsongList () {
             var _this = this
@@ -246,32 +272,6 @@ export default {
                     }
                 }).catch(failResponse => {})
             _this.centerDialogVisible = false;
-        },
-        // 保存编辑
-        saveEdit() {
-            var params = new URLSearchParams()
-            params.append('id', this.form.id)
-            params.append('title', this.form.title)
-            params.append('pic', this.form.pic)
-            params.append('introduction', this.form.introduction)
-            params.append('style', this.form.style)
-            this.$axios.post('http://localhost:8080/api/updateSongListMsgs', params)
-                .then(response => {
-                    if (response.data.code === 1) {
-                        this.$set(this.tableData, this.idx, this.form);
-                        this.$notify({
-                            title: '删除成功',
-                            type: 'success'
-                        });
-                    } else {
-                        this.$notify({
-                            title: '删除失败',
-                            type: 'error'
-                        });
-                    }
-                })
-                .catch(failResponse => {})
-            this.editVisible = false;
         },
         // 确定删除
         deleteRow(){

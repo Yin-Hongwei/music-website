@@ -30,7 +30,7 @@
                     <template slot-scope="scope">
                         <ul style="height: 100px; overflow: scroll">
                             <li v-for="(item, index) in parseLyric(scope.row.lyric)" :key="index">
-                                {{ item[1] }}
+                                {{ item }}
                             </li>
                         </ul>
                     </template>
@@ -260,9 +260,9 @@ export default {
             var _this = this
             _this.tableData = []
             _this.$axios.get('http://localhost:8080/AllSongs').then((res) => {
-                for(var i = 0; i < res.data.length; i++){
+                for (let item of res.data) {
                     var o = {}
-                    o = res.data[i]
+                    o = item
                     o.index = _this.index++
                     _this.tableData.push(o)
                     _this.tempDate.push(o)
@@ -380,32 +380,19 @@ export default {
             _this.delVisible = false;
         },
         parseLyric (text) {
-            // console.log(typeof text)
-            var lines = text.split('\n'),
+            let lines = text.split('\n'),
                 pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g,
                 result = []
-            // console.log(lines)
+
             while (!pattern.test(lines[0])) {
                 lines = lines.slice(1)
-            };
-            // console.log(lines.length)
+            }
             lines[lines.length - 1].length === 0 && lines.pop()
-            lines.forEach(function (item) {
-                let time = item.match(pattern) // 存前面的时间段
+
+            for (let item of lines) {
                 let value = item.replace(pattern, '') // 存歌词
-                // console.log(time) // 时间
-                // console.log(value) // 歌词数据
-                time.forEach(function (item1) {
-                    var t = item1.slice(1, -1).split(':')
-                    if (value !== '') {
-                        result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value])
-                    }
-                })
-            })
-            result.sort(function (a, b) {
-                return a[0] - b[0]
-            })
-            // console.log(result)
+                result.push(value)
+            }
             return result
         }
     },

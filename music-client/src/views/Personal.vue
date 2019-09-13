@@ -188,7 +188,6 @@ export default {
       let _this = this
       axios.get(_this.$store.state.HOST + '/commentOfConsumer?id=' + id)
         .then(response => {
-          console.log(response.data[0])
           _this.registerForm.username = response.data[0].username
           _this.registerForm.password = response.data[0].password
           _this.registerForm.sex = response.data[0].sex
@@ -204,6 +203,7 @@ export default {
       this.$router.go(-1)
     },
     saveMsg () {
+      console.log(this.registerForm)
       let _this = this
       let d = _this.registerForm.birth
       var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
