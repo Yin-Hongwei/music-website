@@ -120,7 +120,7 @@ export default {
     name: 'singer-page',
     data() {
         return {
-            registerForm: {
+            registerForm: { // 添加框信息
                 name: '',
                 sex: '',
                 birth: '',
@@ -134,10 +134,11 @@ export default {
             editVisible: false,
             delVisible: false,
             select_word:'',
-            form: {
+            form: { // 编辑框信息
                 id: '',
                 name: '',
                 sex: '',
+                pic: '',
                 birth: '',
                 location: '',
                 introduction: ''
@@ -162,6 +163,9 @@ export default {
     },
     created() {
         this.getData();
+    },
+    mounted () {
+        console.log(this.tableData)
     },
     mixins: [mixin],
     methods: {
@@ -243,35 +247,36 @@ export default {
             })
         },
         handleEdit(index, row) {
+            this.editVisible = true;
             this.idx = index;
             const item = this.tableData[index];
-            let d = item.birth
-            var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+            let datetime = item.birth
             this.form = {
                 id: item.id,
                 name: item.name,
                 sex: item.sex,
+                pic: item.pic,
                 birth: datetime,
                 location: item.location,
                 introduction: item.introduction,
             }
-            this.editVisible = true;
         },
         // 保存编辑
         saveEdit() {
-            let d = this.registerForm.birth
-            var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-            var params = new URLSearchParams()
-            params.append('id', this.form.id)
-            params.append('name', this.form.name)
-            params.append('sex', this.form.sex)
+            let _this = this
+            let d = _this.form.birth
+            let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+            let params = new URLSearchParams()
+            params.append('id', _this.form.id)
+            params.append('name', _this.form.name)
+            params.append('sex', _this.form.sex)
+            params.append('pic', _this.form.pic)
             params.append('birth', datetime)
-            params.append('location', this.form.location)
-            params.append('introduction', this.form.introduction)
-            console.log(this.form)
-            var _this = this
+            params.append('location', _this.form.location)
+            params.append('introduction', _this.form.introduction)
             _this.$axios.post('http://localhost:8080/api/updateSingerMsgs', params)
                 .then(response => {
+                    console.log(response.data)
                     if (response.data.code === 1) {
                         _this.getData()
                         // _this.$set(this.tableData, _this.idx, _this.form);

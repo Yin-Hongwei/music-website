@@ -431,7 +431,7 @@ export default {
             },
         // 保存编辑
         saveEdit() {
-            let d = this.registerForm.birth
+            let d = this.form.birth
             var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
             var params = new URLSearchParams()
             params.append('id', this.form.id)
@@ -446,7 +446,8 @@ export default {
             this.$axios.post('http://localhost:8080/api/updateUserMsgs', params)
                 .then(response => {
                     if (response.data.code === 1) {
-                        this.$set(this.tableData, this.idx, this.form);
+                        this.getData()
+                        // this.$set(this.tableData, this.idx, this.form);
                         this.$notify({
                             title: '修改成功',
                             type: 'success'
