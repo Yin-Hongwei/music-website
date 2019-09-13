@@ -21,7 +21,7 @@ public interface ListSongMapper {
 
     int updateListSongMsg(ListSong record);
 
-    int deleteListSong(Integer id);
+    int deleteListSong(Integer songId);
 
     List<ListSong> allListSong();
 

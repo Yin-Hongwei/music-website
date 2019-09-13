@@ -13,8 +13,7 @@
             </div>
             <el-table :data="tableData" border stripe style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="50"></el-table-column>
-                <el-table-column prop="l" label="歌手"></el-table-column>
-                <el-table-column prop="f" label="歌曲"></el-table-column>
+                <el-table-column prop="name" label="歌手-歌曲"></el-table-column>
                 <el-table-column label="操作" width="80">
                     <template slot-scope="scope">
                         <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -67,12 +66,6 @@
                 editVisible: false,
                 delVisible: false,
                 select_word:'',
-                form: {
-                    id: '',
-                    songId: '',
-                    songListId: ''
-                },
-                index: 0,
                 idx: -1
             }
         },
@@ -82,11 +75,11 @@
                     this.tableData = this.tempDate
                 } else {
                     this.tableData=[]
-                    this.tempDate.filter((d) => {
-                        if (d.l.indexOf(this.select_word) !== -1) {
-                            this.tableData.push(d);
+                    for (let item of this.tempDate) {
+                        if (item.name.includes(this.select_word)) {
+                            this.tableData.push(item);
                         }
-                    })
+                    }
                 }
             }
         },
@@ -95,54 +88,53 @@
         },
         mixins: [mixin],
         methods: {
+            // 获取歌单
             getData () {
-                var _this = this
+                let _this = this
+                _this.tableData = []
+                _this.tempDate = []
                 _this.$axios.get('http://localhost:8080/listSongOfSingers?songListId=' + _this.$route.query.id).then((res) => {
-                    _this.tableData = []
-                    for (var i = 0; i< res.data.length; i++) {
-                        _this.getSong(res.data[i].songId)
+                    console.log(res.data)
+                    for (let item of res.data) {
+                        _this.getSong(item.songId)
                     }
                 })
             },
+            // 获取歌单里对应的音乐
             getSong (id) {
-                var _this = this
+                let _this = this
                 _this.$axios.get('http://localhost:8080/listSongsOfSongs?id=' + id)
                     .then(function (res) {
-                        console.log(res.data)
-                        var o = {}
-                        o.f = _this.replaceFName(res.data[0].name)
-                        o.l = _this.replaceLName(res.data[0].name)
-                        o.index = _this.index++
-                        _this.tableData.push(o)
-                        _this.tempDate.push(o)
+                        _this.tableData.push(res.data[0])
+                        _this.tempDate.push(res.data[0])
                     })
                     .catch(function (error) {
                         console.log(error)
                     })
             },
+            // 获取要添加歌曲的ID
             getSongId () {
-                var id = this.registerForm.singerName + '-' + this.registerForm.songName
-                var _this = this
+                let _this = this
+                var id = _this.registerForm.singerName + '-' + _this.registerForm.songName
                 _this.$axios.get('http://localhost:8080/listSongsOfSearch?name=' + id).then((res) => {
                     _this.addsong(res.data[0].id)
                 })
             },
+            // 添加歌曲
             addsong (id) {
                 var _this = this
                 var params = new URLSearchParams()
                 params.append('songId', id)
                 params.append('songListId', _this.$route.query.id)
-                console.log('id='+id)
-                console.log('_this.$route.query.id='+_this.$route.query.id)
                 _this.$axios.post('http://localhost:8080/api/addListSong', params).then((res) => {
                     if (res.data.code === 1) {
-                        this.$set(this.tableData, this.idx, this.form);
-                        this.$notify({
+                        _this.getData()
+                        _this.$notify({
                             title: '添加成功',
                             type: 'success'
                         });
                     } else {
-                        this.$notify({
+                        _this.$notify({
                             title: '添加失败',
                             type: 'error'
                         });
@@ -150,47 +142,15 @@
                 })
                 this.centerDialogVisible = false;
             },
-            handleEdit(index, row) {
-                this.idx = index;
-                const item = this.tableData[index];
-                this.form = {
-                    id: item.id,
-                    songId: item.songId,
-                    songListId: item.songListId,
-                }
-                this.editVisible = true;
-            },
-            // 保存编辑
-            saveEdit() {
-                var params = new URLSearchParams()
-                params.append('id', this.form.id)
-                params.append('songId', this.form.songId)
-                params.append('songListId', this.form.songListId)
-                this.$axios.post('http://localhost:8080/api/updateListSongMsgs', params)
-                    .then(response => {
-                        if (response.data.code === 1) {
-                            this.$set(this.tableData, this.idx, this.form);
-                            this.$notify({
-                                title: '删除成功',
-                                type: 'success'
-                            });
-                        } else {
-                            this.$notify({
-                                title: '删除失败',
-                                type: 'error'
-                            });
-                        }
-                    })
-                    .catch(failResponse => {})
-                this.editVisible = false;
-            },
             // 确定删除
             deleteRow(){
                 var _this = this
-                _this.$axios.get('http://localhost:8080/api/deleteListSongs?id=' + _this.tableData[_this.idx].id)
-                    .then(response => {
-                        if (response.data) {
-                            _this.tableData.splice(_this.idx, 1);
+                console.log(_this.tableData[_this.idx])
+                _this.$axios.get('http://localhost:8080/api/deleteListSongs?songId=' + _this.tableData[_this.idx].id)
+                    .then(res => {
+                        console.log(res)
+                        if (res.data) {
+                            _this.getData()
                             _this.$notify({
                                 title: '删除成功',
                                 type: 'success'
@@ -203,7 +163,7 @@
                         }
                     })
                     .catch(failResponse => {})
-                _this.delVisible = false;
+                _this.delVisible = false
             }
         }
     }

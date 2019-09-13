@@ -77,7 +77,7 @@
                         <label>歌手</label>
                         <el-input type="text" name="singerName" id="singerName"></el-input>
                     </div>
-                    <span style="position: absolute; top: 24px; left: 49%;">-</span>
+                    <span style="position: absolute; top: 24px; left: 48%;">-</span>
                     <div style="width:45%; display: inline-block; float: right">
                         <label>歌曲名</label>
                         <el-input type="text" name="name"></el-input>
