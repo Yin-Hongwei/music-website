@@ -10,7 +10,7 @@ public interface ListSongService {
 
     boolean updateListSongMsg(ListSong listSong);
 
-    boolean deleteListSong(Integer id);
+    boolean deleteListSong(Integer songId);
 
     List<ListSong> allListSong();
 

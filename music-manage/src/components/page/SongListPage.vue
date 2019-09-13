@@ -275,10 +275,11 @@ export default {
         },
         // 确定删除
         deleteRow(){
-            this.$axios.get('http://localhost:8080/api/deleteSongLists?id=' + this.form.id)
+            console.log(this.tableData[this.idx])
+            this.$axios.get('http://localhost:8080/api/deleteListSongs?id=' + this.tableData[this.idx].id)
                 .then(response => {
                     if (response.data.code === 1) {
-                        this.tableData.splice(this.idx, 1);
+                        this.getData();
                         this.$notify({
                             title: '删除成功',
                             type: 'success'
