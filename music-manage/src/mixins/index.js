@@ -1,7 +1,6 @@
 export const mixin = {
   methods: {
       getUrl(url) {
-          // console.log(url)
           return "http://localhost:8080" + url
       },
       //获取要删除列表的index
@@ -48,6 +47,34 @@ export const mixin = {
           } else if (value === "男") {
               return 1
           }
-      }
+      },
+      // 更新图片
+      handleAvatarSuccess (res, file) {
+          let _this = this
+          if (res.code === 1) {
+              _this.imageUrl = URL.createObjectURL(file.raw)
+              _this.getData()
+              _this.$notify({
+                  title: '上传成功',
+                  type: 'success'
+              })
+          } else {
+              _this.$notify({
+                  title: '上传失败',
+                  type: 'error'
+              })
+          }
+      },
+      beforeAvatarUpload (file) {
+          const isJPG = file.type === 'image/jpeg'
+          const isLt2M = file.size / 1024 / 1024 < 2
+          if (!isJPG) {
+              this.$message.error('上传头像图片只能是 JPG 格式!')
+          }
+          if (!isLt2M) {
+              this.$message.error('上传头像图片大小不能超过 2MB!')
+          }
+          return isJPG && isLt2M
+      },
   }
 }

@@ -2,7 +2,7 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-tickets"></i> 数据</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-tickets"></i> 用户信息 </el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
@@ -51,6 +51,7 @@
                 </el-table-column>
             </el-table>
         </div>
+
         <!--添加新用户-->
         <el-dialog title="添加用户" :visible.sync="centerDialogVisible" width="400px" center>
             <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="0px" class="demo-ruleForm">
@@ -86,7 +87,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="addpeople">确 定</el-button>
+    <el-button type="primary" @click="addPeople">确 定</el-button>
   </span>
         </el-dialog>
 
@@ -139,7 +140,7 @@
 </template>
 
 <script>
-import {mixin} from '../../mixins'
+import {mixin} from '../mixins'
 export default {
     name: 'consumer-page',
     data() {
@@ -305,8 +306,7 @@ export default {
                 createTime: '',
                 updateTime: ''
             },
-            index: 0,
-            idx: -1 // 记录当前要删除的用户
+            idx: -1 // 记录当前点中的行
         }
     },
     watch: {
@@ -314,13 +314,12 @@ export default {
             if (this.select_word === "") {
                 this.tableData = this.tempDate
             } else {
-                console.log(this.tempDate)
                 this.tableData=[]
-                this.tempDate.filter((d) => {
-                    if (d.username.indexOf(this.select_word) !== -1) {
-                        this.tableData.push(d);
+                for (let item of this.tempDate) {
+                    if (item.username.includes(this.select_word)) {
+                        this.tableData.push(item)
                     }
-                })
+                }
             }
         }
     },
@@ -330,55 +329,23 @@ export default {
     mixins: [mixin],
     methods: {
         uploadUrl (id) {
-            var url = 'http://localhost:8080/api/updateUserImg?id=' + id // 生产环境和开发环境的判断
-            return url
+           return `http://localhost:8080/api/updateUserImg?id=${id}`
         },
-        handleAvatarSuccess (res, file) {
-            let _this = this
-            console.log(res)
-            if (res.code === 1) {
-                _this.imageUrl = URL.createObjectURL(file.raw)
-                _this.getData()
-                _this.$notify({
-                    title: '上传成功',
-                    type: 'success'
-                })
-            } else {
-                _this.$notify({
-                    title: '上传失败',
-                    type: 'error'
-                })
-            }
-        },
-        beforeAvatarUpload (file) {
-            const isJPG = file.type === 'image/jpeg'
-            const isLt2M = file.size / 1024 / 1024 < 2
-            if (!isJPG) {
-                this.$message.error('上传头像图片只能是 JPG 格式!')
-            }
-            if (!isLt2M) {
-                this.$message.error('上传头像图片大小不能超过 2MB!')
-            }
-            return isJPG && isLt2M
-        },
+        // 获取用户信息
         getData () {
             var _this = this
             _this.tableData = []
+            _this.tempDate = []
             _this.$axios.get('http://localhost:8080/AllUsers').then((res) => {
-                for(var i = 0; i < res.data.length; i++){
-                    var o = {}
-                    o = res.data[i]
-                    o.index = _this.index++
-                    _this.tableData.push(o)
-                    _this.tempDate.push(o)
-                }
-                _this.index = 0
+                console.log(res.data)
+                _this.tableData = res.data
+                _this.tempDate = res.data
             })
         },
         getCollect (id) {
             this.$router.push({path: "/collect", query: { id }})
         },
-        addpeople () {
+        addPeople () {
             let _this = this
             let d = _this.registerForm.birth
             var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
@@ -412,22 +379,22 @@ export default {
                 .catch(failResponse => {})
             _this.centerDialogVisible = false
         },
+        // 编辑
         handleEdit(index, row) {
-            this.idx = index;
-            const item = this.tableData[index];
+            this.idx = index
             this.form = {
-                id: item.id,
-                username: item.username,
-                password: item.password,
-                sex: item.sex,
-                phoneNum: item.phoneNum,
-                email: item.email,
-                birth: item.birth,
-                introduction: item.introduction,
-                location: item.location,
-                avator: item.avator
+                id: row.id,
+                username: row.username,
+                password: row.password,
+                sex: row.sex,
+                phoneNum: row.phoneNum,
+                email: row.email,
+                birth: row.birth,
+                introduction: row.introduction,
+                location: row.location,
+                avator: row.avator
             }
-            this.editVisible = true;
+            this.editVisible = true
             },
         // 保存编辑
         saveEdit() {
@@ -444,10 +411,9 @@ export default {
             params.append('introduction', this.form.introduction)
             params.append('location', this.form.location)
             this.$axios.post('http://localhost:8080/api/updateUserMsgs', params)
-                .then(response => {
-                    if (response.data.code === 1) {
+                .then(res => {
+                    if (res.data.code === 1) {
                         this.getData()
-                        // this.$set(this.tableData, this.idx, this.form);
                         this.$notify({
                             title: '修改成功',
                             type: 'success'
@@ -460,7 +426,7 @@ export default {
                     }
                 })
                 .catch(failResponse => {})
-            this.editVisible = false;
+            this.editVisible = false
         },
         // 确定删除
         deleteRow(){
@@ -468,7 +434,7 @@ export default {
             _this.$axios.get('http://localhost:8080/api/deleteUsers?id=' + _this.tableData[_this.idx].id)
                 .then(response => {
                     if (response.data) {
-                        _this.tableData.splice(_this.idx, 1);
+                        _this.getData()
                         _this.$notify({
                             title: '删除成功',
                             type: 'success'
@@ -481,7 +447,7 @@ export default {
                     }
                 })
                 .catch(failResponse => {})
-            _this.delVisible = false;
+            _this.delVisible = false
         }
     }
 }

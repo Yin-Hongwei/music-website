@@ -3,7 +3,7 @@
         {{id}}
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-tickets"></i> 数据</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-tickets"></i> 收藏信息</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
@@ -13,8 +13,7 @@
             </div>
             <el-table :data="tableData" stripe border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="50"></el-table-column>
-                <el-table-column prop="l" label="歌手" width="550"></el-table-column>
-                <el-table-column prop="f" label="歌曲" width="550"></el-table-column>
+                <el-table-column prop="name" label="歌手-歌曲"></el-table-column>
                 <el-table-column label="操作" width="85">
                     <template slot-scope="scope">
                         <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -35,7 +34,7 @@
 </template>
 
 <script>
-import {mixin} from '../../mixins'
+import {mixin} from '../mixins'
 export default {
     name: 'collect-page',
     data() {
@@ -46,8 +45,7 @@ export default {
             multipleSelection: [], // 记录要删除的歌曲
             delVisible: false, // 显示删除框
             select_word:'', // 记录输入框输入的内容
-            idx: -1, // 记录当前要删除的歌曲
-            index: 0 // 歌曲在数组中的位置
+            idx: -1 // 记录当前要删除的歌曲
         }
     },
     watch: {
@@ -56,16 +54,16 @@ export default {
                 this.tableData = this.tempDate
             } else {
                 this.tableData=[]
-                this.tempDate.filter((d) => {
-                    if (d.l.indexOf(this.select_word) !== -1) {
-                        this.tableData.push(d);
+                for (let item of this.tempDate) {
+                    if (item.name.includes(this.select_word)) {
+                        this.tableData.push(item)
                     }
-                })
+                }
             }
         }
     },
     mounted() {
-        this.getData();
+        this.getData()
     },
     props: ['id'],
     mixins: [mixin],
@@ -73,14 +71,12 @@ export default {
         // 通过用户id获取用户收藏的歌曲id
         getData() {
             var _this = this
+            console.log(this.$route.query.id)
             _this.$axios.get('http://localhost:8080/myCollection?userId=' + this.$route.query.id).then((res) => {
                 _this.tableData = []
-                _this.tempId = res.data
-                for (var i = 0; i < res.data.length; i++) {
-                    _this.getSongList(res.data[i].songId)
+                for (let item of res.data) {
+                    _this.getSongList(item.songId)
                 }
-                _this.index = 0
-
             })
         },
         // 通过歌曲ID获取歌曲
@@ -88,12 +84,8 @@ export default {
             var _this = this
             _this.$axios.get('http://localhost:8080/listSongsOfSongs?id=' + id)
                 .then(function (res) {
-                    var o = {}
-                    o.f = _this.replaceFName(res.data[0].name)
-                    o.l = _this.replaceLName(res.data[0].name)
-                    o.index = _this.index++
-                    _this.tableData.push(o)
-                    _this.tempDate.push(o)
+                    _this.tableData.push(res.data[0])
+                    _this.tempDate.push(res.data[0])
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -102,10 +94,10 @@ export default {
         // 删除一首歌曲
         deleteRow(){
             var _this = this
-            _this.$axios.get('http://localhost:8080/api/deleteCollects?id=' + _this.tempId[_this.idx].id)
+            _this.$axios.get('http://localhost:8080/api/deleteCollects?id=' + _this.tableData[_this.idx].id)
                 .then(response => {
                     if (response.data) {
-                        _this.tableData.splice(this.idx, 1);
+                        _this.getData();
                         _this.$notify({
                             title: '删除成功',
                             type: 'success'
@@ -118,7 +110,7 @@ export default {
                     }
                 })
                 .catch(failResponse => {})
-            _this.delVisible = false;
+            _this.delVisible = false
         },
     }
 }

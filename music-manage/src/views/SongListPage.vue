@@ -2,7 +2,7 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-tickets"></i> 数据</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-tickets"></i> 歌单信息</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import {mixin} from '../../mixins'
+import {mixin} from '../mixins'
 export default {
     name: 'song-list-page',
     data() {
@@ -123,7 +123,7 @@ export default {
             },
             tableData: [],
             tempDate: [],
-            multipleSelection: [],
+            multipleSelection: [], // 记录要删除的歌单
             centerDialogVisible: false,
             editVisible: false,
             delVisible: false,
@@ -135,7 +135,6 @@ export default {
                 introduction: '',
                 style: ''
             },
-            index: 0,
             idx: -1
         }
     },
@@ -145,63 +144,30 @@ export default {
                 this.tableData = this.tempDate
             } else {
                 this.tableData=[]
-                this.tempDate.filter((d) => {
-                    if (d.title.indexOf(this.select_word) !== -1) {
-                        this.tableData.push(d);
+                for (let item of this.tempDate) {
+                    if (item.title.includes(this.select_word)) {
+                        this.tableData.push(item)
                     }
-                })
+                }
             }
         }
     },
     created() {
-        this.getData();
+        this.getData()
     },
     mixins: [mixin],
     methods: {
         uploadUrl (id) {
-            var url = 'http://localhost:8080/api/updateSongListImg?id=' + id // 生产环境和开发环境的判断
-            return url
+            return `http://localhost:8080/api/updateSongListImg?id=${id}`
         },
-        handleAvatarSuccess (res, file) {
-            let _this = this
-            console.log(res)
-            if (res.code === 1) {
-                _this.imageUrl = URL.createObjectURL(file.raw)
-                _this.getData()
-                _this.$notify({
-                    title: '上传成功',
-                    type: 'success'
-                })
-            } else {
-                _this.$notify({
-                    title: '上传失败',
-                    type: 'error'
-                })
-            }
-        },
-        beforeAvatarUpload (file) {
-            const isJPG = file.type === 'image/jpeg'
-            const isLt2M = file.size / 1024 / 1024 < 2
-            if (!isJPG) {
-                this.$message.error('上传头像图片只能是 JPG 格式!')
-            }
-            if (!isLt2M) {
-                this.$message.error('上传头像图片大小不能超过 2MB!')
-            }
-            return isJPG && isLt2M
-        },
+        // 获取歌单信息
         getData() {
             var _this = this
             _this.tableData = []
+            _this.tempDate = []
             _this.$axios.get('http://localhost:8080/listSongLists').then((res) => {
-                for(var i = 0; i < res.data.length; i++){
-                    var o = {}
-                    o = res.data[i]
-                    o.index = _this.index++
-                    _this.tableData.push(o)
-                    _this.tempDate.push(o)
-                }
-                _this.index = 0
+                _this.tableData = res.data
+                _this.tempDate = res.data
             })
         },
         getContent (id) {
@@ -212,52 +178,52 @@ export default {
         },
         handleEdit(index, row) {
             this.idx = index;
-            const item = this.tableData[index];
             this.form = {
-                id: item.id,
-                title: item.title,
-                pic: item.pic,
-                introduction: item.introduction,
-                style: item.style,
+                id: row.id,
+                title: row.title,
+                pic: row.pic,
+                introduction: row.introduction,
+                style: row.style,
             }
-            this.editVisible = true;
+            this.editVisible = true
         },
         // 保存编辑
         saveEdit() {
+            let _this = this
             var params = new URLSearchParams()
-            params.append('id', this.form.id)
-            params.append('title', this.form.title)
-            params.append('pic', this.form.pic)
-            params.append('introduction', this.form.introduction)
-            params.append('style', this.form.style)
-            this.$axios.post('http://localhost:8080/api/updateSongListMsgs', params)
-                .then(response => {
-                    if (response.data.code === 1) {
-                        this.getData()
-                        this.$notify({
+            params.append('id', _this.form.id)
+            params.append('title', _this.form.title)
+            params.append('pic', _this.form.pic)
+            params.append('introduction', _this.form.introduction)
+            params.append('style', _this.form.style)
+            _this.$axios.post('http://localhost:8080/api/updateSongListMsgs', params)
+                .then(res => {
+                    if (res.data.code === 1) {
+                        _this.$notify({
                             title: '编辑成功',
                             type: 'success'
-                        });
+                        })
+                        _this.getData()
                     } else {
-                        this.$notify({
+                        _this.$notify({
                             title: '编辑失败',
                             type: 'error'
-                        });
+                        })
                     }
                 })
                 .catch(failResponse => {})
-            this.editVisible = false;
+            _this.editVisible = false
         },
         // 添加歌单
         addsongList () {
-            var _this = this
-            var params = new URLSearchParams()
+            let _this = this
+            let params = new URLSearchParams()
             params.append('title', _this.registerForm.title)
             params.append('pic', '/img/songListPic/123.jpg')
             params.append('introduction', _this.registerForm.introduction)
             params.append('style', _this.registerForm.style)
-            _this.$axios.post('http://localhost:8080/api/addSongList', params).then(response => {
-                    if (response.data.code === 1) {
+            _this.$axios.post('http://localhost:8080/api/addSongList', params).then(res => {
+                    if (res.data.code === 1) {
                         _this.getData()
                         _this.registerForm = []
                         _this.$notify({
@@ -271,28 +237,28 @@ export default {
                         });
                     }
                 }).catch(failResponse => {})
-            _this.centerDialogVisible = false;
+            _this.centerDialogVisible = false
         },
         // 确定删除
-        deleteRow(){
-            console.log(this.tableData[this.idx])
-            this.$axios.get('http://localhost:8080/api/deleteListSongs?id=' + this.tableData[this.idx].id)
-                .then(response => {
-                    if (response.data.code === 1) {
-                        this.getData();
-                        this.$notify({
+        deleteRow () {
+            let _this = this
+            _this.$axios.get('http://localhost:8080/api/deleteSongLists?id=' + _this.tableData[this.idx].id)
+                .then(res => {
+                    if (res.data) {
+                        _this.getData()
+                        _this.$notify({
                             title: '删除成功',
                             type: 'success'
-                        });
+                        })
                     } else {
-                        this.$notify({
+                        _this.$notify({
                             title: '删除失败',
                             type: 'error'
-                        });
+                        })
                     }
                 })
                 .catch(failResponse => {})
-            this.delVisible = false;
+            this.delVisible = false
         }
     }
 }

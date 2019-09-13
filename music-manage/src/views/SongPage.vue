@@ -2,7 +2,7 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-tickets"></i> 数据</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-tickets"></i> 歌曲信息</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
@@ -12,25 +12,28 @@
                 <el-button type="primary" @click="centerDialogVisible = true">添加歌曲</el-button>
             </div>
             <el-table :data="tableData" stripe border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
-                <el-table-column type="selection" width="50"></el-table-column>
-                <el-table-column label="歌曲预览">
+                <el-table-column type="selection" width="40"></el-table-column>
+                <el-table-column label="歌手图片" width="100">
                     <template slot-scope="scope">
-                    <aplayer autoplay :music="{
-                     narrow: true,
-                     title: scope.row.name,
-                     artist: scope.row.introduction,
-                     pic: 'http://localhost:8080' + scope.row.pic,
-                     src: 'http://localhost:8080' + scope.row.url,
-                     lrc: 'http://localhost:8080' + scope.row.lyric
-                     }">
-                    </aplayer>
+                        <img :src="getUrl(scope.row.pic)" alt="" style="width: 80px;"/>
+                        <div class="play" @click="setSongUrl(scope.row.url)">
+                            <div v-if="toggle !== scope.row.url">
+                                <span class="iconfont">&#xe602;</span>
+                            </div>
+                            <div v-if="toggle === scope.row.url">
+                                <span class="iconfont">&#xe693;</span>
+                            </div>
+                        </div>
                     </template>
                 </el-table-column>
-                <el-table-column label="歌词" width="300">
+                <el-table-column label="歌名" prop="name" width="150"></el-table-column>
+                <el-table-column label="专辑" prop="introduction" width="150"></el-table-column>
+                <el-table-column label="歌词">
                     <template slot-scope="scope">
                         <ul style="height: 100px; overflow: scroll">
+                            <li>
                             <li v-for="(item, index) in parseLyric(scope.row.lyric)" :key="index">
-                                {{ item }}
+                                {{ item}}
                             </li>
                         </ul>
                     </template>
@@ -72,16 +75,13 @@
         <!--添加歌曲-->
         <el-dialog title="添加歌曲" :visible.sync="centerDialogVisible" width="400px" center>
             <form action="" id="tf">
-                <div style="overflow: hidden; position: relative">
-                    <div style="width:45%; display: inline-block; float: left">
-                        <label>歌手</label>
-                        <el-input type="text" name="singerName" id="singerName"></el-input>
-                    </div>
-                    <span style="position: absolute; top: 24px; left: 48%;">-</span>
-                    <div style="width:45%; display: inline-block; float: right">
-                        <label>歌曲名</label>
-                        <el-input type="text" name="name"></el-input>
-                    </div>
+                <div style="width:50%;display: inline-block">
+                    <label>歌手</label>
+                    <el-input type="text" name="singerName" id="singerName"></el-input>
+                </div>
+                <div style="width:50%; display: inline-block">
+                    <label>歌曲名</label>
+                    <el-input type="text" name="name"></el-input>
                 </div>
                 <div>
                     <label>歌曲介绍</label>
@@ -133,13 +133,15 @@
 </template>
 
 <script>
-import {mixin} from '../../mixins'
-import Aplayer from 'vue-aplayer'
+import {mixin} from '../mixins'
+import { mapGetters } from 'vuex'
+import SongAudio from '../components/SongAudio'
+
 export default {
     name: 'song-page',
     data() {
         return {
-            aaa: 'http://localhost:8080/api/addSongaaa',
+            toggle: false,
             registerForm: {
                 name: '',
                 singerName: '',
@@ -165,12 +167,16 @@ export default {
                 lyric: '',
                 url: ''
             },
-            index: 0,
             idx: -1
         }
     },
+    computed: {
+        ...mapGetters([
+            'isPlay' // 播放状态
+        ])
+    },
     components: {
-        Aplayer
+        SongAudio
     },
     watch: {
         select_word: function () {
@@ -178,57 +184,39 @@ export default {
                 this.tableData = this.tempDate
             } else {
                 this.tableData=[]
-                this.tempDate.filter((d) => {
-                    if (d.name.indexOf(this.select_word) !== -1) {
-                        this.tableData.push(d);
+                for (let item of this.tempDate) {
+                    if (item.name.includes(this.select_word)) {
+                        this.tableData.push(item)
                     }
-                })
+                }
             }
         }
     },
     created() {
-        this.getData();
+        this.getData()
+    },
+    destroyed () {
+        this.$store.commit('setIsPlay', false)
     },
     mixins: [mixin],
     methods: {
+        setSongUrl (url) {
+            this.$store.commit('setUrl', this.$store.state.HOST + url)
+            if (this.isPlay) {
+                this.$store.commit('setIsPlay', false)
+                this.toggle = ''
+            } else {
+                this.$store.commit('setIsPlay', true)
+                this.toggle = url
+            }
+        },
         // 更新歌曲图片
         uploadUrl (id) {
-            let url = 'http://localhost:8080/api/updateSongPic?id=' + id
-            return url
+            return `http://localhost:8080/api/updateSongPic?id=${id}`
         },
-        handleAvatarSuccess (res, file) {
-            let _this = this
-            console.log(res)
-            if (res.code === 1) {
-                _this.imageUrl = URL.createObjectURL(file.raw)
-                _this.getData()
-                _this.$notify({
-                    title: '上传成功',
-                    type: 'success'
-                })
-            } else {
-                _this.$notify({
-                    title: '上传失败',
-                    type: 'error'
-                })
-            }
-        },
-        beforeAvatarUpload (file) {
-            const isJPG = file.type === 'image/jpeg'
-            const isLt2M = file.size / 1024 / 1024 < 2
-            if (!isJPG) {
-                this.$message.error('上传头像图片只能是 JPG 格式!')
-            }
-            if (!isLt2M) {
-                this.$message.error('上传头像图片大小不能超过 2MB!')
-            }
-            return isJPG && isLt2M
-        },
-
         // 更新歌曲url
         uploadSongUrl (id) {
-            var url = 'http://localhost:8080/api/updateSongUrl?id=' + id
-            return url
+            return `http://localhost:8080/api/updateSongUrl?id=${id}`
         },
         beforeSongUpload (file) {
             var testmsg = file.name.substring(file.name.lastIndexOf('.') + 1)
@@ -243,7 +231,6 @@ export default {
         },
         handleSongSuccess (res, file) {
             let _this = this
-            console.log(res)
             if (res.code === 1) {
                 _this.getData()
                 _this.$notify({
@@ -263,14 +250,8 @@ export default {
             var _this = this
             _this.tableData = []
             _this.$axios.get('http://localhost:8080/AllSongs').then((res) => {
-                for (let item of res.data) {
-                    var o = {}
-                    o = item
-                    o.index = _this.index++
-                    _this.tableData.push(o)
-                    _this.tempDate.push(o)
-                }
-                _this.index = 0
+                _this.tableData = res.data
+                _this.tempDate = res.data
             })
         },
 
@@ -317,17 +298,16 @@ export default {
         },
         handleEdit(index, row) {
             this.idx = index;
-            const item = this.tableData[index];
             this.form = {
-                id: item.id,
-                singerId: item.singerId,
-                name: item.name,
-                introduction: item.introduction,
-                createTime: item.createTime,
-                updateTime: item.updateTime,
-                pic: item.pic,
-                lyric: item.lyric,
-                url: item.url
+                id: row.id,
+                singerId: row.singerId,
+                name: row.name,
+                introduction: row.introduction,
+                createTime: row.createTime,
+                updateTime: row.updateTime,
+                pic: row.pic,
+                lyric: row.lyric,
+                url: row.url
             }
             this.editVisible = true;
         },
@@ -345,7 +325,7 @@ export default {
             this.$axios.post('http://localhost:8080/api/updateSongMsgs', params)
                 .then(response => {
                     if (response.data) {
-                        this.$set(this.tableData, this.idx, this.form);
+                        this.getData()
                         this.$notify({
                             title: '编辑成功',
                             type: 'success'
@@ -358,16 +338,15 @@ export default {
                     }
                 })
                 .catch(failResponse => {})
-            this.editVisible = false;
+            this.editVisible = false
         },
         // 确定删除
         deleteRow(){
             var _this = this
-            _this.$axios.get('http://localhost:8080/api/deleteSongs?id=' + _this.tableData[_this.idx].id)
+            _this.$axios.get('http://localhost:8080/api/deleteSongs?id=' +  _this.tableData[_this.idx].id)
                 .then(response => {
-                    console.log(response)
                     if (response.data) {
-                        _this.tableData.splice(_this.idx, 1);
+                        _this.getData()
                         _this.$notify({
                             title: '删除成功',
                             type: 'success'
@@ -380,21 +359,17 @@ export default {
                     }
                 })
                 .catch(failResponse => {})
-            _this.delVisible = false;
+            _this.delVisible = false
         },
         parseLyric (text) {
             let lines = text.split('\n'),
                 pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g,
                 result = []
-
-            while (!pattern.test(lines[0])) {
-                lines = lines.slice(1)
-            }
-            lines[lines.length - 1].length === 0 && lines.pop()
-
             for (let item of lines) {
-                let value = item.replace(pattern, '') // 存歌词
-                result.push(value)
+                if (pattern.test(item)) {
+                    let value = item.replace(pattern, '') // 存歌词
+                    result.push(value)
+                }
             }
             return result
         }
@@ -404,16 +379,39 @@ export default {
 </script>
 
 <style scoped>
-    *{
-        box-sizing: border-box;
-    }
-    .handle-box {
-        margin-bottom: 20px;
-    }
-
-    .handle-input {
-        width: 300px;
-        display: inline-block;
-    }
-
+@font-face {
+    font-family: 'iconfont';
+    src: url('../assets/css/font/iconfont.eot');
+    src: url('../assets/css/font/iconfont.eot?#iefix') format('embedded-opentype'),
+    url('../assets/css/font/iconfont.woff2') format('woff2'),
+    url('../assets/css/font/iconfont.woff') format('woff'),
+    url('../assets/css/font/iconfont.ttf') format('truetype'),
+    url('../assets/css/font/iconfont.svg#iconfont') format('svg');
+}
+.handle-box {
+    margin-bottom: 20px;
+}
+.handle-input {
+    width: 300px;
+    display: inline-block;
+}
+.play {
+    position: absolute;
+    z-index: 100;
+    width: 80px;
+    height: 80px;
+    top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 30px;
+    font-style: normal;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 </style>
