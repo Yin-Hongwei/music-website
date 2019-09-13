@@ -71,10 +71,12 @@
           </li>
         </ul>
       </div>
-      <div class="item" @click="down()">
+      <div class="item">
+        <a :href="url" download>
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-xiazai"></use>
           </svg>
+        </a>
       </div>
     </div>
   </div>
@@ -105,6 +107,7 @@ export default {
       'isPlay', // 播放状态
       'playButtonUrl', // 播放状态的图标
       'id', // 音乐id
+      'url',
       'title', // 歌名
       'artist', // 歌手名
       'picUrl', // 歌曲图片
@@ -146,8 +149,7 @@ export default {
   methods: {
     // 下载
     down () {
-      let playControl = document.querySelector('#play-control')
-      let url = playControl.src
+      let url = this.url
       window.open(url)
     },
     // 控制音乐播放/暂停
