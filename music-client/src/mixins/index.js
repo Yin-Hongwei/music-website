@@ -70,18 +70,18 @@ export const mixin = {
       };
       // console.log(lines.length)
       lines[lines.length - 1].length === 0 && lines.pop()
-      lines.forEach(function (item) {
+      for (let item of lines) {
         let time = item.match(pattern) // 存前面的时间段
         let value = item.replace(pattern, '') // 存歌词
         // console.log(time) // 时间
         // console.log(value) // 歌词数据
-        time.forEach(function (item1) {
+        for (let item1 of time) {
           var t = item1.slice(1, -1).split(':')
           if (value !== '') {
             result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value])
           }
-        })
-      })
+        }
+      }
       result.sort(function (a, b) {
         return a[0] - b[0]
       })
