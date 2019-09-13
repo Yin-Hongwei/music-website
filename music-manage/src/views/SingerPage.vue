@@ -2,7 +2,7 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-tickets"></i> 数据</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-tickets"></i> 歌手信息</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import {mixin} from '../../mixins'
+import {mixin} from '../mixins'
 export default {
     name: 'singer-page',
     data() {
@@ -143,7 +143,6 @@ export default {
                 location: '',
                 introduction: ''
             },
-            index: 0,
             idx: -1
         }
     },
@@ -153,53 +152,21 @@ export default {
                 this.tableData = this.tempDate
             } else {
                 this.tableData=[]
-                this.tempDate.filter((d) => {
-                    if (d.name.indexOf(this.select_word) !== -1) {
-                        this.tableData.push(d);
+                for (let item of this.tempDate) {
+                    if (item.name.includes(this.select_word)) {
+                        this.tableData.push(item)
                     }
-                })
+                }
             }
         }
     },
     created() {
-        this.getData();
-    },
-    mounted () {
-        console.log(this.tableData)
+        this.getData()
     },
     mixins: [mixin],
     methods: {
         uploadUrl (id) {
-            var url = 'http://localhost:8080/api/updateSingerImg?id=' + id // 生产环境和开发环境的判断
-            return url
-        },
-        handleAvatarSuccess (res, file) {
-            let _this = this
-            console.log(res)
-            if (res.code === 1) {
-                _this.imageUrl = URL.createObjectURL(file.raw)
-                _this.getData()
-                _this.$notify({
-                    title: '上传成功',
-                    type: 'success'
-                })
-            } else {
-                _this.$notify({
-                    title: '上传失败',
-                    type: 'error'
-                })
-            }
-        },
-        beforeAvatarUpload (file) {
-            const isJPG = file.type === 'image/jpeg'
-            const isLt2M = file.size / 1024 / 1024 < 2
-            if (!isJPG) {
-                this.$message.error('上传头像图片只能是 JPG 格式!')
-            }
-            if (!isLt2M) {
-                this.$message.error('上传头像图片大小不能超过 2MB!')
-            }
-            return isJPG && isLt2M
+            return `http://localhost:8080/api/updateSingerImg?id=${id}`
         },
         addsinger () {
             let _this = this
@@ -235,30 +202,24 @@ export default {
         getData() {
             var _this = this
             _this.tableData = []
+            _this.tempDate = []
             _this.$axios.get('http://localhost:8080/listSingers').then((res) => {
-                for(var i = 0; i < res.data.length; i++){
-                    var o = {}
-                    o = res.data[i]
-                    o.index = _this.index++
-                    _this.tableData.push(o)
-                    _this.tempDate.push(o)
-                }
-                _this.index = 0
+                _this.tableData = res.data
+                _this.tempDate = res.data
             })
         },
         handleEdit(index, row) {
-            this.editVisible = true;
-            this.idx = index;
-            const item = this.tableData[index];
-            let datetime = item.birth
+            this.editVisible = true
+            this.idx = index
+            let datetime = row.birth
             this.form = {
-                id: item.id,
-                name: item.name,
-                sex: item.sex,
-                pic: item.pic,
+                id: row.id,
+                name: row.name,
+                sex: row.sex,
+                pic: row.pic,
                 birth: datetime,
-                location: item.location,
-                introduction: item.introduction,
+                location: row.location,
+                introduction: row.introduction,
             }
         },
         // 保存编辑
@@ -279,20 +240,19 @@ export default {
                     console.log(response.data)
                     if (response.data.code === 1) {
                         _this.getData()
-                        // _this.$set(this.tableData, _this.idx, _this.form);
                         _this.$notify({
                             title: '编辑成功',
                             type: 'success'
-                        });
+                        })
                     } else {
                         _this.$notify({
                             title: '编辑失败',
                             type: 'error'
-                        });
+                        })
                     }
                 })
                 .catch(failResponse => {})
-            this.editVisible = false;
+            this.editVisible = false
         },
         // 确定删除
         deleteRow(){
@@ -300,7 +260,7 @@ export default {
             _this.$axios.get('http://localhost:8080/api/deleteSingers?id=' + _this.tableData[_this.idx].id)
                 .then(response => {
                     if (response.data) {
-                        _this.tableData.splice(_this.idx, 1);
+                        _this.getData()
                         _this.$notify({
                             title: '删除成功',
                             type: 'success'
@@ -313,7 +273,7 @@ export default {
                     }
                 })
                 .catch(failResponse => {})
-            _this.delVisible = false;
+            _this.delVisible = false
         }
     }
 }

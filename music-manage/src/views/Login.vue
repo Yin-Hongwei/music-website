@@ -1,6 +1,6 @@
 <template>
     <div class="login-wrap">
-        <div class="ms-title">后台管理系统</div>
+        <div class="ms-title">Yin-music 后台管理系统</div>
         <div class="ms-login">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
                 <el-form-item prop="username" label="管理员">
@@ -42,9 +42,9 @@
                 var params = new URLSearchParams()
                 params.append('name', _this.ruleForm.username)
                 params.append('password', _this.ruleForm.password)
-                _this.$axios.post('http://localhost:8080/api/loginadmin', params).then(response => {
-                        console.log(response.data)
-                        if (response.data.code === 1) {
+                _this.$axios.post('http://localhost:8080/api/loginadmin', params).then(res => {
+                        console.log(res.data)
+                        if (res.data.code === 1) {
                             this.$router.push('/Consumer');
                             this.$notify({
                                 title: '欢迎回来',

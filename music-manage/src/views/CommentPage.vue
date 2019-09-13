@@ -2,7 +2,7 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-tickets"></i> 数据</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-tickets"></i> 评论信息</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import {mixin} from '../../mixins'
+import {mixin} from '../mixins'
 export default {
     name: 'comment-page',
     data() {
@@ -68,7 +68,6 @@ export default {
                 type: '',
                 up: ''
             },
-            index: 0,
             idx: -1
         }
     },
@@ -80,12 +79,12 @@ export default {
             if (this.select_word === "") {
                 this.tableData = this.tempDate
             } else {
-                this.tableData=[]
-                this.tempDate.filter((d) => {
-                    if (d.name.indexOf(this.select_word) !== -1) {
-                        this.tableData.push(d);
+                this.tableData = []
+                for (let item of this.tempDate) {
+                    if (item.name.includes(this.select_word)) {
+                        this.tableData.push(item)
                     }
-                })
+                }
             }
         }
     },
@@ -95,28 +94,22 @@ export default {
             var _this = this
             _this.tableData = []
             _this.tempDate = []
+            let url = ''
             if (_this.$route.query.type === 0) {
-                _this.$axios.get('http://localhost:8080/songComments?songId=' + _this.$route.query.id).then((res) => {
-                    for(var i = 0; i < res.data.length; i++){
-                        _this.getUsers(res.data[i].userId, res.data[i])
-                    }
-                    _this.index = 0
-                })
+                url = 'http://localhost:8080/songComments?songId='
             } else if (_this.$route.query.type === 1){
-                _this.$axios.get('http://localhost:8080/songListComments?songListId=' + _this.$route.query.id).then((res) => {
-                    for(var i = 0; i < res.data.length; i++){
-                        _this.getUsers(res.data[i].userId, res.data[i])
-                    }
-                    _this.index = 0
-                })
+                url = 'http://localhost:8080/songListComments?songListId='
             }
+            _this.$axios.get(url + _this.$route.query.id).then((res) => {
+                for (let item of res.data) {
+                    _this.getUsers(item.userId, item)
+                }
+            })
         },
         getUsers (id, item) {
             let _this = this
             _this.$axios.get('http://localhost:8080/commentOfConsumer?id=' + id).then(function (res) {
-                    let o = {}
-                    o = item
-                    o.index = _this.index++
+                    let o = item
                     o.name = res.data[0].username
                     _this.tableData.push(o)
                     _this.tempDate.push(o)
@@ -124,20 +117,18 @@ export default {
                     console.log(error)
                 })
         },
-
         handleEdit(index, row) {
-            this.idx = index;
-            const item = this.tableData[index];
+            this.idx = index
             this.form = {
-                id: item.id,
-                userId:item.userId,
-                songId: item.songId,
-                songListId: item.songListId,
-                content: item.content,
-                type: item.type,
-                up: item.up
+                id: row.id,
+                userId:row.userId,
+                songId: row.songId,
+                songListId: row.songListId,
+                content: row.content,
+                type: row.type,
+                up: row.up
             }
-            this.editVisible = true;
+            this.editVisible = true
         },
         // 保存编辑
         saveEdit() {
@@ -161,20 +152,19 @@ export default {
                 .then(response => {
                     if (response.data.code === 1) {
                         this.getData()
-                        // this.$set(this.tableData, this.idx, this.form);
                         this.$notify({
-                            title: '修改成功',
+                            title: '编辑成功',
                             type: 'success'
                         });
                     } else {
                         this.$notify({
-                            title: '修改失败',
+                            title: '编辑失败',
                             type: 'error'
                         });
                     }
                 })
                 .catch(failResponse => {})
-            this.editVisible = false;
+            this.editVisible = false
         },
         // 确定删除
         deleteRow(){
@@ -182,7 +172,7 @@ export default {
             _this.$axios.get('http://localhost:8080/api/deleteComments?id=' + _this.tableData[_this.idx].id)
                 .then(response => {
                     if (response.data) {
-                        _this.tableData.splice(_this.idx, 1);
+                        _this.getData()
                         _this.$notify({
                             title: '删除成功',
                             type: 'success'
@@ -195,7 +185,7 @@ export default {
                     }
                 })
                 .catch(failResponse => {})
-            _this.delVisible = false;
+            _this.delVisible = false
         }
     }
 }

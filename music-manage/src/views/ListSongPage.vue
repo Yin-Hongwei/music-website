@@ -2,7 +2,7 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-tickets"></i> 数据</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-tickets"></i> 歌单歌曲信息</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-    import {mixin} from '../../mixins'
+    import {mixin} from '../mixins'
     export default {
         name: 'list-song-page',
         data() {
@@ -77,14 +77,14 @@
                     this.tableData=[]
                     for (let item of this.tempDate) {
                         if (item.name.includes(this.select_word)) {
-                            this.tableData.push(item);
+                            this.tableData.push(item)
                         }
                     }
                 }
             }
         },
         created() {
-            this.getData();
+            this.getData()
         },
         mixins: [mixin],
         methods: {
@@ -117,13 +117,13 @@
                 let _this = this
                 var id = _this.registerForm.singerName + '-' + _this.registerForm.songName
                 _this.$axios.get('http://localhost:8080/listSongsOfSearch?name=' + id).then((res) => {
-                    _this.addsong(res.data[0].id)
+                    _this.addSong(res.data[0].id)
                 })
             },
             // 添加歌曲
-            addsong (id) {
-                var _this = this
-                var params = new URLSearchParams()
+            addSong (id) {
+                let _this = this
+                let params = new URLSearchParams()
                 params.append('songId', id)
                 params.append('songListId', _this.$route.query.id)
                 _this.$axios.post('http://localhost:8080/api/addListSong', params).then((res) => {
@@ -140,15 +140,13 @@
                         });
                     }
                 })
-                this.centerDialogVisible = false;
+                _this.centerDialogVisible = false;
             },
             // 确定删除
             deleteRow(){
-                var _this = this
-                console.log(_this.tableData[_this.idx])
-                _this.$axios.get('http://localhost:8080/api/deleteListSongs?songId=' + _this.tableData[_this.idx].id)
+                let _this = this
+                _this.$axios.get('http://localhost:8080/api/deleteListOfSong?songId=' + _this.tableData[_this.idx].id)
                     .then(res => {
-                        console.log(res)
                         if (res.data) {
                             _this.getData()
                             _this.$notify({

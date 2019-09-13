@@ -44,8 +44,8 @@ public class ListSongController {
 }
 
 //    删除歌单里的歌曲
-    @RequestMapping(value = "/api/deleteListSongs", method = RequestMethod.GET)
-    public Object deleteListSongs(HttpServletRequest req){
+    @RequestMapping(value = "/api/deleteListOfSong", method = RequestMethod.GET)
+    public Object deleteListOfSong(HttpServletRequest req){
         String songId = req.getParameter("songId");
         return listSongService.deleteListSong(Integer.parseInt(songId));
     }

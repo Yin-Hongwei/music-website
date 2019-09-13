@@ -4,7 +4,7 @@
         <div class="collapse-btn" @click="collapseChage">
             <i class="el-icon-menu"></i>
         </div>
-        <div class="logo">音乐后台管理</div>
+        <div class="logo">Yin-music 后台管理</div>
         <div class="header-right">
             <div class="header-user-con">
                 <!-- 全屏显示 -->
@@ -29,11 +29,11 @@
     </div>
 </template>
 <script>
-    import bus from '../common/bus';
+    import bus from '../assets/js/bus';
     export default {
         data() {
             return {
-                collapse: false,
+                collapse: true,
                 fullscreen: false,
                 name: 'admin'
             }

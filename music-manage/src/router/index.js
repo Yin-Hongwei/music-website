@@ -7,49 +7,49 @@ export default new Router({
     routes: [
         {
             path: '/Home',
-            component: resolve => require(['../components/common/Home.vue'], resolve),
+            component: resolve => require(['../components/Home.vue'], resolve),
             meta: { title: '自述文件' },
             children:[
                 {
                     path: '/Song',
-                    component: resolve => require(['../components/page/SongPage.vue'], resolve),
+                    component: resolve => require(['../views/SongPage.vue'], resolve),
                     meta: { title: 'Song' }
                 },
                 {
                     path: '/Singer',
-                    component: resolve => require(['../components/page/SingerPage.vue'], resolve),
+                    component: resolve => require(['../views/SingerPage.vue'], resolve),
                     meta: { title: 'Singer' }
                 },
                 {
                     path: '/SongList',
-                    component: resolve => require(['../components/page/SongListPage.vue'], resolve),
+                    component: resolve => require(['../views/SongListPage.vue'], resolve),
                     meta: { title: 'SongList' }
                 },
                 {
                     path: '/ListSong',
-                    component: resolve => require(['../components/page/ListSongPage.vue'], resolve),
+                    component: resolve => require(['../views/ListSongPage.vue'], resolve),
                     meta: { title: 'ListSong' }
                 },
                 {
                     path: '/Comment',
-                    component: resolve => require(['../components/page/CommentPage.vue'], resolve),
+                    component: resolve => require(['../views/CommentPage.vue'], resolve),
                     meta: { title: 'Comment' }
                 },
                 {
                     path: '/Consumer',
-                    component: resolve => require(['../components/page/ConsumerPage.vue'], resolve),
+                    component: resolve => require(['../views/ConsumerPage.vue'], resolve),
                     meta: { title: 'Consumer' }
                 },
                 {
                     path: '/Collect',
-                    component: resolve => require(['../components/page/CollectPage.vue'], resolve),
+                    component: resolve => require(['../views/CollectPage.vue'], resolve),
                     meta: { title: 'Collect' }
                 },
                 ]
         },
         {
             path: '/',
-            component: resolve => require(['../components/page/Login.vue'], resolve)
+            component: resolve => require(['../views/Login.vue'], resolve)
         },
     ]
 })
