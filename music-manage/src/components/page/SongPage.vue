@@ -72,13 +72,16 @@
         <!--添加歌曲-->
         <el-dialog title="添加歌曲" :visible.sync="centerDialogVisible" width="400px" center>
             <form action="" id="tf">
-                <div>
-                    <label>歌曲名</label>
-                    <el-input type="text" name="name"></el-input>
-                </div>
-                <div>
-                    <label>歌手</label>
-                    <el-input type="text" name="singerName" id="singerName"></el-input>
+                <div style="overflow: hidden; position: relative">
+                    <div style="width:45%; display: inline-block; float: left">
+                        <label>歌手</label>
+                        <el-input type="text" name="singerName" id="singerName"></el-input>
+                    </div>
+                    <span style="position: absolute; top: 24px; left: 49%;">-</span>
+                    <div style="width:45%; display: inline-block; float: right">
+                        <label>歌曲名</label>
+                        <el-input type="text" name="name"></el-input>
+                    </div>
                 </div>
                 <div>
                     <label>歌曲介绍</label>
@@ -401,6 +404,9 @@ export default {
 </script>
 
 <style scoped>
+    *{
+        box-sizing: border-box;
+    }
     .handle-box {
         margin-bottom: 20px;
     }
