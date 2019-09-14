@@ -6,7 +6,6 @@ const song = {
   state: {
     isPlay: false, // 播放状态
     playButtonUrl: '#icon-bofang', // 播放状态的图标
-    listOfSongs: [], // 当前歌单列表
     id: null, // 音乐ID
     url: '', // 歌曲URL
     duration: 0, //  音乐时长
@@ -17,29 +16,17 @@ const song = {
     picUrl: '', // 歌曲图片
     autoNext: true, // 用于触发自动播放下一首
     lyric: [], // 未处理的歌词数据
-    listIndex: -1 // 当前歌曲在歌曲列表的位置
+    listOfSongs: [], // 当前歌单列表
+    listIndex: null // 当前歌曲在歌曲列表的位置
   },
   getters: {
-    isPlay: state => {
-      let isPlay = state.isPlay
-      if (!isPlay) {
-        isPlay = JSON.parse(window.sessionStorage.getItem('isPlay') || null)
-      }
-      return isPlay
-    },
+    isPlay: state => state.isPlay,
     playButtonUrl: state => {
       let playButtonUrl = state.playButtonUrl
       if (!playButtonUrl) {
         playButtonUrl = JSON.parse(window.sessionStorage.getItem('playButtonUrl') || null)
       }
       return playButtonUrl
-    },
-    listOfSongs: state => {
-      let listOfSongs = state.listOfSongs
-      if (!listOfSongs.length) {
-        listOfSongs = JSON.parse(window.sessionStorage.getItem('listOfSongs') || null)
-      }
-      return listOfSongs
     },
     id: state => {
       let id = state.id
@@ -111,6 +98,13 @@ const song = {
       }
       return lyric
     },
+    listOfSongs: state => {
+      let listOfSongs = state.listOfSongs
+      if (!listOfSongs.length) {
+        listOfSongs = JSON.parse(window.sessionStorage.getItem('listOfSongs') || null)
+      }
+      return listOfSongs
+    },
     listIndex: state => {
       let listIndex = state.listIndex
       if (!listIndex) {
@@ -122,8 +116,6 @@ const song = {
   mutations: {
     setIsPlay: (state, isPlay) => { state.isPlay = isPlay },
     setPlayButtonUrl: (state, playButtonUrl) => { state.playButtonUrl = playButtonUrl },
-    setListOfSongs: (state, listOfSongs) => { state.listOfSongs = listOfSongs },
-    // pushListOfSongs: (state, song) => { state.listOfSongs.unshift(song) },
     setId: (state, id) => { state.id = id },
     setUrl: (state, url) => { state.url = url },
     setDuration: (state, duration) => { state.duration = duration },
@@ -134,6 +126,7 @@ const song = {
     setpicUrl: (state, picUrl) => { state.picUrl = picUrl },
     setAutoNext: (state, autoNext) => { state.autoNext = autoNext },
     setLyric: (state, lyric) => { state.lyric = lyric },
+    setListOfSongs: (state, listOfSongs) => { state.listOfSongs = listOfSongs },
     setListIndex: (state, listIndex) => { state.listIndex = listIndex }
   }
 }

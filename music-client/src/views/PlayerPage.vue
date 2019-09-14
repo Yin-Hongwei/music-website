@@ -3,15 +3,16 @@
     <div class="song-lyric">
       <h2>歌词</h2>
       <transition name="lyr-fade">
-        <ul v-show="lyr.length" :style="{top:lrcTop}"  class="lrc">
-          <li class="lyric" v-for="(item, index) in lyr" v-bind:key="index">
-            {{ item[1] }}
-          </li>
-        </ul>
-      </transition>
-      <!--没歌词的情况-->
-      <transition name="lyr-fade">
-        <div v-show="!lyr.length" class="no-lyric">
+        <!--有个词-->
+        <div v-show="lyr.length" key="has-lyr">
+          <ul :style="{top:lrcTop}"  class="lrc">
+            <li class="lyric" v-for="(item, index) in lyr" v-bind:key="index">
+              {{ item[1] }}
+            </li>
+          </ul>
+        </div>
+        <!--没歌词的情况-->
+        <div v-show="!lyr.length" class="no-lyric" key="no-lyr">
           <span class="no-lrc">暂无歌词</span>
         </div>
       </transition>

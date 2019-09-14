@@ -59,6 +59,7 @@
           </svg>
         </el-button>
       </div>
+      <!--歌曲列表-->
       <div class="dropup">
         <div class="item">
           <svg class="icon" aria-hidden="true">
@@ -352,12 +353,14 @@ export default {
   transition: all .5s;
   box-shadow: 0 0 10px black;
 }
+
 .item-up {
   position: absolute;
   bottom: 70px;
   left: 20px;
   cursor: pointer;
 }
+
 .kongjian {
   bottom: 0;
   height: 60px;
@@ -369,12 +372,15 @@ export default {
   align-items: center;
   min-width: 1000px;
 }
+
 .show {
   bottom: -60px;
 }
+
 .turn{
   transform: rotate(180deg);
 }
+
 .item{
   width: 80px;
   height: 50px;
@@ -382,19 +388,23 @@ export default {
   text-align: center;
   cursor: pointer;
 }
+
 .item-img {
   width: 50px;
   height: 50px;
 }
+
 .item-img img {
   width: 100%;
 }
+
 .item-song-title {
   display: flex;
   justify-content: space-between;
   height: 20px;
   line-height: 10px;
 }
+
 .playing-speed {
   height: 50px;
   width: 600px;
@@ -402,6 +412,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .playing-speed .current-time,
 .playing-speed .left-time {
   width: 70px;
@@ -411,21 +422,26 @@ export default {
   font-weight: 500;
   top: -10px;
 }
+
 .playing-speed .progress-box {
   flex: 1;
 }
+
 .playing-speed .progress-box .progress {
   width: 100%;
   background: #a9dbf9;
   height: 6px;
 }
+
 .bg {
   height: 100%;
 }
+
 .cur-progress {
   height: 100%;
   background: #30a4fc;
 }
+
 .playing-speed>.progress-box .idot {
   width: 16px;
   height: 16px;
@@ -443,12 +459,15 @@ export default {
   color: black;
   font-size: 1.5em;
 }
+
 .dropup {
   position: relative;
 }
+
 .dropup:hover .menus {
   display: block;
 }
+
 .menus {
   display: none;
   background-color: #fff;
@@ -460,22 +479,25 @@ export default {
   bottom:54px;
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
   cursor: pointer;
   z-index: 100;
   text-align: center;
   overflow: scroll;
   white-space: nowrap;
 }
-.menus li:hover{
-  background-color: #95d2f6;
-  color: white;
-}
+
 .menus li {
   display: block;
   width: 100%;
-  height: 30px;
-  line-height: 30px;
+  height: 40px;
+  line-height: 40px;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+}
+
+.menus li:hover{
+  background-color: #95d2f6;
+  color: white;
 }
 
 </style>

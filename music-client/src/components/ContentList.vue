@@ -1,31 +1,18 @@
 <template>
   <div class="content-list">
-    <div v-if="type === 0" class="section" v-for="(list, index) in contentList" :key="index">
-      <div class="section-head">{{list.name}}</div>
-      <ul class="section-content">
-        <li class="content-item" v-for="(item, index) in list.list" :key="index">
-          <div class="kuo">
-            <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
-            <div class="mask"  @click="goAblum(item.id, item.list || index, item.name)">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-bofang"></use>
-              </svg>
-            </div>
+    <ul class="section-content">
+      <li class="content-item" v-for="(item, index) in contentList" :key="index">
+        <div class="kuo" @click="goAblum(item.id, item.list || index, item.name)">
+          <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
+          <div class="mask"  @click="goAblum(item.id, item.list || index, item.name)">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-bofang"></use>
+            </svg>
           </div>
-          <p class="item-name">{{item.name || item.title}}</p>
-        </li>
-      </ul>
-    </div>
-    <div v-if="type === 1">
-      <ul class="section-content">
-        <li class="content-item" v-for="(item, index) in contentList" :key="index">
-          <div class="kuo" @click="goAblum(item.id, item.list || index, item.name)">
-            <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
-          </div>
-          <p class="item-name">{{item.name || item.title}}</p>
-        </li>
-      </ul>
-    </div>
+        </div>
+        <p class="item-name">{{item.name || item.title}}</p>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -35,8 +22,7 @@ import {mixin} from '../mixins'
 export default {
   name: 'content-list',
   props: [
-    'contentList',
-    'type'
+    'contentList'
   ],
   mixins: [mixin],
   methods: {
@@ -65,28 +51,15 @@ export default {
   .content-list {
     padding: 0 20px;
   }
-  .section {
-    width: 100%;
-    margin-bottom: 80px;
-    padding: 0 120px 50px 120px;
-    background-color: #ffffff;
-  }
-  .section-head {
-    height: 100px;
-    font-size: 28px;
-    font-weight: 500;
-    text-align: center;
-    line-height: 100px;
-    color: black;
-  }
   .section-content {
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
   }
   .content-item {
     flex-flow: column wrap;
-    width: 13vw;
-    margin: 5px 1vw;
+    width: 18%;
+    margin: 20px 1%;
     overflow: hidden;
     border-radius: 6px;
     -webkit-box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
@@ -107,8 +80,9 @@ export default {
     transition: all 0.4s ease;
   }
   .kuo, .mask {
-    width: 13vw;
-    height: 13vw;
+    width: 100%;
+    padding-bottom: 100%;
+    height: 0;
     overflow: hidden;
   }
   .mask{
@@ -118,8 +92,11 @@ export default {
     transition:all .3s ease-in-out;
     opacity: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
+  }
+  .mask > .icon {
+    position: absolute;
+    top: 40%
   }
   .mask:hover{
     opacity: 1;
@@ -134,8 +111,8 @@ export default {
     margin: 10px 8px;
   }
   .icon {
-    width: 2em;
-    height: 2em;
+    width: 2.5em;
+    height: 2.5em;
     fill: currentColor;
     color: rgba(240,240,240,1);
     font-size: 1.6em;

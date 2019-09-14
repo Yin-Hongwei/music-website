@@ -1,6 +1,6 @@
 <template>
   <div class="search-song-Lists">
-    <content-list :contentList="albumDatas" :type="1" :styleName="'songList'"></content-list>
+    <content-list :contentList="albumDatas"></content-list>
   </div>
 </template>
 

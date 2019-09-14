@@ -30,7 +30,6 @@ export default {
   watch: {
     // 监听播放还是暂停
     isPlay: function () {
-      console.log(this.url)
       this.togglePlay()
     },
     changeTime: function () {
