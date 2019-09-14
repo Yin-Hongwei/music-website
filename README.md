@@ -35,6 +35,8 @@
 
 > 后台模块
 
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/l.png"/><br/>
+
 <img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/y.png"/><br/>
 
 <img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/s.png"/><br/>
