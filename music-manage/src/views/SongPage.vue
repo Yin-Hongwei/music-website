@@ -288,11 +288,6 @@ export default {
                         title: '添加成功',
                         type: 'success'
                     });
-                }else {
-                    _this.$notify({
-                        title: '添加失败',
-                        type: 'error'
-                    });
                 }
             };
             req.open("post", "http://localhost:8080/api/addSong", false)
