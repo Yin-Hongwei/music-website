@@ -1,7 +1,7 @@
 <template>
   <div class="body-section">
     <div class="song-head">全部歌手</div>
-    <content-list :contentList="singersList" :type="1"></content-list>
+    <content-list :contentList="singersList"></content-list>
   </div>
 </template>
 

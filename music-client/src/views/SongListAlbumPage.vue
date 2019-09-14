@@ -102,11 +102,11 @@ export default {
         }})
         .then(function (response) {
           // console.log('------歌单中歌曲的ID------')
-          console.log(response.data)
+          // console.log(response.data)
           _this.listSongOfSinger = response.data
           // 获取歌单里的歌曲信息
-          for (let i = 0; i < _this.listSongOfSinger.length; i++) {
-            _this.getSongList(_this.listSongOfSinger[i].songId)
+          for (let item of _this.listSongOfSinger) {
+            _this.getSongList(item.songId)
           }
           // console.log('------歌曲------')
           // console.log(_this.songLists)

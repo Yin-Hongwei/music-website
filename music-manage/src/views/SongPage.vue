@@ -75,13 +75,16 @@
         <!--添加歌曲-->
         <el-dialog title="添加歌曲" :visible.sync="centerDialogVisible" width="400px" center>
             <form action="" id="tf">
-                <div style="width:50%;display: inline-block">
-                    <label>歌手</label>
-                    <el-input type="text" name="singerName" id="singerName"></el-input>
-                </div>
-                <div style="width:50%; display: inline-block">
-                    <label>歌曲名</label>
-                    <el-input type="text" name="name"></el-input>
+                <div style="display: flex; justify-content: space-around;">
+                    <div style="width:48%">
+                        <label>歌手</label>
+                        <el-input type="text" name="singerName" id="singerName"></el-input>
+                    </div>
+                    <div style="line-height: 80px">-</div>
+                    <div style="width:48%">
+                        <label>歌曲名</label>
+                        <el-input type="text" name="name"></el-input>
+                    </div>
                 </div>
                 <div>
                     <label>歌曲介绍</label>

@@ -12,7 +12,7 @@
       </ul>
     </div>
     <div class="song-content">
-      <content-list :contentList="albumDatas" :type="1"></content-list>
+      <content-list :contentList="albumDatas"></content-list>
     </div>
   </div>
 </template>
