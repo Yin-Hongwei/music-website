@@ -73,12 +73,10 @@
         </ul>
       </div>
       <!--下载-->
-      <div class="item">
-        <a :href="url" download>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-xiazai"></use>
-          </svg>
-        </a>
+      <div class="item" @click="down">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-xiazai"></use>
+        </svg>
       </div>
     </div>
   </div>
@@ -151,8 +149,27 @@ export default {
   methods: {
     // 下载
     down () {
-      let url = this.url
-      window.open(url)
+      let _this = this
+      axios({
+        method: 'get',
+        url: _this.url,
+        responseType: 'blob'
+      })
+        .then(res => {
+          let content = res.data
+          var eleLink = document.createElement('a')
+          eleLink.download = `${_this.artist}-${_this.title}.mp3`
+          eleLink.style.display = 'none'
+          // 字符内容转变成blob地址
+          var blob = new Blob([content])
+          eleLink.href = URL.createObjectURL(blob)
+          // 触发点击
+          document.body.appendChild(eleLink)
+          eleLink.click()
+          // 然后移除
+          document.body.removeChild(eleLink)
+        })
+        .catch(failResponse => {})
     },
     // 控制音乐播放/暂停
     togglePlay () {
