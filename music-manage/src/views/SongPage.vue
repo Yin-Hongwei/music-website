@@ -132,6 +132,14 @@
                 <el-button type="primary" @click="deleteRow">确 定</el-button>
             </span>
         </el-dialog>
+        <div class="pagination">
+            <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="prev, pager, next"
+                :total="total">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
@@ -170,6 +178,8 @@ export default {
                 lyric: '',
                 url: ''
             },
+            cur_page: 0,
+            total: 1,
             idx: -1
         }
     },
@@ -195,8 +205,8 @@ export default {
             }
         }
     },
-    created() {
-        this.getData()
+    created () {
+        this.getData(this.cur_page)
     },
     destroyed () {
         this.$store.commit('setIsPlay', false)
@@ -249,15 +259,21 @@ export default {
         },
 
         //拉取数据
-        getData() {
+        getData(page) {
             var _this = this
             _this.tableData = []
-            _this.$axios.get('http://localhost:8080/AllSongs').then((res) => {
-                _this.tableData = res.data
-                _this.tempDate = res.data
+            _this.tempDate = []
+            _this.$axios.get(_this.$store.state.HOST + `/api/songPage?page=${page}&&size=15`).then((res) => {
+                _this.total = res.data.page.totalPages * 10
+                _this.tableData = res.data._embedded.songs
+                _this.tempDate = res.data._embedded.songs
             })
         },
 
+        handleCurrentChange (val) {
+            this.cur_page = val - 1
+            this.getData(this.cur_page)
+        },
         // 添加音乐
         getSingerName () {
             let _this = this
@@ -411,5 +427,9 @@ export default {
     color: white;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
 }
 </style>
