@@ -136,6 +136,14 @@
                 <el-button type="primary" @click="deleteRow">确 定</el-button>
             </span>
         </el-dialog>
+        <div class="pagination">
+            <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="prev, pager, next"
+                :total="total">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
@@ -306,6 +314,8 @@ export default {
                 createTime: '',
                 updateTime: ''
             },
+            cur_page: 0,
+            total: 1,
             idx: -1 // 记录当前点中的行
         }
     },
@@ -323,8 +333,8 @@ export default {
             }
         }
     },
-    created() {
-        this.getData();
+    created () {
+        this.getData(this.cur_page)
     },
     mixins: [mixin],
     methods: {
@@ -332,15 +342,20 @@ export default {
            return `http://localhost:8080/api/updateUserImg?id=${id}`
         },
         // 获取用户信息
-        getData () {
-            var _this = this
+        // 获取用户信息
+        getData(page) {
+            let _this = this
             _this.tableData = []
             _this.tempDate = []
-            _this.$axios.get('http://localhost:8080/AllUsers').then((res) => {
-                console.log(res.data)
-                _this.tableData = res.data
-                _this.tempDate = res.data
+            _this.$axios.get(_this.$store.state.HOST + '/api/consumerPage?page=' + page).then((res) => {
+                console.log(res.data._embedded)
+                _this.tableData = res.data._embedded.consumers
+                _this.tempDate = res.data._embedded.consumers
             })
+        },
+        handleCurrentChange (val) {
+            this.cur_page = val - 1
+            this.getData(this.cur_page)
         },
         getCollect (id) {
             this.$router.push({path: "/collect", query: { id }})
@@ -462,5 +477,9 @@ export default {
 .handle-input {
     width: 300px;
     display: inline-block;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
 }
 </style>

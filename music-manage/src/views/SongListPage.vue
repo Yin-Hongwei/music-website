@@ -107,6 +107,14 @@
                 <el-button type="primary" @click="deleteRow">确 定</el-button>
             </span>
         </el-dialog>
+        <div class="pagination">
+            <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="prev, pager, next"
+                :total="total">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
@@ -135,6 +143,8 @@ export default {
                 introduction: '',
                 style: ''
             },
+            cur_page: 0,
+            total: 1,
             idx: -1
         }
     },
@@ -152,8 +162,8 @@ export default {
             }
         }
     },
-    created() {
-        this.getData()
+    created () {
+        this.getData(this.cur_page)
     },
     mixins: [mixin],
     methods: {
@@ -161,14 +171,19 @@ export default {
             return `http://localhost:8080/api/updateSongListImg?id=${id}`
         },
         // 获取歌单信息
-        getData() {
+        getData(page) {
             var _this = this
             _this.tableData = []
             _this.tempDate = []
-            _this.$axios.get('http://localhost:8080/listSongLists').then((res) => {
-                _this.tableData = res.data
-                _this.tempDate = res.data
+            _this.$axios.get(_this.$store.state.HOST + `/api/songListPage?page=${page}&&size=15`).then((res) => {
+                _this.total = res.data.page.totalPages * 10
+                _this.tableData = res.data._embedded.songLists
+                _this.tempDate = res.data._embedded.songLists
             })
+        },
+        handleCurrentChange (val) {
+            this.cur_page = val - 1
+            this.getData(this.cur_page)
         },
         getContent (id) {
             this.$router.push({path: "/listSong", query: { id: id}})
@@ -265,12 +280,16 @@ export default {
 </script>
 
 <style scoped>
-    .handle-box {
-        margin-bottom: 20px;
-    }
+.handle-box {
+    margin-bottom: 20px;
+}
 
-    .handle-input {
-        width: 300px;
-        display: inline-block;
-    }
+.handle-input {
+    width: 300px;
+    display: inline-block;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+}
 </style>
