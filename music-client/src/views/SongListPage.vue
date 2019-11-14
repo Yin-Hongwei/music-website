@@ -14,10 +14,20 @@
     <div class="song-content">
       <content-list :contentList="albumDatas"></content-list>
     </div>
+    <div class="pagination">
+      <el-pagination
+        v-if="'全部歌单' === activeName"
+        background
+        @current-change="handleCurrentChange"
+        layout="prev, pager, next"
+        :total="total">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
 import ContentList from '../components/ContentList'
@@ -78,12 +88,23 @@ export default {
   },
   mixins: [mixin],
   methods: {
+    getData (page) {
+      let _this = this
+      axios.get(_this.$store.state.HOST + `/api/songListPage?page=${page}&&size=15`).then((res) => {
+        _this.total = res.data.page.totalPages * 10
+        _this.albumDatas = res.data._embedded.songLists
+      })
+    },
+    handleCurrentChange (val) {
+      this.cur_page = val - 1
+      this.getData(this.cur_page)
+    },
     handleChangeView: function (name) {
       let pattern = new RegExp(name)
       this.activeName = name
       this.albumDatas = []
       if (name === '全部歌单') {
-        this.albumDatas = this.songsList
+        this.getData(this.cur_page)
       } else {
         this.getAlbumDatas(pattern)
       }
@@ -132,5 +153,8 @@ export default {
     font-weight: 600;
     border-bottom: 4px solid black;
   }
-
+  .pagination {
+    display: flex;
+    justify-content: center;
+  }
 </style>
