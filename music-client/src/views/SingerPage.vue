@@ -1,47 +1,112 @@
 <template>
-  <div class="body-section">
-    <div class="song-head">全部歌手</div>
-    <content-list :contentList="singersList"></content-list>
+  <div class="singer-page">
+    <div class="singer-header">
+      <ul>
+        <li
+          v-for="(item, index) in singerStyle"
+          :key="index"
+          :class="{active: item.name === activeName}"
+          @click="handleChangeView(item)">
+          {{item.name}}
+        </li>
+      </ul>
+    </div>
+    <content-list :contentList="albumDatas"></content-list>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import {mixin} from '../mixins'
+import axios from 'axios'
 import ContentList from '../components/ContentList'
 
 export default {
   name: 'singer-page',
-  computed: {
-    ...mapGetters([
-      'singersList'
-    ])
-  },
   components: {
     ContentList
   },
-  mounted () {
-    this.getSingerLists()
+  data () {
+    return {
+      singerStyle: [
+        {
+          name: '全部',
+          type: '3'
+        },
+        {
+          name: '男',
+          type: '1'
+        },
+        {
+          name: '女',
+          type: '0'
+        }
+      ],
+      activeName: '全部',
+      albumDatas: []
+    }
   },
-  mixins: [mixin]
+  created () {
+    this.getSingerAll()
+  },
+  methods: {
+    handleChangeView: function (item) {
+      this.activeName = item.name
+      this.albumDatas = []
+      if (item.name === '全部') {
+        this.getSingerAll()
+      } else if (item.name === '男' || item.name === '女') {
+        this.getSingerSex(item.type)
+      }
+    },
+    getSingerAll () {
+      let _this = this
+      axios.get(_this.$store.state.HOST + '/listSingers')
+        .then(function (response) {
+          _this.albumDatas = response.data
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    getSingerSex (sex) {
+      let _this = this
+      axios.get(_this.$store.state.HOST + `/api/singer?sex=${sex}`)
+        .then((response) => {
+          _this.albumDatas = response.data
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+  }
 }
 </script>
 
 <style scoped>
-  *{
+  div, ul, li{
     box-sizing: border-box;
   }
-  .body-section {
+  .singer-page {
     margin: 30px 10%;
     padding-bottom: 50px;
     background-color: #ffffff;
   }
-  .song-head {
-    height: 100px;
-    font-size: 28px;
-    font-weight: 500;
-    text-align: center;
-    line-height: 100px;
+  .singer-header {
+    width: 100%;
+    padding: 0 40px;
+  }
+  li {
+    display: inline-block;
+    line-height: 40px;
+    margin: 40px 20px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #67757f;
+    border-bottom: none;
+    cursor: pointer;
+  }
+  .active {
     color: black;
+    font-weight: 600;
+    border-bottom: 4px solid black;
   }
 </style>
