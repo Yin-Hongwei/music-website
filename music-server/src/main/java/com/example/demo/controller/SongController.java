@@ -256,4 +256,10 @@ public class SongController {
         String name = req.getParameter("name");
         return songService.searachSongLists('%'+ name + '%');
     }
+
+    @RequestMapping(value = "/api/song", method = RequestMethod.GET)
+    public Object songOfName(HttpServletRequest req){
+        String name = req.getParameter("name").trim();
+        return songService.songOfName(name);
+    }
 }

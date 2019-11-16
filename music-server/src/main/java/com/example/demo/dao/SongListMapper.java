@@ -30,4 +30,5 @@ public interface SongListMapper {
 
     List<SongList> listSongLists();
 
+    List<SongList> songAlbum(String title);
 }

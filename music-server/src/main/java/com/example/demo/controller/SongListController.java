@@ -140,11 +140,20 @@ public Object addSongList(HttpServletRequest req){
             registry.addResourceHandler("/img/songListPic/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/music-website/music-server/img/songListPic/");
         }
     }
-//    返回所有歌单
+
+
+    @RequestMapping(value = "/api/songAlbum", method = RequestMethod.GET)
+    public Object songAlbum(HttpServletRequest req){
+        String title = req.getParameter("title").trim();
+        return songListService.songAlbum(title);
+    }
+
+    //    返回所有歌单
     @RequestMapping(value = "/listSongLists", method = RequestMethod.GET)
     public Object toSongList(){
         return songListService.listSongLists();
     }
+
 }
 
 
