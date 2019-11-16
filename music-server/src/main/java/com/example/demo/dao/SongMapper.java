@@ -37,6 +37,4 @@ public interface SongMapper {
 
     List<Song> searachSongLists(String name);
 
-    List<Song> songOfName(String name);
-
 }

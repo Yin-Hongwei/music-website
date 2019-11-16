@@ -132,14 +132,6 @@
                 <el-button type="primary" @click="deleteRow">确 定</el-button>
             </span>
         </el-dialog>
-        <div class="pagination">
-            <el-pagination
-                background
-                @current-change="handleCurrentChange"
-                layout="prev, pager, next"
-                :total="total">
-            </el-pagination>
-        </div>
     </div>
 </template>
 
@@ -149,259 +141,237 @@ import { mapGetters } from 'vuex'
 import SongAudio from '../components/SongAudio'
 
 export default {
-  name: 'song-page',
-  data () {
-    return {
-      toggle: false,
-      registerForm: {
-        name: '',
-        singerName: '',
-        introduction: '',
-        lyric: ''
-      },
-      tableData: [],
-      tempDate: [],
-      is_search: false,
-      multipleSelection: [], // 记录要删除的歌曲
-      centerDialogVisible: false,
-      editVisible: false,
-      delVisible: false,
-      select_word: '',
-      form: {
-        id: '',
-        singerId: '',
-        name: '',
-        introduction: '',
-        createTime: '',
-        updateTime: '',
-        pic: '',
-        lyric: '',
-        url: ''
-      },
-      cur_page: 0,
-      total: 1,
-      idx: -1
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'isPlay' // 播放状态
-    ])
-  },
-  components: {
-    SongAudio
-  },
-  watch: {
-    select_word: function () {
-      if (this.select_word === '') {
-        this.tableData = this.tempDate
-      } else {
-        this.tableData = []
-        for (let item of this.tempDate) {
-          if (item.name.includes(this.select_word)) {
-            this.tableData.push(item)
-          }
+    name: 'song-page',
+    data() {
+        return {
+            toggle: false,
+            registerForm: {
+                name: '',
+                singerName: '',
+                introduction: '',
+                lyric: ''
+            },
+            tableData: [],
+            tempDate: [],
+            is_search: false,
+            multipleSelection: [], // 记录要删除的歌曲
+            centerDialogVisible: false,
+            editVisible: false,
+            delVisible: false,
+            select_word:'',
+            form: {
+                id: '',
+                singerId: '',
+                name: '',
+                introduction: '',
+                createTime: '',
+                updateTime: '',
+                pic: '',
+                lyric: '',
+                url: ''
+            },
+            idx: -1
         }
-      }
-    }
-  },
-  created () {
-    this.getData(this.cur_page)
-  },
-  destroyed () {
-    this.$store.commit('setIsPlay', false)
-  },
-  mixins: [mixin],
-  methods: {
-    // 拉取数据
-    getData (page) {
-      var _this = this
-      _this.tableData = []
-      _this.tempDate = []
-      _this.$axios.get(_this.$store.state.HOST + `/api/songPage?page=${page}&&size=10`).then((res) => {
-        _this.total = res.data.page.totalPages * 10
-        // _this.tableData = res.data._embedded.songs
-        // _this.tempDate = res.data._embedded.songs
-        // 此处后端使用jpa做分页返回的数据没有id，目前没有解决，所以利用返回的数据用name又请求一遍数据拿到id，有点绕，等有时间解决这个问题。
-        for (let i = 0; i < 10; i++) {
-          this.getId(res.data._embedded.songs[i].name)
+    },
+    computed: {
+        ...mapGetters([
+            'isPlay' // 播放状态
+        ])
+    },
+    components: {
+        SongAudio
+    },
+    watch: {
+        select_word: function () {
+            if (this.select_word === "") {
+                this.tableData = this.tempDate
+            } else {
+                this.tableData=[]
+                for (let item of this.tempDate) {
+                    if (item.name.includes(this.select_word)) {
+                        this.tableData.push(item)
+                    }
+                }
+            }
         }
-      })
     },
-    getId (name) {
-      let _this = this
-      this.$axios.get(_this.$store.state.HOST + `/api/song?name=${name}`)
-        .then((res) => {
-          if (res.data[0]) {
-            let o = res.data[0]
-            _this.tableData.push(o)
-            _this.tempDate.push(o)
-          }
-        })
+    created() {
+        this.getData()
     },
-    setSongUrl (url) {
-      this.$store.commit('setUrl', this.$store.state.HOST + url)
-      if (this.isPlay) {
+    destroyed () {
         this.$store.commit('setIsPlay', false)
-        this.toggle = ''
-      } else {
-        this.$store.commit('setIsPlay', true)
-        this.toggle = url
-      }
     },
-    // 更新歌曲图片
-    uploadUrl (id) {
-      return `http://localhost:8080/api/updateSongPic?id=${id}`
-    },
-    // 更新歌曲url
-    uploadSongUrl (id) {
-      return `http://localhost:8080/api/updateSongUrl?id=${id}`
-    },
-    beforeSongUpload (file) {
-      var testmsg = file.name.substring(file.name.lastIndexOf('.') + 1)
-      const extension = testmsg === 'mp3'
-      if (!extension) {
-        this.$message({
-          message: '上传文件只能是mp3格式！',
-          type: 'error'
-        })
-      }
-      return extension
-    },
-    handleSongSuccess (res, file) {
-      let _this = this
-      if (res.code === 1) {
-        _this.getData()
-        _this.$notify({
-          title: '上传成功',
-          type: 'success'
-        })
-      } else {
-        _this.$notify({
-          title: '上传失败',
-          type: 'error'
-        })
-      }
-    },
+    mixins: [mixin],
+    methods: {
+        setSongUrl (url) {
+            this.$store.commit('setUrl', this.$store.state.HOST + url)
+            if (this.isPlay) {
+                this.$store.commit('setIsPlay', false)
+                this.toggle = ''
+            } else {
+                this.$store.commit('setIsPlay', true)
+                this.toggle = url
+            }
+        },
+        // 更新歌曲图片
+        uploadUrl (id) {
+            return `http://localhost:8080/api/updateSongPic?id=${id}`
+        },
+        // 更新歌曲url
+        uploadSongUrl (id) {
+            return `http://localhost:8080/api/updateSongUrl?id=${id}`
+        },
+        beforeSongUpload (file) {
+            var testmsg = file.name.substring(file.name.lastIndexOf('.') + 1)
+            const extension = testmsg === 'mp3'
+            if (!extension) {
+              this.$message({
+                message: '上传文件只能是mp3格式！',
+                type: 'error'
+              })
+            }
+            return extension
+        },
+        handleSongSuccess (res, file) {
+            let _this = this
+            if (res.code === 1) {
+                _this.getData()
+                _this.$notify({
+                    title: '上传成功',
+                    type: 'success'
+                })
+            } else {
+                _this.$notify({
+                    title: '上传失败',
+                    type: 'error'
+                })
+            }
+        },
 
-    handleCurrentChange (val) {
-      this.cur_page = val - 1
-      this.getData(this.cur_page)
-    },
-    // 添加音乐
-    getSingerName () {
-      let _this = this
-      let value = document.getElementById('singerName').value
-      _this.$axios.get('http://localhost:8080/searachSingers?name=' + value).then(function (res) {
-        if (!res.data.length) {
-          _this.$notify({
-            title: '系统暂无该该歌手',
-            type: 'warning'
-          })
-        } else {
-          _this.addSong(res.data[0].id)
+        //拉取数据
+        getData() {
+            var _this = this
+            _this.tableData = []
+            _this.$axios.get('http://localhost:8080/AllSongs').then((res) => {
+                _this.tableData = res.data
+                _this.tempDate = res.data
+            })
+        },
+
+        // 添加音乐
+        getSingerName () {
+            let _this = this
+            let value = document.getElementById('singerName').value
+            _this.$axios.get('http://localhost:8080/searachSingers?name=' + value).then(function (res) {
+                if (!res.data.length) {
+                    _this.$notify({
+                        title: '系统暂无该该歌手',
+                        type: 'warning'
+                    })
+                } else {
+                    _this.addSong(res.data[0].id)
+                }
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        addSong(id){
+            let _this = this
+            var form = new FormData(document.getElementById("tf"))
+            form.append("singerId", id)
+            var req = new XMLHttpRequest()
+            req.onreadystatechange=function(){
+                if(req.readyState===4 && req.status===200){
+                    _this.getData()
+                    _this.registerForm = []
+                    _this.$notify({
+                        title: '添加成功',
+                        type: 'success'
+                    });
+                }
+            };
+            req.open("post", "http://localhost:8080/api/addSong", false)
+            req.send(form);
+            _this.centerDialogVisible = false
+        },
+        handleEdit(index, row) {
+            this.idx = index;
+            this.form = {
+                id: row.id,
+                singerId: row.singerId,
+                name: row.name,
+                introduction: row.introduction,
+                createTime: row.createTime,
+                updateTime: row.updateTime,
+                pic: row.pic,
+                lyric: row.lyric,
+                url: row.url
+            }
+            this.editVisible = true;
+        },
+        getComment (id) {
+            this.$router.push({path: "/Comment", query: { id: id, type :0}})
+        },
+        // 保存编辑
+        saveEdit() {
+            var params = new URLSearchParams()
+            params.append('id', this.form.id)
+            params.append('singerId', this.form.singerId)
+            params.append('name', this.form.name)
+            params.append('introduction', this.form.introduction)
+            params.append('lyric', this.form.lyric)
+            this.$axios.post('http://localhost:8080/api/updateSongMsgs', params)
+                .then(response => {
+                    if (response.data) {
+                        this.getData()
+                        this.$notify({
+                            title: '编辑成功',
+                            type: 'success'
+                        });
+                    } else {
+                        this.$notify({
+                            title: '编辑失败',
+                            type: 'error'
+                        });
+                    }
+                })
+                .catch(failResponse => {})
+            this.editVisible = false
+        },
+        // 确定删除
+        deleteRow(){
+            var _this = this
+            _this.$axios.get('http://localhost:8080/api/deleteSongs?id=' +  _this.tableData[_this.idx].id)
+                .then(response => {
+                    if (response.data) {
+                        _this.getData()
+                        _this.$notify({
+                            title: '删除成功',
+                            type: 'success'
+                        });
+                    } else {
+                        _this.$notify({
+                            title: '删除失败',
+                            type: 'error'
+                        });
+                    }
+                })
+                .catch(failResponse => {})
+            _this.delVisible = false
+        },
+        parseLyric (text) {
+            let lines = text.split('\n'),
+                pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g,
+                result = []
+            for (let item of lines) {
+                if (pattern.test(item)) {
+                    let value = item.replace(pattern, '') // 存歌词
+                    result.push(value)
+                }
+            }
+            return result
         }
-      }).catch(function (error) {
-        console.log(error)
-      })
     },
-    addSong (id) {
-      let _this = this
-      var form = new FormData(document.getElementById('tf'))
-      form.append('singerId', id)
-      var req = new XMLHttpRequest()
-      req.onreadystatechange = function () {
-        if (req.readyState === 4 && req.status === 200) {
-          _this.getData()
-          _this.registerForm = []
-          _this.$notify({
-            title: '添加成功',
-            type: 'success'
-          })
-        }
-      }
-      req.open('post', 'http://localhost:8080/api/addSong', false)
-      req.send(form)
-      _this.centerDialogVisible = false
-    },
-    handleEdit (index, row) {
-      this.idx = index
-      this.form = {
-        id: row.id,
-        singerId: row.singerId,
-        name: row.name,
-        introduction: row.introduction,
-        createTime: row.createTime,
-        updateTime: row.updateTime,
-        pic: row.pic,
-        lyric: row.lyric,
-        url: row.url
-      }
-      this.editVisible = true
-    },
-    getComment (id) {
-      this.$router.push({path: '/Comment', query: {id: id, type: 0}})
-    },
-    // 保存编辑
-    saveEdit () {
-      var params = new URLSearchParams()
-      params.append('id', this.form.id)
-      params.append('singerId', this.form.singerId)
-      params.append('name', this.form.name)
-      params.append('introduction', this.form.introduction)
-      params.append('lyric', this.form.lyric)
-      this.$axios.post('http://localhost:8080/api/updateSongMsgs', params)
-        .then(response => {
-          if (response.data) {
-            this.getData()
-            this.$notify({
-              title: '编辑成功',
-              type: 'success'
-            })
-          } else {
-            this.$notify({
-              title: '编辑失败',
-              type: 'error'
-            })
-          }
-        })
-        .catch(failResponse => {})
-      this.editVisible = false
-    },
-    // 确定删除
-    deleteRow () {
-      var _this = this
-      _this.$axios.get('http://localhost:8080/api/deleteSongs?id=' + _this.tableData[_this.idx].id)
-        .then(response => {
-          if (response.data) {
-            _this.getData()
-            _this.$notify({
-              title: '删除成功',
-              type: 'success'
-            })
-          } else {
-            _this.$notify({
-              title: '删除失败',
-              type: 'error'
-            })
-          }
-        })
-        .catch(failResponse => {})
-      _this.delVisible = false
-    },
-    parseLyric (text) {
-      let lines = text.split('\n')
-      let pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g
-      let result = []
-      for (let item of lines) {
-        if (pattern.test(item)) {
-          let value = item.replace(pattern, '') // 存歌词
-          result.push(value)
-        }
-      }
-      return result
-    }
-  }
 }
 
 </script>
@@ -441,9 +411,5 @@ export default {
     color: white;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-.pagination {
-    display: flex;
-    justify-content: center;
 }
 </style>

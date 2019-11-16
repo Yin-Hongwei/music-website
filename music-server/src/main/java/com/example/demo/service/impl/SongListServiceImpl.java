@@ -31,14 +31,9 @@ public class SongListServiceImpl implements SongListService {
     }
 
     @Override
-    public List<SongList> songAlbum(String title)
-    {
-        return songListMapper.songAlbum(title);
-    }
-
-    @Override
     public boolean ifAdd(SongList songList)
     {
+
         return songListMapper.insertSelective(songList) > 0?true:false;
     }
 
