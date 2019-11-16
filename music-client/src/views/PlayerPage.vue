@@ -2,7 +2,7 @@
   <div class="content">
     <div class="song-lyric">
       <h2>歌词</h2>
-      <transition-group name="lyr-fade">
+      <transition name="lyr-fade">
         <!--有个词-->
         <div v-show="lyr.length" key="has-lyr">
           <ul :style="{top:lrcTop}"  class="lrc">
@@ -15,7 +15,7 @@
         <div v-show="!lyr.length" class="no-lyric" key="no-lyr">
           <span class="no-lrc">暂无歌词</span>
         </div>
-      </transition-group>
+      </transition>
       <comment :id=id :type="0"></comment>
     </div>
   </div>

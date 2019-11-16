@@ -4,18 +4,18 @@
     <div class="album-body">
       <div class="album-slide">
         <div class="album-img">
-          <img :src=attachImageUrl(songList.pic) alt="">
+          <img :src=attachImageUrl(singers.pic) alt="">
         </div>
         <div class="album-info">
           <h2>简介：</h2>
           <span>
-            {{songList.introduction}}
+            {{singers.introduction}}
           </span>
         </div>
       </div>
       <div class="album-content">
         <div class="album-title">
-          <p>{{songList.title}}</p>
+          <p>{{singers.title}}</p>
         </div>
         <!--评分-->
         <div class="album-score">
@@ -58,6 +58,7 @@ export default {
     return {
       listSongOfSinger: [],
       songLists: [],
+      singers: {},
       count: 0,
       songListId: '', // 歌单ID
       value3: null,
@@ -71,7 +72,10 @@ export default {
   computed: {
     ...mapGetters([
       'loginIn',
+      'songsList', // 歌单列表
+      'index', // 列表中的序号
       'listOfSongs', // 存放的音乐
+      'index',
       'userId',
       'avator',
       'songslistComment'
@@ -79,24 +83,33 @@ export default {
   },
   created () {
     this.songListId = this.$route.params.id // 给歌单ID赋值
+  },
+  mounted: function () {
     // 获取当前歌单信息
-    this.songList = this.$route.query.item
+    this.singers = this.songsList[this.index]
     // 获取歌单里面的歌曲ID
     this.getSongId()
-    this.getRank(this.songList.id)
+    this.getRank(this.singers.id)
   },
   mixins: [mixin],
   methods: {
     // 收集歌单里面的歌曲
-    // 歌单中歌曲的ID
     getSongId () {
       let _this = this
-      axios.get(_this.$store.state.HOST + `/listSongOfSingers?songListId=${this.$route.params.id}`)
-        .then(function (res) {
+      axios.get(_this.$store.state.HOST + '/listSongOfSingers', {
+        params: {
+          songListId: _this.singers.id
+        }})
+        .then(function (response) {
+          // console.log('------歌单中歌曲的ID------')
+          // console.log(response.data)
+          _this.listSongOfSinger = response.data
           // 获取歌单里的歌曲信息
-          for (let item of res.data) {
+          for (let item of _this.listSongOfSinger) {
             _this.getSongList(item.songId)
           }
+          // console.log('------歌曲------')
+          // console.log(_this.songLists)
           _this.$store.commit('setListOfSongs', _this.songLists)
           window.sessionStorage.setItem('listOfSongs', JSON.stringify(_this.songLists))
         })
@@ -108,8 +121,8 @@ export default {
     getSongList (id) {
       let _this = this
       axios.get(_this.$store.state.HOST + '/listSongsOfSongs?id=' + id)
-        .then(function (res) {
-          _this.songLists.push(res.data[0])
+        .then(function (response) {
+          _this.songLists.push(response.data[0])
         })
         .catch(function (error) {
           console.log(error)
@@ -131,13 +144,13 @@ export default {
       if (this.loginIn) {
         let _this = this
         var params = new URLSearchParams()
-        params.append('songListId', _this.songListId)
+        params.append('songListId', _this.index + 1)
         params.append('consumerId', _this.userId)
         params.append('score', _this.value3 * 2)
         axios.post(_this.$store.state.HOST + '/api/pushRank', params)
-          .then(res => {
-            if (res.data.code === 1) {
-              _this.getRank(_this.songListId)
+          .then(response => {
+            if (response.data.code === 1) {
+              _this.getRank(_this.singers.id)
               _this.$notify({
                 title: '评分成功',
                 type: 'success'

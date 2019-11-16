@@ -44,6 +44,16 @@ export default {
     ContentList
   },
   methods: {
+    goRouter (id, index) {
+      this.$store.commit('setIndex', index)
+      window.sessionStorage.setItem('index', JSON.stringify(index))
+      this.$router.push({path: '/song-list-album-page/' + id})
+    },
+    goSingerAblum (id, index) {
+      this.$store.commit('setIndex', index)
+      window.sessionStorage.setItem('index', JSON.stringify(index))
+      this.$router.push({path: '/singer-album-page/' + id})
+    },
     // 得到歌单和歌曲列表前10项
     getList () {
       this.popularList[0] = this.songsList.slice(0, 10)

@@ -43,14 +43,16 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'singersList', // 歌手列表
+      'index', // 列表中的序号
       'listOfSongs' // 存放的音乐
     ])
   },
   components: {
     AlbumContent
   },
-  created () {
-    this.singers = this.$route.query.item
+  mounted: function () {
+    this.singers = this.singersList[this.index]
     this.getSongList()
   },
   mixins: [mixin],
