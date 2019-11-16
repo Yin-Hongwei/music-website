@@ -71,6 +71,8 @@ export default {
         }
       ],
       activeName: '全部歌单',
+      cur_page: 0,
+      total: 1,
       albumDatas: []
     }
   },

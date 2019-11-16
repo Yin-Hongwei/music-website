@@ -2,9 +2,9 @@
   <div class="content-list">
     <ul class="section-content">
       <li class="content-item" v-for="(item, index) in contentList" :key="index">
-        <div class="kuo" @click="goAblum(item.id, item.list || index, item.name)">
+        <div class="kuo" @click="goAblum(item, item.name)">
           <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
-          <div class="mask"  @click="goAblum(item.id, item.list || index, item.name)">
+          <div class="mask"  @click="goAblum(item, item.name)">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-bofang"></use>
             </svg>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import {mixin} from '../mixins'
 
 export default {
@@ -26,18 +27,19 @@ export default {
   ],
   mixins: [mixin],
   methods: {
-    goSongAlbum (id, index) {
-      this.$store.commit('setIndex', index)
-      window.sessionStorage.setItem('index', JSON.stringify(index))
-      this.$router.push({path: '/song-list-album-page/' + id})
+    getId (title) {
+      let _this = this
+      axios.get(_this.$store.state.HOST + `/api/songAlbum?title=${title}`)
+        .then((res) => {
+          let item = res.data[0]
+          this.$router.push({path: `/song-list-album-page/${item.id}`, query: {item}})
+        })
     },
-    goAblum (id, index, type) {
-      this.$store.commit('setIndex', index)
-      window.sessionStorage.setItem('index', JSON.stringify(index))
+    goAblum (item, type) {
       if (type) {
-        this.$router.push({path: '/singer-album-page/' + id})
+        this.$router.push({path: `/singer-album-page/${item.id}`, query: {item}})
       } else {
-        this.$router.push({path: '/song-list-album-page/' + id})
+        this.getId(item.title)
       }
     }
   }
