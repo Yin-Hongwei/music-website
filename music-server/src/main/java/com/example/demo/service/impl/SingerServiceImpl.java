@@ -48,4 +48,11 @@ public class SingerServiceImpl implements SingerService{
     {
         return singerMapper.searachSinger(name);
     }
+
+    @Override
+    public List<Singer> singerSex(Integer sex)
+
+    {
+        return singerMapper.singerSex(sex);
+    }
 }

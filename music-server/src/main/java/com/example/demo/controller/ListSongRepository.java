@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ListSongRepository extends JpaRepository<ListSong,String>{
+public interface ListSongRepository extends JpaRepository<ListSong,Long>{
     Page<ListSong> findAll(Pageable pageable);
 }

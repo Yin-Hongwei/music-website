@@ -121,161 +121,175 @@
 <script>
 import {mixin} from '../mixins'
 export default {
-    name: 'song-list-page',
-    data() {
-        return {
-            registerForm: {
-                title: '',
-                introduction: '',
-                style: ''
-            },
-            tableData: [],
-            tempDate: [],
-            multipleSelection: [], // 记录要删除的歌单
-            centerDialogVisible: false,
-            editVisible: false,
-            delVisible: false,
-            select_word:'',
-            form: {
-                id: '',
-                title: '',
-                pic: '',
-                introduction: '',
-                style: ''
-            },
-            cur_page: 0,
-            total: 1,
-            idx: -1
-        }
-    },
-    watch: {
-        select_word: function () {
-            if (this.select_word === "") {
-                this.tableData = this.tempDate
-            } else {
-                this.tableData=[]
-                for (let item of this.tempDate) {
-                    if (item.title.includes(this.select_word)) {
-                        this.tableData.push(item)
-                    }
-                }
-            }
-        }
-    },
-    created () {
-        this.getData(this.cur_page)
-    },
-    mixins: [mixin],
-    methods: {
-        uploadUrl (id) {
-            return `http://localhost:8080/api/updateSongListImg?id=${id}`
-        },
-        // 获取歌单信息
-        getData(page) {
-            var _this = this
-            _this.tableData = []
-            _this.tempDate = []
-            _this.$axios.get(_this.$store.state.HOST + `/api/songListPage?page=${page}&&size=15`).then((res) => {
-                _this.total = res.data.page.totalPages * 10
-                _this.tableData = res.data._embedded.songLists
-                _this.tempDate = res.data._embedded.songLists
-            })
-        },
-        handleCurrentChange (val) {
-            this.cur_page = val - 1
-            this.getData(this.cur_page)
-        },
-        getContent (id) {
-            this.$router.push({path: "/listSong", query: { id: id}})
-        },
-        getComment (id) {
-            this.$router.push({path: "/Comment", query: { id: id, type: 1}})
-        },
-        handleEdit(index, row) {
-            this.idx = index;
-            this.form = {
-                id: row.id,
-                title: row.title,
-                pic: row.pic,
-                introduction: row.introduction,
-                style: row.style,
-            }
-            this.editVisible = true
-        },
-        // 保存编辑
-        saveEdit() {
-            let _this = this
-            var params = new URLSearchParams()
-            params.append('id', _this.form.id)
-            params.append('title', _this.form.title)
-            params.append('pic', _this.form.pic)
-            params.append('introduction', _this.form.introduction)
-            params.append('style', _this.form.style)
-            _this.$axios.post('http://localhost:8080/api/updateSongListMsgs', params)
-                .then(res => {
-                    if (res.data.code === 1) {
-                        _this.$notify({
-                            title: '编辑成功',
-                            type: 'success'
-                        })
-                        _this.getData()
-                    } else {
-                        _this.$notify({
-                            title: '编辑失败',
-                            type: 'error'
-                        })
-                    }
-                })
-                .catch(failResponse => {})
-            _this.editVisible = false
-        },
-        // 添加歌单
-        addsongList () {
-            let _this = this
-            let params = new URLSearchParams()
-            params.append('title', _this.registerForm.title)
-            params.append('pic', '/img/songListPic/123.jpg')
-            params.append('introduction', _this.registerForm.introduction)
-            params.append('style', _this.registerForm.style)
-            _this.$axios.post('http://localhost:8080/api/addSongList', params).then(res => {
-                    if (res.data.code === 1) {
-                        _this.getData()
-                        _this.registerForm = []
-                        _this.$notify({
-                            title: '添加成功',
-                            type: 'success'
-                        });
-                    } else {
-                        _this.$notify({
-                            title: '添加失败',
-                            type: 'error'
-                        });
-                    }
-                }).catch(failResponse => {})
-            _this.centerDialogVisible = false
-        },
-        // 确定删除
-        deleteRow () {
-            let _this = this
-            _this.$axios.get('http://localhost:8080/api/deleteSongLists?id=' + _this.tableData[this.idx].id)
-                .then(res => {
-                    if (res.data) {
-                        _this.getData()
-                        _this.$notify({
-                            title: '删除成功',
-                            type: 'success'
-                        })
-                    } else {
-                        _this.$notify({
-                            title: '删除失败',
-                            type: 'error'
-                        })
-                    }
-                })
-                .catch(failResponse => {})
-            this.delVisible = false
-        }
+  name: 'song-list-page',
+  data () {
+    return {
+      registerForm: {
+        title: '',
+        introduction: '',
+        style: ''
+      },
+      tableData: [],
+      tempDate: [],
+      multipleSelection: [], // 记录要删除的歌单
+      centerDialogVisible: false,
+      editVisible: false,
+      delVisible: false,
+      select_word: '',
+      form: {
+        id: '',
+        title: '',
+        pic: '',
+        introduction: '',
+        style: ''
+      },
+      cur_page: 0,
+      total: 1,
+      idx: -1
     }
+  },
+  watch: {
+    select_word: function () {
+      if (this.select_word === '') {
+        this.tableData = this.tempDate
+      } else {
+        this.tableData = []
+        for (let item of this.tempDate) {
+          if (item.title.includes(this.select_word)) {
+            this.tableData.push(item)
+          }
+        }
+      }
+    }
+  },
+  created () {
+    this.getData(this.cur_page)
+  },
+  mixins: [mixin],
+  methods: {
+    uploadUrl (id) {
+      return `http://localhost:8080/api/updateSongListImg?id=${id}`
+    },
+    getId (title) {
+      let _this = this
+      this.$axios.get(_this.$store.state.HOST + `/api/songAlbum?title=${title}`)
+        .then((res) => {
+          if (res.data[0]) {
+            let o = res.data[0]
+            _this.tableData.push(o)
+            _this.tempDate.push(o)
+          }
+        })
+    },
+    // 获取歌单信息
+    getData (page) {
+      let _this = this
+      _this.tableData = []
+      _this.tempDate = []
+      _this.$axios.get(_this.$store.state.HOST + `/api/songListPage?page=${page}&&size=10`).then((res) => {
+        _this.total = res.data.page.totalPages * 10
+        // _this.tableData = res.data._embedded.songLists
+        // _this.tempDate = res.data._embedded.songLists
+        for (let i = 0; i < 10; i++) {
+          this.getId(res.data._embedded.songLists[i].title)
+        }
+      })
+    },
+    handleCurrentChange (val) {
+      this.cur_page = val - 1
+      this.getData(this.cur_page)
+    },
+    getContent (id) {
+      this.$router.push({path: '/listSong', query: {id: id}})
+    },
+    getComment (id) {
+      this.$router.push({path: '/Comment', query: {id: id, type: 1}})
+    },
+    handleEdit (index, row) {
+      this.idx = index
+      this.form = {
+        id: row.id,
+        title: row.title,
+        pic: row.pic,
+        introduction: row.introduction,
+        style: row.style
+      }
+      this.editVisible = true
+    },
+    // 保存编辑
+    saveEdit () {
+      let _this = this
+      var params = new URLSearchParams()
+      params.append('id', _this.form.id)
+      params.append('title', _this.form.title)
+      params.append('pic', _this.form.pic)
+      params.append('introduction', _this.form.introduction)
+      params.append('style', _this.form.style)
+      _this.$axios.post('http://localhost:8080/api/updateSongListMsgs', params)
+        .then(res => {
+          if (res.data.code === 1) {
+            _this.$notify({
+              title: '编辑成功',
+              type: 'success'
+            })
+            _this.getData()
+          } else {
+            _this.$notify({
+              title: '编辑失败',
+              type: 'error'
+            })
+          }
+        })
+        .catch(failResponse => {})
+      _this.editVisible = false
+    },
+    // 添加歌单
+    addsongList () {
+      let _this = this
+      let params = new URLSearchParams()
+      params.append('title', _this.registerForm.title)
+      params.append('pic', '/img/songListPic/123.jpg')
+      params.append('introduction', _this.registerForm.introduction)
+      params.append('style', _this.registerForm.style)
+      _this.$axios.post('http://localhost:8080/api/addSongList', params).then(res => {
+        if (res.data.code === 1) {
+          _this.getData()
+          _this.registerForm = []
+          _this.$notify({
+            title: '添加成功',
+            type: 'success'
+          })
+        } else {
+          _this.$notify({
+            title: '添加失败',
+            type: 'error'
+          })
+        }
+      }).catch(failResponse => {})
+      _this.centerDialogVisible = false
+    },
+    // 确定删除
+    deleteRow () {
+      let _this = this
+      _this.$axios.get('http://localhost:8080/api/deleteSongLists?id=' + _this.tableData[this.idx].id)
+        .then(res => {
+          if (res.data) {
+            _this.getData()
+            _this.$notify({
+              title: '删除成功',
+              type: 'success'
+            })
+          } else {
+            _this.$notify({
+              title: '删除失败',
+              type: 'error'
+            })
+          }
+        })
+        .catch(failResponse => {})
+      this.delVisible = false
+    }
+  }
 }
 </script>
 

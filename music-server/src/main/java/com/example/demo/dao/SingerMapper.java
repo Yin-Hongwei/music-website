@@ -28,4 +28,6 @@ public interface SingerMapper {
     List<Singer> listSingers();
 
     List<Singer> searachSinger(String name);
+
+    List<Singer> singerSex(Integer sex);
 }

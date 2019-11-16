@@ -16,4 +16,6 @@ public interface SongListService {
 
     List<SongList> listSongLists();
 
+    List<SongList> songAlbum(String title);
+
 }
