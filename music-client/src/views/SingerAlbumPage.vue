@@ -1,23 +1,22 @@
 <template>
-  <div class="album">
-    <div class="my-bg"></div>
-    <div class="album-slide">
-      <div class="my-slide">
-        <div class="hd-img">
-          <img :src=attachImageUrl(singers.pic) alt="">
+  <div class="singer-album-page">
+    <div class="album">
+      <div class="slide">
+        <div class="singer-img">
+          <img :src=attachImageUrl(singer.pic) alt="">
         </div>
         <ul class="info">
-          <li>性别：{{attachSex(singers.sex)}}</li>
-          <li>生日：{{singers.birth}}</li>
-          <li>地址：{{singers.location}}</li>
+          <li>性别：{{attachSex(singer.sex)}}</li>
+          <li>生日：{{singer.birth}}</li>
+          <li>地址：{{singer.location}}</li>
         </ul>
       </div>
-      <div class="my-content">
-        <div class="hd-intro">
-          <h2>{{singers.name}} : </h2>
-          <span>{{singers.introduction}}</span>
+      <div class="section">
+        <div class="intro">
+          <h2>{{singer.name}}</h2>
+          <span>{{singer.introduction}}</span>
         </div>
-        <div class="songs-body">
+        <div class="content">
           <album-content :songList="listOfSongs">
             <template slot="title">歌单</template>
           </album-content>
@@ -35,40 +34,34 @@ import AlbumContent from '../components/AlbumContent'
 
 export default {
   name: 'singer-album-page',
+  components: {
+    AlbumContent
+  },
+  mixins: [mixin],
   data () {
     return {
       singerId: '',
-      singers: {},
-      textarea: ''
+      singer: {}
     }
   },
   computed: {
     ...mapGetters([
-      'singersList', // 歌手列表
-      'tempList', //
-      'listOfSongs' // 存放的音乐
+      'tempList',
+      'listOfSongs'
     ])
   },
-  components: {
-    AlbumContent
-  },
-  mounted: function () {
+  mounted () {
     this.singerId = this.$route.params.id // 给歌单ID赋值
-    this.singers = this.tempList
+    this.singer = this.tempList
     this.getSongList()
   },
-  mixins: [mixin],
   methods: {
     getSongList () {
       let _this = this
-      axios.get(_this.$store.state.HOST + '/listSongs', {
-        params: {
-          singerId: _this.singerId
-        }
-      })
-        .then(function (response) {
-          _this.$store.commit('setListOfSongs', response.data)
-          window.sessionStorage.setItem('listOfSongs', JSON.stringify(response.data))
+      axios.get(`${_this.$store.state.HOST}/listSongs?singerId=${_this.singerId}`)
+        .then(function (res) {
+          _this.$store.commit('setListOfSongs', res.data)
+          window.sessionStorage.setItem('listOfSongs', JSON.stringify(res.data))
         })
         .catch(function (error) {
           console.log(error)
@@ -86,28 +79,30 @@ export default {
 </script>
 
 <style scoped>
-  .my-bg {
-    width: 100%;
-    height: 200px;
+  .singer-album-page{
     background-color: #93d2f8;
   }
+  .album {
+    margin-top: 200px;
+    background-color: #e6ecf0;
+  }
   /*左*/
-  .my-slide {
+  .slide {
     float: left;
     width: 400px;
   }
-  .hd-img {
+  .singer-img {
     height: 300px;
     width: 300px;
     display: inline-block;
     position: relative;
-    top:-100px;
+    top: -100px;
     left: 50px;
     border-radius: 10%;
     overflow: hidden;
     border: 5px solid white;
   }
-  .hd-img img {
+  .singer-img img {
     width: 100%;
   }
   .info {
@@ -122,17 +117,17 @@ export default {
   }
 
   /*右*/
-  .my-content{
+  .section{
     margin-left: 300px;
     padding: 30px 100px;
   }
-  .hd-intro {
+  .intro {
     font-size: 20px;
   }
-  .hd-intro > span {
+  .intro > span {
     color: rgba(0, 0, 0, 0.5);
   }
-  .songs-body {
+  .content {
     margin-top: 50px;
   }
 

@@ -5,50 +5,58 @@
     <!--热门歌单/歌手-->
     <div class="section">
       <div class="section-head">歌单</div>
-      <content-list :contentList="popularList[0]"></content-list>
+      <content-list :contentList="songsList"></content-list>
     </div>
     <div class="section">
       <div class="section-head">歌手</div>
-      <content-list :contentList="popularList[1]"></content-list>
+      <content-list :contentList="singersList"></content-list>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import {mixin} from '../mixins'
+import axios from 'axios'
 import Swiper from '../components/Swiper'
 import ContentList from '../components/ContentList'
 
 export default {
-  name: 'Home-page',
+  name: 'home-page',
+  components: {
+    Swiper,
+    ContentList
+  },
   data () {
     return {
-      popularList: []
+      songsList: [],
+      singersList: []
     }
   },
   created () {
     this.getSongLists()
     this.getSingerLists()
-    this.getList()
-  },
-  mixins: [mixin],
-  computed: {
-    ...mapGetters([
-      'songsList',
-      'singersList'
-    ])
-  },
-  components: {
-    Swiper,
-    ContentList
   },
   methods: {
-    // 得到歌单和歌曲列表前10项
-    getList () {
-      this.popularList[0] = this.songsList.slice(0, 10)
-      this.popularList[1] = this.singersList.slice(0, 10)
-      console.log(this.popularList)
+    // 获取歌单列表
+    getSongLists () {
+      let _this = this
+      axios.get(`${_this.$store.state.HOST}/listSongLists`)
+        .then(function (res) {
+          _this.songsList = res.data.slice(0, 10)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    // 获取歌手
+    getSingerLists () {
+      let _this = this
+      axios.get(`${_this.$store.state.HOST}/listSingers`)
+        .then(function (res) {
+          _this.singersList = res.data.slice(0, 10)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 }

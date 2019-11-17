@@ -79,13 +79,12 @@ export default {
       params.append('username', _this.loginForm.username)
       params.append('password', _this.loginForm.password)
       axios.post(_this.$store.state.HOST + '/api/loginVerify', params)
-        .then(response => {
+        .then(res => {
           // console.log('-----------获取登录信息---------------')
-          // console.log(response.data)
-          if (response.data.code === 1) {
+          if (res.data.code === 1) {
             _this.showError = false
             _this.showSuccess = true
-            _this.copyMsg(response.data.userMsg[0])
+            _this.copyMsg(res.data.userMsg[0])
             _this.$store.commit('setLoginIn', true)
             window.sessionStorage.setItem('loginIn', JSON.stringify(true))
             setTimeout(function () {
@@ -107,7 +106,6 @@ export default {
       window.localStorage.setItem('username', JSON.stringify(item.username))
       this.$store.commit('setAvator', item.avator)
       window.localStorage.setItem('avator', JSON.stringify(item.avator))
-      console.log(item.avator)
     },
     goRegister () {
       this.$router.push({path: '/register-page'})
