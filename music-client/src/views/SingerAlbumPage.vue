@@ -14,8 +14,8 @@
       </div>
       <div class="my-content">
         <div class="hd-intro">
-            <h2>{{singers.name}} : </h2>
-            <span>{{singers.introduction}}</span>
+          <h2>{{singers.name}} : </h2>
+          <span>{{singers.introduction}}</span>
         </div>
         <div class="songs-body">
           <album-content :songList="listOfSongs">
@@ -37,20 +37,24 @@ export default {
   name: 'singer-album-page',
   data () {
     return {
+      singerId: '',
       singers: {},
       textarea: ''
     }
   },
   computed: {
     ...mapGetters([
+      'singersList', // 歌手列表
+      'tempList', //
       'listOfSongs' // 存放的音乐
     ])
   },
   components: {
     AlbumContent
   },
-  created () {
-    this.singers = this.$route.query.item
+  mounted: function () {
+    this.singerId = this.$route.params.id // 给歌单ID赋值
+    this.singers = this.tempList
     this.getSongList()
   },
   mixins: [mixin],
@@ -59,7 +63,7 @@ export default {
       let _this = this
       axios.get(_this.$store.state.HOST + '/listSongs', {
         params: {
-          singerId: _this.singers.id
+          singerId: _this.singerId
         }
       })
         .then(function (response) {
