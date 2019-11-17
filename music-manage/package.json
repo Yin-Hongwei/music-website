@@ -1,8 +1,8 @@
 {
-  "name": "vue-manage-system",
-  "version": "3.1.0",
-  "description": "基于Vue.js 2.x系列 + element-ui 内容管理系统解决方案",
-  "author": "lin-xin <2981207131@qq.com>",
+  "name": "music",
+  "version": "1.0.0",
+  "description": "A Vue.js project",
+  "author": "Yin-Hongwei <3374461366@qq.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
