@@ -59,9 +59,9 @@ export default {
     },
     getSingerAll () {
       let _this = this
-      axios.get(_this.$store.state.HOST + '/listSingers')
-        .then(function (response) {
-          _this.albumDatas = response.data
+      axios.get(`${_this.$store.state.HOST}/listSingers`)
+        .then(function (res) {
+          _this.albumDatas = res.data
         })
         .catch(function (error) {
           console.log(error)
@@ -69,9 +69,9 @@ export default {
     },
     getSingerSex (sex) {
       let _this = this
-      axios.get(_this.$store.state.HOST + `/api/singer?sex=${sex}`)
-        .then((response) => {
-          _this.albumDatas = response.data
+      axios.get(`${_this.$store.state.HOST}/api/singer?sex=${sex}`)
+        .then((res) => {
+          _this.albumDatas = res.data
         })
         .catch(function (error) {
           console.log(error)
