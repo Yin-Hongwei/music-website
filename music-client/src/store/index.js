@@ -17,6 +17,7 @@ const song = {
     autoNext: true, // 用于触发自动播放下一首
     lyric: [], // 未处理的歌词数据
     listOfSongs: [], // 当前歌单列表
+    tempList: {},
     listIndex: null // 当前歌曲在歌曲列表的位置
   },
   getters: {
@@ -98,6 +99,13 @@ const song = {
       }
       return lyric
     },
+    tempList: state => {
+      let tempList = state.tempList
+      if (JSON.stringify(tempList) === '{}') {
+        tempList = JSON.parse(window.sessionStorage.getItem('tempList') || null)
+      }
+      return tempList
+    },
     listOfSongs: state => {
       let listOfSongs = state.listOfSongs
       if (!listOfSongs.length) {
@@ -126,6 +134,7 @@ const song = {
     setpicUrl: (state, picUrl) => { state.picUrl = picUrl },
     setAutoNext: (state, autoNext) => { state.autoNext = autoNext },
     setLyric: (state, lyric) => { state.lyric = lyric },
+    setTempList: (state, tempList) => { state.tempList = tempList },
     setListOfSongs: (state, listOfSongs) => { state.listOfSongs = listOfSongs },
     setListIndex: (state, listIndex) => { state.listIndex = listIndex }
   }
