@@ -74,17 +74,23 @@ vue + vue-router + vuex + axios +  element-ui + mint-ui + muse-ui + swiper
 
 ## Install
 
-下载本项目到本地
+#### 1、下载项目到本地
 
 ```
 git clone https://github.com/Yin-Hongwei/music-website.git
 ```
 
-将sql文件夹中的 tp_music.sql 文件导入数据库。
+#### 2、下载数据库中记录的资源
 
 去https://pan.baidu.com/s/1PjdvJ8SCJ0kUwrL1m7Dp7Q 下载网站依赖的歌曲及图片，将 data 夹里的文件直接放到 music-server 文件夹下。下载资源可能有点儿慢，这是百度云破解版[https://pan.baidu.com/disk/home#/all?vmode=list&path=%2F%E8%BD%AF%E4%BB%B6%2FPanDownload](https://pan.baidu.com/disk/home#/all?vmode=list&path=%2F软件%2FPanDownload)（适合win用户，Mac上还没发现。
 
-启动后端服务之前，先去 /music-website/music-server/src/main/resources 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password，根据下面**Particular attention**的提示修改文件路径。
+#### 3、修改
+1）数据库：将sql文件夹中的 tp_music.sql 文件导入数据库。
+2）music-server：启动后端服务之前，有一些地方需要修改，先去 /music-website/music-server/src/main/resources 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password，并且修改下面蓝色显示的文件名中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。
+
+<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/Explain.png" width="600"/>
+
+#### 4、启动项目
 
 然后进入 music-server 文件夹，运行下面命令启动服务器
 
@@ -109,15 +115,6 @@ npm run dev // 启动后台管理项目
 ```
 
 <br/>
-
-## Particular attention
-
-启动服务器前要修改蓝色显示的文件名中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。
-
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/Explain.png" width="600"/>
-
-<br/>
-
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
