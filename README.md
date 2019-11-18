@@ -86,6 +86,7 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 
 #### 3、修改
 1）数据库：将sql文件夹中的 tp_music.sql 文件导入数据库。
+
 2）music-server：启动后端服务之前，有一些地方需要修改，先去 /music-website/music-server/src/main/resources 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password，并且修改下面蓝色显示的文件名中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。
 
 <img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/Explain.png" width="600"/>
@@ -115,6 +116,7 @@ npm run dev // 启动后台管理项目
 ```
 
 <br/>
+
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
