@@ -1,6 +1,6 @@
 <template>
   <div class="song-audio">
-    <audio :src='url' controls="controls" id="player" preload="true"  @canplay="startPlay" @timeupdate="timeupdate" @ended="ended">
+    <audio :src='url' controls="controls" ref="player" preload="true"  @canplay="startPlay" @timeupdate="timeupdate" @ended="ended">
       <!--（1）属性：controls，preload（2）事件：canplay，timeupdate，ended（3）方法：play()，pause() -->
       <!--controls：向用户显示音频控件（播放/暂停/进度条/音量）-->
       <!--preload：属性规定是否在页面加载后载入音频-->
@@ -32,16 +32,16 @@ export default {
     isPlay: function () {
       this.togglePlay()
     },
+    // 跳到指定时刻播放
     changeTime: function () {
-      //  跳到指定时刻播放
-      let player = document.querySelector('#player')
+      let player = this.$refs.player
       player.currentTime = this.changeTime
     }
   },
   methods: {
     // 开始/暂停
     togglePlay () {
-      let player = document.querySelector('#player')
+      let player = this.$refs.player
       if (this.isPlay) {
         player.play()
       } else {
@@ -50,7 +50,7 @@ export default {
     },
     // 获取歌曲链接后准备播放
     startPlay () {
-      let player = document.querySelector('#player')
+      let player = this.$refs.player
       //  记录音乐时长
       this.$store.commit('setDuration', player.duration)
       window.sessionStorage.setItem('duration', JSON.stringify(player.duration))
@@ -61,7 +61,7 @@ export default {
     },
     // 音乐播放时记录音乐的播放位置
     timeupdate () {
-      let player = document.querySelector('#player')
+      let player = this.$refs.player
       this.$store.commit('setCurTime', player.currentTime)
       window.sessionStorage.setItem('curTime', JSON.stringify(player.currentTime))
     },
@@ -79,7 +79,7 @@ export default {
 </script>
 
 <style>
-  #player {
-    display: none;
-  }
+audio {
+  display: none;
+}
 </style>

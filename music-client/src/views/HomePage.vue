@@ -3,13 +3,9 @@
     <!--轮播图-->
     <swiper/>
     <!--热门歌单/歌手-->
-    <div class="section">
-      <div class="section-head">歌单</div>
-      <content-list :contentList="songsList"></content-list>
-    </div>
-    <div class="section">
-      <div class="section-head">歌手</div>
-      <content-list :contentList="singersList"></content-list>
+    <div class="section" v-for="(item, index) in songsList" :key="index">
+      <div class="section-head">{{item.name}}</div>
+      <content-list :contentList="item.list"></content-list>
     </div>
   </div>
 </template>
@@ -27,32 +23,28 @@ export default {
   },
   data () {
     return {
-      songsList: [],
-      singersList: []
+      songsList: [
+        {name: '歌单', list: []},
+        {name: '歌手', list: []}
+      ]
     }
   },
   created () {
-    this.getSongLists()
-    this.getSingerLists()
+    this.getSongLists('listSongLists')
+    this.getSongLists('listSingers')
   },
   methods: {
-    // 获取歌单列表
-    getSongLists () {
+    getSongLists (path) {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/listSongLists`)
+      axios.get(`${_this.$store.state.HOST}/${path}`)
         .then(function (res) {
-          _this.songsList = res.data.slice(0, 10)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    // 获取歌手
-    getSingerLists () {
-      let _this = this
-      axios.get(`${_this.$store.state.HOST}/listSingers`)
-        .then(function (res) {
-          _this.singersList = res.data.slice(0, 10)
+          if (path === 'listSongLists') {
+            // 获取歌单列表
+            _this.songsList[0].list = res.data.slice(0, 10)
+          } else if (path === 'listSingers') {
+            // 获取歌手列表
+            _this.songsList[1].list = res.data.slice(0, 10)
+          }
         })
         .catch(function (error) {
           console.log(error)
@@ -63,7 +55,7 @@ export default {
 </script>
 
 <style scoped>
-  * {
+  div {
     box-sizing: border-box;
   }
   .section {

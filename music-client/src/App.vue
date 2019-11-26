@@ -1,19 +1,19 @@
 <template>
   <div id="app">
     <song-audio/>
-    <head-nav/>
+    <the-header/>
     <router-view class="music-content"/>
     <play-control/>
     <scroll-top/>
-    <music-footer/>
+    <the-footer/>
   </div>
 </template>
 
 <script>
 import ScrollTop from './components/ScrollTop'
 import SongAudio from './components/SongAudio'
-import HeadNav from './components/HeadNav'
-import MusicFooter from './components/MusicFooter'
+import TheHeader from './components/TheHeader'
+import TheFooter from './components/TheFooter'
 import PlayControl from './components/PlayControl'
 
 export default {
@@ -21,8 +21,8 @@ export default {
   components: {
     ScrollTop,
     SongAudio,
-    HeadNav,
-    MusicFooter,
+    TheHeader,
+    TheFooter,
     PlayControl
   }
 }
