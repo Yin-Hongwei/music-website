@@ -182,7 +182,7 @@ const store = new Vuex.Store({
     song
   },
   state: {
-    HOST: 'http://localhost:8080',
+    HOST: 'http://localhost:8888',
     loginIn: false, // 是否登录
     activeName: '', // 歌单类型名
     searchword: '', // 搜索关键词

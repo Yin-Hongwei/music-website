@@ -105,9 +105,9 @@ export default {
       _this.tempDate = []
       let url = ''
       if (_this.$route.query.type === 0) {
-        url = 'http://localhost:8080/songComments?songId='
+        url = `${_this.$store.state.HOST}/songComments?songId=`
       } else if (_this.$route.query.type === 1) {
-        url = 'http://localhost:8080/songListComments?songListId='
+        url = `${_this.$store.state.HOST}/songListComments?songListId=`
       }
       _this.$axios.get(url + _this.$route.query.id).then(res => {
         for (let item of res.data) {
@@ -118,7 +118,7 @@ export default {
     getUsers (id, item) {
       let _this = this
       _this.$axios
-        .get('http://localhost:8080/commentOfConsumer?id=' + id)
+        .get(`${_this.$store.state.HOST}/commentOfConsumer?id=${id}`)
         .then(function (res) {
           let o = item
           o.name = res.data[0].username
@@ -161,7 +161,7 @@ export default {
       params.append('type', this.form.type)
       params.append('up', this.form.up)
       this.$axios
-        .post('http://localhost:8080/api/updateCommentMsgs', params)
+        .post(`${this.$store.state.HOST}/api/updateCommentMsgs`, params)
         .then(response => {
           if (response.data.code === 1) {
             this.getData()
@@ -183,7 +183,7 @@ export default {
     deleteRow () {
       var _this = this
       _this.$axios
-        .get('http://localhost:8080/api/deleteComments?id=' + _this.tableData[_this.idx].id)
+        .get(`${_this.$store.state.HOST}/api/deleteComments?id=${_this.tableData[_this.idx].id}`)
         .then(response => {
           if (response.data) {
             _this.getData()

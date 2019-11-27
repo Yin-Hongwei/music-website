@@ -186,7 +186,7 @@ export default {
   methods: {
     getMsg (id) {
       let _this = this
-      axios.get(`${_this.$store.state.HOST }/commentOfConsumer?id=${id}`)
+      axios.get(`${_this.$store.state.HOST}/commentOfConsumer?id=${id}`)
         .then(response => {
           _this.registerForm.username = response.data[0].username
           _this.registerForm.password = response.data[0].password

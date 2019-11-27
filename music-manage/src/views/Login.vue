@@ -52,7 +52,7 @@ export default {
       params.append('name', _this.ruleForm.username)
       params.append('password', _this.ruleForm.password)
       _this.$axios
-        .post('http://localhost:8080/api/loginadmin', params)
+        .post(`${_this.$store.state.HOST}/api/loginadmin`, params)
         .then(res => {
           if (res.data.code === 1) {
             this.$router.push('/Consumer')
