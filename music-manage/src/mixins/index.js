@@ -1,7 +1,7 @@
 export const mixin = {
   methods: {
     getUrl (url) {
-      return '_this.$store.state.HOST' + url
+      return `${this.$store.state.HOST}/${url}`
     },
     // 获取要删除列表的index
     handleDelete (index) {
