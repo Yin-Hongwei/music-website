@@ -28,7 +28,7 @@
 
 <script>
 import axios from 'axios'
-import {mixin} from '../mixins'
+import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
 import AlbumContent from '../components/AlbumContent'
 

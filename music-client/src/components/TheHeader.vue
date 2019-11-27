@@ -56,7 +56,7 @@ export default {
         path: '/singer-page'
       }, {
         name: '我的音乐',
-        path: '/my-song'
+        path: '/my-song-page'
       }],
       loginMsg: [{
         name: '登录',
@@ -67,10 +67,10 @@ export default {
       }],
       menuList: [{
         name: '个人信息',
-        path: '/personal'
+        path: '/personal-info-page'
       }, {
         name: '修改头像',
-        path: '/upLoad-img'
+        path: '/upLoad-page'
       }, {
         name: '退出',
         path: 0
@@ -107,7 +107,7 @@ export default {
     goPage (path, value) {
       document.querySelector('.menu').classList.remove('show')
       this.changeIndex(value)
-      if (!this.loginIn && path === '/my-song') {
+      if (!this.loginIn && path === '/my-song-page') {
         this.$notify({
           title: '请先登录',
           type: 'warning'
@@ -171,10 +171,15 @@ export default {
 }
 
 /*nav*/
+.navbar {
+  box-sizing: border-box;
+  height: 80px;
+}
+
 .navbar li {
   margin: 0 10px;
   padding: 0 10px;
-  height: 55px;
+  height: 48px;
   font-size: 20px;
   text-align: center;
   color: #67757f;
@@ -192,6 +197,7 @@ export default {
 .head-search input {
   height: 30px;
   width: 270px;
+  font-size: 16px;
   border: 0;
   text-indent: 10px;
   background-color: #ebeef0;

@@ -48,6 +48,16 @@
     select *
     from song_list
   </select>
+  <select id="likeTitle" resultMap="ResultMapWithBLOBs">
+    select *
+    from song_list
+    where title like #{title,jdbcType=VARCHAR}
+  </select>
+  <select id="likeStyle" resultMap="ResultMapWithBLOBs">
+    select *
+    from song_list
+    where style like #{style,jdbcType=VARCHAR}
+  </select>
   <select id="songAlbum" resultMap="ResultMapWithBLOBs">
     select *
     from song_list

@@ -3,7 +3,7 @@
     <song-audio/>
     <the-header/>
     <router-view class="music-content"/>
-    <play-control/>
+    <play-bar/>
     <scroll-top/>
     <the-footer/>
   </div>
@@ -14,7 +14,7 @@ import ScrollTop from './components/ScrollTop'
 import SongAudio from './components/SongAudio'
 import TheHeader from './components/TheHeader'
 import TheFooter from './components/TheFooter'
-import PlayControl from './components/PlayControl'
+import PlayBar from './components/PlayBar'
 
 export default {
   name: 'App',
@@ -23,7 +23,7 @@ export default {
     SongAudio,
     TheHeader,
     TheFooter,
-    PlayControl
+    PlayBar
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-img">
+  <div class="upload-page">
     <div class="section">
       <el-upload
         :action="uploadUrl()"
@@ -16,7 +16,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'upload-img',
+  name: 'upload-page',
   data () {
     return {
       imageUrl: ''
@@ -65,14 +65,15 @@ export default {
 </script>
 
 <style scoped>
-  .upload-img {
-    width: 100%;
-  }
-  .section {
-    height: 600px;
-    background-color: #e6ecf0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.upload-page {
+  width: 100%;
+}
+
+.section {
+  height: 600px;
+  background-color: #e6ecf0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

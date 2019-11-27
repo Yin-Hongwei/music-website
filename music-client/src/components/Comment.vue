@@ -82,10 +82,9 @@ export default {
         url = '/songComments?songId='
       }
       axios.get(_this.$store.state.HOST + url + this.id)
-        .then(function (response) {
-          console.log(response.data)
-          _this.commentList = response.data
-          for (let item of response.data) {
+        .then(function (res) {
+          _this.commentList = res.data
+          for (let item of res.data) {
             _this.getUsers(item.userId)
           }
         })
@@ -96,10 +95,10 @@ export default {
     // 获取评论用户的昵称和头像
     getUsers (id) {
       let _this = this
-      axios.get(_this.$store.state.HOST + '/commentOfConsumer?id=' + id)
-        .then(function (response) {
-          _this.userPic.push(response.data[0].avator)
-          _this.userName.push(response.data[0].username)
+      axios.get(`${_this.$store.state.HOST}/commentOfConsumer?id=${id}`)
+        .then(function (res) {
+          _this.userPic.push(res.data[0].avator)
+          _this.userName.push(res.data[0].username)
         })
         .catch(function (error) {
           console.log(error)
@@ -119,10 +118,10 @@ export default {
         params.append('userId', _this.userId)
         params.append('type', this.type)
         params.append('comtent', _this.textarea)
-        axios.post(_this.$store.state.HOST + '/api/commentList', params)
-          .then(response => {
-            console.log(response.data)
-            if (response.data.code === 1) {
+        axios.post(`${_this.$store.state.HOST}/api/commentList`, params)
+          .then(res => {
+            console.log(res.data)
+            if (res.data.code === 1) {
               _this.textarea = ''
               _this.getComment()
               _this.$notify({
@@ -151,9 +150,9 @@ export default {
         var params = new URLSearchParams()
         params.append('id', id)
         params.append('up', up + 1)
-        axios.post(_this.$store.state.HOST + '/api/postUp', params)
-          .then(response => {
-            if (response.data.code === 1) {
+        axios.post(`${_this.$store.state.HOST}/api/postUp`, params)
+          .then(res => {
+            if (res.data.code === 1) {
               _this.$refs.up[index].children[0].style.color = '#2796dd'
               _this.getComment()
             }

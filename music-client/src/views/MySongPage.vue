@@ -32,7 +32,7 @@ import { mapGetters } from 'vuex'
 import AlbumContent from '../components/AlbumContent'
 
 export default {
-  name: 'my-song',
+  name: 'my-song-page',
   data () {
     return {
       avator: '',
@@ -113,57 +113,65 @@ export default {
 </script>
 
 <style scoped>
-  /*歌单背景*/
-  .album-bg {
-    width: 100%;
-    height: 200px;
-    background-color: #93d2f8;
-  }
-  /*歌单左侧*/
-  .album-slide {
-    float: left;
-    width: 400px;
-  }
-  /*歌单图像*/
-  .album-img {
-    height: 200px;
-    width: 200px;
-    display: inline-block;
-    position: relative;
-    top:-100px;
-    left: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 5px solid white;
-  }
-  .album-img img {
-    width: 100%;
-  }
-  /*歌单信息*/
-  .album-info {
-    color: black;
-    width: 500px;
-    font-size: 20px;
-    font-weight: 500;
-    margin-top: -100px;
-    margin-left: 100px;
-    padding: 30px 30px;
-  }
-  .album-info li {
-    width: 100%;
-    line-height: 40px;
-  }
-  /*歌单内容*/
-  .album-content{
-    margin-left: 300px;
-    padding: 40px 100px;
-  }
-  /*歌单题目*/
-  .album-title {
-    font-size: 30px;
-    font-weight: 600;
-  }
-  .songs-body {
-    margin-top: 50px;
-  }
+/*歌单背景*/
+.album-bg {
+  width: 100%;
+  height: 200px;
+  background-color: #93d2f8;
+}
+
+/*歌单左侧*/
+.album-slide {
+  float: left;
+  width: 400px;
+}
+
+/*歌单图像*/
+.album-img {
+  height: 200px;
+  width: 200px;
+  display: inline-block;
+  position: relative;
+  top:-100px;
+  left: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid white;
+}
+
+.album-img img {
+  width: 100%;
+}
+
+/*歌单信息*/
+.album-info {
+  color: black;
+  width: 500px;
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: -100px;
+  margin-left: 100px;
+  padding: 30px 30px;
+}
+
+.album-info li {
+  width: 100%;
+  line-height: 40px;
+}
+
+/*歌单内容*/
+.album-content{
+  margin-left: 300px;
+  padding: 40px 100px;
+}
+
+/*歌单题目*/
+.album-title {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.songs-body {
+  margin-top: 50px;
+}
 </style>

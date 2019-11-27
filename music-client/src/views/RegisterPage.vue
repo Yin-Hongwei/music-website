@@ -1,5 +1,5 @@
 <template>
-<div class="sign">
+<div class="register-page">
   <loginLogo/>
   <div class="register">
     <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="0px" class="demo-ruleForm">
@@ -49,6 +49,9 @@ import loginLogo from '../components/LoginLogo'
 
 export default {
   name: 'register-page',
+  components: {
+    loginLogo
+  },
   data: function () {
     return {
       showSuccess: false, // 提示成功
@@ -195,9 +198,6 @@ export default {
       }]
     }
   },
-  components: {
-    loginLogo
-  },
   methods: {
     register () {
       let _this = this
@@ -213,9 +213,8 @@ export default {
       params.append('introduction', _this.registerForm.introduction)
       params.append('location', _this.registerForm.location)
       params.append('avator', '/img/user.jpg')
-      axios.post(_this.$store.state.HOST + '/api/signup', params)
+      axios.post(`${_this.$store.state.HOST}/api/signup`, params)
         .then(response => {
-          console.log(response)
           if (response.data.code === 1) {
             _this.showError = false
             _this.showSuccess = true
@@ -237,31 +236,34 @@ export default {
 </script>
 
 <style scoped>
-  .register{
-    position: absolute;
-    top:150px;
-    background-color: white;
-    border-radius: 10px;
-    width: 350px;
-    height: 580px;
-    margin-left: 750px;
-    padding: 50px 50px 50px 20px;
-  }
-  .login-btn {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 40px;
-  }
-  .login-btn button{
-    width: 100%;
-    height:36px;
-    margin-top: 40px;
-  }
-  .local {
-    position: absolute;
-    width: 270px;
-    top: 550px;
-    margin-left: 80px;
-  }
+.register{
+  position: absolute;
+  top:150px;
+  background-color: white;
+  border-radius: 10px;
+  width: 350px;
+  height: 580px;
+  margin-left: 750px;
+  padding: 50px 50px 50px 20px;
+}
+
+.login-btn {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 40px;
+}
+
+.login-btn button{
+  width: 100%;
+  height:36px;
+  margin-top: 40px;
+}
+
+.local {
+  position: absolute;
+  width: 270px;
+  top: 550px;
+  margin-left: 80px;
+}
 
 </style>

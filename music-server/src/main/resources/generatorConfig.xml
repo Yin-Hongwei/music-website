@@ -36,9 +36,9 @@
       <property name="enableSubPackages" value="false"/>
     </javaClientGenerator>
 
-     <!--相关表的配置 -->
+    <!--相关表的配置 -->
     <!--<table tableName="rank" domainObjectName="Rank" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
-           <!--enableUpdateByExample="false"/>-->
+    <!--enableUpdateByExample="false"/>-->
 
   </context>
 </generatorConfiguration>

@@ -17,7 +17,7 @@ const song = {
     autoNext: true, // 用于触发自动播放下一首
     lyric: [], // 未处理的歌词数据
     listOfSongs: [], // 当前歌单列表
-    tempList: {},
+    tempList: {}, // 单个歌单信息
     listIndex: null // 当前歌曲在歌曲列表的位置
   },
   getters: {
@@ -186,8 +186,6 @@ const store = new Vuex.Store({
     loginIn: false, // 是否登录
     activeName: '', // 歌单类型名
     searchword: '', // 搜索关键词
-    singersList: [], // 歌手列表
-    songsList: [], // 歌单列表
     index: 0 // 列表中的序号
   },
   getters: {
@@ -212,30 +210,15 @@ const store = new Vuex.Store({
       }
       return index
     },
-    singersList: state => {
-      let singersList = state.singersList
-      if (!singersList.length) {
-        singersList = JSON.parse(window.sessionStorage.getItem('singersList') || null)
-      }
-      return singersList
-    },
-    songsList: state => {
-      let songsList = state.songsList
-      if (!songsList.length) {
-        songsList = JSON.parse(window.sessionStorage.getItem('songsList') || null)
-      }
-      return songsList
-    },
     searchword: state => state.searchword
   },
   mutations: {
     setLoginIn: (state, loginIn) => { state.loginIn = loginIn },
     setActiveName: (state, activeName) => { state.activeName = activeName },
     setIndex: (state, index) => { state.index = index },
-    setSingersList: (state, singersList) => { state.singersList = singersList },
-    setSongsList: (state, songsList) => { state.songsList = songsList },
     setSearchword: (state, searchword) => { state.searchword = searchword }
   },
   actions: {}
 })
+
 export default store
