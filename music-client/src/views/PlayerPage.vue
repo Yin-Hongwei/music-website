@@ -16,7 +16,7 @@
           <span class="no-lrc">暂无歌词</span>
         </div>
       </transition-group>
-      <comment :id=id :type="0"></comment>
+      <comment :id="id" :type="0"></comment>
     </div>
   </div>
 </template>
@@ -28,15 +28,16 @@ import Comment from '../components/Comment'
 
 export default {
   name: 'player-page',
+  components: {
+    Comment
+  },
+  mixins: [mixin],
   data () {
     return {
-      lrcTop: 200 + 'px', // 歌词滑动
+      lrcTop: '200px', // 歌词滑动
       showLrc: false, // 切换唱片和歌词
       lyr: [] // 当前歌曲的歌词
     }
-  },
-  components: {
-    Comment
   },
   computed: {
     ...mapGetters([
@@ -62,7 +63,6 @@ export default {
               document.querySelectorAll('.lrc li')[j].style.fontSize = '15px'
             }
             if (i >= 0) {
-              // this.lrcTop = -i * 30 + 180 + 'px'
               document.querySelectorAll('.lrc li')[i].style.color = '#95d2f6'
               document.querySelectorAll('.lrc li')[i].style.fontSize = '25px'
             }
@@ -73,8 +73,7 @@ export default {
   },
   created () {
     this.lyr = this.lyric
-  },
-  mixins: [mixin]
+  }
 }
 </script>
 

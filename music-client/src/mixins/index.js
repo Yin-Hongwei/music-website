@@ -97,17 +97,17 @@ export const mixin = {
         })
       } else {
         let _this = this
-        axios.get(_this.$store.state.HOST + '/listSongsOfSearch?name=' + _this.$route.query.keywords)
-          .then(function (response) {
-            if (!response.data.length) {
+        axios.get(`${_this.$store.state.HOST}/listSongsOfSearch?name=${_this.$route.query.keywords}`)
+          .then(function (res) {
+            if (!res.data.length) {
               _this.$store.commit('setListOfSongs', [])
               _this.$notify({
                 title: '系统暂无该歌曲',
                 type: 'warning'
               })
             } else {
-              _this.$store.commit('setListOfSongs', response.data)
-              window.sessionStorage.setItem('listOfSongs', JSON.stringify(response.data))
+              _this.$store.commit('setListOfSongs', res.data)
+              window.sessionStorage.setItem('listOfSongs', JSON.stringify(res.data))
             }
           })
           .catch(function (error) {

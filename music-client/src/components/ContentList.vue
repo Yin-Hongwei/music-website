@@ -18,7 +18,7 @@
 
 <script>
 import axios from 'axios'
-import {mixin} from '../mixins'
+import { mixin } from '../mixins'
 
 export default {
   name: 'content-list',
@@ -29,7 +29,7 @@ export default {
   methods: {
     getId (title) {
       let _this = this
-      axios.get(_this.$store.state.HOST + `/api/songAlbum?title=${title}`)
+      axios.get(`${_this.$store.state.HOST}/api/songAlbum?title=${title}`)
         .then((res) => {
           let item = res.data[0]
           this.$router.push({path: `/song-list-album-page/${item.id}`, query: {item}})
@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style scoped>
-  *{
+  div, ul, li, p{
     box-sizing: border-box;
   }
   .content-list {

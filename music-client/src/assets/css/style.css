@@ -10,11 +10,12 @@ ul, li {
 
 html {
   min-width: 1200px;
+  font-size: 14px;
 }
+
 div{
   box-sizing: content-box;
 }
-
 
 /*表单*/
 .el-form-item {

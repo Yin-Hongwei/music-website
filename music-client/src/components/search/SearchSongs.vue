@@ -6,23 +6,23 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import {mixin} from '../../mixins'
+import { mixin } from '../../mixins'
 import AlbumContent from '../AlbumContent'
 
 export default {
   name: 'search-songs',
+  components: {
+    AlbumContent
+  },
+  mixins: [mixin],
   computed: {
     ...mapGetters([
       'listOfSongs' // 存放的音乐
     ])
   },
-  components: {
-    AlbumContent
-  },
-  mounted: function () {
+  mounted () {
     this.getSong()
-  },
-  mixins: [mixin]
+  }
 }
 </script>
 

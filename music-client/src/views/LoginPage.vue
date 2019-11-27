@@ -22,11 +22,15 @@
 
 <script>
 import axios from 'axios'
-import {mixin} from '../mixins'
+import { mixin } from '../mixins'
 import LoginLogo from '../components/LoginLogo'
 
 export default {
   name: 'login-page',
+  components: {
+    LoginLogo
+  },
+  mixins: [mixin],
   data: function () {
     var validateName = (rule, value, callback) => {
       if (!value) {
@@ -59,15 +63,11 @@ export default {
       }
     }
   },
-  components: {
-    LoginLogo
-  },
-  mounted: function () {
+  mounted () {
     this.changeIndex('登录')
     this.getSongLists()
     this.getSingerLists()
   },
-  mixins: [mixin],
   methods: {
     changeIndex (value) {
       this.$store.commit('setActiveName', value)
@@ -115,7 +115,6 @@ export default {
 </script>
 
 <style scoped>
-
 .login{
   position: absolute;
   margin-left: 800px;
@@ -126,16 +125,19 @@ export default {
   height: 210px;
   border-radius: 10px;
 }
+
 .login-btn {
   display: flex;
   justify-content: space-between;
 }
+
 .login-btn button{
   width: 100%;
   height:36px;
   margin-top: 50px;
   margin-left: 20px;
 }
+
 .local {
   position: absolute;
   width: 280px;

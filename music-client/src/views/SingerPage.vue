@@ -57,6 +57,7 @@ export default {
         this.getSingerSex(item.type)
       }
     },
+    // 获取所有歌手
     getSingerAll () {
       let _this = this
       axios.get(`${_this.$store.state.HOST}/listSingers`)
@@ -67,6 +68,7 @@ export default {
           console.log(error)
         })
     },
+    // 通过性别对歌手分类
     getSingerSex (sex) {
       let _this = this
       axios.get(`${_this.$store.state.HOST}/api/singer?sex=${sex}`)
@@ -97,7 +99,7 @@ export default {
   li {
     display: inline-block;
     line-height: 40px;
-    margin: 40px 20px;
+    margin: 40px 20px 15px 20px;
     font-size: 20px;
     font-weight: 400;
     color: #67757f;
