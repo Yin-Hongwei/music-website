@@ -2,15 +2,26 @@ package com.example.demo.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.persistence.*;
+
+@Table
+@Entity
 public class SongList {
+
+    @Id
+    @GeneratedValue
     private Integer id;
 
+    @Column
     private String title;
 
+    @Column
     private String pic;
 
+    @Column
     private String style;
 
+    @Column
     private String introduction;
 
     public Integer getId() {
@@ -36,7 +47,6 @@ public class SongList {
     public void setPic(String pic) {
         this.pic = pic == null ? null : pic.trim();
     }
-
 
     public String getIntroduction() {
         return introduction;

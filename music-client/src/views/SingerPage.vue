@@ -1,27 +1,51 @@
 <template>
-  <div class="body-section">
-    <div class="song-head">全部歌手</div>
-    <content-list :contentList="singersList"></content-list>
+  <div class="singer-page">
+    <div class="singer-header">
+      <ul>
+        <li
+          v-for="(item, index) in singerStyle"
+          :key="index"
+          :class="{active: item.name === activeName}"
+          @click="handleChangeView(item)">
+          {{item.name}}
+        </li>
+      </ul>
+    </div>
+    <content-list :contentList="albumDatas"></content-list>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import {axios} from 'axios'
+import axios from 'axios'
 import ContentList from '../components/ContentList'
 
 export default {
   name: 'singer-page',
-  computed: {
-    ...mapGetters([
-      'singersList'
-    ])
-  },
   components: {
     ContentList
   },
-  mounted () {
-    this.getSingerLists()
+  data () {
+    return {
+      singerStyle: [
+        {
+          name: '全部',
+          type: '3'
+        },
+        {
+          name: '男',
+          type: '1'
+        },
+        {
+          name: '女',
+          type: '0'
+        }
+      ],
+      activeName: '全部',
+      albumDatas: []
+    }
+  },
+  created () {
+    this.getSingerAll()
   },
   methods: {
     handleChangeView: function (item) {
@@ -60,33 +84,31 @@ export default {
 </script>
 
 <style scoped>
-*{
-  box-sizing: border-box;
-}
-
-.body-section {
-  margin: 30px 10%;
-  padding-bottom: 50px;
-  background-color: #ffffff;
-}
-
-.singer-header {
-  width: 100%;
-  padding: 0 40px;
-}
-
-li {
-  display: inline-block;
-  line-height: 40px;
-  margin: 40px 20px 15px 20px;
-  font-size: 20px;
-  font-weight: 400;
-  color: #67757f;
-  border-bottom: none;
-  cursor: pointer;
-}
-
-.active {
-  color: black;
-}
+  div, ul, li{
+    box-sizing: border-box;
+  }
+  .singer-page {
+    margin: 30px 10%;
+    padding-bottom: 50px;
+    background-color: #ffffff;
+  }
+  .singer-header {
+    width: 100%;
+    padding: 0 40px;
+  }
+  li {
+    display: inline-block;
+    line-height: 40px;
+    margin: 40px 20px 15px 20px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #67757f;
+    border-bottom: none;
+    cursor: pointer;
+  }
+  .active {
+    color: black;
+    font-weight: 600;
+    border-bottom: 4px solid black;
+  }
 </style>

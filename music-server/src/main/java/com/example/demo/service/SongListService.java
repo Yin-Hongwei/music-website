@@ -21,4 +21,5 @@ public interface SongListService {
     List<SongList> likeStyle(String style);
 
     List<SongList> songAlbum(String title);
+
 }

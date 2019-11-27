@@ -79,65 +79,56 @@ export default {
 </script>
 
 <style scoped>
-.singer-album-page{
-  background-color: #93d2f8;
-}
+  .singer-album-page{
+    background-color: #93d2f8;
+  }
+  .album {
+    margin-top: 200px;
+    background-color: #e6ecf0;
+  }
+  /*左*/
+  .slide {
+    float: left;
+    width: 400px;
+  }
+  .singer-img {
+    height: 300px;
+    width: 300px;
+    display: inline-block;
+    position: relative;
+    top: -100px;
+    left: 50px;
+    border-radius: 10%;
+    overflow: hidden;
+    border: 5px solid white;
+  }
+  .singer-img img {
+    width: 100%;
+  }
+  .info {
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+    padding-left: 100px;
+  }
+  .info li {
+    width: 100%;
+    height: 40px;
+  }
 
-.album {
-  margin-top: 200px;
-  background-color: #e6ecf0;
-}
-
-/*左*/
-.slide {
-  float: left;
-  width: 400px;
-}
-
-.singer-img {
-  height: 300px;
-  width: 300px;
-  display: inline-block;
-  position: relative;
-  top: -100px;
-  left: 50px;
-  border-radius: 10%;
-  overflow: hidden;
-  border: 5px solid white;
-}
-
-.singer-img img {
-  width: 100%;
-}
-
-.info {
-  color: black;
-  font-size: 20px;
-  font-weight: 500;
-  padding-left: 100px;
-}
-
-.info li {
-  width: 100%;
-  height: 40px;
-}
-
-/*右*/
-.section{
-  margin-left: 300px;
-  padding: 30px 100px;
-}
-
-.intro {
-  font-size: 20px;
-}
-
-.intro > span {
-  color: rgba(0, 0, 0, 0.5);
-}
-
-.content {
-  margin-top: 50px;
-}
+  /*右*/
+  .section{
+    margin-left: 300px;
+    padding: 30px 100px;
+  }
+  .intro {
+    font-size: 20px;
+  }
+  .intro > span {
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .content {
+    margin-top: 50px;
+  }
 
 </style>

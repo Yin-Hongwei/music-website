@@ -69,4 +69,11 @@ public class SongServiceImpl implements SongService {
     {
         return songMapper.searachSongLists(name);
     }
+
+    @Override
+    public List<Song> songOfName(String name)
+
+    {
+        return songMapper.songOfName(name);
+    }
 }
