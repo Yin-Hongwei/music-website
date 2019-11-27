@@ -95,8 +95,6 @@ export default {
           for (let item of response.data) {
             _this.getSongList(item.songId)
           }
-          // console.log('------歌曲------')
-          // console.log(_this.songLists)
           _this.$store.commit('setListOfSongs', _this.songLists)
           window.sessionStorage.setItem('listOfSongs', JSON.stringify(_this.songLists))
         })
@@ -131,7 +129,7 @@ export default {
       if (this.loginIn) {
         let _this = this
         var params = new URLSearchParams()
-        params.append('songListId', _this.index + 1)
+        params.append('songListId', _this.songListId)
         params.append('consumerId', _this.userId)
         params.append('score', _this.value3 * 2)
         axios.post(`${_this.$store.state.HOST}/api/pushRank`, params)

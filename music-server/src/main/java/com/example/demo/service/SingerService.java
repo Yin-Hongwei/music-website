@@ -17,4 +17,6 @@ public interface SingerService {
     List<Singer> listSingers();
 
     List<Singer> searachSinger(String name);
+
+    List<Singer> singerSex(Integer sex);
 }
