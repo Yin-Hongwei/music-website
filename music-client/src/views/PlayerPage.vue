@@ -82,6 +82,7 @@ export default {
   padding: 50px 0;
   flex: 1;
 }
+
 .song-lyric {
   margin: auto;
   width: 700px;
@@ -89,35 +90,42 @@ export default {
   border-radius: 12px;
   padding: 0 20px 50px 20px;
 }
+
 .lyr-fade-enter,
 .lyr-fade-leave-to {
   transform: translateX(30px);
   opacity: 0;
 }
+
 .lyc-fade-enter-active,
 .lyc-fade-leave-active {
   transition: all .3s ease;
 }
+
 .lrc {
   font-size: 18px;
   padding: 30px 0;
   width: 100%;
   text-align: center;
 }
+
 .lyric {
   width: 100%;
   height: 40px;
   line-height: 40px;
 }
+
 .no-lyric {
   margin: 150px 0;
   width: 100%;
   text-align: center;
 }
+
 .no-lrc {
   font-size: 30px;
   text-align: center;
 }
+
 h2 {
   text-align: center;
   height: 50px;

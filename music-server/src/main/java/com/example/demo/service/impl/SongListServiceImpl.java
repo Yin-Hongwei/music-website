@@ -51,6 +51,7 @@ public class SongListServiceImpl implements SongListService {
     @Override
     public boolean ifAdd(SongList songList)
     {
+
         return songListMapper.insertSelective(songList) > 0?true:false;
     }
 

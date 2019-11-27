@@ -2,18 +2,9 @@ package com.example.demo.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.Date;
 
-@Entity
-@Table
 public class Consumer {
-
-    @Id
-    @Column
     private Integer id;
 
     private String username;

@@ -172,14 +172,7 @@ public class SingerController {
     //    根据歌手名查找歌手
     @RequestMapping(value = "/searachSingers", method = RequestMethod.GET)
     public Object searachSingers(HttpServletRequest req){
-        String name = req.getParameter("name").trim();
+        String name = req.getParameter("name");
         return singerService.searachSinger(name);
-    }
-
-    //    根据歌手性别查找歌手
-    @RequestMapping(value = "/api/singer", method = RequestMethod.GET)
-    public Object SingerSex(HttpServletRequest req){
-        String sex = req.getParameter("sex").trim();
-        return singerService.singerSex(Integer.parseInt(sex));
     }
 }
