@@ -329,7 +329,7 @@ export default {
   mixins: [mixin],
   methods: {
     uploadUrl (id) {
-      return `_this.$store.state.HOST/api/updateUserImg?id=${id}`
+      return `${this.$store.state.HOST}/api/updateUserImg?id=${id}`
     },
     // 获取用户信息
     getData () {
