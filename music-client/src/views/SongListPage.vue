@@ -14,15 +14,6 @@
     <div class="song-content">
       <content-list :contentList="albumDatas"></content-list>
     </div>
-    <div class="pagination">
-      <el-pagination
-        v-if="'全部歌单' === activeName"
-        background
-        @current-change="handleCurrentChange"
-        layout="prev, pager, next"
-        :total="total">
-      </el-pagination>
-    </div>
   </div>
 </template>
 

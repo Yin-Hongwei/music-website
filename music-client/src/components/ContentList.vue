@@ -2,9 +2,9 @@
   <div class="content-list">
     <ul class="section-content">
       <li class="content-item" v-for="(item, index) in contentList" :key="index">
-        <div class="kuo" @click="goAblum(item, item.name)">
+        <div class="kuo" @click="goAblum(item.id, item.list || index, item.name)">
           <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
-          <div class="mask"  @click="goAblum(item, item.name)">
+          <div class="mask"  @click="goAblum(item.id, item.list || index, item.name)">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-bofang"></use>
             </svg>
@@ -39,9 +39,9 @@ export default {
       this.$store.commit('setTempList', item)
       window.sessionStorage.setItem('tempList', JSON.stringify(item))
       if (type) {
-        this.$router.push({path: `/singer-album-page/${item.id}`, query: {item}})
+        this.$router.push({path: '/singer-album-page/' + id})
       } else {
-        this.getId(item.title)
+        this.$router.push({path: '/song-list-album-page/' + id})
       }
     }
   }

@@ -142,313 +142,314 @@
 <script>
 import {mixin} from '../mixins'
 export default {
-  name: 'consumer-page',
-  data () {
-    return {
-      registerForm: { // 注册
-        username: '',
-        password: '',
-        sex: '',
-        phoneNum: '',
-        email: '',
-        birth: '',
-        introduction: '',
-        location: ''
-      },
-      cities: [{
-        value: '北京',
-        label: '北京'
-      }, {
-        value: '天津',
-        label: '天津'
-      }, {
-        value: '河北',
-        label: '河北'
-      }, {
-        value: '山西',
-        label: '山西'
-      }, {
-        value: '内蒙古',
-        label: '内蒙古'
-      }, {
-        value: '辽宁',
-        label: '辽宁'
-      }, {
-        value: '吉林',
-        label: '吉林'
-      }, {
-        value: '黑龙江',
-        label: '黑龙江'
-      }, {
-        value: '上海',
-        label: '上海'
-      }, {
-        value: '江苏',
-        label: '江苏'
-      }, {
-        value: '浙江',
-        label: '浙江'
-      }, {
-        value: '安徽',
-        label: '安徽'
-      }, {
-        value: '福建',
-        label: '福建'
-      }, {
-        value: '江西',
-        label: '江西'
-      }, {
-        value: '山东',
-        label: '山东'
-      }, {
-        value: '河南',
-        label: '河南'
-      }, {
-        value: '湖北',
-        label: '湖北'
-      }, {
-        value: '湖南',
-        label: '湖南'
-      }, {
-        value: '广东',
-        label: '广东'
-      }, {
-        value: '广西',
-        label: '广西'
-      }, {
-        value: '海南',
-        label: '海南'
-      }, {
-        value: '重庆',
-        label: '重庆'
-      }, {
-        value: '四川',
-        label: '四川'
-      }, {
-        value: '贵州',
-        label: '贵州'
-      }, {
-        value: '云南',
-        label: '云南'
-      }, {
-        value: '西藏',
-        label: '西藏'
-      }, {
-        value: '陕西',
-        label: '陕西'
-      }, {
-        value: '甘肃',
-        label: '甘肃'
-      }, {
-        value: '青海',
-        label: '青海'
-      }, {
-        value: '宁夏',
-        label: '宁夏'
-      }, {
-        value: '新疆',
-        label: '新疆'
-      }, {
-        value: '香港',
-        label: '香港'
-      }, {
-        value: '澳门',
-        label: '澳门'
-      }, {
-        value: '台湾',
-        label: '台湾'
-      }],
-      rules: {
-        username: [
-          { required: true, trigger: 'blur' }
-        ],
-        password: [
-          { required: true, trigger: 'blur' }
-        ],
-        sex: [
-          { required: true, message: '请选择性别', trigger: 'change' }
-        ],
-        phoneNum: [
-          { essage: '请选择日期', trigger: 'blur' }
-        ],
-        email: [
-          { message: '请输入邮箱地址', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-        ],
-        birth: [
-          { required: true, type: 'date', message: '请选择日期', trigger: 'change' }
-        ],
-        introduction: [
-          { message: '请输入介绍', trigger: 'blur' }
-        ],
-        location: [
-          { message: '请输入地区', trigger: 'change' }
-        ]
-      },
-      tableData: [], // 记录用户信息，用于显示
-      tempDate: [], // 记录用户信息，用于搜索时能临时记录一份用户信息
-      is_search: false,
-      multipleSelection: [], // 记录要删除的用户信息
-      centerDialogVisible: false,
-      editVisible: false, // 显示编辑框
-      delVisible: false, // 显示删除框
-      select_word: '', // 记录输入框输入的内容
-      form: { // 记录编辑的信息
-        id: '',
-        username: '',
-        password: '',
-        sex: '',
-        phoneNum: '',
-        email: '',
-        birth: '',
-        introduction: '',
-        location: '',
-        createTime: '',
-        updateTime: ''
-      },
-      idx: -1 // 记录当前点中的行
-    }
-  },
-  watch: {
-    select_word: function () {
-      if (this.select_word === '') {
-        this.tableData = this.tempDate
-      } else {
-        this.tableData = []
-        for (let item of this.tempDate) {
-          if (item.username.includes(this.select_word)) {
-            this.tableData.push(item)
-          }
+    name: 'consumer-page',
+    data() {
+        return {
+            registerForm: { // 注册
+                username: '',
+                password: '',
+                sex: '',
+                phoneNum: '',
+                email: '',
+                birth: '',
+                introduction: '',
+                location: ''
+            },
+            cities: [{
+                value: '北京',
+                label: '北京'
+            }, {
+                value: '天津',
+                label: '天津'
+            }, {
+                value: '河北',
+                label: '河北'
+            }, {
+                value: '山西',
+                label: '山西'
+            }, {
+                value: '内蒙古',
+                label: '内蒙古'
+            }, {
+                value: '辽宁',
+                label: '辽宁'
+            }, {
+                value: '吉林',
+                label: '吉林'
+            }, {
+                value: '黑龙江',
+                label: '黑龙江'
+            }, {
+                value: '上海',
+                label: '上海'
+            }, {
+                value: '江苏',
+                label: '江苏'
+            }, {
+                value: '浙江',
+                label: '浙江'
+            }, {
+                value: '安徽',
+                label: '安徽'
+            }, {
+                value: '福建',
+                label: '福建'
+            }, {
+                value: '江西',
+                label: '江西'
+            }, {
+                value: '山东',
+                label: '山东'
+            }, {
+                value: '河南',
+                label: '河南'
+            }, {
+                value: '湖北',
+                label: '湖北'
+            }, {
+                value: '湖南',
+                label: '湖南'
+            }, {
+                value: '广东',
+                label: '广东'
+            }, {
+                value: '广西',
+                label: '广西'
+            }, {
+                value: '海南',
+                label: '海南'
+            }, {
+                value: '重庆',
+                label: '重庆'
+            }, {
+                value: '四川',
+                label: '四川'
+            }, {
+                value: '贵州',
+                label: '贵州'
+            }, {
+                value: '云南',
+                label: '云南'
+            }, {
+                value: '西藏',
+                label: '西藏'
+            }, {
+                value: '陕西',
+                label: '陕西'
+            }, {
+                value: '甘肃',
+                label: '甘肃'
+            }, {
+                value: '青海',
+                label: '青海'
+            }, {
+                value: '宁夏',
+                label: '宁夏'
+            }, {
+                value: '新疆',
+                label: '新疆'
+            }, {
+                value: '香港',
+                label: '香港'
+            }, {
+                value: '澳门',
+                label: '澳门'
+            }, {
+                value: '台湾',
+                label: '台湾'
+            }],
+            rules: {
+                username: [
+                    { required: true, trigger: 'blur' }
+                ],
+                password: [
+                    { required: true, trigger: 'blur' }
+                ],
+                sex: [
+                    { required: true, message: '请选择性别', trigger: 'change' }
+                ],
+                phoneNum: [
+                    { essage: '请选择日期', trigger: 'blur' }
+                ],
+                email: [
+                    { message: '请输入邮箱地址', trigger: 'blur' },
+                    { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+                ],
+                birth: [
+                    { required: true, type: 'date', message: '请选择日期', trigger: 'change' }
+                ],
+                introduction: [
+                    { message: '请输入介绍', trigger: 'blur' }
+                ],
+                location: [
+                    { message: '请输入地区', trigger: 'change' }
+                ]
+            },
+            tableData: [], // 记录用户信息，用于显示
+            tempDate: [], // 记录用户信息，用于搜索时能临时记录一份用户信息
+            is_search: false,
+            multipleSelection: [], // 记录要删除的用户信息
+            centerDialogVisible: false,
+            editVisible: false, // 显示编辑框
+            delVisible: false, // 显示删除框
+            select_word:'', // 记录输入框输入的内容
+            form: { // 记录编辑的信息
+                id: '',
+                username: '',
+                password: '',
+                sex: '',
+                phoneNum: '',
+                email: '',
+                birth: '',
+                introduction: '',
+                location: '',
+                createTime: '',
+                updateTime: ''
+            },
+            idx: -1 // 记录当前点中的行
         }
-      }
+    },
+    watch: {
+        select_word: function () {
+            if (this.select_word === "") {
+                this.tableData = this.tempDate
+            } else {
+                this.tableData=[]
+                for (let item of this.tempDate) {
+                    if (item.username.includes(this.select_word)) {
+                        this.tableData.push(item)
+                    }
+                }
+            }
+        }
+    },
+    created() {
+        this.getData();
+    },
+    mixins: [mixin],
+    methods: {
+        uploadUrl (id) {
+           return `http://localhost:8080/api/updateUserImg?id=${id}`
+        },
+        // 获取用户信息
+        getData () {
+            var _this = this
+            _this.tableData = []
+            _this.tempDate = []
+            _this.$axios.get('http://localhost:8080/AllUsers').then((res) => {
+                console.log(res.data)
+                _this.tableData = res.data
+                _this.tempDate = res.data
+            })
+        },
+        getCollect (id) {
+            this.$router.push({path: "/collect", query: { id }})
+        },
+        addPeople () {
+            let _this = this
+            let d = _this.registerForm.birth
+            var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+            var params = new URLSearchParams()
+            params.append('username', _this.registerForm.username)
+            params.append('password', _this.registerForm.password)
+            params.append('sex', _this.registerForm.sex)
+            params.append('phone_num', _this.registerForm.phoneNum)
+            params.append('email', _this.registerForm.email)
+            params.append('birth', datetime)
+            params.append('introduction', _this.registerForm.introduction)
+            params.append('location', _this.registerForm.location)
+            params.append('avator', '/img/user.jpg')
+            _this.$axios.post('http://localhost:8080/api/signup', params)
+                .then(response => {
+                    // console.log(response)
+                    if (response.data.code === 1) {
+                        _this.getData()
+                        _this.registerForm = []
+                        _this.$notify({
+                            title: '添加成功',
+                            type: 'success'
+                        });
+                    } else {
+                        _this.$notify({
+                            title: '添加失败',
+                            type: 'error'
+                        });
+                    }
+                })
+                .catch(failResponse => {})
+            _this.centerDialogVisible = false
+        },
+        // 编辑
+        handleEdit(index, row) {
+            this.idx = index
+            this.form = {
+                id: row.id,
+                username: row.username,
+                password: row.password,
+                sex: row.sex,
+                phoneNum: row.phoneNum,
+                email: row.email,
+                birth: row.birth,
+                introduction: row.introduction,
+                location: row.location,
+                avator: row.avator
+            }
+            this.editVisible = true
+            },
+        // 保存编辑
+        saveEdit() {
+            let d = this.form.birth
+            var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+            var params = new URLSearchParams()
+            params.append('id', this.form.id)
+            params.append('username', this.form.username)
+            params.append('password', this.form.password)
+            params.append('sex', this.form.sex)
+            params.append('phone_num', this.form.phoneNum)
+            params.append('email', this.form.email)
+            params.append('birth', datetime)
+            params.append('introduction', this.form.introduction)
+            params.append('location', this.form.location)
+            this.$axios.post('http://localhost:8080/api/updateUserMsgs', params)
+                .then(res => {
+                    if (res.data.code === 1) {
+                        this.getData()
+                        this.$notify({
+                            title: '修改成功',
+                            type: 'success'
+                        });
+                    } else {
+                        this.$notify({
+                            title: '修改失败',
+                            type: 'error'
+                        });
+                    }
+                })
+                .catch(failResponse => {})
+            this.editVisible = false
+        },
+        // 确定删除
+        deleteRow(){
+            var _this = this
+            _this.$axios.get('http://localhost:8080/api/deleteUsers?id=' + _this.tableData[_this.idx].id)
+                .then(response => {
+                    if (response.data) {
+                        _this.getData()
+                        _this.$notify({
+                            title: '删除成功',
+                            type: 'success'
+                        });
+                    } else {
+                        _this.$notify({
+                            title: '删除失败',
+                            type: 'error'
+                        });
+                    }
+                })
+                .catch(failResponse => {})
+            _this.delVisible = false
+        }
     }
-  },
-  created () {
-    this.getData(this.cur_page)
-  },
-  mixins: [mixin],
-  methods: {
-    uploadUrl (id) {
-      return `http://localhost:8080/api/updateUserImg?id=${id}`
-    },
-    // 获取用户信息
-    getData () {
-      let _this = this
-      _this.tableData = []
-      _this.tempDate = []
-      _this.$axios.get(_this.$store.state.HOST + '/AllUsers').then((res) => {
-        _this.tableData = res.data
-        _this.tempDate = res.data
-      })
-    },
-    getCollect (id) {
-      this.$router.push({path: '/collect', query: { id }})
-    },
-    addPeople () {
-      let _this = this
-      let d = _this.registerForm.birth
-      var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      var params = new URLSearchParams()
-      params.append('username', _this.registerForm.username)
-      params.append('password', _this.registerForm.password)
-      params.append('sex', _this.registerForm.sex)
-      params.append('phone_num', _this.registerForm.phoneNum)
-      params.append('email', _this.registerForm.email)
-      params.append('birth', datetime)
-      params.append('introduction', _this.registerForm.introduction)
-      params.append('location', _this.registerForm.location)
-      params.append('avator', '/img/user.jpg')
-      _this.$axios.post('http://localhost:8080/api/signup', params)
-        .then(response => {
-          // console.log(response)
-          if (response.data.code === 1) {
-            _this.getData()
-            _this.registerForm = []
-            _this.$notify({
-              title: '添加成功',
-              type: 'success'
-            })
-          } else {
-            _this.$notify({
-              title: '添加失败',
-              type: 'error'
-            })
-          }
-        })
-        .catch(failResponse => {})
-      _this.centerDialogVisible = false
-    },
-    // 编辑
-    handleEdit (index, row) {
-      this.idx = index
-      this.form = {
-        id: row.id,
-        username: row.username,
-        password: row.password,
-        sex: row.sex,
-        phoneNum: row.phoneNum,
-        email: row.email,
-        birth: row.birth,
-        introduction: row.introduction,
-        location: row.location,
-        avator: row.avator
-      }
-      this.editVisible = true
-    },
-    // 保存编辑
-    saveEdit () {
-      let d = this.form.birth
-      var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      var params = new URLSearchParams()
-      params.append('id', this.form.id)
-      params.append('username', this.form.username)
-      params.append('password', this.form.password)
-      params.append('sex', this.form.sex)
-      params.append('phone_num', this.form.phoneNum)
-      params.append('email', this.form.email)
-      params.append('birth', datetime)
-      params.append('introduction', this.form.introduction)
-      params.append('location', this.form.location)
-      this.$axios.post('http://localhost:8080/api/updateUserMsgs', params)
-        .then(res => {
-          if (res.data.code === 1) {
-            this.getData()
-            this.$notify({
-              title: '修改成功',
-              type: 'success'
-            })
-          } else {
-            this.$notify({
-              title: '修改失败',
-              type: 'error'
-            })
-          }
-        })
-        .catch(failResponse => {})
-      this.editVisible = false
-    },
-    // 确定删除
-    deleteRow () {
-      var _this = this
-      _this.$axios.get('http://localhost:8080/api/deleteUsers?id=' + _this.tableData[_this.idx].id)
-        .then(response => {
-          if (response.data) {
-            _this.getData()
-            _this.$notify({
-              title: '删除成功',
-              type: 'success'
-            })
-          } else {
-            _this.$notify({
-              title: '删除失败',
-              type: 'error'
-            })
-          }
-        })
-        .catch(failResponse => {})
-      _this.delVisible = false
-    }
-  }
 }
 
 </script>

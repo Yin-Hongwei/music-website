@@ -24,5 +24,4 @@ public interface SongService {
 
     List<Song> searachSongLists(String name);
 
-    List<Song> songOfName(String name);
 }
