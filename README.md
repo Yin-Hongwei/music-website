@@ -68,7 +68,7 @@ spring boot + MyBatis
 
 #### 前端
 
-vue + vue-router + vuex + axios +  element-ui + mint-ui + muse-ui + swiper
+vue + vue-router + vuex + axios +  element-ui + swiper
 
 <br/>
 
