@@ -82,7 +82,7 @@ export default {
     getData () {
       var _this = this
       _this.$axios
-        .get('http://localhost:8080/myCollection?userId=' + this.$route.query.id)
+        .get(`${_this.$store.state.HOST}/myCollection?userId=${this.$route.query.id}`)
         .then(res => {
           _this.tableData = []
           for (let item of res.data) {
@@ -94,7 +94,7 @@ export default {
     getSongList (id) {
       var _this = this
       _this.$axios
-        .get('http://localhost:8080/listSongsOfSongs?id=' + id)
+        .get(`${_this.$store.state.HOST}/listSongsOfSongs?id=${id}`)
         .then(function (res) {
           _this.tableData.push(res.data[0])
           _this.tempDate.push(res.data[0])
@@ -107,7 +107,7 @@ export default {
     deleteRow () {
       var _this = this
       _this.$axios
-        .get('http://localhost:8080/api/deleteCollects?id=' + _this.tableData[_this.idx].id)
+        .get(`${_this.$store.state.HOST}/api/deleteCollects?id=${_this.tableData[_this.idx].id}`)
         .then(response => {
           if (response.data) {
             _this.getData()

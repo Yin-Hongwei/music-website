@@ -84,31 +84,35 @@ export default {
 </script>
 
 <style scoped>
-  div, ul, li{
-    box-sizing: border-box;
-  }
-  .singer-page {
-    margin: 30px 10%;
-    padding-bottom: 50px;
-    background-color: #ffffff;
-  }
-  .singer-header {
-    width: 100%;
-    padding: 0 40px;
-  }
-  li {
-    display: inline-block;
-    line-height: 40px;
-    margin: 40px 20px 15px 20px;
-    font-size: 20px;
-    font-weight: 400;
-    color: #67757f;
-    border-bottom: none;
-    cursor: pointer;
-  }
-  .active {
-    color: black;
-    font-weight: 600;
-    border-bottom: 4px solid black;
-  }
+div, ul, li{
+  box-sizing: border-box;
+}
+
+.singer-page {
+  margin: 30px 10%;
+  padding-bottom: 50px;
+  background-color: #ffffff;
+}
+
+.singer-header {
+  width: 100%;
+  padding: 0 40px;
+}
+
+li {
+  display: inline-block;
+  line-height: 40px;
+  margin: 40px 20px 15px 20px;
+  font-size: 20px;
+  font-weight: 400;
+  color: #67757f;
+  border-bottom: none;
+  cursor: pointer;
+}
+
+.active {
+  color: black;
+  font-weight: 600;
+  border-bottom: 4px solid black;
+}
 </style>

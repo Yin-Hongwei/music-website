@@ -218,7 +218,7 @@ export default {
       var _this = this
       _this.tableData = []
       _this.tempDate = []
-      _this.$axios.get(_this.$store.state.HOST + `/api/songPage?page=${page}&&size=10`).then((res) => {
+      _this.$axios.get(`${_this.$store.state.HOST}/api/songPage?page=${page}&&size=10`).then((res) => {
         _this.total = res.data.page.totalPages * 10
         // _this.tableData = res.data._embedded.songs
         // _this.tempDate = res.data._embedded.songs
@@ -230,7 +230,7 @@ export default {
     },
     getId (name) {
       let _this = this
-      this.$axios.get(_this.$store.state.HOST + `/api/song?name=${name}`)
+      this.$axios.get(`${_this.$store.state.HOST}/api/song?name=${name}`)
         .then((res) => {
           if (res.data[0]) {
             let o = res.data[0]
@@ -251,11 +251,11 @@ export default {
     },
     // 更新歌曲图片
     uploadUrl (id) {
-      return `http://localhost:8080/api/updateSongPic?id=${id}`
+      return `${this.$store.state.HOST}/api/updateSongPic?id=${id}`
     },
     // 更新歌曲url
     uploadSongUrl (id) {
-      return `http://localhost:8080/api/updateSongUrl?id=${id}`
+      return `${this.$store.state.HOST}/api/updateSongUrl?id=${id}`
     },
     beforeSongUpload (file) {
       var testmsg = file.name.substring(file.name.lastIndexOf('.') + 1)
@@ -292,7 +292,7 @@ export default {
     getSingerName () {
       let _this = this
       let value = document.getElementById('singerName').value
-      _this.$axios.get('http://localhost:8080/searachSingers?name=' + value).then(function (res) {
+      _this.$axios.get(`${_this.$store.state.HOST}/searachSingers?name=${value}`).then(function (res) {
         if (!res.data.length) {
           _this.$notify({
             title: '系统暂无该该歌手',
@@ -320,7 +320,7 @@ export default {
           })
         }
       }
-      req.open('post', 'http://localhost:8080/api/addSong', false)
+      req.open('post', `${_this.$store.state.HOST}/api/addSong`, false)
       req.send(form)
       _this.centerDialogVisible = false
     },
@@ -350,7 +350,7 @@ export default {
       params.append('name', this.form.name)
       params.append('introduction', this.form.introduction)
       params.append('lyric', this.form.lyric)
-      this.$axios.post('http://localhost:8080/api/updateSongMsgs', params)
+      this.$axios.post(`${this.$store.state.HOST}/api/updateSongMsgs`, params)
         .then(response => {
           if (response.data) {
             this.getData()
@@ -371,7 +371,7 @@ export default {
     // 确定删除
     deleteRow () {
       var _this = this
-      _this.$axios.get('http://localhost:8080/api/deleteSongs?id=' + _this.tableData[_this.idx].id)
+      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteSongs?id=${_this.tableData[_this.idx].id}`)
         .then(response => {
           if (response.data) {
             _this.getData()

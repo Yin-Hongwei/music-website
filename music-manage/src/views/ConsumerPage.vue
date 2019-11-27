@@ -329,14 +329,14 @@ export default {
   mixins: [mixin],
   methods: {
     uploadUrl (id) {
-      return `http://localhost:8080/api/updateUserImg?id=${id}`
+      return `_this.$store.state.HOST/api/updateUserImg?id=${id}`
     },
     // 获取用户信息
     getData () {
       let _this = this
       _this.tableData = []
       _this.tempDate = []
-      _this.$axios.get(_this.$store.state.HOST + '/AllUsers').then((res) => {
+      _this.$axios.get(`${_this.$store.state.HOST}/AllUsers`).then((res) => {
         _this.tableData = res.data
         _this.tempDate = res.data
       })
@@ -358,7 +358,7 @@ export default {
       params.append('introduction', _this.registerForm.introduction)
       params.append('location', _this.registerForm.location)
       params.append('avator', '/img/user.jpg')
-      _this.$axios.post('http://localhost:8080/api/signup', params)
+      _this.$axios.post(`${_this.$store.state.HOST}/api/signup`, params)
         .then(response => {
           // console.log(response)
           if (response.data.code === 1) {
@@ -409,7 +409,7 @@ export default {
       params.append('birth', datetime)
       params.append('introduction', this.form.introduction)
       params.append('location', this.form.location)
-      this.$axios.post('http://localhost:8080/api/updateUserMsgs', params)
+      this.$axios.post(`${this.$store.state.HOST}/api/updateUserMsgs`, params)
         .then(res => {
           if (res.data.code === 1) {
             this.getData()
@@ -430,7 +430,7 @@ export default {
     // 确定删除
     deleteRow () {
       var _this = this
-      _this.$axios.get('http://localhost:8080/api/deleteUsers?id=' + _this.tableData[_this.idx].id)
+      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteUsers?id=${_this.tableData[_this.idx].id}`)
         .then(response => {
           if (response.data) {
             _this.getData()

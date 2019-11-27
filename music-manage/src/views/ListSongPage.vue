@@ -109,7 +109,7 @@ export default {
       _this.tableData = []
       _this.tempDate = []
       _this.$axios
-        .get('http://localhost:8080/listSongOfSingers?songListId=' + _this.$route.query.id)
+        .get(`${_this.$store.state.HOST}/listSongOfSingers?songListId=${_this.$route.query.id}`)
         .then(res => {
           console.log(res.data)
           for (let item of res.data) {
@@ -121,7 +121,7 @@ export default {
     getSong (id) {
       let _this = this
       _this.$axios
-        .get('http://localhost:8080/listSongsOfSongs?id=' + id)
+        .get(`${_this.$store.state.HOST}/listSongsOfSongs?id=${id}`)
         .then(function (res) {
           _this.tableData.push(res.data[0])
           _this.tempDate.push(res.data[0])
@@ -136,7 +136,7 @@ export default {
       var id =
         _this.registerForm.singerName + '-' + _this.registerForm.songName
       _this.$axios
-        .get('http://localhost:8080/listSongsOfSearch?name=' + id)
+        .get(`${_this.$store.state.HOST}/listSongsOfSearch?name=${id}`)
         .then(res => {
           _this.addSong(res.data[0].id)
         })
@@ -148,7 +148,7 @@ export default {
       params.append('songId', id)
       params.append('songListId', _this.$route.query.id)
       _this.$axios
-        .post('http://localhost:8080/api/addListSong', params)
+        .post(`${_this.$store.state.HOST}/api/addListSong`, params)
         .then(res => {
           if (res.data.code === 1) {
             _this.getData()
@@ -170,8 +170,7 @@ export default {
       let _this = this
       _this.$axios
         .get(
-          'http://localhost:8080/api/deleteListOfSong?songId=' +
-            _this.tableData[_this.idx].id
+          `${_this.$store.state.HOST}/api/deleteListOfSong?songId=${_this.tableData[_this.idx].id}`
         )
         .then(res => {
           if (res.data) {

@@ -190,7 +190,7 @@ export default {
   mixins: [mixin],
   methods: {
     uploadUrl (id) {
-      return `http://localhost:8080/api/updateSingerImg?id=${id}`
+      return `${this.$store.state.HOST}/api/updateSingerImg?id=${id}`
     },
     addsinger () {
       let _this = this
@@ -205,7 +205,7 @@ export default {
       params.append('location', this.registerForm.location)
       params.append('introduction', this.registerForm.introduction)
       _this.$axios
-        .post('http://localhost:8080/api/addSinger', params)
+        .post(`${_this.$store.state.HOST}/api/addSinger`, params)
         .then(res => {
           console.log(res)
           if (res.data.code === 1) {
@@ -229,7 +229,7 @@ export default {
       var _this = this
       _this.tableData = []
       _this.tempDate = []
-      _this.$axios.get('http://localhost:8080/listSingers').then(res => {
+      _this.$axios.get(`${_this.$store.state.HOST}/listSingers`).then(res => {
         _this.tableData = res.data
         _this.tempDate = res.data
       })
@@ -263,7 +263,7 @@ export default {
       params.append('location', _this.form.location)
       params.append('introduction', _this.form.introduction)
       _this.$axios
-        .post('http://localhost:8080/api/updateSingerMsgs', params)
+        .post(`${_this.$store.state.HOST}/api/updateSingerMsgs`, params)
         .then(response => {
           console.log(response.data)
           if (response.data.code === 1) {
@@ -287,9 +287,7 @@ export default {
       var _this = this
       _this.$axios
         .get(
-          'http://localhost:8080/api/deleteSingers?id=' +
-            _this.tableData[_this.idx].id
-        )
+          `${_this.$store.state.HOST}/api/deleteSingers?id=${_this.tableData[_this.idx].id}`)
         .then(response => {
           if (response.data) {
             _this.getData()
