@@ -2,7 +2,7 @@
   <div class="content">
     <div class="song-lyric">
       <h2>歌词</h2>
-      <transition name="lyr-fade">
+      <transition-group name="lyr-fade">
         <!--有个词-->
         <div v-show="lyr.length" key="has-lyr">
           <ul :style="{top:lrcTop}"  class="lrc">
@@ -15,8 +15,8 @@
         <div v-show="!lyr.length" class="no-lyric" key="no-lyr">
           <span class="no-lrc">暂无歌词</span>
         </div>
-      </transition>
-      <comment :id=id :type="0"></comment>
+      </transition-group>
+      <comment :id="id" :type="0"></comment>
     </div>
   </div>
 </template>
@@ -28,15 +28,16 @@ import Comment from '../components/Comment'
 
 export default {
   name: 'player-page',
+  components: {
+    Comment
+  },
+  mixins: [mixin],
   data () {
     return {
-      lrcTop: 200 + 'px', // 歌词滑动
+      lrcTop: '200px', // 歌词滑动
       showLrc: false, // 切换唱片和歌词
       lyr: [] // 当前歌曲的歌词
     }
-  },
-  components: {
-    Comment
   },
   computed: {
     ...mapGetters([
@@ -62,7 +63,6 @@ export default {
               document.querySelectorAll('.lrc li')[j].style.fontSize = '15px'
             }
             if (i >= 0) {
-              // this.lrcTop = -i * 30 + 180 + 'px'
               document.querySelectorAll('.lrc li')[i].style.color = '#95d2f6'
               document.querySelectorAll('.lrc li')[i].style.fontSize = '25px'
             }
@@ -73,8 +73,7 @@ export default {
   },
   created () {
     this.lyr = this.lyric
-  },
-  mixins: [mixin]
+  }
 }
 </script>
 
@@ -83,6 +82,7 @@ export default {
   padding: 50px 0;
   flex: 1;
 }
+
 .song-lyric {
   margin: auto;
   width: 700px;
@@ -90,35 +90,42 @@ export default {
   border-radius: 12px;
   padding: 0 20px 50px 20px;
 }
+
 .lyr-fade-enter,
 .lyr-fade-leave-to {
   transform: translateX(30px);
   opacity: 0;
 }
+
 .lyc-fade-enter-active,
 .lyc-fade-leave-active {
   transition: all .3s ease;
 }
+
 .lrc {
   font-size: 18px;
   padding: 30px 0;
   width: 100%;
   text-align: center;
 }
+
 .lyric {
   width: 100%;
   height: 40px;
   line-height: 40px;
 }
+
 .no-lyric {
   margin: 150px 0;
   width: 100%;
   text-align: center;
 }
+
 .no-lrc {
   font-size: 30px;
   text-align: center;
 }
+
 h2 {
   text-align: center;
   height: 50px;

@@ -43,7 +43,7 @@
             </el-form-item>
           </el-form>
         <div class="btn">
-          <div plain @click="saveMsg()">保存</div>
+          <div @click="saveMsg()">保存</div>
           <div @click="goback">取消</div>
         </div>
         </div>
@@ -175,18 +175,18 @@ export default {
       }]
     }
   },
-  mounted () {
-    this.getMsg(this.userId)
-  },
   computed: {
     ...mapGetters([
       'userId'
     ])
   },
+  mounted () {
+    this.getMsg(this.userId)
+  },
   methods: {
     getMsg (id) {
       let _this = this
-      axios.get(_this.$store.state.HOST + '/commentOfConsumer?id=' + id)
+      axios.get(`${_this.$store.state.HOST }/commentOfConsumer?id=${id}`)
         .then(response => {
           _this.registerForm.username = response.data[0].username
           _this.registerForm.password = response.data[0].password
@@ -218,9 +218,9 @@ export default {
       params.append('introduction', _this.registerForm.introduction)
       params.append('location', _this.registerForm.location)
       params.append('avator', '/img/user.jpg')
-      axios.post(_this.$store.state.HOST + '/api/updateUserMsgs', params)
-        .then(response => {
-          if (response.data.code === 1) {
+      axios.post(`${_this.$store.state.HOST}/api/updateUserMsgs`, params)
+        .then(res => {
+          if (res.data.code === 1) {
             _this.showError = false
             _this.showSuccess = true
             this.$store.commit('setUsername', _this.registerForm.username)
@@ -248,50 +248,56 @@ export default {
 </script>
 
 <style scoped>
-  .my-bg {
-    width: 100%;
-    height: 100px;
-    background-color: #93d2f8;
-  }
-  .my-body{
-    position: relative;
-    padding: 0 100px;
-  }
-  .content {
-    width: 60%;
-    margin:50px auto;
-    background-color: white;
-    border-radius: 10px;
-    padding-bottom: 30px;
-  }
-  .content p {
-    height: 50px;
-    line-height: 50px;
-    padding-left: 20px;
-    font-size: 20px;
-    font-weight: 600;
-    color: black;
-  }
-  .personal {
-    padding-right: 50px;
-    padding-top: 40px;
-  }
-  .btn {
-    width: 100%;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-  .btn div {
-    display: inline-block;
-    width: 100px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    background-color: #30a4fc;
-    margin: 0 20px;
-    color: white;
-  }
+.my-bg {
+  width: 100%;
+  height: 100px;
+  background-color: #93d2f8;
+}
+
+.my-body{
+  position: relative;
+  padding: 0 100px;
+}
+
+.content {
+  width: 60%;
+  margin:50px auto;
+  background-color: white;
+  border-radius: 10px;
+  padding-bottom: 30px;
+}
+
+.content p {
+  height: 50px;
+  line-height: 50px;
+  padding-left: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: black;
+}
+
+.personal {
+  padding-right: 50px;
+  padding-top: 40px;
+}
+
+.btn {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn div {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background-color: #30a4fc;
+  margin: 0 20px;
+  color: white;
+}
 </style>

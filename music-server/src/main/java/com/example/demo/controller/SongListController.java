@@ -140,7 +140,29 @@ public Object addSongList(HttpServletRequest req){
             registry.addResourceHandler("/img/songListPic/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/music-website/music-server/img/songListPic/");
         }
     }
-//    返回所有歌单
+
+    //    返回指定标题对应的歌单
+    @RequestMapping(value = "/api/songAlbum", method = RequestMethod.GET)
+    public Object songAlbum(HttpServletRequest req){
+        String title = req.getParameter("title").trim();
+        return songListService.songAlbum(title);
+    }
+
+    //    返回标题包含文字的歌单
+    @RequestMapping(value = "/api/songList/likeTitle", method = RequestMethod.GET)
+    public Object likeTitle(HttpServletRequest req){
+        String title = req.getParameter("title").trim();
+        return songListService.likeTitle(title);
+    }
+
+    //    返回指定类型的歌单
+    @RequestMapping(value = "/api/songList/likeStyle", method = RequestMethod.GET)
+    public Object likeStyle(HttpServletRequest req){
+        String style = req.getParameter("style").trim();
+        return songListService.likeStyle(style);
+    }
+
+    //    返回所有歌单
     @RequestMapping(value = "/listSongLists", method = RequestMethod.GET)
     public Object toSongList(){
         return songListService.listSongLists();

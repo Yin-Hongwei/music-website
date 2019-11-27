@@ -5,44 +5,37 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import axios from 'axios'
 import ContentList from '../ContentList'
 
 export default {
   name: 'search-song-Lists',
+  components: {
+    ContentList
+  },
   data () {
     return {
       albumDatas: []
     }
   },
-  computed: {
-    ...mapGetters([
-      'songsList'
-    ])
-  },
-  components: {
-    ContentList
-  },
-  mounted: function () {
+  mounted () {
     this.getSearchList()
   },
   methods: {
     getSearchList () {
-      console.log(this.$route.query.keywords)
       if (!this.$route.query.keywords) {
         this.$notify({
           title: '您输入内容为空',
           type: 'warning'
         })
       } else if (this.$route.query.keywords) {
-        for (let i = 0; i < this.songsList.length; i++) {
-          if (this.songsList[i].title.indexOf(this.$route.query.keywords) !== -1) {
-            var item = this.songsList[i]
-            item.list = i
-            this.albumDatas.push(item)
-            console.log(item)
-          }
-        }
+        let _this = this
+        axios.get(`${_this.$store.state.HOST}/api/songList/likeTitle?title=${_this.$route.query.keywords}`)
+          .then(res => {
+            // 关键词暂时不支持搜索歌单
+            // console.log(res.data)
+            _this.albumDatas = res.data
+          })
       } else {
         this.$notify({
           title: '暂无该歌曲内容',
@@ -55,8 +48,8 @@ export default {
 </script>
 
 <style scoped>
-  .search-song-Lists{
-    min-height: 300px;
-    margin-top: 50px;
-  }
+.search-song-Lists{
+  min-height: 300px;
+  margin-top: 50px;
+}
 </style>

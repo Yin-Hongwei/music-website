@@ -31,6 +31,24 @@ public class SongListServiceImpl implements SongListService {
     }
 
     @Override
+    public List<SongList> likeTitle(String title)
+    {
+        return songListMapper.likeTitle(title);
+    }
+
+    @Override
+    public List<SongList> likeStyle(String style)
+    {
+        return songListMapper.likeStyle(style);
+    }
+
+    @Override
+    public List<SongList> songAlbum(String title)
+    {
+        return songListMapper.songAlbum(title);
+    }
+
+    @Override
     public boolean ifAdd(SongList songList)
     {
 

@@ -7,7 +7,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import {mixin} from '../mixins'
+import {axios} from 'axios'
 import ContentList from '../components/ContentList'
 
 export default {
@@ -23,25 +23,70 @@ export default {
   mounted () {
     this.getSingerLists()
   },
-  mixins: [mixin]
+  methods: {
+    handleChangeView: function (item) {
+      this.activeName = item.name
+      this.albumDatas = []
+      if (item.name === '全部') {
+        this.getSingerAll()
+      } else if (item.name === '男' || item.name === '女') {
+        this.getSingerSex(item.type)
+      }
+    },
+    // 获取所有歌手
+    getSingerAll () {
+      let _this = this
+      axios.get(`${_this.$store.state.HOST}/listSingers`)
+        .then(function (res) {
+          _this.albumDatas = res.data
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    // 通过性别对歌手分类
+    getSingerSex (sex) {
+      let _this = this
+      axios.get(`${_this.$store.state.HOST}/api/singer?sex=${sex}`)
+        .then((res) => {
+          _this.albumDatas = res.data
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+  }
 }
 </script>
 
 <style scoped>
-  *{
-    box-sizing: border-box;
-  }
-  .body-section {
-    margin: 30px 10%;
-    padding-bottom: 50px;
-    background-color: #ffffff;
-  }
-  .song-head {
-    height: 100px;
-    font-size: 28px;
-    font-weight: 500;
-    text-align: center;
-    line-height: 100px;
-    color: black;
-  }
+*{
+  box-sizing: border-box;
+}
+
+.body-section {
+  margin: 30px 10%;
+  padding-bottom: 50px;
+  background-color: #ffffff;
+}
+
+.singer-header {
+  width: 100%;
+  padding: 0 40px;
+}
+
+li {
+  display: inline-block;
+  line-height: 40px;
+  margin: 40px 20px 15px 20px;
+  font-size: 20px;
+  font-weight: 400;
+  color: #67757f;
+  border-bottom: none;
+  cursor: pointer;
+}
+
+.active {
+  color: black;
+}
 </style>

@@ -67,7 +67,7 @@ export const mixin = {
       // console.log(lines)
       while (!pattern.test(lines[0])) {
         lines = lines.slice(1)
-      };
+      }
       // console.log(lines.length)
       lines[lines.length - 1].length === 0 && lines.pop()
       for (let item of lines) {
@@ -85,7 +85,6 @@ export const mixin = {
       result.sort(function (a, b) {
         return a[0] - b[0]
       })
-      // console.log(result)
       return result
     },
     // 搜索音乐
@@ -98,18 +97,17 @@ export const mixin = {
         })
       } else {
         let _this = this
-        axios.get(_this.$store.state.HOST + '/listSongsOfSearch?name=' + _this.$route.query.keywords)
-          .then(function (response) {
-            // console.log(response.data)
-            if (!response.data.length) {
+        axios.get(`${_this.$store.state.HOST}/listSongsOfSearch?name=${_this.$route.query.keywords}`)
+          .then(function (res) {
+            if (!res.data.length) {
               _this.$store.commit('setListOfSongs', [])
               _this.$notify({
                 title: '系统暂无该歌曲',
                 type: 'warning'
               })
             } else {
-              _this.$store.commit('setListOfSongs', response.data)
-              // window.sessionStorage.setItem('listOfSongs', JSON.stringify(response.data))
+              _this.$store.commit('setListOfSongs', res.data)
+              window.sessionStorage.setItem('listOfSongs', JSON.stringify(res.data))
             }
           })
           .catch(function (error) {

@@ -51,6 +51,21 @@
     <!--<include refid="Blob_Column_List" />-->
     from song_list
   </select>
+  <select id="likeTitle" resultMap="ResultMapWithBLOBs">
+    select *
+    from song_list
+    where title like #{title,jdbcType=VARCHAR}
+  </select>
+  <select id="likeStyle" resultMap="ResultMapWithBLOBs">
+    select *
+    from song_list
+    where style like #{style,jdbcType=VARCHAR}
+  </select>
+  <select id="songAlbum" resultMap="ResultMapWithBLOBs">
+    select *
+    from song_list
+    where title = #{title,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteSongList" parameterType="java.lang.Integer" >
     <!--
       WARNING - @mbggenerated
