@@ -1,9 +1,7 @@
 <template>
-  <div id="upload-img">
-    <div class="my-bg"></div>
-    <div class="kuang">
+  <div class="upload-page">
+    <div class="section">
       <el-upload
-        class="upload-demo change"
         :action="uploadUrl()"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
@@ -18,7 +16,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'upload-img',
+  name: 'upload-page',
   data () {
     return {
       imageUrl: ''
@@ -31,12 +29,11 @@ export default {
   },
   methods: {
     uploadUrl () {
-      let url = 'http://localhost:8080/api/updateUserImg?id=' + this.userId // 生产环境和开发环境的判断
+      let url = `${this.$store.state.HOST}/api/updateUserImg?id=${this.userId}` // 生产环境和开发环境的判断
       return url
     },
     handleAvatarSuccess (res, file) {
       let _this = this
-      console.log(res)
       if (res.code === 1) {
         _this.imageUrl = URL.createObjectURL(file.raw)
         _this.$store.commit('setAvator', res.avator)
@@ -68,20 +65,15 @@ export default {
 </script>
 
 <style scoped>
-  #upload-img {
-    width: 100%;
-  }
-  .kuang {
-    margin: 200px auto;
-  }
-  .my-bg {
-    width: 100%;
-    height: 100px;
-    background-color: #93d2f8;
-  }
-  .change {
-    position: relative;
-    left: 47%;
-    top: 20px;
-  }
+.upload-page {
+  width: 100%;
+}
+
+.section {
+  height: 600px;
+  background-color: #e6ecf0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

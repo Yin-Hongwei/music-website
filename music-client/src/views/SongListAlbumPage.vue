@@ -29,7 +29,7 @@
           <div>
             <h3>评价：</h3>
             <div @click="pushValue()">
-              <el-rate v-model="value3" show-text ></el-rate>
+              <el-rate v-model="value3" show-text></el-rate>
             </div>
           </div>
         </div>
@@ -38,7 +38,7 @@
           <album-content :songList="listOfSongs">
             <template slot="title">歌单</template>
           </album-content>
-          <comment :id=songListId :type="1"></comment>
+          <comment :id="songListId" :type="1"></comment>
         </div>
       </div>
     </div>
@@ -47,7 +47,7 @@
 
 <script>
 import axios from 'axios'
-import {mixin} from '../mixins'
+import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
 import AlbumContent from '../components/AlbumContent'
 import Comment from '../components/Comment'
@@ -56,10 +56,9 @@ export default {
   name: 'song-list-album-page',
   data () {
     return {
-      listSongOfSinger: [],
       songLists: [],
       singers: {},
-      count: 0,
+      count: 0, // 点赞数
       songListId: '', // 歌单ID
       value3: null,
       value5: 0
@@ -71,41 +70,29 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'loginIn',
-      'songsList', // 歌单列表
-      'index', // 列表中的序号
+      'loginIn', // 登录标识
+      'tempList', // 单个歌单信息
       'listOfSongs', // 存放的音乐
-      'index',
-      'userId',
-      'avator',
-      'songslistComment'
+      'userId', // 用户ID
+      'avator' // 用户头像
     ])
   },
-  created () {
+  mounted () {
     this.songListId = this.$route.params.id // 给歌单ID赋值
-  },
-  mounted: function () {
-    // 获取当前歌单信息
-    this.singers = this.songsList[this.index]
+    this.singers = this.tempList
     // 获取歌单里面的歌曲ID
     this.getSongId()
-    this.getRank(this.singers.id)
+    this.getRank(this.songListId)
   },
   mixins: [mixin],
   methods: {
     // 收集歌单里面的歌曲
     getSongId () {
       let _this = this
-      axios.get(_this.$store.state.HOST + '/listSongOfSingers', {
-        params: {
-          songListId: _this.singers.id
-        }})
+      axios.get(`${_this.$store.state.HOST}/listSongOfSingers?songListId=${this.songListId}`)
         .then(function (response) {
-          // console.log('------歌单中歌曲的ID------')
-          // console.log(response.data)
-          _this.listSongOfSinger = response.data
           // 获取歌单里的歌曲信息
-          for (let item of _this.listSongOfSinger) {
+          for (let item of response.data) {
             _this.getSongList(item.songId)
           }
           // console.log('------歌曲------')
@@ -120,9 +107,9 @@ export default {
     // 获取单里的歌曲
     getSongList (id) {
       let _this = this
-      axios.get(_this.$store.state.HOST + '/listSongsOfSongs?id=' + id)
-        .then(function (response) {
-          _this.songLists.push(response.data[0])
+      axios.get(`${_this.$store.state.HOST}/listSongsOfSongs?id=${id}`)
+        .then(res => {
+          _this.songLists.push(res.data[0])
         })
         .catch(function (error) {
           console.log(error)
@@ -132,7 +119,7 @@ export default {
     getRank (id) {
       let _this = this
       axios.get(_this.$store.state.HOST + '/api/getRank?songListId=' + id)
-        .then(function (res) {
+        .then(res => {
           _this.value5 = res.data
         })
         .catch(function (error) {
@@ -147,10 +134,10 @@ export default {
         params.append('songListId', _this.index + 1)
         params.append('consumerId', _this.userId)
         params.append('score', _this.value3 * 2)
-        axios.post(_this.$store.state.HOST + '/api/pushRank', params)
-          .then(response => {
-            if (response.data.code === 1) {
-              _this.getRank(_this.singers.id)
+        axios.post(`${_this.$store.state.HOST}/api/pushRank`, params)
+          .then(res => {
+            if (res.data.code === 1) {
+              _this.getRank(_this.songListId)
               _this.$notify({
                 title: '评分成功',
                 type: 'success'
@@ -181,77 +168,90 @@ export default {
 </script>
 
 <style scoped>
-  /*歌单背景*/
-  .album-bg {
-    width: 100%;
-    height: 200px;
-    background-color: #93d2f8;
-  }
-  .album-body {
-    width: 100%;
-    display: inline-block;
-  }
-  /*歌单左侧*/
-  .album-slide {
-    float: left;
-    width: 400px;
-  }
-  /*歌单图像*/
-  .album-img {
-    height: 300px;
-    width: 300px;
-    display: inline-block;
-    position: relative;
-    top:-100px;
-    left: 50px;
-    border-radius: 10%;
-    overflow: hidden;
-    border: 5px solid white;
-  }
-  .album-img img {
-    width: 100%;
-  }
-  /*歌单信息*/
-  .album-info {
-    font-size: 20px;
-    font-weight: 500;
-    margin-top: -80px;
-    padding: 30px 50px;
-  }
-  .album-info > span {
-    color: rgba(0, 0, 0, 0.5);
-  }
-  /*歌单内容*/
-  .album-content{
-    margin-left: 300px;
-    padding: 40px 100px;
-  }
-  /*歌单题目*/
-  .album-title {
-    font-size: 30px;
-    font-weight: 600;
-  }
-  /*歌单打分*/
-  .album-score {
-    display: flex;
-    align-items: center;
-    margin: 50px;
-  }
-  .album-score > div {
-    margin-left: 100px;
-  }
-  .album-score > span{
-    font-size: 60px;
-  }
-  .album-score h3 {
-    margin: 10px 0;
-  }
-  /*歌曲列表*/
-  .songs-body {
-    background-color: white;
-    border-radius: 12px;
-    padding: 0 40px 50px 40px;
-    min-width: 700px;
-  }
+/*歌单背景*/
+.album-bg {
+  width: 100%;
+  height: 200px;
+  background-color: #93d2f8;
+}
+
+.album-body {
+  width: 100%;
+  display: inline-block;
+}
+
+/*歌单左侧*/
+.album-slide {
+  float: left;
+  width: 400px;
+}
+
+/*歌单图像*/
+.album-img {
+  height: 300px;
+  width: 300px;
+  display: inline-block;
+  position: relative;
+  top:-100px;
+  left: 50px;
+  border-radius: 10%;
+  overflow: hidden;
+  border: 5px solid white;
+}
+
+.album-img img {
+  width: 100%;
+}
+
+/*歌单信息*/
+.album-info {
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: -80px;
+  padding: 30px 50px;
+}
+
+.album-info > span {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/*歌单内容*/
+.album-content{
+  margin-left: 300px;
+  padding: 40px 100px;
+}
+
+/*歌单题目*/
+.album-title {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+/*歌单打分*/
+.album-score {
+  display: flex;
+  align-items: center;
+  margin: 50px;
+}
+
+.album-score > div {
+  margin-left: 100px;
+}
+
+.album-score > span{
+  font-size: 60px;
+}
+
+.album-score h3 {
+  margin: 10px 0;
+}
+
+/*歌曲列表*/
+.songs-body {
+  background-color: white;
+  border-radius: 12px;
+  padding: 0 40px 50px 40px;
+  min-width: 700px;
+}
 
 </style>

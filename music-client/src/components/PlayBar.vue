@@ -1,5 +1,5 @@
 <template>
-  <div class="play-control" :class="{show:!toggle}">
+  <div class="play-bar" :class="{show:!toggle}">
     <div @click="toggle=!toggle" class="item-up" :class="{turn:toggle}">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-jiantou-xia-cuxiantiao"></use>
@@ -85,10 +85,10 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex'
-import {mixin} from '../mixins'
+import { mixin } from '../mixins'
 
 export default {
-  name: 'play-control',
+  name: 'play-bar',
   data () {
     return {
       tag: false,
@@ -120,7 +120,7 @@ export default {
   },
   watch: {
     // 切换播放状态的图标
-    isPlay: function (val) {
+    isPlay (val) {
       if (val) {
         this.$store.commit('setPlayButtonUrl', '#icon-zanting')
         window.sessionStorage.setItem('playButtonUrl', JSON.stringify('#icon-zanting'))
@@ -130,7 +130,7 @@ export default {
       }
     },
     // 播放时间的开始和结束
-    curTime: function () {
+    curTime () {
       this.nowTime = this.formatSeconds(this.curTime)
       this.songTime = this.formatSeconds(this.duration)
       // 移动进度条
@@ -138,7 +138,7 @@ export default {
       // 处理歌词位置及颜色
     },
     // 自动播放下一首
-    autoNext: function () {
+    autoNext () {
       this.next()
     }
   },
@@ -223,8 +223,6 @@ export default {
     },
     //  拖拽开始
     mousedown (e) {
-      // console.log(e)
-      // console.log(this.$refs.idot.offsetLeft)
       this.mouseStartX = e.clientX
       this.tag = true
     },
@@ -320,7 +318,7 @@ export default {
       }
     },
     goPlayerPage () {
-      this.$router.push({path: '/player-page/' + this.id})
+      this.$router.push({path: `/player-page/${this.id}`})
     },
     collection () {
       if (this.loginIn) {
@@ -330,15 +328,14 @@ export default {
         params.append('userId', _this.userId)
         params.append('type', 0)
         params.append('songId', _this.id || '')
-        axios.post(_this.$store.state.HOST + '/api/collectionList', params)
-          .then(response => {
-            console.log(response.data.code)
-            if (response.data.code === 1) {
+        axios.post(`${_this.$store.state.HOST}/api/collectionList`, params)
+          .then(res => {
+            if (res.data.code === 1) {
               this.$notify({
                 title: '收藏成功',
                 type: 'success'
               })
-            } else if (response.data.code === 2) {
+            } else if (res.data.code === 2) {
               this.$notify({
                 title: '已收藏',
                 type: 'warning'
@@ -363,7 +360,7 @@ export default {
 </script>
 
 <style scoped>
-.play-control{
+.play-bar{
   position: fixed;
   bottom: 0;
   width: 100%;

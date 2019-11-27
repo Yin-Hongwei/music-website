@@ -1,5 +1,5 @@
 <template>
-  <div class="music-footer">
+  <div class="the-footer">
     <p v-for="(item, index) in list" :key="index">
       {{item}}
     </p>
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'music-footer',
+  name: 'the-footer',
   data () {
     return {
       list: [
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style scoped>
-.music-footer{
+.the-footer{
   width: 100%;
   background-color: white;
   height: 180px;
@@ -31,7 +31,8 @@ export default {
   justify-content: center;
   flex-direction: column;
 }
-.music-footer p {
+
+.the-footer p {
   height: 30px;
 }
 </style>

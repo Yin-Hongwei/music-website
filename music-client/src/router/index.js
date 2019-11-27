@@ -5,12 +5,12 @@ import RegisterPage from '@/views/RegisterPage'
 import HomePage from '@/views/HomePage'
 import SongListPage from '@/views/SongListPage'
 import SingerPage from '@/views/SingerPage'
-import MySong from '@/views/MySong'
+import MySongPage from '@/views/MySongPage'
 import SongListAlbumPage from '@/views/SongListAlbumPage'
 import SingerAlbumPage from '@/views/SingerAlbumPage'
 import SearchPage from '@/views/SearchPage'
-import Personal from '@/views/Personal'
-import UpLoadImg from '@/views/UpLoadImg'
+import PersonalInfoPage from '@/views/PersonalInfoPage'
+import UpLoadPage from '@/views/UpLoadPage'
 import PlayerPage from '@/views/PlayerPage'
 
 Vue.use(Router)
@@ -46,9 +46,9 @@ export default new Router({
       component: SongListPage
     },
     {
-      path: '/my-song',
-      name: 'my-song',
-      component: MySong
+      path: '/my-song-page',
+      name: 'my-song-page',
+      component: MySongPage
     },
     {
       path: '/song-list-album-page/:id',
@@ -76,14 +76,14 @@ export default new Router({
       component: SearchPage
     },
     {
-      path: '/personal',
-      name: 'personal',
-      component: Personal
+      path: '/personal-info-page',
+      name: 'personal-info-page',
+      component: PersonalInfoPage
     },
     {
-      path: '/upLoad-img',
-      name: 'upLoad-img',
-      component: UpLoadImg
+      path: '/upLoad-page',
+      name: 'upLoad-page',
+      component: UpLoadPage
     }
   ]
 })

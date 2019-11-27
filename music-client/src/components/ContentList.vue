@@ -17,7 +17,8 @@
 </template>
 
 <script>
-import {mixin} from '../mixins'
+import axios from 'axios'
+import { mixin } from '../mixins'
 
 export default {
   name: 'content-list',
@@ -26,14 +27,17 @@ export default {
   ],
   mixins: [mixin],
   methods: {
-    goSongAlbum (id, index) {
-      this.$store.commit('setIndex', index)
-      window.sessionStorage.setItem('index', JSON.stringify(index))
-      this.$router.push({path: '/song-list-album-page/' + id})
+    getId (title) {
+      let _this = this
+      axios.get(`${_this.$store.state.HOST}/api/songAlbum?title=${title}`)
+        .then((res) => {
+          let item = res.data[0]
+          this.$router.push({path: `/song-list-album-page/${item.id}`, query: {item}})
+        })
     },
-    goAblum (id, index, type) {
-      this.$store.commit('setIndex', index)
-      window.sessionStorage.setItem('index', JSON.stringify(index))
+    goAblum (item, type) {
+      this.$store.commit('setTempList', item)
+      window.sessionStorage.setItem('tempList', JSON.stringify(item))
       if (type) {
         this.$router.push({path: '/singer-album-page/' + id})
       } else {
@@ -45,7 +49,7 @@ export default {
 </script>
 
 <style scoped>
-  *{
+  div, ul, li, p{
     box-sizing: border-box;
   }
   .content-list {

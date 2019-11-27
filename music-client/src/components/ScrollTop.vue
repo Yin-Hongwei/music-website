@@ -1,5 +1,5 @@
 <template>
-  <div id="scroll-top" @click="returnTop">
+  <div class="scroll-top" @click="returnTop">
     <div class="box-in"></div>
   </div>
 </template>
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style scoped>
-#scroll-top{
+.scroll-top{
   position:fixed;
   right:10px;
   bottom: 80px;
@@ -42,13 +42,16 @@ export default {
   overflow: hidden;
   box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
 }
-#scroll-top:hover:before{
+
+.scroll-top:hover:before{
   top:50%
 }
-#scroll-top:hover .box-in{
+
+.scroll-top:hover .box-in{
   visibility: hidden;
 }
-#scroll-top:before{
+
+.scroll-top:before{
   position: absolute;
   top: -50%;
   left: 50%;
@@ -58,6 +61,7 @@ export default {
   font-weight:bold;
 
 }
+
 .box-in{
   visibility: visible;
   display:inline-block;

@@ -162,13 +162,14 @@ public class SingerController {
             registry.addResourceHandler("/img/singerPic/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/music-website/music-server/img/singerPic/");
         }
     }
-//    返回所有歌手
+
+    //    返回所有歌手
     @RequestMapping(value = "/listSingers", method = RequestMethod.GET)
     public Object toSingerList(){
         return singerService.listSingers();
     }
 
-//    查找歌手
+    //    根据歌手名查找歌手
     @RequestMapping(value = "/searachSingers", method = RequestMethod.GET)
     public Object searachSingers(HttpServletRequest req){
         String name = req.getParameter("name");

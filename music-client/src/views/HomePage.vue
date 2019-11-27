@@ -3,83 +3,75 @@
     <!--轮播图-->
     <swiper/>
     <!--热门歌单/歌手-->
-    <div class="section">
-      <div class="section-head">歌单</div>
-      <content-list :contentList="popularList[0]"></content-list>
-    </div>
-    <div class="section">
-      <div class="section-head">歌手</div>
-      <content-list :contentList="popularList[1]"></content-list>
+    <div class="section" v-for="(item, index) in songsList" :key="index">
+      <div class="section-head">{{item.name}}</div>
+      <content-list :contentList="item.list"></content-list>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import {mixin} from '../mixins'
+import axios from 'axios'
 import Swiper from '../components/Swiper'
 import ContentList from '../components/ContentList'
 
 export default {
-  name: 'Home-page',
-  data () {
-    return {
-      popularList: []
-    }
-  },
-  created () {
-    this.getSongLists()
-    this.getSingerLists()
-    this.getList()
-  },
-  mixins: [mixin],
-  computed: {
-    ...mapGetters([
-      'songsList',
-      'singersList'
-    ])
-  },
+  name: 'home-page',
   components: {
     Swiper,
     ContentList
   },
+  data () {
+    return {
+      songsList: [
+        {name: '歌单', list: []},
+        {name: '歌手', list: []}
+      ]
+    }
+  },
+  created () {
+    this.getSongLists('listSongLists')
+    this.getSongLists('listSingers')
+  },
   methods: {
-    goRouter (id, index) {
-      this.$store.commit('setIndex', index)
-      window.sessionStorage.setItem('index', JSON.stringify(index))
-      this.$router.push({path: '/song-list-album-page/' + id})
-    },
-    goSingerAblum (id, index) {
-      this.$store.commit('setIndex', index)
-      window.sessionStorage.setItem('index', JSON.stringify(index))
-      this.$router.push({path: '/singer-album-page/' + id})
-    },
-    // 得到歌单和歌曲列表前10项
-    getList () {
-      this.popularList[0] = this.songsList.slice(0, 10)
-      this.popularList[1] = this.singersList.slice(0, 10)
-      console.log(this.popularList)
+    getSongLists (path) {
+      let _this = this
+      axios.get(`${_this.$store.state.HOST}/${path}`)
+        .then(function (res) {
+          if (path === 'listSongLists') {
+            // 获取歌单列表
+            _this.songsList[0].list = res.data.slice(0, 10)
+          } else if (path === 'listSingers') {
+            // 获取歌手列表
+            _this.songsList[1].list = res.data.slice(0, 10)
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 }
 </script>
 
 <style scoped>
-  * {
-    box-sizing: border-box;
-  }
-  .section {
-    width: 100%;
-    margin-bottom: 80px;
-    padding: 0 120px 50px 120px;
-    background-color: #ffffff;
-  }
-  .section-head {
-    height: 100px;
-    font-size: 28px;
-    font-weight: 500;
-    text-align: center;
-    line-height: 100px;
-    color: black;
-  }
+div {
+  box-sizing: border-box;
+}
+
+.section {
+  width: 100%;
+  margin-bottom: 80px;
+  padding: 0 120px 50px 120px;
+  background-color: #ffffff;
+}
+
+.section-head {
+  height: 100px;
+  font-size: 28px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 100px;
+  color: black;
+}
 </style>
