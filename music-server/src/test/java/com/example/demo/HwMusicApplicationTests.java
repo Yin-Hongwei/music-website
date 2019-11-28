@@ -105,7 +105,7 @@ public void consumerTest(){
     consumer.setBirth(new Date());
     consumer.setIntroduction("");
     consumer.setLocation("");
-    consumer.setAvator("/img/user.jpg");
+    consumer.setAvator("/static/user.jpg");
     consumer.setCreateTime(new Date());
     consumer.setUpdateTime(new Date());
     consumerService.ifAdd(consumer);

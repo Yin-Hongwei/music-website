@@ -122,14 +122,14 @@ public class SingerController {
             return jsonObject;
         }
         String fileName = System.currentTimeMillis()+avatorFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "singerPic" ;
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "static" + System.getProperty("file.separator") + "singerPic" ;
         File file1 = new File(filePath);
         if (!file1.exists()){
             file1.mkdir();
         }
 
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeAvatorPath = "/img/singerPic/"+fileName;
+        String storeAvatorPath = "/static/singerPic/"+fileName;
         try {
             avatorFile.transferTo(dest);
             Singer singer = new Singer();
@@ -159,7 +159,7 @@ public class SingerController {
     public class MyPicConfig implements WebMvcConfigurer {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/singerPic/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/music-website/music-server/img/singerPic/");
+            registry.addResourceHandler("/static/singerPic/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/music-website/music-server/img/singerPic/");
         }
     }
 

@@ -46,7 +46,7 @@ public class SongController {
         String singer_id = req.getParameter("singerId").trim();
         String name = req.getParameter("name").trim();
         String introduction = req.getParameter("introduction").trim();
-        String pic = "/img/songPic/tubiao.jpg";
+        String pic = "/static/songPic/tubiao.jpg";
         String lyric = req.getParameter("lyric").trim();
 
         if (mpfile.isEmpty()) {
@@ -105,14 +105,14 @@ public class SongController {
             return jsonObject;
         }
         String fileName = System.currentTimeMillis()+urlFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songPic";
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "static" + System.getProperty("file.separator") + "songPic";
         File file1 = new File(filePath);
         if (!file1.exists()){
             file1.mkdir();
         }
 
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeUrlPath = "/img/songPic/"+fileName;
+        String storeUrlPath = "/static/songPic/"+fileName;
         try {
             urlFile.transferTo(dest);
             Song song = new Song();
@@ -187,7 +187,7 @@ public class SongController {
     public class MyPicConfig implements WebMvcConfigurer {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/songPic/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/music-website/music-server/img/songPic/");
+            registry.addResourceHandler("/static/songPic/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/music-website/music-server/img/songPic/");
             registry.addResourceHandler("/song/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/music-website/music-server/song/");
         }
     }
