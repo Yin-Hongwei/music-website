@@ -7,7 +7,7 @@
 
 ## 项目说明
 
-本音乐网站的开发主要利用前端框架VUE开发用户和管理员界面，后端接口用Spring Boot来实现，数据持久化用的是 MyBatis，数据用MySQL来进行存储。具体实现可以参考[这里](https://yin-hongwei.github.io/2019/03/04/music/)。
+本音乐网站的开发主要利用前端框架VUE开发客户端和管理端，后端接口用Spring Boot来实现，数据持久化用的是 MyBatis，数据用MySQL来进行存储。实现思路可以参考[这里](https://yin-hongwei.github.io/2019/03/04/music/)。
 
 <br/>
 
@@ -15,35 +15,35 @@
 
 > 前台模块
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/denglu.png"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e96uj70jj31c00u0n5k.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/shouye.png"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e97bwxifj31c00u0npe.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gedan.png"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e98u647cj31c00u0x6q.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geshou.png"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e99hqjoxj31c00u0e37.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/my.png"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9a6ji44j31c00u01ky.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gedanxiangqing.png"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9aqzofkj31c00u0aq5.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geshouxiangqing.png"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9clwspxj31c00u01kx.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/geci.png"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9cy5qpmj31c00u0qdr.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/sousuo.png"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9d8b2ukj31c00u0dof.jpg"/><br/>
 
 > 后台模块
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/l.png"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9ln0na3j31c00u042z.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/y.png"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9lzum1kj31c00u0ndw.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/s.png"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9m96eobj31c00u0h1y.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/g.png"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9mi8ppej31c00u0h81.jpg"/><br/>
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/gd.png"/><br/><br/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9mrm2xoj31c00u0kat.jpg"/><br/><br/>
 
 ## 功能
 
@@ -89,7 +89,7 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 
 2）music-server：启动后端服务之前，有一些地方需要修改，先去 /music-website/music-server/src/main/resources 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password，并且修改下面蓝色显示的文件名中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。
 
-<img src="https://github.com/Yin-Hongwei/vue-spring-music/blob/master/img/Explain.png" width="600"/>
+<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9l2f210j31ya0c643k.jpg"/>
 
 #### 4、启动项目
 
