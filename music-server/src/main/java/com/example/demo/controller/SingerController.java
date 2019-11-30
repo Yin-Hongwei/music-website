@@ -122,14 +122,14 @@ public class SingerController {
             return jsonObject;
         }
         String fileName = System.currentTimeMillis()+avatorFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "static" + System.getProperty("file.separator") + "singerPic" ;
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "singerPic" ;
         File file1 = new File(filePath);
         if (!file1.exists()){
             file1.mkdir();
         }
 
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeAvatorPath = "/static/singerPic/"+fileName;
+        String storeAvatorPath = "/img/singerPic/"+fileName;
         try {
             avatorFile.transferTo(dest);
             Singer singer = new Singer();
