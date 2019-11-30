@@ -100,14 +100,14 @@ public Object addSongList(HttpServletRequest req){
             return jsonObject;
         }
         String fileName = System.currentTimeMillis()+avatorFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "static" + System.getProperty("file.separator") + "songListPic" ;
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songListPic" ;
         File file1 = new File(filePath);
         if (!file1.exists()){
             file1.mkdir();
         }
 
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeAvatorPath = "/static/songListPic/"+fileName;
+        String storeAvatorPath = "/img/songListPic/"+fileName;
         try {
             avatorFile.transferTo(dest);
             SongList songList = new SongList();
