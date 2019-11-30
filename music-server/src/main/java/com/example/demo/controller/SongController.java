@@ -105,14 +105,14 @@ public class SongController {
             return jsonObject;
         }
         String fileName = System.currentTimeMillis()+urlFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "static" + System.getProperty("file.separator") + "songPic";
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songPic";
         File file1 = new File(filePath);
         if (!file1.exists()){
             file1.mkdir();
         }
 
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeUrlPath = "/static/songPic/"+fileName;
+        String storeUrlPath = "/img/songPic/"+fileName;
         try {
             urlFile.transferTo(dest);
             Song song = new Song();
