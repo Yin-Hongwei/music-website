@@ -21,8 +21,8 @@
         ref="multipleTable"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column label="歌手图片" width="100">
+        <el-table-column type="selection" width="40"></el-table-column>
+        <el-table-column label="歌手图片" width="110">
           <template slot-scope="scope">
             <img :src="getUrl(scope.row.pic)" alt style="width: 80px;" />
             <el-upload
@@ -63,7 +63,7 @@
         :model="registerForm"
         status-icon
         ref="registerForm"
-        label-width="0px"
+        label-width="80px"
         class="demo-ruleForm"
       >
         <el-form-item prop="name" label="歌手名">
@@ -98,7 +98,7 @@
 
     <!-- 编辑弹出框 -->
     <el-dialog title="编辑" :visible.sync="editVisible" width="400px">
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="form" :model="form" label-width="60px">
         <el-form-item label="歌手">
           <el-input v-model="form.name"></el-input>
         </el-form-item>

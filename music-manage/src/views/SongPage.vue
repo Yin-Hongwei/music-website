@@ -13,7 +13,7 @@
             </div>
             <el-table :data="tableData" stripe border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="40"></el-table-column>
-                <el-table-column label="歌手图片" width="100">
+                <el-table-column label="歌手图片" width="110">
                     <template slot-scope="scope">
                         <img :src="getUrl(scope.row.pic)" alt="" style="width: 80px;"/>
                         <div class="play" @click="setSongUrl(scope.row.url)">
@@ -101,7 +101,8 @@
                 </div>
                 <div>
                     <label>歌曲上传</label>
-                    <el-input type="file" name="file" id="upadte-file-input"></el-input>
+                    <br>
+                    <input type="file" name="file" id="upadte-file-input">
                 </div>
             </form>
             <span slot="footer" class="dialog-footer">
@@ -419,6 +420,9 @@ export default {
 .handle-input {
     width: 300px;
     display: inline-block;
+}
+.el-input__inner{
+  background-color: aqua
 }
 .play {
     position: absolute;

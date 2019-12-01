@@ -12,7 +12,7 @@
                 <el-button type="primary" @click="centerDialogVisible = true">添加歌单</el-button>
             </div>
             <el-table :data="tableData" border stripe style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
-                <el-table-column type="selection" width="55"></el-table-column>
+                <el-table-column type="selection" width="40"></el-table-column>
                 <el-table-column label="歌单图片" width="100">
                     <template slot-scope="scope">
                         <img :src="getUrl(scope.row.pic)" alt="" style="width: 80px;"/>
@@ -63,7 +63,7 @@
 
         <!--添加歌单-->
         <el-dialog title="添加歌单" :visible.sync="centerDialogVisible" width="400px" center>
-            <el-form :model="registerForm" status-icon ref="registerForm" label-width="0px" class="demo-ruleForm">
+            <el-form :model="registerForm" status-icon ref="registerForm" label-width="70px" class="demo-ruleForm">
                 <el-form-item prop="title" label="歌单名">
                     <el-input v-model="registerForm.title" placeholder="歌单名"></el-input>
                 </el-form-item>
@@ -82,7 +82,7 @@
 
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="400px">
-            <el-form ref="form" :model="form" label-width="80px">
+            <el-form ref="form" :model="form" label-width="40px">
                 <el-form-item label="标题">
                     <el-input v-model="form.title"></el-input>
                 </el-form-item>

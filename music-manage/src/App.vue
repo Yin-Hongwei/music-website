@@ -7,7 +7,6 @@
 
 <script>
 import SongAudio from './components/SongAudio'
-import './assets/css/main.css'
 
 export default {
   name: 'App',

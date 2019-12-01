@@ -37,7 +37,7 @@
         :model="registerForm"
         status-icon
         ref="registerForm"
-        label-width="0px"
+        label-width="80px"
         class="demo-ruleForm"
       >
         <el-form-item prop="singerName" label="歌手名字">

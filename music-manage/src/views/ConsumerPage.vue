@@ -12,7 +12,7 @@
                 <el-button type="primary" @click="centerDialogVisible = true">添加新用户</el-button>
             </div>
             <el-table :data="tableData" border stripe style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
-                <el-table-column type="selection" width="55"></el-table-column>
+                <el-table-column type="selection" width="40"></el-table-column>
                 <el-table-column label="歌手图片" width="100">
                     <template slot-scope="scope">
                         <img :src="getUrl(scope.row.avator)" alt="" style="width: 80px;"/>
@@ -54,7 +54,7 @@
 
         <!--添加新用户-->
         <el-dialog title="添加用户" :visible.sync="centerDialogVisible" width="400px" center>
-            <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="0px" class="demo-ruleForm">
+            <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="70px" class="demo-ruleForm">
                 <el-form-item prop="username" label="用户名">
                     <el-input v-model="registerForm.username" placeholder="用户名"></el-input>
                 </el-form-item>
@@ -93,7 +93,7 @@
 
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="400px">
-            <el-form ref="form" :model="form" label-width="80px">
+            <el-form ref="form" :model="form" label-width="60px">
                 <el-form-item label="用户名">
                     <el-input v-model="form.username" :disabled="true"></el-input>
                 </el-form-item>

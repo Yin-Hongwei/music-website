@@ -5,6 +5,7 @@ import store from './store/index'
 import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import './assets/css/main.css'
 import 'babel-polyfill'
 import VCharts from 'v-charts'
 
