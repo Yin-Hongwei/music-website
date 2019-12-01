@@ -7,8 +7,7 @@
 
 <script>
 import SongAudio from './components/SongAudio'
-import '../static/css/main.css'
-import '../static/css/color-dark.css'
+import './assets/css/main.css'
 
 export default {
   name: 'App',

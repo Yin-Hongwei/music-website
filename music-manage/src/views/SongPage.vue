@@ -18,10 +18,14 @@
                         <img :src="getUrl(scope.row.pic)" alt="" style="width: 80px;"/>
                         <div class="play" @click="setSongUrl(scope.row.url)">
                             <div v-if="toggle !== scope.row.url">
-                                <span class="iconfont">&#xe602;</span>
+                              <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-bofanganniu"></use>
+                              </svg>
                             </div>
                             <div v-if="toggle === scope.row.url">
-                                <span class="iconfont">&#xe693;</span>
+                              <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-zanting"></use>
+                              </svg>
                             </div>
                         </div>
                     </template>
@@ -48,6 +52,7 @@
                             :before-upload="beforeAvatarUpload">
                             <el-button size="small" type="primary">更新图片</el-button>
                         </el-upload>
+                      <br>
                         <el-upload
                             class="upload-demo change"
                             :action="uploadSongUrl(scope.row.id)"
@@ -147,6 +152,7 @@
 import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
 import SongAudio from '../components/SongAudio'
+import '@/assets/js/iconfont.js'
 
 export default {
   name: 'song-page',
@@ -407,15 +413,6 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-    font-family: 'iconfont';
-    src: url('../assets/css/font/iconfont.eot');
-    src: url('../assets/css/font/iconfont.eot?#iefix') format('embedded-opentype'),
-    url('../assets/css/font/iconfont.woff2') format('woff2'),
-    url('../assets/css/font/iconfont.woff') format('woff'),
-    url('../assets/css/font/iconfont.ttf') format('truetype'),
-    url('../assets/css/font/iconfont.svg#iconfont') format('svg');
-}
 .handle-box {
     margin-bottom: 20px;
 }
@@ -434,13 +431,12 @@ export default {
     justify-content: center;
     cursor: pointer;
 }
-.iconfont {
-    font-family: "iconfont" !important;
-    font-size: 30px;
-    font-style: normal;
-    color: white;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+.icon {
+  width: 2em;
+  height: 2em;
+  color: white;
+  fill: currentColor;
+  overflow: hidden;
 }
 .pagination {
     display: flex;

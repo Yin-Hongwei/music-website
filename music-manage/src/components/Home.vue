@@ -20,15 +20,15 @@ import vSidebar from './Sidebar.vue'
 import bus from '../assets/js/bus'
 
 export default {
+  components: {
+    vHead,
+    vSidebar
+  },
   data () {
     return {
       tagsList: [],
       collapse: false
     }
-  },
-  components: {
-    vHead,
-    vSidebar
   },
   created () {
     bus.$on('collapse', msg => {
@@ -46,3 +46,7 @@ export default {
   }
 }
 </script>
+
+<style>
+
+</style>

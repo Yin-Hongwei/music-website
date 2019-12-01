@@ -81,7 +81,7 @@ export default {
       } else if (this.type === 0) {
         url = '/songComments?songId='
       }
-      axios.get(_this.$store.state.HOST + url + this.id)
+      axios.get(_this.$store.state.HOST + url + _this.id)
         .then(function (res) {
           _this.commentList = res.data
           for (let item of res.data) {
@@ -116,7 +116,7 @@ export default {
           params.append('songId', _this.id)
         }
         params.append('userId', _this.userId)
-        params.append('type', this.type)
+        params.append('type', _this.type)
         params.append('comtent', _this.textarea)
         axios.post(`${_this.$store.state.HOST}/api/commentList`, params)
           .then(res => {
