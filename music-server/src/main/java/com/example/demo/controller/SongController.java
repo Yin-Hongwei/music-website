@@ -46,7 +46,7 @@ public class SongController {
         String singer_id = req.getParameter("singerId").trim();
         String name = req.getParameter("name").trim();
         String introduction = req.getParameter("introduction").trim();
-        String pic = "/static/songPic/tubiao.jpg";
+        String pic = "/img/songPic/tubiao.jpg";
         String lyric = req.getParameter("lyric").trim();
 
         if (mpfile.isEmpty()) {
@@ -187,7 +187,7 @@ public class SongController {
     public class MyPicConfig implements WebMvcConfigurer {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/static/songPic/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/music-website/music-server/img/songPic/");
+            registry.addResourceHandler("/img/songPic/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/music-website/music-server/img/songPic/");
             registry.addResourceHandler("/song/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/music-website/music-server/song/");
         }
     }
