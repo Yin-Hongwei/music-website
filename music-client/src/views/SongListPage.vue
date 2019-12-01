@@ -14,15 +14,6 @@
     <div class="song-content">
       <content-list :contentList="albumDatas"></content-list>
     </div>
-    <div class="pagination">
-      <el-pagination
-        v-if="'全部歌单' === activeName"
-        background
-        @current-change="handleCurrentChange"
-        layout="prev, pager, next"
-        :total="total">
-      </el-pagination>
-    </div>
   </div>
 </template>
 
@@ -87,19 +78,6 @@ export default {
     this.handleChangeView('全部歌单')
   },
   methods: {
-    // 获取歌单（目前只支持通过分页数获取，不支持查询分页）
-    getSongList (page) {
-      let _this = this
-      axios.get(`${_this.$store.state.HOST}/api/songListPage?page=${page}&&size=15`).then((res) => {
-        _this.total = res.data.page.totalPages * 10
-        _this.albumDatas = res.data._embedded.songLists
-      })
-    },
-    // 换页
-    handleCurrentChange (val) {
-      this.cur_page = val - 1
-      this.getSongList(this.cur_page)
-    },
     // 获取歌单
     handleChangeView: function (name) {
       this.activeName = name
@@ -109,6 +87,14 @@ export default {
       } else {
         this.getSongListOfStyle(name)
       }
+    },
+    // 获取全部歌单
+    getSongList (page) {
+      let _this = this
+      axios.get(`${_this.$store.state.HOST}/listSongLists`)
+        .then((res) => {
+          _this.albumDatas = res.data
+        })
     },
     // 通过类别获取歌单
     getSongListOfStyle (style) {
@@ -150,10 +136,5 @@ li {
   color: black;
   font-weight: 600;
   border-bottom: 4px solid black;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
 }
 </style>

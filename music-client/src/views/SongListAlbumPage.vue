@@ -22,7 +22,7 @@
           <div>
             <h3>歌单评分：</h3>
             <div>
-              <el-rate v-model="value5" disabled text-color="#ff9900" score-template="{value}"></el-rate>
+              <el-rate v-model="value5" disabled text-color="#ff9900" score-template="{value5}"></el-rate>
             </div>
           </div>
           <span>{{value5}}</span>
@@ -77,8 +77,8 @@ export default {
       'avator' // 用户头像
     ])
   },
-  mounted () {
-    this.songListId = this.$route.params.id // 给歌单ID赋值
+  created () {
+    this.songListId = this.tempList.id // 给歌单ID赋值
     this.singers = this.tempList
     // 获取歌单里面的歌曲ID
     this.getSongId()

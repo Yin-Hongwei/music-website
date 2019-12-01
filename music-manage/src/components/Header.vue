@@ -15,7 +15,7 @@
         </div>
         <!-- 用户头像 -->
         <div class="user-avator">
-          <img src="static/img/img.jpg" />
+          <img src="../assets/img/user.jpg"/>
         </div>
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
@@ -51,6 +51,11 @@ export default {
         username = this.name
       }
       return username
+    }
+  },
+  mounted () {
+    if (document.body.clientWidth < 1500) {
+      this.collapseChage()
     }
   },
   methods: {
@@ -92,17 +97,13 @@ export default {
       }
       this.fullscreen = !this.fullscreen
     }
-  },
-  mounted () {
-    if (document.body.clientWidth < 1500) {
-      this.collapseChage()
-    }
   }
 }
 </script>
 <style scoped>
 .header {
   position: relative;
+  background-color: #253041;
   box-sizing: border-box;
   width: 100%;
   height: 70px;

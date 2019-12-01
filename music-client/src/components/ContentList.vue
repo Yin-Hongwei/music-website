@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mixin } from '../mixins'
 
 export default {
@@ -27,21 +26,13 @@ export default {
   ],
   mixins: [mixin],
   methods: {
-    getId (title) {
-      let _this = this
-      axios.get(`${_this.$store.state.HOST}/api/songAlbum?title=${title}`)
-        .then((res) => {
-          let item = res.data[0]
-          this.$router.push({path: `/song-list-album-page/${item.id}`, query: {item}})
-        })
-    },
     goAblum (item, type) {
       this.$store.commit('setTempList', item)
       window.sessionStorage.setItem('tempList', JSON.stringify(item))
       if (type) {
         this.$router.push({path: `/singer-album-page/${item.id}`, query: {item}})
       } else {
-        this.getId(item.title)
+        this.$router.push({path: `/song-list-album-page/${item.id}`, query: {item}})
       }
     }
   }

@@ -37,6 +37,7 @@
 
 <script>
 import bus from '../assets/js/bus'
+
 export default {
   data () {
     return {
@@ -107,6 +108,7 @@ export default {
 .sidebar {
   display: block;
   position: absolute;
+  background-color: #334256;
   left: 0;
   top: 70px;
   bottom: 0;
