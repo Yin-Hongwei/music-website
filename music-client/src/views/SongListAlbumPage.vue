@@ -22,7 +22,7 @@
           <div>
             <h3>歌单评分：</h3>
             <div>
-              <el-rate v-model="value5" disabled text-color="#ff9900" score-template="value"></el-rate>
+              <el-rate v-model="value5" disabled text-color="#ff9900" score-template="{value}"></el-rate>
             </div>
           </div>
           <span>{{value5}}</span>
@@ -61,7 +61,7 @@ export default {
       count: 0, // 点赞数
       songListId: '', // 歌单ID
       value3: null,
-      value5: 6
+      value5: 0
     }
   },
   components: {
@@ -116,7 +116,7 @@ export default {
     // 获取评分
     getRank (id) {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/api/getRank?songListId=${id}`)
+      axios.get(_this.$store.state.HOST + '/api/getRank?songListId=' + id)
         .then(res => {
           _this.value5 = res.data
         })

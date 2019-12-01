@@ -137,7 +137,7 @@ public Object addSongList(HttpServletRequest req){
     public class MyPicConfig implements WebMvcConfigurer {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/static/songListPic/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/music-website/music-server/img/songListPic/");
+            registry.addResourceHandler("/img/songListPic/**").addResourceLocations("file:/Users/yhw/Documents/github-workspace/music-website/music-server/img/songListPic/");
         }
     }
 
