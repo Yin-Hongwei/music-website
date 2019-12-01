@@ -2,7 +2,10 @@
 <div class="register-page">
   <loginLogo/>
   <div class="register">
-    <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="0px" class="demo-ruleForm">
+    <div class="register-head">
+      <span>用户注册</span>
+    </div>
+    <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="80px" class="demo-ruleForm">
       <el-form-item prop="username" label="用户名">
         <el-input v-model="registerForm.username" placeholder="用户名"></el-input>
       </el-form-item>
@@ -35,7 +38,7 @@
       <el-alert v-show="showSuccess" class="local" title="注册成功" type="success" center show-icon></el-alert>
       <el-alert v-show="showError" class="local" title="注册失败" type="error" center show-icon></el-alert>
       <div class="login-btn">
-        <el-button type="primary" @click="goback(-1)">取消</el-button>
+        <el-button @click="goback(-1)">取消</el-button>
         <el-button type="primary" @click="register">确定</el-button>
       </div>
     </el-form>
@@ -244,19 +247,24 @@ export default {
   width: 350px;
   height: 580px;
   margin-left: 750px;
-  padding: 50px 50px 50px 20px;
+  padding: 30px 30px;
+}
+
+.register-head {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .login-btn {
   display: flex;
   justify-content: space-between;
-  margin-left: 40px;
 }
 
 .login-btn button{
-  width: 100%;
-  height:36px;
-  margin-top: 40px;
+  display: block;
+  width: 50%;
 }
 
 .local {

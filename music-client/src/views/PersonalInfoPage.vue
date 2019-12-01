@@ -6,7 +6,7 @@
         <p class="title">编辑个人资料</p>
         <hr/>
         <div class="personal">
-          <el-form :model="registerForm" class="demo-ruleForm">
+          <el-form :model="registerForm" class="demo-ruleForm" label-width="80px">
             <el-form-item prop="username" label="用户名">
               <el-input v-model="registerForm.username" placeholder="用户名"></el-input>
             </el-form-item>

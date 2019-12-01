@@ -2,18 +2,19 @@
 <div class="login-page">
   <login-logo/>
   <div class="login">
-    <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="0px" class="demo-ruleForm" >
-      <el-form-item prop="username" label="用户名">
+    <div class="login-head">
+      <span>帐号登录</span>
+    </div>
+    <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" class="demo-ruleForm" >
+      <el-form-item prop="username">
         <el-input placeholder="用户名" v-model="loginForm.username"></el-input>
       </el-form-item>
-      <el-form-item prop="password" label="密码">
+      <el-form-item prop="password">
         <el-input type="password" placeholder="密码" v-model="loginForm.password" @keyup.enter.native="login"></el-input>
       </el-form-item>
-      <el-alert v-show="showSuccess" class="local" title="登录成功" type="success" center show-icon></el-alert>
-      <el-alert v-show="showError" class="local" title="用户名或密码错误" type="error" center show-icon></el-alert>
       <div class="login-btn">
+        <el-button @click="goRegister()">注册</el-button>
         <el-button type="primary" @click="login">登录</el-button>
-        <el-button type="primary" @click="goRegister()">注册</el-button>
       </div>
     </el-form>
   </div>
@@ -47,8 +48,6 @@ export default {
       }
     }
     return {
-      showSuccess: false, // 提示成功
-      showError: false, // 提示失败
       loginForm: { // 登录用户名密码
         username: '',
         password: ''
@@ -65,8 +64,6 @@ export default {
   },
   mounted () {
     this.changeIndex('登录')
-    this.getSongLists()
-    this.getSingerLists()
   },
   methods: {
     changeIndex (value) {
@@ -78,12 +75,14 @@ export default {
       var params = new URLSearchParams()
       params.append('username', _this.loginForm.username)
       params.append('password', _this.loginForm.password)
-      axios.post(_this.$store.state.HOST + '/api/loginVerify', params)
+      axios.post(`${_this.$store.state.HOST}/api/loginVerify`, params)
         .then(res => {
           // console.log('-----------获取登录信息---------------')
           if (res.data.code === 1) {
-            _this.showError = false
-            _this.showSuccess = true
+            _this.$notify({
+              title: '登录成功',
+              type: 'success'
+            })
             _this.copyMsg(res.data.userMsg[0])
             _this.$store.commit('setLoginIn', true)
             window.sessionStorage.setItem('loginIn', JSON.stringify(true))
@@ -93,8 +92,10 @@ export default {
               _this.$router.go(0)
             }, 2000)
           } else {
-            _this.showSuccess = false
-            _this.showError = true
+            _this.$notify({
+              title: '用户名或密码错误',
+              type: 'error'
+            })
           }
         })
         .catch(failResponse => {})
@@ -118,12 +119,19 @@ export default {
 .login{
   position: absolute;
   margin-left: 800px;
-  top:150px;
-  padding: 50px 50px 50px 30px;
+  top: 150px;
+  padding: 30px 50px;
   width: 300px;
   background-color: white;
   height: 210px;
   border-radius: 10px;
+}
+
+.login-head {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .login-btn {
@@ -132,16 +140,7 @@ export default {
 }
 
 .login-btn button{
-  width: 100%;
-  height:36px;
-  margin-top: 50px;
-  margin-left: 20px;
-}
-
-.local {
-  position: absolute;
-  width: 280px;
-  margin-left: 20px;
-  top: 170px;
+  display: block;
+  width: 50%;
 }
 </style>

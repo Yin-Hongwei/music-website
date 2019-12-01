@@ -110,9 +110,9 @@ export default {
   line-height: 40px;
 }
 .no-lyric {
-  margin: 150px 0;
+  /* margin: 200px 0;
   width: 100%;
-  text-align: center;
+  text-align: center; */
 }
 .no-lrc {
   font-size: 30px;

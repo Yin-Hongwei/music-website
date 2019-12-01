@@ -22,14 +22,14 @@
           <div>
             <h3>歌单评分：</h3>
             <div>
-              <el-rate v-model="value5" disabled text-color="#ff9900" score-template="{value5}"></el-rate>
+              <el-rate v-model="value5" disabled></el-rate>
             </div>
           </div>
-          <span>{{value5}}</span>
+          <span>{{value5 * 2}}</span>
           <div>
             <h3>评价：</h3>
             <div @click="pushValue()">
-              <el-rate v-model="value3" show-text></el-rate>
+              <el-rate v-model="value3" show-text allow-half></el-rate>
             </div>
           </div>
         </div>
@@ -60,7 +60,7 @@ export default {
       singers: {},
       count: 0, // 点赞数
       songListId: '', // 歌单ID
-      value3: null,
+      value3: 0,
       value5: 0
     }
   },
@@ -80,9 +80,8 @@ export default {
   created () {
     this.songListId = this.tempList.id // 给歌单ID赋值
     this.singers = this.tempList
-    // 获取歌单里面的歌曲ID
-    this.getSongId()
-    this.getRank(this.songListId)
+    this.getSongId() // 获取歌单里面的歌曲ID
+    this.getRank(this.songListId) // 获取评分
   },
   mixins: [mixin],
   methods: {
@@ -116,9 +115,9 @@ export default {
     // 获取评分
     getRank (id) {
       let _this = this
-      axios.get(_this.$store.state.HOST + '/api/getRank?songListId=' + id)
+      axios.get(`${_this.$store.state.HOST}/api/getRank?songListId=${id}`)
         .then(res => {
-          _this.value5 = res.data
+          _this.value5 = res.data / 2
         })
         .catch(function (error) {
           console.log(error)
