@@ -85,17 +85,8 @@ a {
 }
 
 /*表单*/
-.el-form-item {
-  width: 100%;
-}
-.el-form-item__label, .el-form-item__label{
-  width: 80px !important;
-}
 .el-select {
-  width: 100% !important;
-}
-.el-form-item__content {
-  margin-left: 80px !important;
+  width: 100%;
 }
 .table{
   min-width: 800px;

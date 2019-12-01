@@ -6,13 +6,12 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="0px"
         class="demo-ruleForm"
       >
-        <el-form-item prop="username" label="管理员">
+        <el-form-item prop="username">
           <el-input v-model="ruleForm.username" placeholder="username"></el-input>
         </el-form-item>
-        <el-form-item prop="password" label="密码">
+        <el-form-item prop="password">
           <el-input
             type="password"
             placeholder="password"
@@ -55,7 +54,7 @@ export default {
         .post(`${_this.$store.state.HOST}/api/loginadmin`, params)
         .then(res => {
           if (res.data.code === 1) {
-            this.$router.push('/Consumer')
+            this.$router.push('/Info')
             this.$notify({
               title: '欢迎回来',
               type: 'success'
@@ -76,6 +75,10 @@ export default {
 <style scoped>
 .login-wrap {
   position: relative;
+  background: url('../assets/img/background.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
   width: 100%;
   height: 100%;
 }
@@ -86,6 +89,7 @@ export default {
   margin-top: -230px;
   text-align: center;
   font-size: 30px;
+  font-weight: 600;
   color: #fff;
 }
 .ms-login {
