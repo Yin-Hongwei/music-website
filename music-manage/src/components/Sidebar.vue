@@ -45,6 +45,17 @@ export default {
       items: [
         {
           icon: 'el-icon-document',
+          index: 'info',
+          title: '系统首页',
+          subs: [
+            {
+              index: 'info',
+              title: '系统首页'
+            }
+          ]
+        },
+        {
+          icon: 'el-icon-document',
           index: 'consumer',
           title: '用户管理',
           subs: [

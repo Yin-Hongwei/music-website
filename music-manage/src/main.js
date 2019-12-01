@@ -6,8 +6,10 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'babel-polyfill'
+import VCharts from 'v-charts'
 
 Vue.use(ElementUI)
+Vue.use(VCharts)
 Vue.prototype.$axios = axios
 
 /* eslint-disable no-new */
