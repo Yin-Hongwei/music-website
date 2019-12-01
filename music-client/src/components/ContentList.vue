@@ -30,9 +30,9 @@ export default {
       this.$store.commit('setTempList', item)
       window.sessionStorage.setItem('tempList', JSON.stringify(item))
       if (type) {
-        this.$router.push({path: `/singer-album-page/${item.id}`, query: {item}})
+        this.$router.push({path: `/singer-album-page/${item.id}`})
       } else {
-        this.$router.push({path: `/song-list-album-page/${item.id}`, query: {item}})
+        this.$router.push({path: `/song-list-album-page/${item.id}`})
       }
     }
   }

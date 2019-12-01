@@ -18,26 +18,16 @@ div{
 }
 
 /*表单*/
-.el-form-item {
-  width: 100%;
-}
-.el-form-item__label, .el-form-item__label{
-  width: 80px !important;
-}
-.el-select {
-  width: 100% !important;
-}
-.el-form-item__content {
-  margin-left: 80px !important;
-}
 .el-select-dropdown__item {
   display: block !important;
 }
+
 /*轮播图*/
 .el-scrollbar__view, .el-select-dropdown__list {
   width: 100% !important;
   text-align: center;
 }
+
 .el-carousel__indicators, .el-carousel__indicators--outside{
   display: inline-block;
   margin-left: 500px !important;

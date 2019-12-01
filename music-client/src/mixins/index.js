@@ -1,30 +1,6 @@
 import axios from 'axios'
 export const mixin = {
   methods: {
-    // 获取歌单列表
-    getSongLists () {
-      let _this = this
-      axios.get(_this.$store.state.HOST + '/listSongLists')
-        .then(function (response) {
-          _this.$store.commit('setSongsList', response.data)
-          window.sessionStorage.setItem('songsList', JSON.stringify(response.data))
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    // 获取歌手
-    getSingerLists () {
-      let _this = this
-      axios.get(_this.$store.state.HOST + '/listSingers')
-        .then(function (response) {
-          _this.$store.commit('setSingersList', response.data)
-          window.sessionStorage.setItem('singersList', JSON.stringify(response.data))
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
     // 获取图片信息
     attachImageUrl (srcUrl) {
       return this.$store.state.HOST + srcUrl || '../assets/img/user.jpg'
