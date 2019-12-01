@@ -11,6 +11,11 @@ export default new Router({
       meta: { title: '自述文件' },
       children: [
         {
+          path: '/Info',
+          component: resolve => require(['../views/InfoPage.vue'], resolve),
+          meta: { title: 'Info' }
+        },
+        {
           path: '/Song',
           component: resolve => require(['../views/SongPage.vue'], resolve),
           meta: { title: 'Song' }
