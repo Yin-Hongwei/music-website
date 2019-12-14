@@ -12,7 +12,7 @@
       <el-form-item prop="password" label="密码">
         <el-input type="password" placeholder="密码" v-model="registerForm.password"></el-input>
       </el-form-item>
-      <el-form-item label="性别">
+      <el-form-item prop="sex" label="性别">
         <el-radio-group v-model="registerForm.sex">
           <el-radio :label="0">女</el-radio>
           <el-radio :label="1">男</el-radio>
