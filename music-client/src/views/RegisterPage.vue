@@ -35,8 +35,6 @@
           <el-option v-for="item in cities" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
       </el-form-item>
-      <el-alert v-show="showSuccess" class="local" title="注册成功" type="success" center show-icon></el-alert>
-      <el-alert v-show="showError" class="local" title="注册失败" type="error" center show-icon></el-alert>
       <div class="login-btn">
         <el-button @click="goback(-1)">取消</el-button>
         <el-button type="primary" @click="register">确定</el-button>
@@ -57,8 +55,6 @@ export default {
   },
   data: function () {
     return {
-      showSuccess: false, // 提示成功
-      showError: false, // 提示失败
       registerForm: { // 注册
         username: '',
         password: '',
@@ -219,14 +215,18 @@ export default {
       axios.post(`${_this.$store.state.HOST}/api/signup`, params)
         .then(response => {
           if (response.data.code === 1) {
-            _this.showError = false
-            _this.showSuccess = true
+            _this.$notify({
+              title: '注册成功',
+              type: 'success'
+            })
             setTimeout(function () {
               _this.$router.push({path: '/'})
             }, 2000)
           } else {
-            _this.showSuccess = false
-            _this.showError = true
+            _this.$notify({
+              title: '注册失败',
+              type: 'error'
+            })
           }
         })
         .catch(failResponse => {})
