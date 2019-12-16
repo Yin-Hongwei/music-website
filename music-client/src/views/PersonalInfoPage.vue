@@ -203,9 +203,9 @@ export default {
       this.$router.go(-1)
     },
     saveMsg () {
-      console.log(this.registerForm)
+      // console.log(this.registerForm)
       let _this = this
-      let d = _this.registerForm.birth
+      let d = new Date(_this.registerForm.birth)
       var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
       var params = new URLSearchParams()
       params.append('id', _this.userId)
