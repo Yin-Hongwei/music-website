@@ -251,7 +251,7 @@ export default {
     // 保存编辑
     saveEdit () {
       let _this = this
-      let d = _this.form.birth
+      let d = new Date(_this.form.birth)
       let datetime =
         d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
       let params = new URLSearchParams()

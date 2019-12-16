@@ -397,7 +397,7 @@ export default {
     },
     // 保存编辑
     saveEdit () {
-      let d = this.form.birth
+      let d = new Date(this.form.birth)
       var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
       var params = new URLSearchParams()
       params.append('id', this.form.id)
