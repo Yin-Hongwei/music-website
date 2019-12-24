@@ -210,7 +210,7 @@ export default {
           console.log(res)
           if (res.data.code === 1) {
             _this.getData()
-            _this.registerForm = []
+            _this.registerForm = {}
             _this.$notify({
               title: '添加成功',
               type: 'success'

@@ -320,7 +320,7 @@ export default {
       req.onreadystatechange = function () {
         if (req.readyState === 4 && req.status === 200) {
           _this.getData()
-          _this.registerForm = []
+          _this.registerForm = {}
           _this.$notify({
             title: '添加成功',
             type: 'success'
