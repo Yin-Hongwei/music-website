@@ -360,10 +360,9 @@ export default {
       params.append('avator', '/img/user.jpg')
       _this.$axios.post(`${_this.$store.state.HOST}/api/signup`, params)
         .then(response => {
-          // console.log(response)
           if (response.data.code === 1) {
             _this.getData()
-            _this.registerForm = []
+            _this.registerForm = {}
             _this.$notify({
               title: '添加成功',
               type: 'success'

@@ -203,7 +203,6 @@ export default {
       this.$router.go(-1)
     },
     saveMsg () {
-      // console.log(this.registerForm)
       let _this = this
       let d = new Date(_this.registerForm.birth)
       var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
