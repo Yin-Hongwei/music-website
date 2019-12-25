@@ -1,17 +1,12 @@
 <template>
     <div class="table">
-        <div class="crumbs">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-tickets"></i> 用户信息 </el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
         <div class="container">
-            <div class="handle-box">
+          <div class="handle-box">
                 <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
                 <el-input v-model="select_word" placeholder="筛选相关用户" class="handle-input mr10"></el-input>
                 <el-button type="primary" @click="centerDialogVisible = true">添加新用户</el-button>
             </div>
-            <el-table :data="tableData" border stripe style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
+          <el-table :data="data" border stripe style="width: 100%" ref="multipleTable" height="500px" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="40"></el-table-column>
                 <el-table-column label="歌手图片" width="100">
                     <template slot-scope="scope">
@@ -40,7 +35,7 @@
                 <el-table-column prop="location" label="地区" width="80"></el-table-column>
                 <el-table-column label="收藏" width="80">
                     <template  slot-scope="scope">
-                        <el-button size="mini" @click="getCollect(tableData[scope.$index].id)">收藏</el-button>
+                        <el-button size="mini" @click="getCollect(data[scope.$index].id)">收藏</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" width="150">
@@ -50,6 +45,16 @@
                     </template>
                 </el-table-column>
             </el-table>
+          <div class="pagination">
+            <el-pagination
+              @current-change="handleCurrentChange"
+              background
+              layout="total, prev, pager, next"
+              :current-page="currentPage"
+              :page-size="pageSize"
+              :total="tableData.length">
+            </el-pagination>
+          </div>
         </div>
 
         <!--添加新用户-->
@@ -143,6 +148,7 @@
 import {mixin} from '../mixins'
 export default {
   name: 'consumer-page',
+  mixins: [mixin],
   data () {
     return {
       registerForm: { // 注册
@@ -306,7 +312,15 @@ export default {
         createTime: '',
         updateTime: ''
       },
+      pageSize: 5, // 页数
+      currentPage: 1, // 当前页
       idx: -1 // 记录当前点中的行
+    }
+  },
+  computed: {
+    // 计算当前表格中的数据
+    data () {
+      return this.tableData.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
     }
   },
   watch: {
@@ -326,8 +340,11 @@ export default {
   created () {
     this.getData(this.cur_page)
   },
-  mixins: [mixin],
   methods: {
+    // 获取当前页
+    handleCurrentChange (val) {
+      this.currentPage = val
+    },
     uploadUrl (id) {
       return `${this.$store.state.HOST}/api/updateUserImg?id=${id}`
     },
@@ -460,5 +477,10 @@ export default {
 .handle-input {
     width: 300px;
     display: inline-block;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
 }
 </style>

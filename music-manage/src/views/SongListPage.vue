@@ -1,17 +1,12 @@
 <template>
     <div class="table">
-        <div class="crumbs">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-tickets"></i> 歌单信息</el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
         <div class="container">
-            <div class="handle-box">
+          <div class="handle-box">
                 <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
                 <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" @click="centerDialogVisible = true">添加歌单</el-button>
             </div>
-            <el-table :data="tableData" border stripe style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
+          <el-table :data="data" border stripe style="width: 100%" height="500px" ref="multipleTable" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="40"></el-table-column>
                 <el-table-column label="歌单图片" width="100">
                     <template slot-scope="scope">
@@ -39,12 +34,12 @@
                 </el-table-column>
                 <el-table-column label="内容" width="80">
                     <template  slot-scope="scope">
-                        <el-button size="mini" @click="getContent(tableData[scope.$index].id)">内容</el-button>
+                        <el-button size="mini" @click="getContent(data[scope.$index].id)">内容</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column label="评论" width="80">
                     <template  slot-scope="scope">
-                        <el-button size="mini" @click="getComment(tableData[scope.$index].id)">评论</el-button>
+                        <el-button size="mini" @click="getComment(data[scope.$index].id)">评论</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" width="150">
@@ -59,6 +54,16 @@
                     </template>
                 </el-table-column>
             </el-table>
+          <div class="pagination">
+            <el-pagination
+              @current-change="handleCurrentChange"
+              background
+              layout="total, prev, pager, next"
+              :current-page="currentPage"
+              :page-size="pageSize"
+              :total="tableData.length">
+            </el-pagination>
+          </div>
         </div>
 
         <!--添加歌单-->
@@ -107,14 +112,6 @@
                 <el-button type="primary" @click="deleteRow">确 定</el-button>
             </span>
         </el-dialog>
-        <div class="pagination">
-            <el-pagination
-                background
-                @current-change="handleCurrentChange"
-                layout="prev, pager, next"
-                :total="total">
-            </el-pagination>
-        </div>
     </div>
 </template>
 
@@ -143,9 +140,15 @@ export default {
         introduction: '',
         style: ''
       },
-      cur_page: 0,
-      total: 1,
+      pageSize: 5, // 页数
+      currentPage: 1, // 当前页
       idx: -1
+    }
+  },
+  computed: {
+    // 计算当前表格中的数据
+    data () {
+      return this.tableData.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
     }
   },
   watch: {
@@ -170,34 +173,19 @@ export default {
     uploadUrl (id) {
       return `${this.$store.state.HOST}/api/updateSongListImg?id=${id}`
     },
-    getId (title) {
-      let _this = this
-      this.$axios.get(`${_this.$store.state.HOST}/api/songAlbum?title=${title}`)
-        .then((res) => {
-          if (res.data[0]) {
-            let o = res.data[0]
-            _this.tableData.push(o)
-            _this.tempDate.push(o)
-          }
-        })
-    },
     // 获取歌单信息
     getData (page) {
       let _this = this
       _this.tableData = []
       _this.tempDate = []
-      _this.$axios.get(`${_this.$store.state.HOST}/api/songListPage?page=${page}&&size=10`).then((res) => {
-        _this.total = res.data.page.totalPages * 10
-        // _this.tableData = res.data._embedded.songLists
-        // _this.tempDate = res.data._embedded.songLists
-        for (let i = 0; i < 10; i++) {
-          this.getId(res.data._embedded.songLists[i].title)
-        }
+      _this.$axios.get(`${_this.$store.state.HOST}/listSongLists`).then((res) => {
+        _this.tableData = res.data
+        _this.tempDate = res.data
       })
     },
+    // 获取当前页
     handleCurrentChange (val) {
-      this.cur_page = val - 1
-      this.getData(this.cur_page)
+      this.currentPage = val
     },
     getContent (id) {
       this.$router.push({path: '/listSong', query: {id: id}})
