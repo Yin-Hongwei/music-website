@@ -4,7 +4,6 @@
       <el-col :span="6">
         <el-card shadow="hover" :body-style="{padding: '0px'}">
           <div class="grid-content grid-con-1">
-            <i class="el-icon-user-solid"></i>
             <div class="grid-cont-right">
               <div class="grid-num">{{userCount}}</div>
               <div>用户总数</div>

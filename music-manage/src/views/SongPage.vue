@@ -1,17 +1,12 @@
 <template>
     <div class="table">
-        <div class="crumbs">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-tickets"></i> 歌曲信息</el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
         <div class="container">
             <div class="handle-box">
                 <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
                 <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" @click="centerDialogVisible = true">添加歌曲</el-button>
             </div>
-            <el-table :data="tableData" stripe border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
+            <el-table :data="data" stripe border style="width: 100%" ref="multipleTable" height="500px" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="40"></el-table-column>
                 <el-table-column label="歌手图片" width="110">
                     <template slot-scope="scope">
@@ -65,7 +60,7 @@
                 </el-table-column>
                 <el-table-column label="评论" width="80">
                     <template  slot-scope="scope">
-                        <el-button size="mini" @click="getComment(tableData[scope.$index].id)">评论</el-button>
+                        <el-button size="mini" @click="getComment(data[scope.$index].id)">评论</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" width="150">
@@ -75,6 +70,16 @@
                     </template>
                 </el-table-column>
             </el-table>
+          <div class="pagination">
+            <el-pagination
+              @current-change="handleCurrentChange"
+              background
+              layout="total, prev, pager, next"
+              :current-page="currentPage"
+              :page-size="pageSize"
+              :total="tableData.length">
+            </el-pagination>
+          </div>
         </div>
 
         <!--添加歌曲-->
@@ -138,14 +143,6 @@
                 <el-button type="primary" @click="deleteRow">确 定</el-button>
             </span>
         </el-dialog>
-        <div class="pagination">
-            <el-pagination
-                background
-                @current-change="handleCurrentChange"
-                layout="prev, pager, next"
-                :total="total">
-            </el-pagination>
-        </div>
     </div>
 </template>
 
@@ -157,6 +154,10 @@ import '@/assets/js/iconfont.js'
 
 export default {
   name: 'song-page',
+  components: {
+    SongAudio
+  },
+  mixins: [mixin],
   data () {
     return {
       toggle: false,
@@ -185,18 +186,19 @@ export default {
         lyric: '',
         url: ''
       },
-      cur_page: 0,
-      total: 1,
+      pageSize: 5, // 页数
+      currentPage: 1, // 当前页
       idx: -1
     }
   },
   computed: {
     ...mapGetters([
       'isPlay' // 播放状态
-    ])
-  },
-  components: {
-    SongAudio
+    ]),
+    // 计算当前表格中的数据
+    data () {
+      return this.tableData.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
+    }
   },
   watch: {
     select_word: function () {
@@ -218,33 +220,16 @@ export default {
   destroyed () {
     this.$store.commit('setIsPlay', false)
   },
-  mixins: [mixin],
   methods: {
     // 拉取数据
     getData (page) {
       var _this = this
       _this.tableData = []
       _this.tempDate = []
-      _this.$axios.get(`${_this.$store.state.HOST}/api/songPage?page=${page}&&size=10`).then((res) => {
-        _this.total = res.data.page.totalPages * 10
-        // _this.tableData = res.data._embedded.songs
-        // _this.tempDate = res.data._embedded.songs
-        // 此处后端使用jpa做分页返回的数据没有id，目前没有解决，所以利用返回的数据用name又请求一遍数据拿到id，有点绕，等有时间解决这个问题。
-        for (let i = 0; i < 10; i++) {
-          this.getId(res.data._embedded.songs[i].name)
-        }
+      _this.$axios.get(`${_this.$store.state.HOST}/AllSongs`).then((res) => {
+        _this.tableData = res.data
+        _this.tempDate = res.data
       })
-    },
-    getId (name) {
-      let _this = this
-      this.$axios.get(`${_this.$store.state.HOST}/api/song?name=${name}`)
-        .then((res) => {
-          if (res.data[0]) {
-            let o = res.data[0]
-            _this.tableData.push(o)
-            _this.tempDate.push(o)
-          }
-        })
     },
     setSongUrl (url) {
       this.$store.commit('setUrl', this.$store.state.HOST + url)
@@ -290,10 +275,9 @@ export default {
         })
       }
     },
-
+    // 获取当前页
     handleCurrentChange (val) {
-      this.cur_page = val - 1
-      this.getData(this.cur_page)
+      this.currentPage = val
     },
     // 添加音乐
     getSingerName () {

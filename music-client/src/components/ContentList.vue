@@ -44,6 +44,7 @@ export default {
     box-sizing: border-box;
   }
   .content-list {
+    min-height: 500px;
     padding: 0 20px;
   }
   .section-content {

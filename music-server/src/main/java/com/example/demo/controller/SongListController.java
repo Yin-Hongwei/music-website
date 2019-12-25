@@ -24,32 +24,32 @@ public class SongListController {
     private SongListServiceImpl songListService;
 
 //    添加歌单
-@ResponseBody
-@RequestMapping(value = "/api/addSongList", method = RequestMethod.POST)
-public Object addSongList(HttpServletRequest req){
-    JSONObject jsonObject = new JSONObject();
-    String title = req.getParameter("title").trim();
-    String pic = req.getParameter("pic").trim();
-    String introduction = req.getParameter("introduction").trim();
-    String style = req.getParameter("style").trim();
+    @ResponseBody
+    @RequestMapping(value = "/api/addSongList", method = RequestMethod.POST)
+    public Object addSongList(HttpServletRequest req){
+        JSONObject jsonObject = new JSONObject();
+        String title = req.getParameter("title").trim();
+        String pic = req.getParameter("pic").trim();
+        String introduction = req.getParameter("introduction").trim();
+        String style = req.getParameter("style").trim();
 
-    SongList songList = new SongList();
-    songList.setTitle(title);
-    songList.setPic(pic);
-    songList.setIntroduction(introduction);
-    songList.setStyle(style);
+        SongList songList = new SongList();
+        songList.setTitle(title);
+        songList.setPic(pic);
+        songList.setIntroduction(introduction);
+        songList.setStyle(style);
 
-    boolean res = songListService.ifAdd(songList);
-    if (res){
-        jsonObject.put("code", 1);
-        jsonObject.put("msg", "添加成功");
-        return jsonObject;
-    }else {
-        jsonObject.put("code", 0);
-        jsonObject.put("msg", "添加失败");
-        return jsonObject;
+        boolean res = songListService.ifAdd(songList);
+        if (res){
+            jsonObject.put("code", 1);
+            jsonObject.put("msg", "添加成功");
+            return jsonObject;
+        }else {
+            jsonObject.put("code", 0);
+            jsonObject.put("msg", "添加失败");
+            return jsonObject;
+        }
     }
-}
 
 //    删除歌单
     @RequestMapping(value = "/api/deleteSongLists", method = RequestMethod.GET)

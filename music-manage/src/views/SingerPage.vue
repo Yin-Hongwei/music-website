@@ -1,26 +1,12 @@
 <template>
   <div class="table">
-    <div class="crumbs">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item>
-          <i class="el-icon-tickets"></i> 歌手信息
-        </el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
     <div class="container">
       <div class="handle-box">
         <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
         <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
         <el-button type="primary" @click="centerDialogVisible = true">添加歌手</el-button>
       </div>
-      <el-table
-        :data="tableData"
-        stripe
-        border
-        style="width: 100%"
-        ref="multipleTable"
-        @selection-change="handleSelectionChange"
-      >
+      <el-table ref="multipleTable" stripe border style="width: 100%" height="500px" :data="data" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="40"></el-table-column>
         <el-table-column label="歌手图片" width="110">
           <template slot-scope="scope">
@@ -56,6 +42,16 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="pagination">
+        <el-pagination
+          @current-change="handleCurrentChange"
+          background
+          layout="total, prev, pager, next"
+          :current-page="currentPage"
+          :page-size="pageSize"
+          :total="tableData.length">
+        </el-pagination>
+      </div>
     </div>
 
     <el-dialog title="添加歌手" :visible.sync="centerDialogVisible" width="400px" center>
@@ -140,6 +136,7 @@ import { mixin } from '../mixins'
 
 export default {
   name: 'singer-page',
+  mixins: [mixin],
   data () {
     return {
       registerForm: {
@@ -167,7 +164,15 @@ export default {
         location: '',
         introduction: ''
       },
+      pageSize: 5, // 页数
+      currentPage: 1, // 当前页
       idx: -1
+    }
+  },
+  computed: {
+    // 计算当前表格中的数据
+    data () {
+      return this.tableData.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
     }
   },
   watch: {
@@ -187,8 +192,11 @@ export default {
   created () {
     this.getData()
   },
-  mixins: [mixin],
   methods: {
+    // 获取当前页
+    handleCurrentChange (val) {
+      this.currentPage = val
+    },
     uploadUrl (id) {
       return `${this.$store.state.HOST}/api/updateSingerImg?id=${id}`
     },
@@ -317,5 +325,10 @@ export default {
 .handle-input {
   width: 300px;
   display: inline-block;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
 }
 </style>
