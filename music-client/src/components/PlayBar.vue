@@ -67,7 +67,7 @@
           </svg>
         </div>
         <ul class="menus">
-          <li v-for="(item, index) in listOfSongs" :key="index" @click="toplay(item.id, item.url, item.pic, index, item.name, item.lyric)">
+          <li v-for="(item, index) in listOfSongs" :class="{'is-play': id === item.id}" :key="index" @click="toplay(item.id, item.url, item.pic, index, item.name, item.lyric)">
             {{replaceFName(item.name)}}
           </li>
         </ul>
@@ -514,4 +514,8 @@ export default {
   color: white;
 }
 
+.is-play{
+  color: #30a4fc;
+  font-weight: bold;
+}
 </style>
