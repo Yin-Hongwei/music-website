@@ -47,6 +47,11 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'comment',
+  mixins: [mixin],
+  props: [
+    'id', // 歌曲ID或歌单ID
+    'type' // 歌单（1）/歌曲（0）
+  ],
   data () {
     return {
       commentList: [], // 存放评论内容
@@ -55,10 +60,6 @@ export default {
       textarea: '' // 存放输入内容
     }
   },
-  props: [
-    'id', // 歌曲ID或歌单ID
-    'type' // 歌单（1）/歌曲（0）
-  ],
   computed: {
     ...mapGetters([
       'userId', // 用户ID
@@ -70,7 +71,6 @@ export default {
   mounted () {
     this.getComment()
   },
-  mixins: [mixin],
   methods: {
     // 获取所有评论
     getComment () {

@@ -33,6 +33,10 @@ import AlbumContent from '../components/AlbumContent'
 
 export default {
   name: 'my-song-page',
+  components: {
+    AlbumContent
+  },
+  mixins: [mixin],
   data () {
     return {
       avator: '',
@@ -52,14 +56,10 @@ export default {
       'listOfSongs' // 存放的音乐
     ])
   },
-  components: {
-    AlbumContent
-  },
   mounted () {
     this.getMsg(this.userId)
     this.getCollection(this.userId)
   },
-  mixins: [mixin],
   methods: {
     getMsg (id) {
       let _this = this

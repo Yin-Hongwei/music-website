@@ -89,6 +89,7 @@ import { mixin } from '../mixins'
 
 export default {
   name: 'play-bar',
+  mixins: [mixin],
   data () {
     return {
       tag: false,
@@ -145,7 +146,6 @@ export default {
   mounted () {
     this.progressLength = this.$refs.progress.getBoundingClientRect().width
   },
-  mixins: [mixin],
   methods: {
     // 下载
     down () {

@@ -36,6 +36,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'album-content',
+  mixins: [mixin],
   props: [
     'songList'
   ],
@@ -43,8 +44,7 @@ export default {
     ...mapGetters([
       'id' // 音乐ID
     ])
-  },
-  mixins: [mixin]
+  }
 }
 </script>
 

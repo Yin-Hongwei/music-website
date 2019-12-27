@@ -111,6 +111,7 @@ export default {
       let _this = this
       axios.get(`${_this.$store.state.HOST}/listSongLists`)
         .then((res) => {
+          _this.currentPage = 1
           _this.albumDatas = res.data
         })
     },
@@ -119,6 +120,7 @@ export default {
       let _this = this
       axios.get(`${_this.$store.state.HOST}/api/songList/likeStyle?style=${style}`)
         .then(res => {
+          _this.currentPage = 1
           _this.albumDatas = res.data
         })
     }
