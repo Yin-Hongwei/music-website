@@ -21,10 +21,10 @@ import { mixin } from '../mixins'
 
 export default {
   name: 'content-list',
+  mixins: [mixin],
   props: [
     'contentList'
   ],
-  mixins: [mixin],
   methods: {
     goAblum (item, type) {
       this.$store.commit('setTempList', item)

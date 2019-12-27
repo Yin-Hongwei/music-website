@@ -52,7 +52,7 @@ public class CollectController {
         }
     }
 
-//    ？？？？？？？？？？？？？？？？？
+//
     @ResponseBody
     @RequestMapping(value = "/api/collectionList", method = RequestMethod.POST)
     public Object collectionList(HttpServletRequest req){

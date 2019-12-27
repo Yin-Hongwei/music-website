@@ -54,6 +54,10 @@ import Comment from '../components/Comment'
 
 export default {
   name: 'song-list-album-page',
+  components: {
+    AlbumContent,
+    Comment
+  },
   data () {
     return {
       songLists: [],
@@ -63,10 +67,6 @@ export default {
       value3: 0,
       value5: 0
     }
-  },
-  components: {
-    AlbumContent,
-    Comment
   },
   computed: {
     ...mapGetters([

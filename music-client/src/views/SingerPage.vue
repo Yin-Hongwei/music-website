@@ -84,6 +84,7 @@ export default {
       let _this = this
       axios.get(`${_this.$store.state.HOST}/listSingers`)
         .then(function (res) {
+          _this.currentPage = 1
           _this.albumDatas = res.data
         })
         .catch(function (error) {
@@ -95,6 +96,7 @@ export default {
       let _this = this
       axios.get(`${_this.$store.state.HOST}/api/singer?sex=${sex}`)
         .then((res) => {
+          _this.currentPage = 1
           _this.albumDatas = res.data
         })
         .catch(function (error) {
