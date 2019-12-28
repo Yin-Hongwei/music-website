@@ -338,7 +338,7 @@ export default {
     }
   },
   created () {
-    this.getData(this.cur_page)
+    this.getData()
   },
   methods: {
     // 获取当前页

@@ -215,18 +215,19 @@ export default {
     }
   },
   created () {
-    this.getData(this.cur_page)
+    this.getData()
   },
   destroyed () {
     this.$store.commit('setIsPlay', false)
   },
   methods: {
     // 拉取数据
-    getData (page) {
+    getData () {
       var _this = this
       _this.tableData = []
       _this.tempDate = []
       _this.$axios.get(`${_this.$store.state.HOST}/AllSongs`).then((res) => {
+        console.log('歌曲信息===========>', res.data)
         _this.tableData = res.data
         _this.tempDate = res.data
       })
