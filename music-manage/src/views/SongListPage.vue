@@ -166,7 +166,7 @@ export default {
     }
   },
   created () {
-    this.getData(this.cur_page)
+    this.getData()
   },
   mixins: [mixin],
   methods: {
@@ -174,7 +174,7 @@ export default {
       return `${this.$store.state.HOST}/api/updateSongListImg?id=${id}`
     },
     // 获取歌单信息
-    getData (page) {
+    getData () {
       let _this = this
       _this.tableData = []
       _this.tempDate = []
