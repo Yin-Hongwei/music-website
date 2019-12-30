@@ -36,15 +36,14 @@ export const mixin = {
     },
     // 解析歌词
     parseLyric (text) {
-      // console.log(typeof text)
-      var lines = text.split('\n'),
-        pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g,
-        result = []
-      // console.log(lines)
+      let lines = text.split('\n')
+      let pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g
+      let result = []
+
       while (!pattern.test(lines[0])) {
         lines = lines.slice(1)
       }
-      // console.log(lines.length)
+
       lines[lines.length - 1].length === 0 && lines.pop()
       for (let item of lines) {
         let time = item.match(pattern) // 存前面的时间段

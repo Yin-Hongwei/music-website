@@ -152,7 +152,7 @@ public class SongListController {
     @RequestMapping(value = "/api/songList/likeTitle", method = RequestMethod.GET)
     public Object likeTitle(HttpServletRequest req){
         String title = req.getParameter("title").trim();
-        return songListService.likeTitle(title);
+        return songListService.likeTitle('%'+ title + '%');
     }
 
     //    返回指定类型的歌单
