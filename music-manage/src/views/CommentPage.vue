@@ -25,8 +25,8 @@
         <el-table-column prop="content" label="评论内容"></el-table-column>
         <el-table-column label="操作" width="150">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -129,8 +129,8 @@ export default {
           console.log(error)
         })
     },
-    handleEdit (index, row) {
-      this.idx = index
+    handleEdit (row) {
+      this.idx = row.id
       this.form = {
         id: row.id,
         userId: row.userId,
@@ -161,8 +161,8 @@ export default {
       params.append('type', this.form.type)
       params.append('up', this.form.up)
       this.$axios.post(`${this.$store.state.HOST}/api/updateCommentMsgs`, params)
-        .then(response => {
-          if (response.data.code === 1) {
+        .then(res => {
+          if (res.data.code === 1) {
             this.getData()
             this.$notify({
               title: '编辑成功',
@@ -181,9 +181,9 @@ export default {
     // 确定删除
     deleteRow () {
       var _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteComments?id=${_this.tableData[_this.idx].id}`)
-        .then(response => {
-          if (response.data) {
+      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteComments?id=${_this.idx}`)
+        .then(res => {
+          if (res.data) {
             _this.getData()
             _this.$notify({
               title: '删除成功',
