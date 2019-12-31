@@ -3,10 +3,9 @@ export const mixin = {
     getUrl (url) {
       return `${this.$store.state.HOST}/${url}`
     },
-    // 获取要删除列表的index
-    handleDelete (index) {
-      this.idx = index
-      console.log(index)
+    // 获取要删除列表的id
+    handleDelete (id) {
+      this.idx = id
       this.delVisible = true
     },
     // 获取批量要删除的列表
@@ -15,10 +14,9 @@ export const mixin = {
     },
     // 批量删除
     delAll () {
-      const length = this.multipleSelection.length
-      for (let i = 0; i < length; i++) {
-        this.handleDelete(this.multipleSelection[i].index)
-        this.deleteRow(this.multipleSelection[i].index)
+      for (let item of this.multipleSelection) {
+        this.handleDelete(item.id)
+        this.deleteRow(item.id)
       }
       this.multipleSelection = []
     },

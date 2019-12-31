@@ -25,7 +25,7 @@
         <el-table-column prop="name" label="歌手-歌曲"></el-table-column>
         <el-table-column label="操作" width="85">
           <template slot-scope="scope">
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -105,7 +105,7 @@ export default {
     // 删除一首歌曲
     deleteRow () {
       var _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteCollects?id=${_this.tableData[_this.idx].id}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteCollects?id=${_this.idx}`)
         .then(res => {
           if (res.data) {
             _this.getData()

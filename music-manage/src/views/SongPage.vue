@@ -65,8 +65,8 @@
                 </el-table-column>
                 <el-table-column label="操作" width="150">
                     <template slot-scope="scope">
-                        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+                        <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -316,8 +316,8 @@ export default {
       req.send(form)
       _this.centerDialogVisible = false
     },
-    handleEdit (index, row) {
-      this.idx = index
+    handleEdit (row) {
+      this.idx = row.id
       this.form = {
         id: row.id,
         singerId: row.singerId,
@@ -363,7 +363,7 @@ export default {
     // 确定删除
     deleteRow () {
       var _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteSongs?id=${_this.data[_this.idx].id}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteSongs?id=${_this.idx}`)
         .then(response => {
           if (response.data) {
             _this.getData()

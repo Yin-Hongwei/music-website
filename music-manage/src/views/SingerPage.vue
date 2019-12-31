@@ -37,8 +37,8 @@
         </el-table-column>
         <el-table-column label="操作" width="150">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -212,10 +212,8 @@ export default {
       params.append('birth', datetime)
       params.append('location', this.registerForm.location)
       params.append('introduction', this.registerForm.introduction)
-      _this.$axios
-        .post(`${_this.$store.state.HOST}/api/addSinger`, params)
+      _this.$axios.post(`${_this.$store.state.HOST}/api/addSinger`, params)
         .then(res => {
-          console.log(res)
           if (res.data.code === 1) {
             _this.getData()
             _this.registerForm = {}
@@ -242,9 +240,9 @@ export default {
         _this.tempDate = res.data
       })
     },
-    handleEdit (index, row) {
+    handleEdit (row) {
       this.editVisible = true
-      this.idx = index
+      this.idx = row.id
       let datetime = row.birth
       this.form = {
         id: row.id,
@@ -260,8 +258,7 @@ export default {
     saveEdit () {
       let _this = this
       let d = new Date(_this.form.birth)
-      let datetime =
-        d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+      let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
       let params = new URLSearchParams()
       params.append('id', _this.form.id)
       params.append('name', _this.form.name)
@@ -270,11 +267,9 @@ export default {
       params.append('birth', datetime)
       params.append('location', _this.form.location)
       params.append('introduction', _this.form.introduction)
-      _this.$axios
-        .post(`${_this.$store.state.HOST}/api/updateSingerMsgs`, params)
-        .then(response => {
-          console.log(response.data)
-          if (response.data.code === 1) {
+      _this.$axios.post(`${_this.$store.state.HOST}/api/updateSingerMsgs`, params)
+        .then(res => {
+          if (res.data.code === 1) {
             _this.getData()
             _this.$notify({
               title: '编辑成功',
@@ -293,11 +288,9 @@ export default {
     // 确定删除
     deleteRow () {
       var _this = this
-      _this.$axios
-        .get(
-          `${_this.$store.state.HOST}/api/deleteSingers?id=${_this.data[_this.idx].id}`)
-        .then(response => {
-          if (response.data) {
+      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteSingers?id=${_this.idx}`)
+        .then(res => {
+          if (res.data) {
             _this.getData()
             _this.$notify({
               title: '删除成功',

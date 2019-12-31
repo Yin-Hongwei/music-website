@@ -25,7 +25,7 @@
         <el-table-column prop="name" label="歌手-歌曲"></el-table-column>
         <el-table-column label="操作" width="80">
           <template slot-scope="scope">
-            <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button size="small" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -109,8 +109,7 @@ export default {
       let _this = this
       _this.tableData = []
       _this.tempDate = []
-      _this.$axios
-        .get(`${_this.$store.state.HOST}/listSongOfSingers?songListId=${_this.$route.query.id}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/listSongOfSingers?songListId=${_this.$route.query.id}`)
         .then(res => {
           console.log(res.data)
           for (let item of res.data) {
@@ -121,8 +120,7 @@ export default {
     // 获取歌单里对应的音乐
     getSong (id) {
       let _this = this
-      _this.$axios
-        .get(`${_this.$store.state.HOST}/listSongsOfSongs?id=${id}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/listSongsOfSongs?id=${id}`)
         .then(function (res) {
           _this.tableData.push(res.data[0])
           _this.tempDate.push(res.data[0])
@@ -134,10 +132,8 @@ export default {
     // 获取要添加歌曲的ID
     getSongId () {
       let _this = this
-      var id =
-        _this.registerForm.singerName + '-' + _this.registerForm.songName
-      _this.$axios
-        .get(`${_this.$store.state.HOST}/listSongsOfSearch?name=${id}`)
+      var id = _this.registerForm.singerName + '-' + _this.registerForm.songName
+      _this.$axios.get(`${_this.$store.state.HOST}/listSongsOfSearch?name=${id}`)
         .then(res => {
           _this.addSong(res.data[0].id)
         })
@@ -148,8 +144,7 @@ export default {
       let params = new URLSearchParams()
       params.append('songId', id)
       params.append('songListId', _this.$route.query.id)
-      _this.$axios
-        .post(`${_this.$store.state.HOST}/api/addListSong`, params)
+      _this.$axios.post(`${_this.$store.state.HOST}/api/addListSong`, params)
         .then(res => {
           if (res.data.code === 1) {
             _this.getData()
@@ -169,10 +164,7 @@ export default {
     // 确定删除
     deleteRow () {
       let _this = this
-      _this.$axios
-        .get(
-          `${_this.$store.state.HOST}/api/deleteListOfSong?songId=${_this.tableData[_this.idx].id}`
-        )
+      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteListOfSong?songId=${_this.idx}`)
         .then(res => {
           if (res.data) {
             _this.getData()
