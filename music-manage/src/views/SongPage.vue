@@ -230,6 +230,7 @@ export default {
         console.log('歌曲信息===========>', res.data)
         _this.tableData = res.data
         _this.tempDate = res.data
+        _this.currentPage = 1
       })
     },
     setSongUrl (url) {
