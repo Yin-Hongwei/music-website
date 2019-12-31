@@ -262,21 +262,6 @@ export default {
       }
       return extension
     },
-    handleSongSuccess (res, file) {
-      let _this = this
-      if (res.code === 1) {
-        _this.getData()
-        _this.$notify({
-          title: '上传成功',
-          type: 'success'
-        })
-      } else {
-        _this.$notify({
-          title: '上传失败',
-          type: 'error'
-        })
-      }
-    },
     // 获取当前页
     handleCurrentChange (val) {
       this.currentPage = val
@@ -298,6 +283,21 @@ export default {
         console.log(error)
       })
     },
+    handleSongSuccess (res, file) {
+      let _this = this
+      if (res.code === 1) {
+        _this.getData()
+        _this.$notify({
+          title: '上传成功',
+          type: 'success'
+        })
+      } else {
+        _this.$notify({
+          title: '上传失败',
+          type: 'error'
+        })
+      }
+    },
     addSong (id) {
       let _this = this
       var form = new FormData(document.getElementById('tf'))
@@ -305,12 +305,20 @@ export default {
       var req = new XMLHttpRequest()
       req.onreadystatechange = function () {
         if (req.readyState === 4 && req.status === 200) {
-          _this.getData()
-          _this.registerForm = {}
-          _this.$notify({
-            title: '添加成功',
-            type: 'success'
-          })
+          let res = JSON.parse(req.response)
+          if (res.code) {
+            _this.getData()
+            _this.registerForm = {}
+            _this.$notify({
+              title: res.msg,
+              type: 'success'
+            })
+          } else if (!res.code) {
+            _this.$notify({
+              title: '上传失败',
+              type: 'error'
+            })
+          }
         }
       }
       req.open('post', `${_this.$store.state.HOST}/api/addSong`, false)
