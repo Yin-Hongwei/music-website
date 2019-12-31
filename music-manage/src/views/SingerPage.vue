@@ -295,7 +295,7 @@ export default {
       var _this = this
       _this.$axios
         .get(
-          `${_this.$store.state.HOST}/api/deleteSingers?id=${_this.tableData[_this.idx].id}`)
+          `${_this.$store.state.HOST}/api/deleteSingers?id=${_this.data[_this.idx].id}`)
         .then(response => {
           if (response.data) {
             _this.getData()

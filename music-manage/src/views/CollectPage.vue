@@ -47,6 +47,8 @@ import { mixin } from '../mixins'
 
 export default {
   name: 'collect-page',
+  mixins: [mixin],
+  props: ['id'],
   data () {
     return {
       tableData: [], // 记录歌曲，用于显示
@@ -75,8 +77,6 @@ export default {
   mounted () {
     this.getData()
   },
-  props: ['id'],
-  mixins: [mixin],
   methods: {
     // 通过用户id获取用户收藏的歌曲id
     getData () {
@@ -93,8 +93,7 @@ export default {
     // 通过歌曲ID获取歌曲
     getSongList (id) {
       var _this = this
-      _this.$axios
-        .get(`${_this.$store.state.HOST}/listSongsOfSongs?id=${id}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/listSongsOfSongs?id=${id}`)
         .then(function (res) {
           _this.tableData.push(res.data[0])
           _this.tempDate.push(res.data[0])
@@ -106,10 +105,9 @@ export default {
     // 删除一首歌曲
     deleteRow () {
       var _this = this
-      _this.$axios
-        .get(`${_this.$store.state.HOST}/api/deleteCollects?id=${_this.tableData[_this.idx].id}`)
-        .then(response => {
-          if (response.data) {
+      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteCollects?id=${_this.tableData[_this.idx].id}`)
+        .then(res => {
+          if (res.data) {
             _this.getData()
             _this.$notify({
               title: '删除成功',
