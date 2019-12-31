@@ -238,6 +238,7 @@ export default {
       _this.$axios.get(`${_this.$store.state.HOST}/listSingers`).then(res => {
         _this.tableData = res.data
         _this.tempDate = res.data
+        _this.currentPage = 1
       })
     },
     handleEdit (row) {
