@@ -117,6 +117,7 @@
 
 <script>
 import {mixin} from '../mixins'
+
 export default {
   name: 'song-list-page',
   data () {
@@ -259,7 +260,7 @@ export default {
     // 确定删除
     deleteRow () {
       let _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteSongLists?id=${_this.tableData[this.idx].id}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteSongLists?id=${_this.data[this.idx].id}`)
         .then(res => {
           if (res.data) {
             _this.getData()

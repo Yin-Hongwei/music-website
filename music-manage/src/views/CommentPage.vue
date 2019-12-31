@@ -58,8 +58,10 @@
 
 <script>
 import { mixin } from '../mixins'
+
 export default {
   name: 'comment-page',
+  mixins: [mixin],
   data () {
     return {
       tableData: [],
@@ -80,9 +82,6 @@ export default {
       idx: -1
     }
   },
-  created () {
-    this.getData()
-  },
   watch: {
     select_word: function () {
       if (this.select_word === '') {
@@ -97,7 +96,9 @@ export default {
       }
     }
   },
-  mixins: [mixin],
+  created () {
+    this.getData()
+  },
   methods: {
     getData () {
       var _this = this
@@ -117,8 +118,7 @@ export default {
     },
     getUsers (id, item) {
       let _this = this
-      _this.$axios
-        .get(`${_this.$store.state.HOST}/commentOfConsumer?id=${id}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/commentOfConsumer?id=${id}`)
         .then(function (res) {
           let o = item
           o.name = res.data[0].username
@@ -160,8 +160,7 @@ export default {
       params.append('content', this.form.content)
       params.append('type', this.form.type)
       params.append('up', this.form.up)
-      this.$axios
-        .post(`${this.$store.state.HOST}/api/updateCommentMsgs`, params)
+      this.$axios.post(`${this.$store.state.HOST}/api/updateCommentMsgs`, params)
         .then(response => {
           if (response.data.code === 1) {
             this.getData()
@@ -182,8 +181,7 @@ export default {
     // 确定删除
     deleteRow () {
       var _this = this
-      _this.$axios
-        .get(`${_this.$store.state.HOST}/api/deleteComments?id=${_this.tableData[_this.idx].id}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteComments?id=${_this.tableData[_this.idx].id}`)
         .then(response => {
           if (response.data) {
             _this.getData()

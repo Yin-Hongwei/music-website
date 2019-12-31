@@ -66,8 +66,10 @@
 
 <script>
 import { mixin } from '../mixins'
+
 export default {
   name: 'list-song-page',
+  mixins: [mixin],
   data () {
     return {
       registerForm: {
@@ -101,7 +103,6 @@ export default {
   created () {
     this.getData()
   },
-  mixins: [mixin],
   methods: {
     // 获取歌单
     getData () {
