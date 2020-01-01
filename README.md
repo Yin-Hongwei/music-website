@@ -31,7 +31,7 @@
 
 <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9aqzofkj31c00u0aq5.jpg"/><br/>
 
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1gaajrcairsj31c00u0x5a.jpg"/><br/>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1gahhz8khb3j31c00u01kx.jpg"/><br/>
 
 <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9cy5qpmj31c00u0qdr.jpg"/><br/>
 
@@ -76,7 +76,7 @@ spring boot + MyBatis
 
 #### 前端
 
-vue + vue-router + vuex + axios +  element-ui + swiper
+vue + vue-router + vuex + axios +  element-ui
 
 <br/>
 
@@ -93,9 +93,9 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 去https://pan.baidu.com/s/1PjdvJ8SCJ0kUwrL1m7Dp7Q 下载网站依赖的歌曲及图片，将 data 夹里的文件直接放到 music-server 文件夹下（因为音乐有的不是无损的，可能有部分音乐会失效，只需要替换掉失效的即可）。下载资源可能有点儿慢，这是百度云破解版[https://pan.baidu.com/disk/home#/all?vmode=list&path=%2F%E8%BD%AF%E4%BB%B6%2FPanDownload](https://pan.baidu.com/disk/home#/all?vmode=list&path=%2F软件%2FPanDownload)（适合win用户，Mac上还没发现。
 
 #### 3、修改
-1）数据库：将sql文件夹中的 tp_music.sql 文件导入数据库。
+1）数据库：将sql文件夹中的 tp_music.sql 文件导入数据库。（mysql 版本不能低于5.7）
 
-2）music-server：启动后端服务之前，有一些地方需要修改，先去 /music-website/music-server/src/main/resources 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password，并且修改下面蓝色显示的文件名中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。
+2）music-server：启动后端服务之前，有一些地方需要修改，先去 /music-website/music-server/src/main/resources 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password，并且修改下面蓝色显示的文件名中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。（Mac 和 win 下路径有些差异，我的是Mac上的路径，win 上 需要在 file:后标明是哪个盘，例如："file:C:/user/XXX"）
 
 <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9l2f210j31ya0c643k.jpg"/>
 

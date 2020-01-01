@@ -59,23 +59,16 @@
           </svg>
         </el-button>
       </div>
-      <!--歌曲列表-->
-      <div class="dropup">
-        <div class="item">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-liebiao"></use>
-          </svg>
-        </div>
-        <ul class="menus">
-          <li v-for="(item, index) in listOfSongs" :class="{'is-play': id === item.id}" :key="index" @click="toplay(item.id, item.url, item.pic, index, item.name, item.lyric)">
-            {{replaceFName(item.name)}}
-          </li>
-        </ul>
-      </div>
       <!--下载-->
       <div class="item" @click="down">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-xiazai"></use>
+        </svg>
+      </div>
+      <!--歌曲列表-->
+      <div class="item" @click="changeAside">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-liebiao"></use>
         </svg>
       </div>
     </div>
@@ -116,6 +109,7 @@ export default {
       'duration', // 音乐时长
       'listOfSongs', // 当前歌单列表
       'listIndex', // 当前歌曲在歌曲列表的位置
+      'showAside', // 是否显示侧边栏
       'autoNext' // 用于触发自动播放下一首
     ])
   },
@@ -170,6 +164,11 @@ export default {
           document.body.removeChild(eleLink)
         })
         .catch(failResponse => {})
+    },
+    changeAside () {
+      let temp = !this.showAside
+      this.$store.commit('setShowAside', temp)
+      window.sessionStorage.setItem('showAside', JSON.stringify(temp))
     },
     // 控制音乐播放/暂停
     togglePlay () {
@@ -472,50 +471,5 @@ export default {
   fill: currentColor;
   color: black;
   font-size: 1.5em;
-}
-
-.dropup {
-  position: relative;
-}
-
-.dropup:hover .menus {
-  display: block;
-}
-
-.menus {
-  display: none;
-  background-color: #fff;
-  position: absolute;
-  max-height: 250px;
-  min-height: 50px;
-  width: 250px;
-  right: -80px;
-  bottom:54px;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 100;
-  text-align: center;
-  overflow: scroll;
-  white-space: nowrap;
-}
-
-.menus li {
-  display: block;
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
-}
-
-.menus li:hover{
-  background-color: #95d2f6;
-  color: white;
-}
-
-.is-play{
-  color: #30a4fc;
-  font-weight: bold;
 }
 </style>

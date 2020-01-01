@@ -4,8 +4,6 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store/index'
-import Swiper from 'swiper'
-import 'swiper/dist/css/swiper.min.css'
 import './assets/css/style.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -22,7 +20,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  Swiper,
   components: { App },
   template: '<App/>'
 })

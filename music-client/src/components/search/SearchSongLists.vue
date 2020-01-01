@@ -32,8 +32,6 @@ export default {
         let _this = this
         axios.get(`${_this.$store.state.HOST}/api/songList/likeTitle?title=${_this.$route.query.keywords}`)
           .then(res => {
-            // 关键词暂时不支持搜索歌单
-            // console.log(res.data)
             _this.albumDatas = res.data
           })
       } else {
