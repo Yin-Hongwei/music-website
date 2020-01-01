@@ -186,6 +186,7 @@ const store = new Vuex.Store({
     loginIn: false, // 是否登录
     activeName: '', // 歌单类型名
     searchword: '', // 搜索关键词
+    showAside: false, // 是否显示侧边栏
     index: 0 // 列表中的序号
   },
   getters: {
@@ -203,6 +204,13 @@ const store = new Vuex.Store({
       }
       return activeName
     },
+    showAside: state => {
+      let showAside = state.showAside
+      if (!showAside) {
+        showAside = JSON.parse(window.sessionStorage.getItem('showAside') || null)
+      }
+      return showAside
+    },
     index: state => {
       let index = state.index
       if (!index) {
@@ -215,6 +223,7 @@ const store = new Vuex.Store({
   mutations: {
     setLoginIn: (state, loginIn) => { state.loginIn = loginIn },
     setActiveName: (state, activeName) => { state.activeName = activeName },
+    setShowAside: (state, showAside) => { state.showAside = showAside },
     setIndex: (state, index) => { state.index = index },
     setSearchword: (state, searchword) => { state.searchword = searchword }
   },
