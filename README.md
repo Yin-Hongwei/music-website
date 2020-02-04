@@ -97,7 +97,7 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 
 2）music-server：启动后端服务之前，有一些地方需要修改，先去 /music-website/music-server/src/main/resources 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password，并且修改下面蓝色显示的文件名中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。（Mac 和 win 下路径有些差异，我的是Mac上的路径，win 上 需要在 file:后标明是哪个盘，例如："file:C:/user/XXX"）
 
-<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9l2f210j31ya0c643k.jpg"/>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1gbkqbc66q9j33fr0u07u0.jpg"/>
 
 #### 4、启动项目
 
@@ -137,4 +137,4 @@ npm run dev // 启动后台管理项目
 
 [MIT](http://opensource.org/licenses/MIT)
 
-Copyright (c) 2018 Yin-Hongwei
+Copyright (c) 2018 Yin-Hongwei 

@@ -5,7 +5,7 @@
 <generatorConfiguration>
 
   <!-- 本地数据库驱动程序jar包的全路径 -->
-  <classPathEntry location="/Users/yhw/Documents/IdeaProjects/Item/hwmusic/src/main/resources/mysql-connector-java-8.0.13.jar"/>
+  <classPathEntry location="/Users/hongweiyin/Documents/github-workspace/music-website/music-server/src/main/resources/mysql-connector-java-8.0.13.jar"/>
 
   <context id="context" targetRuntime="MyBatis3">
     <commentGenerator>
@@ -14,7 +14,7 @@
     </commentGenerator>
 
     <!-- 数据库的相关配置 -->
-    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/tp_music?serverTimezone=Asia/Shanghai" userId="root" password="1026"/>
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/tp_music?serverTimezone=Asia/Shanghai" userId="root" password="yhw925727"/>
 
     <javaTypeResolver>
       <property name="forceBigDecimals" value="false"/>
