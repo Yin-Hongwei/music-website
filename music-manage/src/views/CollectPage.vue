@@ -105,7 +105,7 @@ export default {
     // 删除一首歌曲
     deleteRow () {
       var _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteCollects?id=${_this.idx}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteCollects?songId=${_this.idx}`)
         .then(res => {
           if (res.data) {
             _this.getData()
