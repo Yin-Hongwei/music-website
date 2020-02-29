@@ -96,8 +96,8 @@ public class CollectController {
 //    删除收藏的歌曲
     @RequestMapping(value = "/api/deleteCollects", method = RequestMethod.GET)
     public Object deleteCollects(HttpServletRequest req){
-        String id = req.getParameter("id");
-        return collectService.deleteCollect(Integer.parseInt(id));
+        String song_id = req.getParameter("songId");
+        return collectService.deleteCollect(Integer.parseInt(song_id));
     }
 
 //    更新收藏
