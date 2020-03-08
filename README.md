@@ -15,43 +15,37 @@
 
 > 前台模块
 
-![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hkbfdtbej31c00u0jyu.jpg)
+![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hkbfdtbej31c00u0jyu.jpg)<br/>
 
-<br/>
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e97bwxifj31c00u0npe.jpg)<br/>
 
-<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e97bwxifj31c00u0npe.jpg"/><br/>
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e98u647cj31c00u0x6q.jpg)<br/>
 
-<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e98u647cj31c00u0x6q.jpg"/><br/>
+![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hl4b9jjdj31c00u0nmn.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hl4b9jjdj31c00u0nmn.jpg)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9a6ji44j31c00u01ky.jpg)<br/>
 
-<br/>
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9aqzofkj31c00u0aq5.jpg)<br/>
 
-<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9a6ji44j31c00u01ky.jpg"/><br/>
+![](https://tva1.sinaimg.cn/large/006tNbRwly1gahhz8khb3j31c00u01kx.jpg)<br/>
 
-<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9aqzofkj31c00u0aq5.jpg"/><br/>
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9cy5qpmj31c00u0qdr.jpg)<br/>
 
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1gahhz8khb3j31c00u01kx.jpg"/><br/>
-
-<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9cy5qpmj31c00u0qdr.jpg"/><br/>
-
-<img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9d8b2ukj31c00u0dof.jpg"/><br/>
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9d8b2ukj31c00u0dof.jpg)<br/>
 
 > 后台模块
 
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9hhhu4n7tj31c00u04qq.jpg"/><br/>
+![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hhhu4n7tj31c00u04qq.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hiab0gatj31c00u0456.jpg)
+![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hiab0gatj31c00u0456.jpg)<br/>
 
-<br/>
+![](https://tva1.sinaimg.cn/large/006tNbRwly1ga9exajjrqj31c00u07j1.jpg)<br/>
 
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga9exajjrqj31c00u07j1.jpg"/><br/>
+![](https://tva1.sinaimg.cn/large/006tNbRwly1ga9exqfzt2j31c00u0186.jpg)<br/>
 
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga9exqfzt2j31c00u0186.jpg"/><br/>
+![](https://tva1.sinaimg.cn/large/006tNbRwly1ga9exytrurj31c00u0ttl.jpg)<br/>
 
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga9exytrurj31c00u0ttl.jpg"/><br/>
-
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga9ey8sc82j31c00u01ao.jpg"/><br/><br/>
+![](https://tva1.sinaimg.cn/large/006tNbRwly1ga9ey8sc82j31c00u01ao.jpg)<br/>
 
 ## 功能
 
@@ -97,7 +91,7 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 
 2）music-server：启动后端服务之前，有一些地方需要修改，先去 /music-website/music-server/src/main/resources 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password，并且修改下面蓝色显示的文件名中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。（Mac 和 win 下路径有些差异，我的是Mac上的路径，win 上 需要在 file:后标明是哪个盘，例如："file:C:/user/XXX"）
 
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1gbkqbc66q9j33fr0u07u0.jpg"/>
+![](https://tva1.sinaimg.cn/large/006tNbRwly1gbkqbc66q9j33fr0u07u0.jpg)
 
 #### 4、启动项目
 
