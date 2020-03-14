@@ -13,6 +13,7 @@ img/
 song/
 avatorImages/
 target/
+.DS_Store
 
 ### IntelliJ IDEA ###
 .idea
