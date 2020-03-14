@@ -53,26 +53,20 @@ export default {
       let player = this.$refs.player
       //  记录音乐时长
       this.$store.commit('setDuration', player.duration)
-      window.sessionStorage.setItem('duration', JSON.stringify(player.duration))
       //  开始播放
       player.play()
       this.$store.commit('setIsPlay', true)
-      window.sessionStorage.setItem('isPlay', JSON.stringify(true))
     },
     // 音乐播放时记录音乐的播放位置
     timeupdate () {
       let player = this.$refs.player
       this.$store.commit('setCurTime', player.currentTime)
-      window.sessionStorage.setItem('curTime', JSON.stringify(player.currentTime))
     },
     // 音乐播放结束时触发
     ended () {
       this.$store.commit('setIsPlay', false)
-      window.sessionStorage.setItem('isPlay', JSON.stringify(false))
       this.$store.commit('setCurTime', 0)
-      window.sessionStorage.setItem('curTime', JSON.stringify(0))
       this.$store.commit('setAutoNext', !this.autoNext)
-      window.sessionStorage.setItem('autoNext', JSON.stringify(!this.autoNext))
     }
   }
 }

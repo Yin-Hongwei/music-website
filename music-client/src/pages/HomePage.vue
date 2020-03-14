@@ -36,7 +36,7 @@ export default {
   methods: {
     getSongLists (path) {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/${path}`)
+      axios.get(`${_this.$store.state.configure.HOST}/${path}`)
         .then(function (res) {
           if (path === 'songList') {
             // 获取歌单列表

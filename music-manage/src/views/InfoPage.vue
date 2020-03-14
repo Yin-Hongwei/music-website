@@ -42,10 +42,32 @@
         </el-card>
       </el-col>
     </el-row>
-    <h3 style="margin-bottom: 20px">用户性别比例</h3>
-    <el-row style="background-color: white">
-      <el-col :span="24">
-        <ve-pie :data="userSex"></ve-pie>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <h3 style="margin-bottom: 20px">用户性别比例</h3>
+        <div  style="background-color: white">
+          <ve-pie :data="userSex" :theme="options"></ve-pie>
+        </div>
+      </el-col>
+      <el-col :span="12">
+        <h3 style="margin-bottom: 20px">歌曲类型分布</h3>
+        <div  style="background-color: white">
+          <ve-histogram :data="songStyle" :theme="options3"></ve-histogram>
+        </div>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <h3 style="margin: 20px 0">歌手性别比例</h3>
+        <div  style="background-color: white">
+          <ve-pie :data="singerSex" :theme="options1"></ve-pie>
+        </div>
+      </el-col>
+      <el-col :span="12">
+        <h3 style="margin: 20px 0">歌手国籍分布</h3>
+        <div  style="background-color: white">
+          <ve-histogram :data="country" :theme="options2"></ve-histogram>
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -61,6 +83,74 @@ export default {
         rows: [
           { '性别': '男', '总数': 0 },
           { '性别': '女', '总数': 0 }
+        ]
+      },
+      singerSex: {
+        columns: ['性别', '总数'],
+        rows: [
+          { '性别': '男', '总数': 0 },
+          { '性别': '女', '总数': 0 }
+        ]
+      },
+      country: {
+        columns: ['国家', '总数'],
+        rows: [
+          { '国家': '中国', '总数': 0 },
+          { '国家': '韩国', '总数': 0 },
+          { '国家': '意大利', '总数': 0 },
+          { '国家': '新加坡', '总数': 0 },
+          { '国家': '美国', '总数': 0 },
+          { '国家': '马来西亚', '总数': 0 },
+          { '国家': '西班牙', '总数': 0 },
+          { '国家': '日本', '总数': 0 }
+        ]
+      },
+      options: {
+        color: ['#87CEFA', '#FFC0CB']
+      },
+      options1: {
+        color: ['#1E90FF', '#7B68EE']
+      },
+      options2: {
+        color: ['#FEED78'],
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        }
+      },
+      options3: {
+        color: ['#FD8A61'],
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        }
+      },
+      songStyle: {
+        columns: ['分格', '总数'],
+        rows: [
+          { '分格': '华语', '总数': 0 },
+          { '分格': '粤语', '总数': 0 },
+          { '分格': '欧美', '总数': 0 },
+          { '分格': '日韩', '总数': 0 },
+          { '分格': 'BGM', '总数': 0 },
+          { '分格': '轻音乐', '总数': 0 },
+          { '分格': '乐器', '总数': 0 }
         ]
       },
       userCount: 0,
@@ -79,25 +169,44 @@ export default {
     getUser () {
       let _this = this
       _this.$axios.get(`${_this.$store.state.HOST}/user`).then((res) => {
-        _this.user = res.data
         _this.userCount = res.data.length
-        _this.userSex.rows[0]['总数'] = _this.setSex(1)
-        _this.userSex.rows[1]['总数'] = _this.setSex(0)
+        _this.userSex.rows[0]['总数'] = _this.setSex(1, res.data)
+        _this.userSex.rows[1]['总数'] = _this.setSex(0, res.data)
       })
     },
-    setSex (sex) {
+    setSex (sex, arr) {
       let count = 0
-      for (let item of this.user) {
+      for (let item of arr) {
         if (sex === item.sex) {
           count++
         }
       }
       return count
     },
+    getCountry (val) {
+      for (let item of this.country.rows) {
+        if (val.includes(item['国家'])) {
+          item['总数']++
+          break
+        }
+      }
+    },
+    getStyle (val) {
+      for (let item of this.songStyle.rows) {
+        if (val.includes(item['分格'])) {
+          item['总数']++
+        }
+      }
+    },
     getSinger () {
       let _this = this
       _this.$axios.get(`${_this.$store.state.HOST}/singer`).then((res) => {
         _this.singerCount = res.data.length
+        _this.singerSex.rows[0]['总数'] = _this.setSex(1, res.data)
+        _this.singerSex.rows[1]['总数'] = _this.setSex(0, res.data)
+        for (let item of res.data) {
+          this.getCountry(item.location)
+        }
       })
     },
     getSong () {
@@ -110,6 +219,9 @@ export default {
       let _this = this
       _this.$axios.get(`${_this.$store.state.HOST}/songList`).then((res) => {
         _this.songListCount = res.data.length
+        for (let item of res.data) {
+          this.getStyle(item.style)
+        }
       })
     }
   }

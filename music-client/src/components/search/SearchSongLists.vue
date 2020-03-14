@@ -30,7 +30,7 @@ export default {
         })
       } else if (this.$route.query.keywords) {
         let _this = this
-        axios.get(`${_this.$store.state.HOST}/songList/likeTitle/detail?title=${_this.$route.query.keywords}`)
+        axios.get(`${_this.$store.state.configure.HOST}/songList/likeTitle/detail?title=${_this.$route.query.keywords}`)
           .then(res => {
             _this.albumDatas = res.data
           })

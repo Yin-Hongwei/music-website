@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import LoginPage from '@/views/LoginPage'
-import RegisterPage from '@/views/RegisterPage'
-import HomePage from '@/views/HomePage'
-import SongListPage from '@/views/SongListPage'
-import SingerPage from '@/views/SingerPage'
-import MySongPage from '@/views/MySongPage'
-import SongListAlbumPage from '@/views/SongListAlbumPage'
-import SingerAlbumPage from '@/views/SingerAlbumPage'
-import SearchPage from '@/views/SearchPage'
-import PersonalInfoPage from '@/views/PersonalInfoPage'
-import UpLoadPage from '@/views/UpLoadPage'
-import PlayerPage from '@/views/PlayerPage'
+import LoginPage from '@/pages/LoginPage'
+import RegisterPage from '@/pages/RegisterPage'
+import HomePage from '@/pages/HomePage'
+import SongListPage from '@/pages/SongListPage'
+import SingerPage from '@/pages/SingerPage'
+import MySongPage from '@/pages/MySongPage'
+import SongListAlbumPage from '@/pages/SongListAlbumPage'
+import SingerAlbumPage from '@/pages/SingerAlbumPage'
+import SearchPage from '@/pages/SearchPage'
+import PersonalInfoPage from '@/pages/PersonalInfoPage'
+import UpLoadPage from '@/pages/UpLoadPage'
+import PlayerPage from '@/pages/PlayerPage'
 
 Vue.use(Router)
 
@@ -23,7 +23,7 @@ export default new Router({
     },
     {
       path: '/404',
-      component: resolve => require(['../views/404.vue'], resolve)
+      component: resolve => require(['../pages/404.vue'], resolve)
     },
     {
       path: '/',

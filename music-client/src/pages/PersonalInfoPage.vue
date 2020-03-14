@@ -186,7 +186,7 @@ export default {
   methods: {
     getMsg (id) {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/user/detail?id=${id}`)
+      axios.get(`${_this.$store.state.configure.HOST}/user/detail?id=${id}`)
         .then(response => {
           _this.registerForm.username = response.data[0].username
           _this.registerForm.password = response.data[0].password
@@ -217,13 +217,12 @@ export default {
       params.append('introduction', _this.registerForm.introduction)
       params.append('location', _this.registerForm.location)
       params.append('avator', '/img/user.jpg')
-      axios.post(`${_this.$store.state.HOST}/user/update`, params)
+      axios.post(`${_this.$store.state.configure.HOST}/user/update`, params)
         .then(res => {
           if (res.data.code === 1) {
             _this.showError = false
             _this.showSuccess = true
             this.$store.commit('setUsername', _this.registerForm.username)
-            window.localStorage.setItem('username', JSON.stringify(_this.registerForm.username))
             this.$notify.success({
               title: '编辑成功',
               showClose: true
