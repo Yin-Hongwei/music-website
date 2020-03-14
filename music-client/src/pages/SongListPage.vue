@@ -109,7 +109,7 @@ export default {
     // 获取全部歌单
     getSongList (page) {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/songList`)
+      axios.get(`${_this.$store.state.configure.HOST}/songList`)
         .then((res) => {
           _this.currentPage = 1
           _this.albumDatas = res.data
@@ -118,7 +118,7 @@ export default {
     // 通过类别获取歌单
     getSongListOfStyle (style) {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/songList/style/detail?style=${style}`)
+      axios.get(`${_this.$store.state.configure.HOST}/songList/style/detail?style=${style}`)
         .then(res => {
           _this.currentPage = 1
           _this.albumDatas = res.data

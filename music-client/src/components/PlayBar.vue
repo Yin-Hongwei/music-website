@@ -118,10 +118,8 @@ export default {
     isPlay (val) {
       if (val) {
         this.$store.commit('setPlayButtonUrl', '#icon-zanting')
-        window.sessionStorage.setItem('playButtonUrl', JSON.stringify('#icon-zanting'))
       } else {
         this.$store.commit('setPlayButtonUrl', '#icon-bofang')
-        window.sessionStorage.setItem('playButtonUrl', JSON.stringify('#icon-bofang'))
       }
     },
     // 播放时间的开始和结束
@@ -168,19 +166,16 @@ export default {
     changeAside () {
       let temp = !this.showAside
       this.$store.commit('setShowAside', temp)
-      window.sessionStorage.setItem('showAside', JSON.stringify(temp))
     },
-    // 控制音乐播放/暂停
+    // 控制音乐播放 / 暂停
     togglePlay () {
       if (this.isPlay) {
         this.$store.commit('setIsPlay', false)
-        window.sessionStorage.setItem('isPlay', JSON.stringify(false))
       } else {
         this.$store.commit('setIsPlay', true)
-        window.sessionStorage.setItem('isPlay', JSON.stringify(true))
       }
     },
-    //  解析播放时间
+    // 解析播放时间
     formatSeconds (value) {
       let theTime = parseInt(value)
       let theTime1 = 0
@@ -220,15 +215,16 @@ export default {
       }
       return result
     },
-    //  拖拽开始
+    // 拖拽开始
     mousedown (e) {
       this.mouseStartX = e.clientX
       this.tag = true
     },
+    // 拖拽结束
     mouseup () {
       this.tag = false
     },
-    //  拖拽ing
+    // 拖拽中
     mousemove (e) {
       if (!this.duration) {
         return false
@@ -252,7 +248,6 @@ export default {
     changeTime (percent) {
       let newCurTime = this.duration * (percent * 0.01)
       this.$store.commit('setChangeTime', newCurTime)
-      window.sessionStorage.setItem('changeTime', JSON.stringify(newCurTime))
     },
     updatemove (e) {
       if (!this.tag) {
@@ -273,11 +268,9 @@ export default {
       if (this.listIndex !== -1 && this.listOfSongs.length > 1) {
         if (this.listIndex > 0) {
           this.$store.commit('setListIndex', this.listIndex - 1)
-          window.sessionStorage.setItem('listIndex', JSON.stringify(this.listIndex - 1))
           this.toPlay(this.listOfSongs[this.listIndex].url)
         } else {
           this.$store.commit('setListIndex', this.listOfSongs.length - 1)
-          window.sessionStorage.setItem('listIndex', JSON.stringify(this.listOfSongs.length - 1))
           this.toPlay(this.listOfSongs[this.listIndex].url)
         }
       }
@@ -287,33 +280,22 @@ export default {
       if (this.listIndex !== -1 && this.listOfSongs.length > 1) {
         if (this.listIndex < this.listOfSongs.length - 1) {
           this.$store.commit('setListIndex', this.listIndex + 1)
-          window.sessionStorage.setItem('listIndex', JSON.stringify(this.listIndex - 1))
           this.toPlay(this.listOfSongs[this.listIndex].url)
         } else {
           this.$store.commit('setListIndex', 0)
-          window.sessionStorage.setItem('listIndex', JSON.stringify(0))
           this.toPlay(this.listOfSongs[0].url)
         }
       }
     },
-    updateMsg () {
-      this.$store.commit('setId', this.listOfSongs[this.listIndex].id)
-      window.sessionStorage.setItem('id', JSON.stringify(this.listOfSongs[this.listIndex].id))
-      this.$store.commit('setpicUrl', this.$store.state.HOST + this.listOfSongs[this.listIndex].pic)
-      window.sessionStorage.setItem('picUrl', JSON.stringify(this.$store.state.HOST + this.listOfSongs[this.listIndex].pic))
-      this.$store.commit('setTitle', this.replaceFName(this.listOfSongs[this.listIndex].name))
-      window.sessionStorage.setItem('title', JSON.stringify(this.replaceFName(this.listOfSongs[this.listIndex].name)))
-      this.$store.commit('setArtist', this.replaceLName(this.listOfSongs[this.listIndex].name))
-      window.sessionStorage.setItem('artist', JSON.stringify(this.replaceLName(this.listOfSongs[this.listIndex].name)))
-      this.$store.commit('setLyric', this.parseLyric(this.listOfSongs[this.listIndex].lyric))
-      window.sessionStorage.setItem('lyric', JSON.stringify(this.parseLyric(this.listOfSongs[this.listIndex].lyric)))
-    },
     // 选中播放
     toPlay (url) {
       if (url && url !== this.url) {
-        this.updateMsg()
-        this.$store.commit('setUrl', this.$store.state.HOST + url)
-        window.sessionStorage.setItem('url', JSON.stringify(this.$store.state.HOST + url))
+        this.$store.commit('setId', this.listOfSongs[this.listIndex].id)
+        this.$store.commit('setUrl', this.$store.state.configure.HOST + url)
+        this.$store.commit('setpicUrl', this.$store.state.configure.HOST + this.listOfSongs[this.listIndex].pic)
+        this.$store.commit('setTitle', this.replaceFName(this.listOfSongs[this.listIndex].name))
+        this.$store.commit('setArtist', this.replaceLName(this.listOfSongs[this.listIndex].name))
+        this.$store.commit('setLyric', this.parseLyric(this.listOfSongs[this.listIndex].lyric))
       }
     },
     goPlayerPage () {
@@ -327,7 +309,7 @@ export default {
         params.append('userId', _this.userId)
         params.append('type', 0)
         params.append('songId', _this.id || '')
-        axios.post(`${_this.$store.state.HOST}/collection/add`, params)
+        axios.post(`${_this.$store.state.configure.HOST}/collection/add`, params)
           .then(res => {
             if (res.data.code === 1) {
               this.$notify({

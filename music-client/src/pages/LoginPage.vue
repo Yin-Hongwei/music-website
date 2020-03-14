@@ -68,14 +68,13 @@ export default {
   methods: {
     changeIndex (value) {
       this.$store.commit('setActiveName', value)
-      window.sessionStorage.setItem('activeName', JSON.stringify(value))
     },
     login () {
       let _this = this
       var params = new URLSearchParams()
       params.append('username', _this.loginForm.username)
       params.append('password', _this.loginForm.password)
-      axios.post(`${_this.$store.state.HOST}/user/login/status`, params)
+      axios.post(`${_this.$store.state.configure.HOST}/user/login/status`, params)
         .then(res => {
           // console.log('-----------获取登录信息---------------')
           if (res.data.code === 1) {
@@ -85,7 +84,6 @@ export default {
             })
             _this.copyMsg(res.data.userMsg[0])
             _this.$store.commit('setLoginIn', true)
-            window.sessionStorage.setItem('loginIn', JSON.stringify(true))
             setTimeout(function () {
               _this.changeIndex('首页')
               _this.$router.push({path: '/home-Page'})
@@ -102,11 +100,8 @@ export default {
     },
     copyMsg (item) {
       this.$store.commit('setUserId', item.id)
-      window.localStorage.setItem('userId', JSON.stringify(item.id))
       this.$store.commit('setUsername', item.username)
-      window.localStorage.setItem('username', JSON.stringify(item.username))
       this.$store.commit('setAvator', item.avator)
-      window.localStorage.setItem('avator', JSON.stringify(item.avator))
     },
     goRegister () {
       this.$router.push({path: '/register-page'})

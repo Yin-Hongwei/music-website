@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     uploadUrl () {
-      let url = `${this.$store.state.HOST}/user/avatar/update?id=${this.userId}` // 生产环境和开发环境的判断
+      let url = `${this.$store.state.configure.HOST}/user/avatar/update?id=${this.userId}` // 生产环境和开发环境的判断
       return url
     },
     handleAvatarSuccess (res, file) {
@@ -37,7 +37,6 @@ export default {
       if (res.code === 1) {
         _this.imageUrl = URL.createObjectURL(file.raw)
         _this.$store.commit('setAvator', res.avator)
-        window.localStorage.setItem('avator', JSON.stringify(res.avator))
         _this.$notify({
           title: '上传成功',
           type: 'success'
@@ -51,7 +50,7 @@ export default {
     },
     beforeAvatarUpload (file) {
       const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
+      const isLt2M = file.size / 1024 / 1024 < 10
       if (!isJPG) {
         this.$message.error('上传头像图片只能是 JPG 格式!')
       }

@@ -118,7 +118,6 @@ export default {
     },
     changeIndex (value) {
       this.$store.commit('setActiveName', value)
-      window.sessionStorage.setItem('activeName', JSON.stringify(value))
     },
     goMenuList (path) {
       document.querySelector('.menu').classList.remove('show')
@@ -126,7 +125,6 @@ export default {
         this.$router.push({path: path})
       } else {
         this.$store.commit('setLoginIn', false)
-        window.sessionStorage.setItem('loginIn', JSON.stringify(false))
         this.$router.go(0)
       }
     },

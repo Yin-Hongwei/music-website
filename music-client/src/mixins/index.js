@@ -3,7 +3,7 @@ export const mixin = {
   methods: {
     // 获取图片信息
     attachImageUrl (srcUrl) {
-      return this.$store.state.HOST + srcUrl || '../assets/img/user.jpg'
+      return this.$store.state.configure.HOST + srcUrl || '../assets/img/user.jpg'
     },
     // 得到名字后部分
     replaceFName (str) {
@@ -17,22 +17,13 @@ export const mixin = {
     },
     // 播放
     toplay: function (id, url, pic, index, name, lyric) {
-      // console.log(lyric)
       this.$store.commit('setId', id)
-      window.sessionStorage.setItem('id', JSON.stringify(id))
       this.$store.commit('setListIndex', index)
-      window.sessionStorage.setItem('listIndex', JSON.stringify(index))
-      this.$store.commit('setUrl', this.$store.state.HOST + url)
-      window.sessionStorage.setItem('url', JSON.stringify(this.$store.state.HOST + url))
-      this.$store.commit('setpicUrl', this.$store.state.HOST + pic)
-      window.sessionStorage.setItem('picUrl', JSON.stringify(this.$store.state.HOST + pic))
+      this.$store.commit('setUrl', this.$store.state.configure.HOST + url)
+      this.$store.commit('setpicUrl', this.$store.state.configure.HOST + pic)
       this.$store.commit('setTitle', this.replaceFName(name))
-      window.sessionStorage.setItem('title', JSON.stringify(this.replaceFName(name)))
       this.$store.commit('setArtist', this.replaceLName(name))
-      window.sessionStorage.setItem('artist', JSON.stringify(this.replaceLName(name)))
       this.$store.commit('setLyric', this.parseLyric(lyric))
-      window.sessionStorage.setItem('lyric', JSON.stringify(this.parseLyric(lyric)))
-      // console.log(this.$store.state.playing['songsList'])
     },
     // 解析歌词
     parseLyric (text) {
@@ -72,7 +63,7 @@ export const mixin = {
         })
       } else {
         let _this = this
-        axios.get(`${_this.$store.state.HOST}/song/singerName/detail?name=${_this.$route.query.keywords}`)
+        axios.get(`${_this.$store.state.configure.HOST}/song/singerName/detail?name=${_this.$route.query.keywords}`)
           .then(function (res) {
             if (!res.data.length) {
               _this.$store.commit('setListOfSongs', [])
@@ -82,7 +73,6 @@ export const mixin = {
               })
             } else {
               _this.$store.commit('setListOfSongs', res.data)
-              window.sessionStorage.setItem('listOfSongs', JSON.stringify(res.data))
             }
           })
           .catch(function (error) {

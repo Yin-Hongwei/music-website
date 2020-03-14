@@ -82,7 +82,7 @@ export default {
     // 获取所有歌手
     getSingerAll () {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/singer`)
+      axios.get(`${_this.$store.state.configure.HOST}/singer`)
         .then(function (res) {
           _this.currentPage = 1
           _this.albumDatas = res.data
@@ -94,7 +94,7 @@ export default {
     // 通过性别对歌手分类
     getSingerSex (sex) {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/singer/sex/detail?sex=${sex}`)
+      axios.get(`${_this.$store.state.configure.HOST}/singer/sex/detail?sex=${sex}`)
         .then((res) => {
           _this.currentPage = 1
           _this.albumDatas = res.data

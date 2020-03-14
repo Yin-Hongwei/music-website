@@ -28,7 +28,6 @@ export default {
   methods: {
     goAblum (item, type) {
       this.$store.commit('setTempList', item)
-      window.sessionStorage.setItem('tempList', JSON.stringify(item))
       if (type) {
         this.$router.push({path: `/singer-album-page/${item.id}`})
       } else {

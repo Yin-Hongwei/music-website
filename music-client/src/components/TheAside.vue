@@ -29,7 +29,6 @@ export default {
     let _this = this
     document.addEventListener('click', function () {
       _this.$store.commit('setShowAside', false)
-      window.sessionStorage.setItem('showAside', JSON.stringify(false))
     }, true)
   }
 }

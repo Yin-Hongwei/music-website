@@ -53,7 +53,7 @@ export default {
   components: {
     loginLogo
   },
-  data: function () {
+  data () {
     return {
       registerForm: { // 注册
         username: '',
@@ -212,7 +212,7 @@ export default {
       params.append('introduction', _this.registerForm.introduction)
       params.append('location', _this.registerForm.location)
       params.append('avator', '/img/user.jpg')
-      axios.post(`${_this.$store.state.HOST}/user/add`, params)
+      axios.post(`${_this.$store.state.configure.HOST}/user/add`, params)
         .then(response => {
           if (response.data.code === 1) {
             _this.$notify({
