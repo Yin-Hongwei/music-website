@@ -30,18 +30,18 @@ export default {
     }
   },
   created () {
-    this.getSongLists('listSongLists')
-    this.getSongLists('listSingers')
+    this.getSongLists('songList')
+    this.getSongLists('singer')
   },
   methods: {
     getSongLists (path) {
       let _this = this
       axios.get(`${_this.$store.state.HOST}/${path}`)
         .then(function (res) {
-          if (path === 'listSongLists') {
+          if (path === 'songList') {
             // 获取歌单列表
             _this.songsList[0].list = res.data.slice(0, 10)
-          } else if (path === 'listSingers') {
+          } else if (path === 'singer') {
             // 获取歌手列表
             _this.songsList[1].list = res.data.slice(0, 10)
           }

@@ -226,7 +226,7 @@ export default {
       var _this = this
       _this.tableData = []
       _this.tempDate = []
-      _this.$axios.get(`${_this.$store.state.HOST}/AllSongs`).then((res) => {
+      _this.$axios.get(`${_this.$store.state.HOST}/song`).then((res) => {
         console.log('歌曲信息===========>', res.data)
         _this.tableData = res.data
         _this.tempDate = res.data
@@ -245,11 +245,11 @@ export default {
     },
     // 更新歌曲图片
     uploadUrl (id) {
-      return `${this.$store.state.HOST}/api/updateSongPic?id=${id}`
+      return `${this.$store.state.HOST}/song/img/update?id=${id}`
     },
     // 更新歌曲url
     uploadSongUrl (id) {
-      return `${this.$store.state.HOST}/api/updateSongUrl?id=${id}`
+      return `${this.$store.state.HOST}/song/url/update?id=${id}`
     },
     beforeSongUpload (file) {
       var testmsg = file.name.substring(file.name.lastIndexOf('.') + 1)
@@ -270,7 +270,7 @@ export default {
     getSingerName () {
       let _this = this
       let value = document.getElementById('singerName').value
-      _this.$axios.get(`${_this.$store.state.HOST}/searachSingers?name=${value}`).then(function (res) {
+      _this.$axios.get(`${_this.$store.state.HOST}/singer/name/detail?name=${value}`).then(function (res) {
         if (!res.data.length) {
           _this.$notify({
             title: '系统暂无该该歌手',
@@ -321,7 +321,7 @@ export default {
           }
         }
       }
-      req.open('post', `${_this.$store.state.HOST}/api/addSong`, false)
+      req.open('post', `${_this.$store.state.HOST}/song/add`, false)
       req.send(form)
       _this.centerDialogVisible = false
     },
@@ -351,7 +351,7 @@ export default {
       params.append('name', this.form.name)
       params.append('introduction', this.form.introduction)
       params.append('lyric', this.form.lyric)
-      this.$axios.post(`${this.$store.state.HOST}/api/updateSongMsgs`, params)
+      this.$axios.post(`${this.$store.state.HOST}/song/update`, params)
         .then(response => {
           if (response.data) {
             this.getData()
@@ -372,7 +372,7 @@ export default {
     // 确定删除
     deleteRow () {
       var _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteSongs?id=${_this.idx}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/song/delete?id=${_this.idx}`)
         .then(response => {
           if (response.data) {
             _this.getData()

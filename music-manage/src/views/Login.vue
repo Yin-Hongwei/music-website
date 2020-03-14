@@ -51,7 +51,7 @@ export default {
       params.append('name', _this.ruleForm.username)
       params.append('password', _this.ruleForm.password)
       _this.$axios
-        .post(`${_this.$store.state.HOST}/api/loginadmin`, params)
+        .post(`${_this.$store.state.HOST}/admin/login/status`, params)
         .then(res => {
           if (res.data.code === 1) {
             this.$router.push('/Info')

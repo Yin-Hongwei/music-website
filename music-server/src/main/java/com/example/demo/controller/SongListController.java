@@ -23,9 +23,17 @@ public class SongListController {
     @Autowired
     private SongListServiceImpl songListService;
 
+    @Configuration
+    public class MyPicConfig implements WebMvcConfigurer {
+        @Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            registry.addResourceHandler("/img/songListPic/**").addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/img/songListPic/");
+        }
+    }
+
 //    添加歌单
     @ResponseBody
-    @RequestMapping(value = "/api/addSongList", method = RequestMethod.POST)
+    @RequestMapping(value = "/songList/add", method = RequestMethod.POST)
     public Object addSongList(HttpServletRequest req){
         JSONObject jsonObject = new JSONObject();
         String title = req.getParameter("title").trim();
@@ -51,17 +59,44 @@ public class SongListController {
         }
     }
 
+//    返回所有歌单
+    @RequestMapping(value = "/songList", method = RequestMethod.GET)
+    public Object allSongList(){
+        return songListService.listSongLists();
+    }
+
+//    返回指定标题对应的歌单
+    @RequestMapping(value = "/songList/title/detail", method = RequestMethod.GET)
+    public Object songListOfTitle(HttpServletRequest req){
+        String title = req.getParameter("title").trim();
+        return songListService.songAlbum(title);
+    }
+
+//    返回标题包含文字的歌单
+    @RequestMapping(value = "/songList/likeTitle/detail", method = RequestMethod.GET)
+    public Object songListOfLikeTitle(HttpServletRequest req){
+        String title = req.getParameter("title").trim();
+        return songListService.likeTitle('%'+ title + '%');
+    }
+
+//    返回指定类型的歌单
+    @RequestMapping(value = "/songList/style/detail", method = RequestMethod.GET)
+    public Object songListOfStyle(HttpServletRequest req){
+        String style = req.getParameter("style").trim();
+        return songListService.likeStyle('%'+ style + '%');
+    }
+
 //    删除歌单
-    @RequestMapping(value = "/api/deleteSongLists", method = RequestMethod.GET)
-    public Object deleteSongLists(HttpServletRequest req){
+    @RequestMapping(value = "/songList/delete", method = RequestMethod.GET)
+    public Object deleteSongList(HttpServletRequest req){
         String id = req.getParameter("id");
         return songListService.deleteSongList(Integer.parseInt(id));
     }
 
 //    更新歌单信息
     @ResponseBody
-    @RequestMapping(value = "/api/updateSongListMsgs", method = RequestMethod.POST)
-    public Object updateSongListMsgs(HttpServletRequest req){
+    @RequestMapping(value = "/songList/update", method = RequestMethod.POST)
+    public Object updateSongListMsg(HttpServletRequest req){
         JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String title = req.getParameter("title").trim();
@@ -88,10 +123,10 @@ public class SongListController {
         }
     }
 
-    //    更新歌单图片
+//    更新歌单图片
     @ResponseBody
-    @RequestMapping(value = "/api/updateSongListImg", method = RequestMethod.POST)
-    public Object updateSongListImg(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id")int id){
+    @RequestMapping(value = "/songList/img/update", method = RequestMethod.POST)
+    public Object updateSongListPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id")int id){
         JSONObject jsonObject = new JSONObject();
 
         if (avatorFile.isEmpty()) {
@@ -132,42 +167,6 @@ public class SongListController {
             return jsonObject;
         }
     }
-
-    @Configuration
-    public class MyPicConfig implements WebMvcConfigurer {
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/songListPic/**").addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/img/songListPic/");
-        }
-    }
-
-    //    返回指定标题对应的歌单
-    @RequestMapping(value = "/api/songAlbum", method = RequestMethod.GET)
-    public Object songAlbum(HttpServletRequest req){
-        String title = req.getParameter("title").trim();
-        return songListService.songAlbum(title);
-    }
-
-    //    返回标题包含文字的歌单
-    @RequestMapping(value = "/api/songList/likeTitle", method = RequestMethod.GET)
-    public Object likeTitle(HttpServletRequest req){
-        String title = req.getParameter("title").trim();
-        return songListService.likeTitle('%'+ title + '%');
-    }
-
-    //    返回指定类型的歌单
-    @RequestMapping(value = "/api/songList/likeStyle", method = RequestMethod.GET)
-    public Object likeStyle(HttpServletRequest req){
-        String style = req.getParameter("style").trim();
-        return songListService.likeStyle(style);
-    }
-
-    //    返回所有歌单
-    @RequestMapping(value = "/listSongLists", method = RequestMethod.GET)
-    public Object toSongList(){
-        return songListService.listSongLists();
-    }
-
 }
 
 

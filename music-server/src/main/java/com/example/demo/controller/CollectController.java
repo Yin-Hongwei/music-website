@@ -20,42 +20,10 @@ public class CollectController {
     @Autowired
     private CollectServiceImpl collectService;
 
-    //    添加收藏的歌曲
+//    添加收藏的歌曲
     @ResponseBody
-    @RequestMapping(value = "/api/addCollections", method = RequestMethod.POST)
-    public Object addCollections(HttpServletRequest req){
-
-        JSONObject jsonObject = new JSONObject();
-        String user_id = req.getParameter("userId");
-        String type = req.getParameter("type");
-        String song_id=req.getParameter("songId");
-        String song_list_id=req.getParameter("songListId");
-
-        Collect collect = new Collect();
-        collect.setUserId(Integer.parseInt(user_id));
-        collect.setType(new Byte(type));
-        if (new Byte(type) == 0) {
-            collect.setSongId(Integer.parseInt(song_id));
-        } else if (new Byte(type) == 1) {
-            collect.setSongListId(Integer.parseInt(song_list_id));
-        }
-        collect.setCreateTime(new Date());
-        boolean res = collectService.addCollection(collect);
-        if (res){
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "收藏成功");
-            return jsonObject;
-        }else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "收藏失败");
-            return jsonObject;
-        }
-    }
-
-//
-    @ResponseBody
-    @RequestMapping(value = "/api/collectionList", method = RequestMethod.POST)
-    public Object collectionList(HttpServletRequest req){
+    @RequestMapping(value = "/collection/add", method = RequestMethod.POST)
+    public Object addCollection(HttpServletRequest req){
 
         JSONObject jsonObject = new JSONObject();
         String user_id = req.getParameter("userId");
@@ -93,17 +61,30 @@ public class CollectController {
         }
     }
 
+//    返回所有用户收藏列表
+    @RequestMapping(value = "/collection", method = RequestMethod.GET)
+    public Object allCollection(){
+        return collectService.allCollect();
+    }
+
+//    返回的制定用户ID收藏列表
+    @RequestMapping(value = "/collection/detail", method = RequestMethod.GET)
+    public Object collectionOfUser(HttpServletRequest req){
+        String userId = req.getParameter("userId");
+        return collectService.myCollectOfSongs(Integer.parseInt(userId));
+    }
+
 //    删除收藏的歌曲
-    @RequestMapping(value = "/api/deleteCollects", method = RequestMethod.GET)
-    public Object deleteCollects(HttpServletRequest req){
+    @RequestMapping(value = "/collection/delete", method = RequestMethod.GET)
+    public Object deleteCollection(HttpServletRequest req){
         String song_id = req.getParameter("songId");
         return collectService.deleteCollect(Integer.parseInt(song_id));
     }
 
 //    更新收藏
     @ResponseBody
-    @RequestMapping(value = "/api/updateCollectMsgs", method = RequestMethod.POST)
-    public Object updateCollectMsgs(HttpServletRequest req){
+    @RequestMapping(value = "/collection/update", method = RequestMethod.POST)
+    public Object updateCollectMsg(HttpServletRequest req){
         JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String user_id = req.getParameter("userId").trim();
@@ -128,17 +109,5 @@ public class CollectController {
             return jsonObject;
         }
     }
-
-//    返回所有用户收藏列表
-    @RequestMapping(value = "/allCollects", method = RequestMethod.GET)
-    public Object allCollects(){
-        return collectService.allCollect();
-    }
-
-//    返回的制定用户ID收藏列表
-    @RequestMapping(value = "/myCollection", method = RequestMethod.GET)
-    public Object myCollection(HttpServletRequest req){
-        String userId = req.getParameter("userId");
-        return collectService.myCollectOfSongs(Integer.parseInt(userId));
-    }
 }
+

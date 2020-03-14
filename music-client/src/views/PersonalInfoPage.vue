@@ -186,7 +186,7 @@ export default {
   methods: {
     getMsg (id) {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/commentOfConsumer?id=${id}`)
+      axios.get(`${_this.$store.state.HOST}/user/detail?id=${id}`)
         .then(response => {
           _this.registerForm.username = response.data[0].username
           _this.registerForm.password = response.data[0].password
@@ -217,7 +217,7 @@ export default {
       params.append('introduction', _this.registerForm.introduction)
       params.append('location', _this.registerForm.location)
       params.append('avator', '/img/user.jpg')
-      axios.post(`${_this.$store.state.HOST}/api/updateUserMsgs`, params)
+      axios.post(`${_this.$store.state.HOST}/user/update`, params)
         .then(res => {
           if (res.data.code === 1) {
             _this.showError = false

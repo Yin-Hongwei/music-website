@@ -212,7 +212,7 @@ export default {
       params.append('introduction', _this.registerForm.introduction)
       params.append('location', _this.registerForm.location)
       params.append('avator', '/img/user.jpg')
-      axios.post(`${_this.$store.state.HOST}/api/signup`, params)
+      axios.post(`${_this.$store.state.HOST}/user/add`, params)
         .then(response => {
           if (response.data.code === 1) {
             _this.$notify({

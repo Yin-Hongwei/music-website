@@ -198,7 +198,7 @@ export default {
       this.currentPage = val
     },
     uploadUrl (id) {
-      return `${this.$store.state.HOST}/api/updateSingerImg?id=${id}`
+      return `${this.$store.state.HOST}/singer/avatar/update?id=${id}`
     },
     addsinger () {
       let _this = this
@@ -212,7 +212,7 @@ export default {
       params.append('birth', datetime)
       params.append('location', this.registerForm.location)
       params.append('introduction', this.registerForm.introduction)
-      _this.$axios.post(`${_this.$store.state.HOST}/api/addSinger`, params)
+      _this.$axios.post(`${_this.$store.state.HOST}/singer/add`, params)
         .then(res => {
           if (res.data.code === 1) {
             _this.getData()
@@ -235,7 +235,7 @@ export default {
       var _this = this
       _this.tableData = []
       _this.tempDate = []
-      _this.$axios.get(`${_this.$store.state.HOST}/listSingers`).then(res => {
+      _this.$axios.get(`${_this.$store.state.HOST}/singer`).then(res => {
         _this.tableData = res.data
         _this.tempDate = res.data
         _this.currentPage = 1
@@ -268,7 +268,7 @@ export default {
       params.append('birth', datetime)
       params.append('location', _this.form.location)
       params.append('introduction', _this.form.introduction)
-      _this.$axios.post(`${_this.$store.state.HOST}/api/updateSingerMsgs`, params)
+      _this.$axios.post(`${_this.$store.state.HOST}/singer/update`, params)
         .then(res => {
           if (res.data.code === 1) {
             _this.getData()
@@ -289,7 +289,7 @@ export default {
     // 确定删除
     deleteRow () {
       var _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteSingers?id=${_this.idx}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/singer/delete?id=${_this.idx}`)
         .then(res => {
           if (res.data) {
             _this.getData()

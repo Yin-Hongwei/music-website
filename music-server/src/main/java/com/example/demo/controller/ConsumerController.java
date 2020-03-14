@@ -22,15 +22,23 @@ import java.util.Date;
 
 @RestController
 @Controller
-public class LoginController {
+public class ConsumerController {
 
     @Autowired
     private ConsumerServiceImpl consumerService;
 
+    @Configuration
+    public class MyPicConfig implements WebMvcConfigurer {
+        @Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            registry.addResourceHandler("/avatorImages/**").addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/avatorImages/");
+        }
+    }
+
 //    添加用户
     @ResponseBody
-    @RequestMapping(value = "/api/signup", method = RequestMethod.POST)
-    public Object signup(HttpServletRequest req){
+    @RequestMapping(value = "/user/add", method = RequestMethod.POST)
+    public Object addUser(HttpServletRequest req){
         JSONObject jsonObject = new JSONObject();
         String username = req.getParameter("username").trim();
         String password = req.getParameter("password").trim();
@@ -52,21 +60,21 @@ public class LoginController {
         Date myBirth = new Date();
         try {
             myBirth = dateFormat.parse(birth);
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
         }
         consumer.setUsername(username);
         consumer.setPassword(password);
         consumer.setSex(new Byte(sex));
-        if(phone_num == ""){
+        if (phone_num == "") {
             consumer.setPhoneNum(null);
-        }else{
+        } else{
             consumer.setPhoneNum(phone_num);
         }
 
-        if(email == ""){
+        if (email == "") {
             consumer.setEmail(null);
-        }else{
+        } else{
             consumer.setEmail(email);
         }
         consumer.setBirth(myBirth);
@@ -77,11 +85,11 @@ public class LoginController {
         consumer.setUpdateTime(new Date());
 
         boolean res = consumerService.addUser(consumer);
-        if (res){
+        if (res) {
             jsonObject.put("code", 1);
             jsonObject.put("msg", "登录成功");
             return jsonObject;
-        }else {
+        } else {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "用户名或密码错误");
             return jsonObject;
@@ -90,8 +98,8 @@ public class LoginController {
 
 //    判断是否登录成功
     @ResponseBody
-    @RequestMapping(value = "/api/loginVerify", method = RequestMethod.POST)
-    public Object loginVerify(HttpServletRequest req, HttpSession session){
+    @RequestMapping(value = "/user/login/status", method = RequestMethod.POST)
+    public Object loginStatus(HttpServletRequest req, HttpSession session){
 
         JSONObject jsonObject = new JSONObject();
         String username = req.getParameter("username");
@@ -113,17 +121,30 @@ public class LoginController {
 
     }
 
+//    返回所有用户
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public Object allUser(){
+        return consumerService.allUser();
+    }
+
+//    返回指定ID的用户
+    @RequestMapping(value = "/user/detail", method = RequestMethod.GET)
+    public Object userOfId(HttpServletRequest req){
+        String id = req.getParameter("id");
+        return consumerService.conmmentUser(Integer.parseInt(id));
+    }
+
 //    删除用户
-    @RequestMapping(value = "/api/deleteUsers", method = RequestMethod.GET)
-    public Object deleteUsers(HttpServletRequest req){
+    @RequestMapping(value = "/user/delete", method = RequestMethod.GET)
+    public Object deleteUser(HttpServletRequest req){
         String id = req.getParameter("id");
         return consumerService.deleteUser(Integer.parseInt(id));
     }
 
 //    更新用户信息
     @ResponseBody
-    @RequestMapping(value = "/api/updateUserMsgs", method = RequestMethod.POST)
-    public Object updateUserMsgs(HttpServletRequest req){
+    @RequestMapping(value = "/user/update", method = RequestMethod.POST)
+    public Object updateUserMsg(HttpServletRequest req){
         JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String username = req.getParameter("username").trim();
@@ -176,8 +197,8 @@ public class LoginController {
 
 //    更新用户头像
     @ResponseBody
-    @RequestMapping(value = "/api/updateUserImg", method = RequestMethod.POST)
-    public Object updateUserImg(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id")int id){
+    @RequestMapping(value = "/user/avatar/update", method = RequestMethod.POST)
+    public Object updateUserPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id")int id){
         JSONObject jsonObject = new JSONObject();
 
         if (avatorFile.isEmpty()) {
@@ -217,26 +238,5 @@ public class LoginController {
         }finally {
             return jsonObject;
         }
-    }
-
-    @Configuration
-    public class MyPicConfig implements WebMvcConfigurer {
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/avatorImages/**").addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/avatorImages/");
-        }
-    }
-
-//    返回指定ID的用户
-    @RequestMapping(value = "/commentOfConsumer", method = RequestMethod.GET)
-    public Object toSongs(HttpServletRequest req){
-        String id = req.getParameter("id");
-        return consumerService.conmmentUser(Integer.parseInt(id));
-    }
-
-//    返回所有用户
-    @RequestMapping(value = "/AllUsers", method = RequestMethod.GET)
-    public Object AllUsers(){
-        return consumerService.allUser();
     }
 }

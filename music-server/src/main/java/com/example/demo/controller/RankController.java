@@ -21,8 +21,8 @@ public class RankController {
 
 //    提交评分
     @ResponseBody
-    @RequestMapping(value = "/api/pushRank", method = RequestMethod.POST)
-    public Object signup(HttpServletRequest req){
+    @RequestMapping(value = "/rank/add", method = RequestMethod.POST)
+    public Object addRank(HttpServletRequest req){
         JSONObject jsonObject = new JSONObject();
         String songListId = req.getParameter("songListId").trim();
         String consumerId = req.getParameter("consumerId").trim();
@@ -46,8 +46,8 @@ public class RankController {
     }
 
 //    获取指定歌单的评分
-    @RequestMapping(value = "/api/getRank", method = RequestMethod.GET)
-    public Object ranks(HttpServletRequest req){
+    @RequestMapping(value = "/rank", method = RequestMethod.GET)
+    public Object rankOfSongListId(HttpServletRequest req){
         String songListId = req.getParameter("songListId");
         return rankService.selectAverScore(Long.parseLong(songListId));
     }

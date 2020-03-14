@@ -106,9 +106,9 @@ export default {
       _this.tempDate = []
       let url = ''
       if (_this.$route.query.type === 0) {
-        url = `${_this.$store.state.HOST}/songComments?songId=`
+        url = `${_this.$store.state.HOST}/comment/song/detail?songId=`
       } else if (_this.$route.query.type === 1) {
-        url = `${_this.$store.state.HOST}/songListComments?songListId=`
+        url = `${_this.$store.state.HOST}/comment/songList/detail?songListId=`
       }
       _this.$axios.get(url + _this.$route.query.id).then(res => {
         for (let item of res.data) {
@@ -118,7 +118,7 @@ export default {
     },
     getUsers (id, item) {
       let _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/commentOfConsumer?id=${id}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/user/detail?id=${id}`)
         .then(function (res) {
           let o = item
           o.name = res.data[0].username
@@ -160,7 +160,7 @@ export default {
       params.append('content', this.form.content)
       params.append('type', this.form.type)
       params.append('up', this.form.up)
-      this.$axios.post(`${this.$store.state.HOST}/api/updateCommentMsgs`, params)
+      this.$axios.post(`${this.$store.state.HOST}/comment/update`, params)
         .then(res => {
           if (res.data.code === 1) {
             this.getData()
@@ -181,7 +181,7 @@ export default {
     // 确定删除
     deleteRow () {
       var _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteComments?id=${_this.idx}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/comment/delete?id=${_this.idx}`)
         .then(res => {
           if (res.data) {
             _this.getData()

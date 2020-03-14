@@ -19,10 +19,10 @@ public class CommentController {
     @Autowired
     private CommentServiceImpl commentService;
 
-// 提交评论
+//  提交评论
     @ResponseBody
-    @RequestMapping(value = "/api/commentList", method = RequestMethod.POST)
-    public Object commentList(HttpServletRequest req){
+    @RequestMapping(value = "/comment/add", method = RequestMethod.POST)
+    public Object addComment(HttpServletRequest req){
 
         JSONObject jsonObject = new JSONObject();
         String user_id = req.getParameter("userId");
@@ -53,10 +53,30 @@ public class CommentController {
         }
     }
 
+//    获取所有评论列表
+    @RequestMapping(value = "/comment", method = RequestMethod.GET)
+    public Object allComment(){
+        return commentService.songListComment();
+    }
+
+//    获得指定歌曲ID的评论列表
+    @RequestMapping(value = "/comment/song/detail", method = RequestMethod.GET)
+    public Object commentOfSongId(HttpServletRequest req){
+        String songId = req.getParameter("songId");
+        return commentService.songComments(Integer.parseInt(songId));
+    }
+
+//    获得指定歌单ID的评论列表
+    @RequestMapping(value = "/comment/songList/detail", method = RequestMethod.GET)
+    public Object commentOfSongListId(HttpServletRequest req){
+        String songListId = req.getParameter("songListId");
+        return commentService.songListComments(Integer.parseInt(songListId));
+    }
+
 //    点赞
     @ResponseBody
-    @RequestMapping(value = "/api/postUp", method = RequestMethod.POST)
-    public Object postUp(HttpServletRequest req){
+    @RequestMapping(value = "/comment/like", method = RequestMethod.POST)
+    public Object commentOfLike(HttpServletRequest req){
 
     JSONObject jsonObject = new JSONObject();
     String id = req.getParameter("id").trim();
@@ -78,16 +98,16 @@ public class CommentController {
 }
 
 //    删除评论
-    @RequestMapping(value = "/api/deleteComments", method = RequestMethod.GET)
-    public Object deleteComments(HttpServletRequest req){
+    @RequestMapping(value = "/comment/delete", method = RequestMethod.GET)
+    public Object deleteComment(HttpServletRequest req){
         String id = req.getParameter("id");
         return commentService.deleteComment(Integer.parseInt(id));
     }
 
 //    更新评论
     @ResponseBody
-    @RequestMapping(value = "/api/updateCommentMsgs", method = RequestMethod.POST)
-    public Object updateCommentMsgs(HttpServletRequest req){
+    @RequestMapping(value = "/comment/update", method = RequestMethod.POST)
+    public Object updateCommentMsg(HttpServletRequest req){
         JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String user_id = req.getParameter("userId").trim();
@@ -125,25 +145,5 @@ public class CommentController {
             jsonObject.put("msg", "修改失败");
             return jsonObject;
         }
-    }
-
-//    获取所有评论列表
-    @RequestMapping(value = "/songsListComment", method = RequestMethod.GET)
-    public Object songsListComment(){
-        return commentService.songListComment();
-    }
-
-//    获得指定歌曲ID的评论列表
-    @RequestMapping(value = "/songComments", method = RequestMethod.GET)
-    public Object songComments(HttpServletRequest req){
-        String songId = req.getParameter("songId");
-        return commentService.songComments(Integer.parseInt(songId));
-    }
-
-//    获得指定歌单ID的评论列表
-    @RequestMapping(value = "/songListComments", method = RequestMethod.GET)
-    public Object songListComments(HttpServletRequest req){
-        String songListId = req.getParameter("songListId");
-        return commentService.songListComments(Integer.parseInt(songListId));
     }
 }
