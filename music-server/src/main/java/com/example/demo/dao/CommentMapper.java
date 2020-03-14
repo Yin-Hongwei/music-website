@@ -19,15 +19,13 @@ public interface CommentMapper {
 
     int updateByPrimaryKey(Comment record);
 
-    int addComment(Comment comment);
-
     int updateCommentMsg(Comment record);
 
     int deleteComment(Integer id);
 
-    List<Comment> songListComment();
+    List<Comment> allComment();
 
-    List<Comment> songComments(Integer songId);
+    List<Comment> commentOfSongId(Integer songId);
 
-    List<Comment> songListComments(Integer songListId);
+    List<Comment> commentOfSongListId(Integer songListId);
 }

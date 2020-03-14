@@ -21,13 +21,13 @@ public interface SingerMapper {
 
     int updateSingerMsg(Singer record);
 
-    int updateSingerImg(Singer record);
+    int updateSingerPic(Singer record);
 
     int deleteSinger(Integer id);
 
-    List<Singer> listSingers();
+    List<Singer> allSinger();
 
-    List<Singer> searachSinger(String name);
+    List<Singer> singerOfName(String name);
 
-    List<Singer> singerSex(Integer sex);
+    List<Singer> singerOfSex(Integer sex);
 }

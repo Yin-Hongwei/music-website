@@ -33,7 +33,7 @@ public class RankController {
         rank.setConsumerId(Long.parseLong(consumerId));
         rank.setScore(Integer.parseInt(score));
 
-        boolean res = rankService.insert(rank);
+        boolean res = rankService.addRank(rank);
         if (res){
             jsonObject.put("code", 1);
             jsonObject.put("msg", "评价成功");
@@ -49,6 +49,6 @@ public class RankController {
     @RequestMapping(value = "/rank", method = RequestMethod.GET)
     public Object rankOfSongListId(HttpServletRequest req){
         String songListId = req.getParameter("songListId");
-        return rankService.selectAverScore(Long.parseLong(songListId));
+        return rankService.rankOfSongListId(Long.parseLong(songListId));
     }
 }

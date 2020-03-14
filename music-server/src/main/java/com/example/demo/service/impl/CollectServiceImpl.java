@@ -15,7 +15,7 @@ public class CollectServiceImpl implements CollectService {
 
     @Override
     public boolean addCollection(Collect collect) {
-        return collectMapper.addCollection(collect) > 0 ? true:false;
+        return collectMapper.insertSelective(collect) > 0 ? true:false;
     }
 
     @Override
@@ -41,9 +41,9 @@ public class CollectServiceImpl implements CollectService {
     }
 
     @Override
-    public List<Collect> myCollectOfSongs(Integer userId)
+    public List<Collect> collectionOfUser(Integer userId)
 
     {
-        return collectMapper.myCollectOfSongs(userId);
+        return collectMapper.collectionOfUser(userId);
     }
 }

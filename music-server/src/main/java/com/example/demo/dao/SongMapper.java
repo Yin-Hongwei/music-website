@@ -29,13 +29,13 @@ public interface SongMapper {
 
     int deleteSong(Integer id);
 
-    List<Song> listSongs();
+    List<Song> allSong();
 
-    List<Song> listSongsOfSinger(Integer singerId);
+    List<Song> songOfSingerId(Integer singerId);
 
-    List<Song> listSongsOfSongs(Integer id);
+    List<Song> songOfId(Integer id);
 
-    List<Song> searachSongLists(String name);
+    List<Song> songOfSingerName(String name);
 
     List<Song> songOfName(String name);
 

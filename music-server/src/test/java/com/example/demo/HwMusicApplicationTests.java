@@ -48,18 +48,13 @@ public class HwMusicApplicationTests {
 //            song.setIntroduction("Undo");
 //            song.setLyric("[00:00:00]暂无歌词");
 //            song.setUrl("/song/Sanna Nielsen-Undo.mp3");
-//            songService.ifAdd(song);
+//            songService.addSong(song);
 //    }
 
-//    @Test
-//    public void songTest2(){
-//        System.out.println(songService.listSongs());
-//    }
 
 //    //歌手
 //    @Test
 //    public void singerTest(){
-//
 //        Singer singer = new Singer();
 //        singer.setName("Álvaro Soler");
 //        singer.setSex(new Byte("1"));
@@ -67,12 +62,12 @@ public class HwMusicApplicationTests {
 //        singer.setBirth(new Date());
 //        singer.setLocation("西班牙");
 //        singer.setIntroduction("全名是Álvaro Tauchert Soler，是一位新晋西班牙歌手，流行音乐作曲家。出生于1991年，西班牙巴塞罗纳。");
-//        singerService.ifAdd(singer);
+//        singerService.addSinger(singer);
 //    }
 //    @Test
 //    public void singerTest2()
 //    {
-//        System.out.println(singerService.listSingers());
+//        System.out.println(singerService.allSinger());
 //    }
 
     //歌单
@@ -84,12 +79,12 @@ public class HwMusicApplicationTests {
 //        songList.setPic("/img/songListPic/19169985230816413.jpg");
 //        songList.setIntroduction(" 都是自己很喜欢的吉他指弹");
 //        songList.setStyle("乐器");
-//        songListService.ifAdd(songList);
+//        songListService.addSongList(songList);
 //    }
 //    @Test
 //    public void songListTest2()
 //    {
-//        System.out.println(songListService.listSongLists());
+//        System.out.println(songListService.allSongList());
 //    }
 
 //用户
@@ -108,12 +103,12 @@ public void consumerTest(){
     consumer.setAvator("/img/user.jpg");
     consumer.setCreateTime(new Date());
     consumer.setUpdateTime(new Date());
-    consumerService.ifAdd(consumer);
+    consumerService.addUser(consumer);
 }
 //    @Test
 //    public void consumerTest2()
 //    {
-//        System.out.println(consumerService.consumerLists());
+//        System.out.println(consumerService.allUser());
 //    }
 }
 

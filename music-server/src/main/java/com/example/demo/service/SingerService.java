@@ -6,17 +6,17 @@ import java.util.List;
 
 public interface SingerService {
 
-    boolean ifAdd (Singer singer);
+    boolean addSinger (Singer singer);
 
     boolean updateSingerMsg(Singer singer);
 
-    boolean updateSingerImg(Singer singer);
+    boolean updateSingerPic(Singer singer);
 
     boolean deleteSinger(Integer id);
 
-    List<Singer> listSingers();
+    List<Singer> allSinger();
 
-    List<Singer> searachSinger(String name);
+    List<Singer> singerOfName(String name);
 
-    List<Singer> singerSex(Integer sex);
+    List<Singer> singerOfSex(Integer sex);
 }

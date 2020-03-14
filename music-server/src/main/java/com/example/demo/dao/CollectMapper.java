@@ -19,8 +19,6 @@ public interface CollectMapper {
 
     int updateByPrimaryKey(Collect record);
 
-    int addCollection(Collect collect);
-
     int existSongId(Integer songId);
 
     int updateCollectMsg(Collect collect);
@@ -29,5 +27,5 @@ public interface CollectMapper {
 
     List<Collect> allCollect();
 
-    List<Collect> myCollectOfSongs(Integer userId);
+    List<Collect> collectionOfUser(Integer userId);
 }

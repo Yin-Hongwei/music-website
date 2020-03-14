@@ -25,5 +25,5 @@ public interface ListSongMapper {
 
     List<ListSong> allListSong();
 
-    List<ListSong> listSongsOfSingers(Integer songListId);
+    List<ListSong> listSongOfSongId(Integer songListId);
 }

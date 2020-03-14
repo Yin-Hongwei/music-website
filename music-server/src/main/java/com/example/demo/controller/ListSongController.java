@@ -31,14 +31,14 @@ public class ListSongController {
     listsong.setSongId(Integer.parseInt(song_id));
     listsong.setSongListId(Integer.parseInt(song_list_id));
 
-    boolean res = listSongService.ifAdd(listsong);
+    boolean res = listSongService.addListSong(listsong);
     if (res){
         jsonObject.put("code", 1);
-        jsonObject.put("msg", "修改成功");
+        jsonObject.put("msg", "添加成功");
         return jsonObject;
     }else {
         jsonObject.put("code", 0);
-        jsonObject.put("msg", "修改失败");
+        jsonObject.put("msg", "添加失败");
         return jsonObject;
     }
 }
@@ -53,7 +53,7 @@ public class ListSongController {
     @RequestMapping(value = "/listSong/detail", method = RequestMethod.GET)
     public Object listSongOfSongId(HttpServletRequest req){
         String songListId = req.getParameter("songListId");
-        return listSongService.listSongsOfSingers(Integer.parseInt(songListId));
+        return listSongService.listSongOfSongId(Integer.parseInt(songListId));
     }
 
 //    删除歌单里的歌曲

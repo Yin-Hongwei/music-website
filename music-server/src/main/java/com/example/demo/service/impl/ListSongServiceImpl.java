@@ -31,15 +31,15 @@ public class ListSongServiceImpl implements ListSongService {
     }
 
     @Override
-    public boolean ifAdd(ListSong listSong)
+    public boolean addListSong(ListSong listSong)
     {
         return listSongMapper.insertSelective(listSong) > 0?true:false;
     }
 
     @Override
-    public List<ListSong> listSongsOfSingers(Integer songListId)
+    public List<ListSong> listSongOfSongId(Integer songListId)
     {
-        return listSongMapper.listSongsOfSingers(songListId);
+        return listSongMapper.listSongOfSongId(songListId);
     }
 
 }

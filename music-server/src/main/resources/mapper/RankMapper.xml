@@ -14,7 +14,6 @@
   <select id="selectScoreSum" resultType="java.lang.Integer">
   SELECT COALESCE(sum(score),0) as score from rank where songListId = #{0} ;
   </select>
-
   <select id="selectRankNum" resultType="java.lang.Integer">
   SELECT COALESCE(count(id),0) as num from rank where songListId = #{0} ;
   </select>

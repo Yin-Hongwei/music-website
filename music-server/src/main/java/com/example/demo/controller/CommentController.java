@@ -56,21 +56,21 @@ public class CommentController {
 //    获取所有评论列表
     @RequestMapping(value = "/comment", method = RequestMethod.GET)
     public Object allComment(){
-        return commentService.songListComment();
+        return commentService.allComment();
     }
 
 //    获得指定歌曲ID的评论列表
     @RequestMapping(value = "/comment/song/detail", method = RequestMethod.GET)
     public Object commentOfSongId(HttpServletRequest req){
         String songId = req.getParameter("songId");
-        return commentService.songComments(Integer.parseInt(songId));
+        return commentService.commentOfSongId(Integer.parseInt(songId));
     }
 
 //    获得指定歌单ID的评论列表
     @RequestMapping(value = "/comment/songList/detail", method = RequestMethod.GET)
     public Object commentOfSongListId(HttpServletRequest req){
         String songListId = req.getParameter("songListId");
-        return commentService.songListComments(Integer.parseInt(songListId));
+        return commentService.commentOfSongListId(Integer.parseInt(songListId));
     }
 
 //    点赞

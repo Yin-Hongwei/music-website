@@ -16,7 +16,7 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     @Override
     public boolean addUser(Consumer consumer) {
-        return consumerMapper.addUser(consumer) >0 ?true:false;
+        return consumerMapper.insertSelective(consumer) >0 ?true:false;
     }
 
     @Override
@@ -48,27 +48,19 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    public List<Consumer> allUser()
-    {
+    public List<Consumer> allUser() {
         return consumerMapper.allUser();
     }
 
     @Override
-    public boolean ifAdd(Consumer consumer)
-    {
-        return consumerMapper.addUser(consumer) > 0?true:false;
+    public List<Consumer> userOfId(Integer id) {
+
+        return consumerMapper.userOfId(id);
     }
 
     @Override
-    public List<Consumer> conmmentUser(Integer id) {
+    public List<Consumer> loginStatus(String username) {
 
-        return consumerMapper.conmmentUser(id);
-    }
-
-    @Override
-    public List<Consumer> consumerLists(String username)
-    {
-
-        return consumerMapper.consumerLists(username);
+        return consumerMapper.loginStatus(username);
     }
 }

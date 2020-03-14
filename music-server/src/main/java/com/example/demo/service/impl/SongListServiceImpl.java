@@ -25,9 +25,9 @@ public class SongListServiceImpl implements SongListService {
     }
 
     @Override
-    public List<SongList> listSongLists()
+    public List<SongList> allSongList()
     {
-        return songListMapper.listSongLists();
+        return songListMapper.allSongList();
     }
 
     @Override
@@ -43,13 +43,13 @@ public class SongListServiceImpl implements SongListService {
     }
 
     @Override
-    public List<SongList> songAlbum(String title)
+    public List<SongList> songListOfTitle(String title)
     {
-        return songListMapper.songAlbum(title);
+        return songListMapper.songListOfTitle(title);
     }
 
     @Override
-    public boolean ifAdd(SongList songList)
+    public boolean addSongList(SongList songList)
     {
         return songListMapper.insertSelective(songList) > 0?true:false;
     }

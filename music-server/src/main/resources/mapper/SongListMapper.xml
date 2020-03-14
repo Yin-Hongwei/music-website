@@ -44,7 +44,7 @@
     from song_list
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="listSongLists" resultMap="ResultMapWithBLOBs">
+  <select id="allSongList" resultMap="ResultMapWithBLOBs">
     select *
     from song_list
   </select>
@@ -58,7 +58,7 @@
     from song_list
     where style like #{style,jdbcType=VARCHAR}
   </select>
-  <select id="songAlbum" resultMap="ResultMapWithBLOBs">
+  <select id="songListOfTitle" resultMap="ResultMapWithBLOBs">
     select *
     from song_list
     where title = #{title,jdbcType=VARCHAR}

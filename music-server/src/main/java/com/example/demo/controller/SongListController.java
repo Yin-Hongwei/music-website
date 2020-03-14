@@ -47,7 +47,7 @@ public class SongListController {
         songList.setIntroduction(introduction);
         songList.setStyle(style);
 
-        boolean res = songListService.ifAdd(songList);
+        boolean res = songListService.addSongList(songList);
         if (res){
             jsonObject.put("code", 1);
             jsonObject.put("msg", "添加成功");
@@ -62,14 +62,14 @@ public class SongListController {
 //    返回所有歌单
     @RequestMapping(value = "/songList", method = RequestMethod.GET)
     public Object allSongList(){
-        return songListService.listSongLists();
+        return songListService.allSongList();
     }
 
 //    返回指定标题对应的歌单
     @RequestMapping(value = "/songList/title/detail", method = RequestMethod.GET)
     public Object songListOfTitle(HttpServletRequest req){
         String title = req.getParameter("title").trim();
-        return songListService.songAlbum(title);
+        return songListService.songListOfTitle(title);
     }
 
 //    返回标题包含文字的歌单

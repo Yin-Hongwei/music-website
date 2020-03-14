@@ -60,7 +60,7 @@ public class SingerController {
         singer.setLocation(location);
         singer.setIntroduction(introduction);
 
-        boolean res = singerService.ifAdd(singer);
+        boolean res = singerService.addSinger(singer);
         if (res){
             jsonObject.put("code", 1);
             jsonObject.put("msg", "添加成功");
@@ -75,21 +75,21 @@ public class SingerController {
 //    返回所有歌手
     @RequestMapping(value = "/singer", method = RequestMethod.GET)
     public Object allSinger(){
-        return singerService.listSingers();
+        return singerService.allSinger();
     }
 
 //    根据歌手名查找歌手
     @RequestMapping(value = "/singer/name/detail", method = RequestMethod.GET)
     public Object singerOfName(HttpServletRequest req){
         String name = req.getParameter("name").trim();
-        return singerService.searachSinger(name);
+        return singerService.singerOfName(name);
     }
 
 //    根据歌手性别查找歌手
     @RequestMapping(value = "/singer/sex/detail", method = RequestMethod.GET)
     public Object singerOfSex(HttpServletRequest req){
         String sex = req.getParameter("sex").trim();
-        return singerService.singerSex(Integer.parseInt(sex));
+        return singerService.singerOfSex(Integer.parseInt(sex));
     }
 
 //    删除歌手
@@ -165,7 +165,7 @@ public class SingerController {
             Singer singer = new Singer();
             singer.setId(id);
             singer.setPic(storeAvatorPath);
-            boolean res = singerService.updateSingerImg(singer);
+            boolean res = singerService.updateSingerPic(singer);
             if (res){
                 jsonObject.put("code", 1);
                 jsonObject.put("pic", storeAvatorPath);
