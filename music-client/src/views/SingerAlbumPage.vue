@@ -58,7 +58,7 @@ export default {
   methods: {
     getSongList () {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/listSongs?singerId=${_this.singerId}`)
+      axios.get(`${_this.$store.state.HOST}/song/singer/detail?singerId=${_this.singerId}`)
         .then(function (res) {
           _this.$store.commit('setListOfSongs', res.data)
           window.sessionStorage.setItem('listOfSongs', JSON.stringify(res.data))

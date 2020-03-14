@@ -63,7 +63,7 @@ export default {
   methods: {
     getMsg (id) {
       let _this = this
-      axios.get(_this.$store.state.HOST + '/commentOfConsumer?id=' + id)
+      axios.get(_this.$store.state.HOST + '/user/detail?id=' + id)
         .then(response => {
           _this.username = response.data[0].username
           _this.getuserSex(response.data[0].sex)
@@ -83,7 +83,7 @@ export default {
     // 收藏的歌曲ID
     getCollection (userId) {
       let _this = this
-      axios.get(_this.$store.state.HOST + '/myCollection?userId=' + userId)
+      axios.get(_this.$store.state.HOST + '/collection/detail?userId=' + userId)
         .then(function (response) {
           _this.collection = response.data
           // 通过歌曲ID获取歌曲信息
@@ -100,7 +100,7 @@ export default {
     // 获取收藏的歌曲
     getCollectSongs (id) {
       let _this = this
-      axios.get(_this.$store.state.HOST + '/listSongsOfSongs?id=' + id)
+      axios.get(_this.$store.state.HOST + '/song/detail?id=' + id)
         .then(function (response) {
           _this.collectList.push(response.data[0])
         })

@@ -20,21 +20,20 @@ public class AdminController {
 
 //    判断是否登录成功
     @ResponseBody
-    @RequestMapping(value = "/api/loginadmin", method = RequestMethod.POST)
-    public Object loginadmin(HttpServletRequest req, HttpSession session){
-
+    @RequestMapping(value = "/admin/login/status", method = RequestMethod.POST)
+    public Object loginStatus(HttpServletRequest req, HttpSession session){
         JSONObject jsonObject = new JSONObject();
+
         String name = req.getParameter("name");
         String password = req.getParameter("password");
-//        System.out.println(name+"  "+password);
 
         boolean res = adminService.veritypasswd(name, password);
-        if (res){
+        if (res) {
             jsonObject.put("code", 1);
             jsonObject.put("msg", "登录成功");
             session.setAttribute("name", name);
             return jsonObject;
-        }else {
+        } else {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "用户名或密码错误");
             return jsonObject;

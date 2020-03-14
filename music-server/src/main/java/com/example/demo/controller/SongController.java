@@ -38,9 +38,18 @@ public class SongController {
         return factory.createMultipartConfig();
     }
 
+    @Configuration
+    public class MyPicConfig implements WebMvcConfigurer {
+        @Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            registry.addResourceHandler("/img/songPic/**").addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/img/songPic/");
+            registry.addResourceHandler("/song/**").addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/song/");
+        }
+    }
+
 //    添加歌曲
     @ResponseBody
-    @RequestMapping(value = "/api/addSong", method = RequestMethod.POST)
+    @RequestMapping(value = "/song/add", method = RequestMethod.POST)
     public Object addSong(HttpServletRequest req, @RequestParam("file") MultipartFile mpfile){
         JSONObject jsonObject = new JSONObject();
         String singer_id = req.getParameter("singerId").trim();
@@ -93,9 +102,82 @@ public class SongController {
             return jsonObject;
         }
     }
+
+//    返回所有歌曲
+    @RequestMapping(value = "/song", method = RequestMethod.GET)
+    public Object allSong(){
+        return songService.listSongs();
+    }
+
+//    返回指定歌曲ID的歌曲
+    @RequestMapping(value = "/song/detail", method = RequestMethod.GET)
+    public Object songOfId(HttpServletRequest req){
+        String id = req.getParameter("id");
+        return songService.listSongsOfSongs(Integer.parseInt(id));
+    }
+
+//    返回指定歌手ID的歌曲
+    @RequestMapping(value = "/song/singer/detail", method = RequestMethod.GET)
+    public Object songOfSingerId(HttpServletRequest req){
+        String singerId = req.getParameter("singerId");
+        return songService.listSongsOfSinger(Integer.parseInt(singerId));
+    }
+
+//    返回指定歌手名的歌曲
+    @RequestMapping(value = "/song/singerName/detail", method = RequestMethod.GET)
+    public Object songOfSingerName(HttpServletRequest req){
+        String name = req.getParameter("name");
+        return songService.searachSongLists('%'+ name + '%');
+    }
+
+//    返回指定歌曲名的歌曲
+    @RequestMapping(value = "/song/name/detail", method = RequestMethod.GET)
+    public Object songOfName(HttpServletRequest req){
+        String name = req.getParameter("name").trim();
+        return songService.songOfName(name);
+    }
+
+//    删除歌曲
+    @RequestMapping(value = "/song/delete", method = RequestMethod.GET)
+    public Object deleteSong(HttpServletRequest req){
+        String id = req.getParameter("id");
+        return songService.deleteSong(Integer.parseInt(id));
+    }
+
+//    更新歌曲信息
+    @ResponseBody
+    @RequestMapping(value = "/song/update", method = RequestMethod.POST)
+    public Object updateSongMsg(HttpServletRequest req){
+        JSONObject jsonObject = new JSONObject();
+        String id = req.getParameter("id").trim();
+        String singer_id = req.getParameter("singerId").trim();
+        String name = req.getParameter("name").trim();
+        String introduction = req.getParameter("introduction").trim();
+        String lyric = req.getParameter("lyric").trim();
+
+        Song song = new Song();
+        song.setId(Integer.parseInt(id));
+        song.setSingerId(Integer.parseInt(singer_id));
+        song.setName(name);
+        song.setIntroduction(introduction);
+        song.setUpdateTime(new Date());
+        song.setLyric(lyric);
+
+        boolean res = songService.updateSongMsg(song);
+        if (res){
+            jsonObject.put("code", 1);
+            jsonObject.put("msg", "修改成功");
+            return jsonObject;
+        }else {
+            jsonObject.put("code", 0);
+            jsonObject.put("msg", "修改失败");
+            return jsonObject;
+        }
+    }
+
 //    更新歌曲图片
     @ResponseBody
-    @RequestMapping(value = "/api/updateSongPic", method = RequestMethod.POST)
+    @RequestMapping(value = "/song/img/update", method = RequestMethod.POST)
     public Object updateSongPic(@RequestParam("file") MultipartFile urlFile, @RequestParam("id")int id){
         JSONObject jsonObject = new JSONObject();
 
@@ -140,7 +222,7 @@ public class SongController {
 
 //    更新歌曲URL
     @ResponseBody
-    @RequestMapping(value = "/api/updateSongUrl", method = RequestMethod.POST)
+    @RequestMapping(value = "/song/url/update", method = RequestMethod.POST)
     public Object updateSongUrl(@RequestParam("file") MultipartFile urlFile, @RequestParam("id")int id){
         JSONObject jsonObject = new JSONObject();
 
@@ -181,85 +263,5 @@ public class SongController {
         }finally {
             return jsonObject;
         }
-    }
-
-    @Configuration
-    public class MyPicConfig implements WebMvcConfigurer {
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/songPic/**").addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/img/songPic/");
-            registry.addResourceHandler("/song/**").addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/song/");
-        }
-    }
-
-//    删除歌曲
-    @RequestMapping(value = "/api/deleteSongs", method = RequestMethod.GET)
-    public Object deleteSongs(HttpServletRequest req){
-        String id = req.getParameter("id");
-        return songService.deleteSong(Integer.parseInt(id));
-    }
-
-//    更新歌曲信息
-    @ResponseBody
-    @RequestMapping(value = "/api/updateSongMsgs", method = RequestMethod.POST)
-    public Object updateSongMsgs(HttpServletRequest req){
-        JSONObject jsonObject = new JSONObject();
-        String id = req.getParameter("id").trim();
-        String singer_id = req.getParameter("singerId").trim();
-        String name = req.getParameter("name").trim();
-        String introduction = req.getParameter("introduction").trim();
-        String lyric = req.getParameter("lyric").trim();
-
-        Song song = new Song();
-        song.setId(Integer.parseInt(id));
-        song.setSingerId(Integer.parseInt(singer_id));
-        song.setName(name);
-        song.setIntroduction(introduction);
-        song.setUpdateTime(new Date());
-        song.setLyric(lyric);
-
-        boolean res = songService.updateSongMsg(song);
-        if (res){
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "修改成功");
-            return jsonObject;
-        }else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "修改失败");
-            return jsonObject;
-        }
-    }
-
-//    返回所有歌曲
-    @RequestMapping(value = "/AllSongs", method = RequestMethod.GET)
-    public Object AllSongs(){
-        return songService.listSongs();
-    }
-
-//    返回指定歌曲ID的歌曲
-    @RequestMapping(value = "/listSongsOfSongs", method = RequestMethod.GET)
-    public Object toSongs(HttpServletRequest req){
-        String id = req.getParameter("id");
-        return songService.listSongsOfSongs(Integer.parseInt(id));
-    }
-
-//    返回指定歌手ID的歌曲
-    @RequestMapping(value = "/listSongs", method = RequestMethod.GET)
-    public Object toSongList(HttpServletRequest req){
-        String singerId = req.getParameter("singerId");
-        return songService.listSongsOfSinger(Integer.parseInt(singerId));
-    }
-
-//    返回指定歌手名的歌曲
-    @RequestMapping(value = "/listSongsOfSearch", method = RequestMethod.GET)
-    public Object toSearchLists(HttpServletRequest req){
-        String name = req.getParameter("name");
-        return songService.searachSongLists('%'+ name + '%');
-    }
-
-    @RequestMapping(value = "/api/song", method = RequestMethod.GET)
-    public Object songOfName(HttpServletRequest req){
-        String name = req.getParameter("name").trim();
-        return songService.songOfName(name);
     }
 }

@@ -327,7 +327,7 @@ export default {
         params.append('userId', _this.userId)
         params.append('type', 0)
         params.append('songId', _this.id || '')
-        axios.post(`${_this.$store.state.HOST}/api/collectionList`, params)
+        axios.post(`${_this.$store.state.HOST}/collection/add`, params)
           .then(res => {
             if (res.data.code === 1) {
               this.$notify({

@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     uploadUrl () {
-      let url = `${this.$store.state.HOST}/api/updateUserImg?id=${this.userId}` // 生产环境和开发环境的判断
+      let url = `${this.$store.state.HOST}/user/avatar/update?id=${this.userId}` // 生产环境和开发环境的判断
       return url
     },
     handleAvatarSuccess (res, file) {

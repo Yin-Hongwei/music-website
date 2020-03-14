@@ -72,7 +72,7 @@ export const mixin = {
         })
       } else {
         let _this = this
-        axios.get(`${_this.$store.state.HOST}/listSongsOfSearch?name=${_this.$route.query.keywords}`)
+        axios.get(`${_this.$store.state.HOST}/song/singerName/detail?name=${_this.$route.query.keywords}`)
           .then(function (res) {
             if (!res.data.length) {
               _this.$store.commit('setListOfSongs', [])

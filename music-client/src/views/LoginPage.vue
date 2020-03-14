@@ -75,7 +75,7 @@ export default {
       var params = new URLSearchParams()
       params.append('username', _this.loginForm.username)
       params.append('password', _this.loginForm.password)
-      axios.post(`${_this.$store.state.HOST}/api/loginVerify`, params)
+      axios.post(`${_this.$store.state.HOST}/user/login/status`, params)
         .then(res => {
           // console.log('-----------获取登录信息---------------')
           if (res.data.code === 1) {

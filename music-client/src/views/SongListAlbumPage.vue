@@ -88,7 +88,7 @@ export default {
     // 收集歌单里面的歌曲
     getSongId () {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/listSongOfSingers?songListId=${this.songListId}`)
+      axios.get(`${_this.$store.state.HOST}/listSong/detail?songListId=${this.songListId}`)
         .then(function (response) {
           // 获取歌单里的歌曲信息
           for (let item of response.data) {
@@ -104,7 +104,7 @@ export default {
     // 获取单里的歌曲
     getSongList (id) {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/listSongsOfSongs?id=${id}`)
+      axios.get(`${_this.$store.state.HOST}/song/detail?id=${id}`)
         .then(res => {
           _this.songLists.push(res.data[0])
         })
@@ -115,7 +115,7 @@ export default {
     // 获取评分
     getRank (id) {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/api/getRank?songListId=${id}`)
+      axios.get(`${_this.$store.state.HOST}/rank?songListId=${id}`)
         .then(res => {
           _this.value5 = res.data / 2
         })
@@ -131,7 +131,7 @@ export default {
         params.append('songListId', _this.songListId)
         params.append('consumerId', _this.userId)
         params.append('score', _this.value3 * 2)
-        axios.post(`${_this.$store.state.HOST}/api/pushRank`, params)
+        axios.post(`${_this.$store.state.HOST}/rank/add`, params)
           .then(res => {
             if (res.data.code === 1) {
               _this.getRank(_this.songListId)

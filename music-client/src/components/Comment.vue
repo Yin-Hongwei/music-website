@@ -77,9 +77,9 @@ export default {
       let _this = this
       let url = ''
       if (this.type === 1) {
-        url = '/songListComments?songListId='
+        url = '/comment/songList/detail?songListId='
       } else if (this.type === 0) {
-        url = '/songComments?songId='
+        url = '/comment/song/detail?songId='
       }
       axios.get(_this.$store.state.HOST + url + _this.id)
         .then(function (res) {
@@ -95,7 +95,7 @@ export default {
     // 获取评论用户的昵称和头像
     getUsers (id) {
       let _this = this
-      axios.get(`${_this.$store.state.HOST}/commentOfConsumer?id=${id}`)
+      axios.get(`${_this.$store.state.HOST}/user/detail?id=${id}`)
         .then(function (res) {
           _this.userPic.push(res.data[0].avator)
           _this.userName.push(res.data[0].username)
@@ -118,7 +118,7 @@ export default {
         params.append('userId', _this.userId)
         params.append('type', _this.type)
         params.append('comtent', _this.textarea)
-        axios.post(`${_this.$store.state.HOST}/api/commentList`, params)
+        axios.post(`${_this.$store.state.HOST}/comment/add`, params)
           .then(res => {
             console.log(res.data)
             if (res.data.code === 1) {
@@ -150,7 +150,7 @@ export default {
         var params = new URLSearchParams()
         params.append('id', id)
         params.append('up', up + 1)
-        axios.post(`${_this.$store.state.HOST}/api/postUp`, params)
+        axios.post(`${_this.$store.state.HOST}/comment/like`, params)
           .then(res => {
             if (res.data.code === 1) {
               _this.$refs.up[index].children[0].style.color = '#2796dd'

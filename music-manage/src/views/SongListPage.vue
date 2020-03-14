@@ -172,14 +172,14 @@ export default {
   mixins: [mixin],
   methods: {
     uploadUrl (id) {
-      return `${this.$store.state.HOST}/api/updateSongListImg?id=${id}`
+      return `${this.$store.state.HOST}/songList/img/update?id=${id}`
     },
     // 获取歌单信息
     getData () {
       let _this = this
       _this.tableData = []
       _this.tempDate = []
-      _this.$axios.get(`${_this.$store.state.HOST}/listSongLists`).then((res) => {
+      _this.$axios.get(`${_this.$store.state.HOST}/songList`).then((res) => {
         _this.tableData = res.data
         _this.tempDate = res.data
         _this.currentPage = 1
@@ -215,7 +215,7 @@ export default {
       params.append('pic', _this.form.pic)
       params.append('introduction', _this.form.introduction)
       params.append('style', _this.form.style)
-      _this.$axios.post(`${_this.$store.state.HOST}/api/updateSongListMsgs`, params)
+      _this.$axios.post(`${_this.$store.state.HOST}/songList/update`, params)
         .then(res => {
           if (res.data.code === 1) {
             _this.$notify({
@@ -241,7 +241,7 @@ export default {
       params.append('pic', '/img/songListPic/123.jpg')
       params.append('introduction', _this.registerForm.introduction)
       params.append('style', _this.registerForm.style)
-      _this.$axios.post(`${_this.$store.state.HOST}/api/addSongList`, params).then(res => {
+      _this.$axios.post(`${_this.$store.state.HOST}/songList/add`, params).then(res => {
         if (res.data.code === 1) {
           _this.getData()
           _this.registerForm = {}
@@ -261,7 +261,7 @@ export default {
     // 确定删除
     deleteRow () {
       let _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/api/deleteSongLists?id=${_this.idx}`)
+      _this.$axios.get(`${_this.$store.state.HOST}/songList/delete?id=${_this.idx}`)
         .then(res => {
           if (res.data) {
             _this.getData()
