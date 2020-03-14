@@ -34,8 +34,8 @@ public interface ConsumerMapper {
 
     List<Consumer> allUser();
 
-    List<Consumer> conmmentUser(Integer id);
+    List<Consumer> userOfId(Integer id);
 
-    List<Consumer> consumerLists(String username);
+    List<Consumer> loginStatus(String username);
 
 }

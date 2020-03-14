@@ -16,5 +16,5 @@ public interface CollectService {
 
     List<Collect> allCollect();
 
-    List<Collect> myCollectOfSongs(Integer userId);
+    List<Collect> collectionOfUser(Integer userId);
 }

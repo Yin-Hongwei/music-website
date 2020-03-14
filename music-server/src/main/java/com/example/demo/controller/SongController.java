@@ -83,22 +83,22 @@ public class SongController {
             song.setPic(pic);
             song.setLyric(lyric);
             song.setUrl(storeUrlPath);
-            boolean res = songService.ifAdd(song);
-            if (res){
+            boolean res = songService.addSong(song);
+            if (res) {
                 jsonObject.put("code", 1);
                 jsonObject.put("avator", storeUrlPath);
                 jsonObject.put("msg", "上传成功");
                 return jsonObject;
-            }else {
+            } else {
                 jsonObject.put("code", 0);
                 jsonObject.put("msg", "上传失败");
                 return jsonObject;
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "上传失败" + e.getMessage());
             return jsonObject;
-        }finally {
+        } finally {
             return jsonObject;
         }
     }
@@ -106,28 +106,28 @@ public class SongController {
 //    返回所有歌曲
     @RequestMapping(value = "/song", method = RequestMethod.GET)
     public Object allSong(){
-        return songService.listSongs();
+        return songService.allSong();
     }
 
 //    返回指定歌曲ID的歌曲
     @RequestMapping(value = "/song/detail", method = RequestMethod.GET)
     public Object songOfId(HttpServletRequest req){
         String id = req.getParameter("id");
-        return songService.listSongsOfSongs(Integer.parseInt(id));
+        return songService.songOfId(Integer.parseInt(id));
     }
 
 //    返回指定歌手ID的歌曲
     @RequestMapping(value = "/song/singer/detail", method = RequestMethod.GET)
     public Object songOfSingerId(HttpServletRequest req){
         String singerId = req.getParameter("singerId");
-        return songService.listSongsOfSinger(Integer.parseInt(singerId));
+        return songService.songOfSingerId(Integer.parseInt(singerId));
     }
 
 //    返回指定歌手名的歌曲
     @RequestMapping(value = "/song/singerName/detail", method = RequestMethod.GET)
     public Object songOfSingerName(HttpServletRequest req){
         String name = req.getParameter("name");
-        return songService.searachSongLists('%'+ name + '%');
+        return songService.songOfSingerName('%'+ name + '%');
     }
 
 //    返回指定歌曲名的歌曲

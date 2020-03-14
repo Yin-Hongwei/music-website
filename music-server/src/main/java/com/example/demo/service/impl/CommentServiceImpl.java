@@ -15,7 +15,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public boolean addComment(Comment comment) {
-        return commentMapper.addComment(comment) > 0 ? true:false;
+        return commentMapper.insertSelective(comment) > 0 ? true:false;
     }
 
     @Override
@@ -30,22 +30,22 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public List<Comment> songListComment()
+    public List<Comment> allComment()
     {
-        return commentMapper.songListComment();
+        return commentMapper.allComment();
     }
 
     @Override
-    public List<Comment> songComments(Integer songId)
+    public List<Comment> commentOfSongId(Integer songId)
 
     {
-        return commentMapper.songComments(songId);
+        return commentMapper.commentOfSongId(songId);
     }
 
     @Override
-    public List<Comment> songListComments(Integer songListId)
+    public List<Comment> commentOfSongListId(Integer songListId)
 
     {
-        return commentMapper.songListComments(songListId);
+        return commentMapper.commentOfSongListId(songListId);
     }
 }

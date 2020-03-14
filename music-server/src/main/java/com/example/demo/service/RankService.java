@@ -4,7 +4,7 @@ import com.example.demo.domain.Rank;
 
 public interface RankService {
 
-    int selectAverScore(Long songListId);
+    int rankOfSongListId(Long songListId);
 
-    boolean insert(Rank rank);
+    boolean addRank(Rank rank);
 }

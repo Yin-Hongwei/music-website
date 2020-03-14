@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SongService {
 
-    boolean ifAdd (Song song);
+    boolean addSong (Song song);
 
     boolean updateSongMsg(Song song);
 
@@ -16,13 +16,13 @@ public interface SongService {
 
     boolean deleteSong(Integer id);
 
-    List<Song> listSongs();
+    List<Song> allSong();
 
-    List<Song> listSongsOfSinger(Integer singerId);
+    List<Song> songOfSingerId(Integer singerId);
 
-    List<Song> listSongsOfSongs(Integer id);
+    List<Song> songOfId(Integer id);
 
-    List<Song> searachSongLists(String name);
+    List<Song> songOfSingerName(String name);
 
     List<Song> songOfName(String name);
 }

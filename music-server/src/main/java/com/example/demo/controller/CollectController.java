@@ -71,7 +71,7 @@ public class CollectController {
     @RequestMapping(value = "/collection/detail", method = RequestMethod.GET)
     public Object collectionOfUser(HttpServletRequest req){
         String userId = req.getParameter("userId");
-        return collectService.myCollectOfSongs(Integer.parseInt(userId));
+        return collectService.collectionOfUser(Integer.parseInt(userId));
     }
 
 //    删除收藏的歌曲

@@ -28,11 +28,11 @@ public interface SongListMapper {
 
     int deleteSongList(Integer id);
 
-    List<SongList> listSongLists();
+    List<SongList> allSongList();
 
     List<SongList> likeTitle(String title);
 
     List<SongList> likeStyle(String style);
 
-    List<SongList> songAlbum(String title);
+    List<SongList> songListOfTitle(String title);
 }

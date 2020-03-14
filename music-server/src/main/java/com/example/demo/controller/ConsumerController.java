@@ -110,7 +110,7 @@ public class ConsumerController {
         if (res){
             jsonObject.put("code", 1);
             jsonObject.put("msg", "登录成功");
-            jsonObject.put("userMsg", consumerService.consumerLists(username));
+            jsonObject.put("userMsg", consumerService.loginStatus(username));
             session.setAttribute("username", username);
             return jsonObject;
         }else {
@@ -131,7 +131,7 @@ public class ConsumerController {
     @RequestMapping(value = "/user/detail", method = RequestMethod.GET)
     public Object userOfId(HttpServletRequest req){
         String id = req.getParameter("id");
-        return consumerService.conmmentUser(Integer.parseInt(id));
+        return consumerService.userOfId(Integer.parseInt(id));
     }
 
 //    删除用户

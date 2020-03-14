@@ -15,13 +15,13 @@ public class SongServiceImpl implements SongService {
     private SongMapper songMapper;
 
     @Override
-    public List<Song> listSongs()
+    public List<Song> allSong()
     {
-        return songMapper.listSongs();
+        return songMapper.allSong();
     }
 
     @Override
-    public boolean ifAdd(Song song)
+    public boolean addSong(Song song)
     {
 
         return songMapper.insertSelective(song) > 0?true:false;
@@ -50,24 +50,24 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public List<Song> listSongsOfSinger(Integer singerId)
+    public List<Song> songOfSingerId(Integer singerId)
 
     {
-        return songMapper.listSongsOfSinger(singerId);
+        return songMapper.songOfSingerId(singerId);
     }
 
     @Override
-    public List<Song> listSongsOfSongs(Integer id)
+    public List<Song> songOfId(Integer id)
 
     {
-        return songMapper.listSongsOfSongs(id);
+        return songMapper.songOfId(id);
     }
 
     @Override
-    public List<Song> searachSongLists(String name)
+    public List<Song> songOfSingerName(String name)
 
     {
-        return songMapper.searachSongLists(name);
+        return songMapper.songOfSingerName(name);
     }
 
     @Override

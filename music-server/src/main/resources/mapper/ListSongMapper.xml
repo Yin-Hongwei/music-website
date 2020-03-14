@@ -17,12 +17,10 @@
     -->
     id, song_id, song_list_id
   </sql>
-
   <select id="allListSong" resultMap="BaseResultMap">
     select *
     from list_song
   </select>
-
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     <!--
       WARNING - @mbggenerated
@@ -33,8 +31,7 @@
     from list_song
     where id = #{id,jdbcType=INTEGER}
   </select>
-
-  <select id="listSongsOfSingers" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  <select id="listSongOfSongId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select *
     <!--<include refid="Base_Column_List" />-->
     <!--,-->
@@ -42,7 +39,6 @@
     from list_song
     where song_list_id = #{songListId, jdbcType=INTEGER}
   </select>
-
   <delete id="deleteListSong" parameterType="java.lang.Integer" >
     <!--
       WARNING - @mbggenerated
@@ -51,7 +47,6 @@
     delete from list_song
     where song_id = #{song_id,jdbcType=INTEGER}
   </delete>
-
   <insert id="insertSelective" parameterType="com.example.demo.domain.ListSong" >
     <!--
       WARNING - @mbggenerated

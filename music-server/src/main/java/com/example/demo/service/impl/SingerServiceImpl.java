@@ -20,9 +20,9 @@ public class SingerServiceImpl implements SingerService{
     }
 
     @Override
-    public boolean updateSingerImg(Singer singer) {
+    public boolean updateSingerPic(Singer singer) {
 
-        return singerMapper.updateSingerImg(singer) >0 ?true:false;
+        return singerMapper.updateSingerPic(singer) >0 ?true:false;
     }
 
     @Override
@@ -31,28 +31,28 @@ public class SingerServiceImpl implements SingerService{
     }
 
     @Override
-    public List<Singer> listSingers()
+    public List<Singer> allSinger()
     {
-        return singerMapper.listSingers();
+        return singerMapper.allSinger();
     }
 
     @Override
-    public boolean ifAdd(Singer singer)  {
+    public boolean addSinger(Singer singer)  {
 
         return singerMapper.insertSelective(singer) > 0 ? true : false;
     }
 
     @Override
-    public List<Singer> searachSinger(String name)
+    public List<Singer> singerOfName(String name)
 
     {
-        return singerMapper.searachSinger(name);
+        return singerMapper.singerOfName(name);
     }
 
     @Override
-    public List<Singer> singerSex(Integer sex)
+    public List<Singer> singerOfSex(Integer sex)
 
     {
-        return singerMapper.singerSex(sex);
+        return singerMapper.singerOfSex(sex);
     }
 }

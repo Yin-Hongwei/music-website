@@ -31,25 +31,21 @@
     from singer
     where id = #{id,jdbcType=INTEGER}
   </select>
-
-  <select id="listSingers" resultMap="BaseResultMap">
+  <select id="allSinger" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from singer
   </select>
-
-  <select id="searachSinger" resultMap="BaseResultMap" parameterType="java.lang.String">
+  <select id="singerOfName" resultMap="BaseResultMap" parameterType="java.lang.String">
     select *
     from singer
     where name like #{name, jdbcType=VARCHAR}
   </select>
-
-  <select id="singerSex" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  <select id="singerOfSex" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select *
     from singer
     where sex = #{sex, jdbcType=INTEGER}
   </select>
-
   <delete id="deleteSinger" parameterType="java.lang.Integer" >
     <!--
       WARNING - @mbggenerated
@@ -151,7 +147,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateSingerImg" parameterType="com.example.demo.domain.Consumer" >
+  <update id="updateSingerPic" parameterType="com.example.demo.domain.Consumer" >
     update singer
     <set >
       <if test="pic != null" >
