@@ -12,49 +12,49 @@ export default new Router({
       children: [
         {
           path: '/Info',
-          component: resolve => require(['../views/InfoPage.vue'], resolve),
+          component: resolve => require(['../pages/InfoPage.vue'], resolve),
           meta: { title: 'Info' }
         },
         {
           path: '/Song',
-          component: resolve => require(['../views/SongPage.vue'], resolve),
+          component: resolve => require(['../pages/SongPage.vue'], resolve),
           meta: { title: 'Song' }
         },
         {
           path: '/Singer',
-          component: resolve => require(['../views/SingerPage.vue'], resolve),
+          component: resolve => require(['../pages/SingerPage.vue'], resolve),
           meta: { title: 'Singer' }
         },
         {
           path: '/SongList',
-          component: resolve => require(['../views/SongListPage.vue'], resolve),
+          component: resolve => require(['../pages/SongListPage.vue'], resolve),
           meta: { title: 'SongList' }
         },
         {
           path: '/ListSong',
-          component: resolve => require(['../views/ListSongPage.vue'], resolve),
+          component: resolve => require(['../pages/ListSongPage.vue'], resolve),
           meta: { title: 'ListSong' }
         },
         {
           path: '/Comment',
-          component: resolve => require(['../views/CommentPage.vue'], resolve),
+          component: resolve => require(['../pages/CommentPage.vue'], resolve),
           meta: { title: 'Comment' }
         },
         {
           path: '/Consumer',
-          component: resolve => require(['../views/ConsumerPage.vue'], resolve),
+          component: resolve => require(['../pages/ConsumerPage.vue'], resolve),
           meta: { title: 'Consumer' }
         },
         {
           path: '/Collect',
-          component: resolve => require(['../views/CollectPage.vue'], resolve),
+          component: resolve => require(['../pages/CollectPage.vue'], resolve),
           meta: { title: 'Collect' }
         }
       ]
     },
     {
       path: '/',
-      component: resolve => require(['../views/Login.vue'], resolve)
+      component: resolve => require(['../pages/Login.vue'], resolve)
     }
   ]
 })
