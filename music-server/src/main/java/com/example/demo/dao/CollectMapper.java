@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.domain.Collect;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface CollectMapper {
 
     int updateByPrimaryKey(Collect record);
 
-    int existSongId(Integer songId);
+    int existSongId(@Param("userId") Integer userId, @Param("songId") Integer songId);
 
     int updateCollectMsg(Collect collect);
 

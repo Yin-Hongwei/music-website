@@ -8,7 +8,7 @@
       </div>
       <el-table ref="multipleTable" stripe border style="width: 100%" height="500px" :data="data" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="40"></el-table-column>
-        <el-table-column label="歌手图片" width="110">
+        <el-table-column label="歌手图片" width="110" align="center">
           <template slot-scope="scope">
             <img :src="getUrl(scope.row.pic)" alt style="width: 80px;" />
             <el-upload
@@ -22,20 +22,24 @@
             </el-upload>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="歌手" width="120"></el-table-column>
-        <el-table-column label="性别" width="60">
+        <el-table-column prop="name" label="歌手" width="120" align="center"></el-table-column>
+        <el-table-column label="性别" width="50" align="center">
           <template slot-scope="scope">
             <div>{{changeSex(scope.row.sex) }}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="birth" label="出生" width="100"></el-table-column>
-        <el-table-column prop="location" label="地区" width="100"></el-table-column>
+        <el-table-column label="出生" width="120" align="center">
+          <template slot-scope="scope">
+              <div>{{attachBirth(scope.row.birth) }}</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="location" label="地区" width="100" align="center"></el-table-column>
         <el-table-column label="简介">
           <template slot-scope="scope">
             <p style="height: 100px; overflow: scroll">{{ scope.row.introduction }}</p>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="150">
+        <el-table-column label="操作" width="150" align="center">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>

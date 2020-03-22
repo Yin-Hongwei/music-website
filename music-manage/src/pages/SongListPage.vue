@@ -8,7 +8,7 @@
             </div>
           <el-table :data="data" border stripe style="width: 100%" height="500px" ref="multipleTable" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="40"></el-table-column>
-                <el-table-column label="歌单图片" width="100">
+                <el-table-column label="歌单图片" width="100" align="center">
                     <template slot-scope="scope">
                         <img :src="getUrl(scope.row.pic)" alt="" style="width: 80px;"/>
                             <el-upload
@@ -21,28 +21,28 @@
                             </el-upload>
                     </template>
                 </el-table-column>
-                <el-table-column prop="title" label="标题" width="200"></el-table-column>
+                <el-table-column prop="title" label="标题" width="200" align="center"></el-table-column>
                 <el-table-column label="简介">
                     <template slot-scope="scope">
                         <p style="height: 100px; overflow: scroll">{{ scope.row.introduction }}</p>
                     </template>
                 </el-table-column>
-                <el-table-column label="风格" width="100">
+                <el-table-column label="风格" width="100" align="center">
                     <template slot-scope="scope">
                         <div>{{ scope.row.style }}</div>
                     </template>
                 </el-table-column>
-                <el-table-column label="内容" width="80">
+                <el-table-column label="内容" width="80" align="center">
                     <template  slot-scope="scope">
                         <el-button size="mini" @click="getContent(data[scope.$index].id)">内容</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column label="评论" width="80">
+                <el-table-column label="评论" width="80" align="center">
                     <template  slot-scope="scope">
                         <el-button size="mini" @click="getComment(data[scope.$index].id)">评论</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="150">
+                <el-table-column label="操作" width="150" align="center">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"

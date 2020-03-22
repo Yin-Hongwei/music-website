@@ -1,5 +1,5 @@
 <template>
-  <div class="singer-page">
+  <div class="singer">
     <div class="singer-header">
       <ul>
         <li
@@ -26,31 +26,18 @@
 </template>
 
 <script>
-import axios from 'axios'
 import ContentList from '../components/ContentList'
+import { singerStyle } from '../assets/data/singer'
 
 export default {
-  name: 'singer-page',
+  name: 'singer',
   components: {
     ContentList
   },
   data () {
     return {
-      singerStyle: [
-        {
-          name: '全部',
-          type: '3'
-        },
-        {
-          name: '男',
-          type: '1'
-        },
-        {
-          name: '女',
-          type: '0'
-        }
-      ],
-      activeName: '全部',
+      singerStyle: [], // 歌手导航栏类别
+      activeName: '全部歌手',
       pageSize: 15, // 页数
       currentPage: 1, // 当前页
       albumDatas: []
@@ -63,7 +50,8 @@ export default {
     }
   },
   created () {
-    this.getSingerAll()
+    this.singerStyle = singerStyle
+    this.getAllSinger()
   },
   methods: {
     // 获取当前页
@@ -73,34 +61,32 @@ export default {
     handleChangeView: function (item) {
       this.activeName = item.name
       this.albumDatas = []
-      if (item.name === '全部') {
-        this.getSingerAll()
-      } else if (item.name === '男' || item.name === '女') {
+      if (item.name === '全部歌手') {
+        this.getAllSinger()
+      } else if (item.name === '男歌手' || item.name === '女歌手') {
         this.getSingerSex(item.type)
       }
     },
     // 获取所有歌手
-    getSingerAll () {
-      let _this = this
-      axios.get(`${_this.$store.state.configure.HOST}/singer`)
-        .then(function (res) {
-          _this.currentPage = 1
-          _this.albumDatas = res.data
+    getAllSinger () {
+      this.$api.singerAPI.getAllSinger()
+        .then(res => {
+          this.currentPage = 1
+          this.albumDatas = res.data
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     },
     // 通过性别对歌手分类
     getSingerSex (sex) {
-      let _this = this
-      axios.get(`${_this.$store.state.configure.HOST}/singer/sex/detail?sex=${sex}`)
-        .then((res) => {
-          _this.currentPage = 1
-          _this.albumDatas = res.data
+      this.$api.singerAPI.getSingerOfSex(sex)
+        .then(res => {
+          this.currentPage = 1
+          this.albumDatas = res.data
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     }
   }
@@ -112,7 +98,7 @@ div, ul, li{
   box-sizing: border-box;
 }
 
-.singer-page {
+.singer {
   margin: 30px 10%;
   padding-bottom: 50px;
   background-color: #ffffff;

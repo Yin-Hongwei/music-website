@@ -1,7 +1,7 @@
 <template>
   <div class="the-header">
     <!--图标-->
-    <div class="head-logo" @click="goHomePage">
+    <div class="head-logo" @click="goHome">
       <div class="logo-hd">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-erji"></use>
@@ -23,7 +23,7 @@
           </div>
         </div>
       </li>
-      <li :class="{active: item.name === activeName}" v-for="item in loginMsg" :key="item.type" @click="goPage(item.path, item.name)" v-if="!loginIn">{{item.name}}</li>
+      <li v-if="!loginIn" :class="{active: item.name === activeName}" v-for="item in loginMsg" :key="item.type" @click="goPage(item.path, item.name)">{{item.name}}</li>
     </ul>
     <!--用户-->
     <ul class="menu">
@@ -38,6 +38,7 @@
 <script>
 import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
+import { navMsg, loginMsg, menuList } from '../assets/data/header'
 
 export default {
   name: 'the-header',
@@ -45,36 +46,9 @@ export default {
   data () {
     return {
       musicName: 'Yin-music',
-      navMsg: [{
-        name: '首页',
-        path: '/home-page'
-      }, {
-        name: '歌单',
-        path: '/song-list-page'
-      }, {
-        name: '歌手',
-        path: '/singer-page'
-      }, {
-        name: '我的音乐',
-        path: '/my-song-page'
-      }],
-      loginMsg: [{
-        name: '登录',
-        path: '/'
-      }, {
-        name: '注册',
-        path: '/register-page'
-      }],
-      menuList: [{
-        name: '个人信息',
-        path: '/personal-info-page'
-      }, {
-        name: '修改头像',
-        path: '/upLoad-page'
-      }, {
-        name: '退出',
-        path: 0
-      }],
+      navMsg: [], // 左侧导航栏
+      loginMsg: [], // 右侧导航栏
+      menuList: [], // 用户下拉菜单项
       keywords: ''
     }
   },
@@ -86,6 +60,11 @@ export default {
       'username',
       'loginIn'
     ])
+  },
+  created () {
+    this.navMsg = navMsg
+    this.loginMsg = loginMsg
+    this.menuList = menuList
   },
   methods: {
     show () {
@@ -101,17 +80,14 @@ export default {
         document.querySelector('.menu').classList.remove('show')
       }, false)
     },
-    goHomePage () {
-      this.$router.push({path: '/home-page'})
+    goHome () {
+      this.$router.push({path: '/home'})
     },
     goPage (path, value) {
       document.querySelector('.menu').classList.remove('show')
       this.changeIndex(value)
-      if (!this.loginIn && path === '/my-song-page') {
-        this.$notify({
-          title: '请先登录',
-          type: 'warning'
-        })
+      if (!this.loginIn && path === '/my-music') {
+        this.notify('请先登录', 'warning')
       } else {
         this.$router.push({path: path})
       }
@@ -130,7 +106,7 @@ export default {
     },
     goSearch () {
       this.$store.commit('setSearchword', this.keywords)
-      this.$router.push({path: '/search-page', query: {keywords: this.keywords}})
+      this.$router.push({path: '/search', query: {keywords: this.keywords}})
     }
   }
 }

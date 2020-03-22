@@ -87,11 +87,11 @@ public class ConsumerController {
         boolean res = consumerService.addUser(consumer);
         if (res) {
             jsonObject.put("code", 1);
-            jsonObject.put("msg", "登录成功");
+            jsonObject.put("msg", "注册成功");
             return jsonObject;
         } else {
             jsonObject.put("code", 0);
-            jsonObject.put("msg", "用户名或密码错误");
+            jsonObject.put("msg", "注册失败");
             return jsonObject;
         }
     }

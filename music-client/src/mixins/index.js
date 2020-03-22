@@ -1,9 +1,19 @@
-import axios from 'axios'
 export const mixin = {
   methods: {
+    // 提示信息
+    notify (title, type) {
+      this.$notify({
+        title: title,
+        type: type
+      })
+    },
     // 获取图片信息
     attachImageUrl (srcUrl) {
-      return this.$store.state.configure.HOST + srcUrl || '../assets/img/user.jpg'
+      return srcUrl ? this.$store.state.configure.HOST + srcUrl || '../assets/img/user.jpg' : ''
+    },
+    attachBirth (val) {
+      let birth = String(val).match(/[0-9-]+(?=\s)/)
+      return Array.isArray(birth) ? birth[0] : birth
     },
     // 得到名字后部分
     replaceFName (str) {
@@ -57,26 +67,19 @@ export const mixin = {
     getSong () {
       if (!this.$route.query.keywords) {
         this.$store.commit('setListOfSongs', [])
-        this.$notify({
-          title: '您输入内容为空',
-          type: 'warning'
-        })
+        this.notify('您输入内容为空', 'warning')
       } else {
-        let _this = this
-        axios.get(`${_this.$store.state.configure.HOST}/song/singerName/detail?name=${_this.$route.query.keywords}`)
-          .then(function (res) {
+        this.$api.songAPI.getSongOfSingerName(this.$route.query.keywords)
+          .then(res => {
             if (!res.data.length) {
-              _this.$store.commit('setListOfSongs', [])
-              _this.$notify({
-                title: '系统暂无该歌曲',
-                type: 'warning'
-              })
+              this.$store.commit('setListOfSongs', [])
+              this.notify('系统暂无该歌曲', 'warning')
             } else {
-              _this.$store.commit('setListOfSongs', res.data)
+              this.$store.commit('setListOfSongs', res.data)
             }
           })
-          .catch(function (error) {
-            console.log(error)
+          .catch(err => {
+            console.log(err)
           })
       }
     }

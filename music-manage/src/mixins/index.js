@@ -30,6 +30,10 @@ export const mixin = {
       let arr = str.split('-')
       return arr[0]
     },
+    attachBirth (val) {
+      let birth = String(val).match(/[0-9-]+(?=\s)/)
+      return Array.isArray(birth) ? birth[0] : birth
+    },
     changeSex (value) {
       if (value === 0) {
         return '女'

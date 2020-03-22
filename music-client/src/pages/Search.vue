@@ -1,5 +1,5 @@
 <template>
-  <div id="search-page">
+  <div id="search">
     <div class="my-bg"></div>
     <div class="my-body">
       <div class="content">
@@ -20,7 +20,7 @@ import { mapGetters } from 'vuex'
 import { mixin } from '../mixins'
 
 export default {
-  name: 'search-page',
+  name: 'search',
   components: {
     searchSongs,
     searchSongLists

@@ -1,5 +1,5 @@
 <template>
-<div class="login-page">
+<div class="login-in">
   <login-logo/>
   <div class="login">
     <div class="login-head">
@@ -10,11 +10,11 @@
         <el-input placeholder="用户名" v-model="loginForm.username"></el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input type="password" placeholder="密码" v-model="loginForm.password" @keyup.enter.native="login"></el-input>
+        <el-input type="password" placeholder="密码" v-model="loginForm.password" @keyup.enter.native="loginIn"></el-input>
       </el-form-item>
       <div class="login-btn">
-        <el-button @click="goRegister()">注册</el-button>
-        <el-button type="primary" @click="login">登录</el-button>
+        <el-button @click="goLoginUp()">注册</el-button>
+        <el-button type="primary" @click="loginIn">登录</el-button>
       </div>
     </el-form>
   </div>
@@ -22,12 +22,11 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mixin } from '../mixins'
 import LoginLogo from '../components/LoginLogo'
 
 export default {
-  name: 'login-page',
+  name: 'login-in',
   components: {
     LoginLogo
   },
@@ -69,42 +68,33 @@ export default {
     changeIndex (value) {
       this.$store.commit('setActiveName', value)
     },
-    login () {
+    loginIn () {
       let _this = this
-      var params = new URLSearchParams()
-      params.append('username', _this.loginForm.username)
-      params.append('password', _this.loginForm.password)
-      axios.post(`${_this.$store.state.configure.HOST}/user/login/status`, params)
+      _this.$api.userAPI.loginIn(this.loginForm.username, this.loginForm.password)
         .then(res => {
           // console.log('-----------获取登录信息---------------')
           if (res.data.code === 1) {
-            _this.$notify({
-              title: '登录成功',
-              type: 'success'
-            })
-            _this.copyMsg(res.data.userMsg[0])
+            _this.notify('登录成功', 'success')
+            _this.setUserMsg(res.data.userMsg[0])
             _this.$store.commit('setLoginIn', true)
             setTimeout(function () {
               _this.changeIndex('首页')
-              _this.$router.push({path: '/home-Page'})
+              _this.$router.push({path: '/home'})
               _this.$router.go(0)
             }, 2000)
           } else {
-            _this.$notify({
-              title: '用户名或密码错误',
-              type: 'error'
-            })
+            _this.notify('用户名或密码错误', 'error')
           }
         })
         .catch(failResponse => {})
     },
-    copyMsg (item) {
+    setUserMsg (item) {
       this.$store.commit('setUserId', item.id)
       this.$store.commit('setUsername', item.username)
       this.$store.commit('setAvator', item.avator)
     },
-    goRegister () {
-      this.$router.push({path: '/register-page'})
+    goLoginUp () {
+      this.$router.push({path: '/login-up'})
     }
   }
 }

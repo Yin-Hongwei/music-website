@@ -5,6 +5,7 @@
   <a href=""><img alt="license" src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat"></a>
 </p>
 
+
 ## 项目说明
 
 本音乐网站的开发主要利用前端框架VUE开发客户端和管理端，后端接口用Spring Boot来实现，数据持久化用的是 MyBatis，数据用MySQL来进行存储。实现思路可以参考[这里](https://yin-hongwei.github.io/2019/03/04/music/)。
@@ -13,7 +14,7 @@
 
 ## 项目截图
 
-> 前台模块
+> 客户端
 
 ![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hkbfdtbej31c00u0jyu.jpg)<br/>
 
@@ -23,29 +24,29 @@
 
 ![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hl4b9jjdj31c00u0nmn.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9a6ji44j31c00u01ky.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gd385qvgmej31c00u0x6p.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9aqzofkj31c00u0aq5.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gd3867tq24j31c00u0tnw.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006tNbRwly1gahhz8khb3j31c00u01kx.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gd386h28hqj31c00u07vj.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9cy5qpmj31c00u0qdr.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gd388evmh0j31c00u07ha.jpg)<br/>
 
 ![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9d8b2ukj31c00u0dof.jpg)<br/>
 
-> 后台模块
+> 管理端
 
 ![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hhhu4n7tj31c00u04qq.jpg)<br/>
 
 ![](https://tva1.sinaimg.cn/large/00831rSTly1gcu22b795vj31c00u0qbf.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006tNbRwly1ga9exajjrqj31c00u07j1.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gd387588m9j31c00u0wte.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006tNbRwly1ga9exqfzt2j31c00u0186.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gd3890so5wj31c00u0k6w.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006tNbRwly1ga9exytrurj31c00u0ttl.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gd3897mblvj31c00u0h6c.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006tNbRwly1ga9ey8sc82j31c00u01ao.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gd389f4en6j31c00u0k8h.jpg)<br/>
 
 ## 功能
 
@@ -89,9 +90,9 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 #### 3、修改
 1）数据库：将sql文件夹中的 tp_music.sql 文件导入数据库。（mysql 版本不能低于5.7）
 
-2）music-server：启动后端服务之前，有一些地方需要修改，先去 /music-website/music-server/src/main/resources 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password，并且修改下面蓝色显示的文件名中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。（Mac 和 win 下路径有些差异，我的是Mac上的路径，win 上 需要在 file:后标明是哪个盘，例如："file:C:/user/XXX"）
+2）music-server：启动后端服务之前，有一些地方需要修改，先去 /music-website/music-server/src/main/resources 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password，并且修改下圈出来的的文件中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。（Mac 和 win 下路径有些差异，我的是Mac上的路径，win 上 需要在 file:后标明是哪个盘，例如："file:C:/user/XXX"）
 
-![](https://tva1.sinaimg.cn/large/006tNbRwly1gbkqbc66q9j33fr0u07u0.jpg)
+![](https://tva1.sinaimg.cn/large/00831rSTly1gd38cq6yhrj31zk0juk02.jpg)
 
 #### 4、启动项目
 

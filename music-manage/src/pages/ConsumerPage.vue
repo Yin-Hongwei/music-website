@@ -7,8 +7,8 @@
                 <el-button type="primary" @click="centerDialogVisible = true">添加新用户</el-button>
             </div>
           <el-table :data="data" border stripe style="width: 100%" ref="multipleTable" height="500px" @selection-change="handleSelectionChange">
-                <el-table-column type="selection" width="40"></el-table-column>
-                <el-table-column label="歌手图片" width="100">
+                <el-table-column type="selection" width="40" align="center"></el-table-column>
+                <el-table-column label="歌手图片" width="102" align="center">
                     <template slot-scope="scope">
                         <img :src="getUrl(scope.row.avator)" alt="" style="width: 80px;"/>
                         <el-upload
@@ -21,24 +21,28 @@
                         </el-upload>
                     </template>
                 </el-table-column>
-                <el-table-column prop="username" label="用户名" width="80"></el-table-column>
-                <el-table-column prop="password" label="密码" width="120"></el-table-column>
-                <el-table-column label="性别" width="50">
+                <el-table-column prop="username" label="用户名" width="80" align="center"></el-table-column>
+                <el-table-column prop="password" label="密码" width="80" align="center"></el-table-column>
+                <el-table-column label="性别" width="50" align="center">
                     <template slot-scope="scope">
                         <div>{{changeSex(scope.row.sex) }}</div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="phoneNum" label="手机号码" width="120"></el-table-column>
-                <el-table-column prop="email" label="邮箱" width="120"></el-table-column>
-                <el-table-column prop="birth" label="生日" width="80"></el-table-column>
-                <el-table-column prop="introduction" label="签名"></el-table-column>
-                <el-table-column prop="location" label="地区" width="80"></el-table-column>
-                <el-table-column label="收藏" width="80">
+                <el-table-column prop="phoneNum" label="手机号码" width="120" align="center"></el-table-column>
+                <el-table-column prop="email" label="邮箱" width="120" align="center"></el-table-column>
+                <el-table-column label="生日" width="120" align="center">
+                    <template slot-scope="scope">
+                        <div>{{attachBirth(scope.row.birth) }}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="introduction" label="签名" align="center"></el-table-column>
+                <el-table-column prop="location" label="地区" width="80" align="center"></el-table-column>
+                <el-table-column label="收藏" width="80" align="center">
                     <template  slot-scope="scope">
                         <el-button size="mini" @click="getCollect(data[scope.$index].id)">收藏</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="150">
+                <el-table-column label="操作" width="150" align="center">
                     <template slot-scope="scope">
                         <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
                         <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>

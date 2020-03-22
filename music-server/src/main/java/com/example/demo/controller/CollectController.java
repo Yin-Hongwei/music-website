@@ -30,12 +30,11 @@ public class CollectController {
         String type = req.getParameter("type");
         String song_id=req.getParameter("songId");
         String song_list_id=req.getParameter("songListId");
-
         if (song_id == ""){
             jsonObject.put("code", 0);
-            jsonObject.put("msg", "收藏失败");
+            jsonObject.put("msg", "收藏歌曲为空");
             return jsonObject;
-        } else if (collectService.existSongId(Integer.parseInt(song_id))) {
+        } else if (collectService.existSongId(Integer.parseInt(user_id), Integer.parseInt(song_id))) {
             jsonObject.put("code", 2);
             jsonObject.put("msg", "已收藏");
             return jsonObject;
@@ -67,7 +66,7 @@ public class CollectController {
         return collectService.allCollect();
     }
 
-//    返回的制定用户ID收藏列表
+//    返回的指定用户ID收藏列表
     @RequestMapping(value = "/collection/detail", method = RequestMethod.GET)
     public Object collectionOfUser(HttpServletRequest req){
         String userId = req.getParameter("userId");

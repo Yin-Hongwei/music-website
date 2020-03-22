@@ -1,5 +1,5 @@
 <template>
-  <div class="singer-album-page">
+  <div class="singer-album">
     <div class="album">
       <div class="slide">
         <div class="singer-img">
@@ -7,8 +7,8 @@
         </div>
         <ul class="info">
           <li>性别：{{attachSex(singer.sex)}}</li>
-          <li>生日：{{singer.birth}}</li>
-          <li>地址：{{singer.location}}</li>
+          <li>生日：{{attachBirth(singer.birth)}}</li>
+          <li>故乡：{{singer.location}}</li>
         </ul>
       </div>
       <div class="section">
@@ -27,13 +27,12 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
 import AlbumContent from '../components/AlbumContent'
 
 export default {
-  name: 'singer-album-page',
+  name: 'singer-album',
   components: {
     AlbumContent
   },
@@ -57,13 +56,12 @@ export default {
   },
   methods: {
     getSongList () {
-      let _this = this
-      axios.get(`${_this.$store.state.configure.HOST}/song/singer/detail?singerId=${_this.singerId}`)
-        .then(function (res) {
-          _this.$store.commit('setListOfSongs', res.data)
+      this.$api.songAPI.getSongOfSingerId(this.singerId)
+        .then(res => {
+          this.$store.commit('setListOfSongs', res.data)
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     },
     attachSex (value) {
@@ -78,7 +76,7 @@ export default {
 </script>
 
 <style scoped>
-.singer-album-page{
+.singer-album{
   background-color: #93d2f8;
 }
 
