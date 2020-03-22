@@ -120,6 +120,7 @@ import {mixin} from '../mixins'
 
 export default {
   name: 'song-list-page',
+  mixins: [mixin],
   data () {
     return {
       registerForm: {
@@ -169,20 +170,18 @@ export default {
   created () {
     this.getData()
   },
-  mixins: [mixin],
   methods: {
     uploadUrl (id) {
       return `${this.$store.state.HOST}/songList/img/update?id=${id}`
     },
     // 获取歌单信息
     getData () {
-      let _this = this
-      _this.tableData = []
-      _this.tempDate = []
-      _this.$axios.get(`${_this.$store.state.HOST}/songList`).then((res) => {
-        _this.tableData = res.data
-        _this.tempDate = res.data
-        _this.currentPage = 1
+      this.tableData = []
+      this.tempDate = []
+      this.$api.getSongList().then((res) => {
+        this.tableData = res.data
+        this.tempDate = res.data
+        this.currentPage = 1
       })
     },
     // 获取当前页
@@ -208,75 +207,60 @@ export default {
     },
     // 保存编辑
     saveEdit () {
-      let _this = this
-      var params = new URLSearchParams()
-      params.append('id', _this.form.id)
-      params.append('title', _this.form.title)
-      params.append('pic', _this.form.pic)
-      params.append('introduction', _this.form.introduction)
-      params.append('style', _this.form.style)
-      _this.$axios.post(`${_this.$store.state.HOST}/songList/update`, params)
+      this.$api.updateSongListMsg(
+        this.form.id,
+        this.form.title,
+        this.form.pic,
+        this.form.introduction,
+        this.form.style
+      )
         .then(res => {
           if (res.data.code === 1) {
-            _this.$notify({
-              title: '编辑成功',
-              type: 'success'
-            })
-            _this.getData()
+            this.notify('编辑成功', 'success')
+            this.getData()
           } else {
-            _this.$notify({
-              title: '编辑失败',
-              type: 'error'
-            })
+            this.notify('编辑失败', 'error')
           }
         })
-        .catch(failResponse => {})
-      _this.editVisible = false
+        .catch(err => {
+          console.log(err)
+        })
+      this.editVisible = false
     },
     // 添加歌单
     addsongList () {
-      let _this = this
-      let params = new URLSearchParams()
-      params.append('title', _this.registerForm.title)
-      params.append('pic', '/img/songListPic/123.jpg')
-      params.append('introduction', _this.registerForm.introduction)
-      params.append('style', _this.registerForm.style)
-      _this.$axios.post(`${_this.$store.state.HOST}/songList/add`, params).then(res => {
+      this.$api.setSongList(
+        this.registerForm.title,
+        '/img/songListPic/123.jpg',
+        this.registerForm.introduction,
+        this.registerForm.style
+      ).then(res => {
         if (res.data.code === 1) {
-          _this.getData()
-          _this.registerForm = {}
-          _this.$notify({
-            title: '添加成功',
-            type: 'success'
-          })
+          this.getData()
+          this.registerForm = {}
+          this.notify('添加成功', 'success')
         } else {
-          _this.$notify({
-            title: '添加失败',
-            type: 'error'
-          })
+          this.notify('添加失败', 'error')
         }
-      }).catch(failResponse => {})
-      _this.centerDialogVisible = false
+      }).catch(err => {
+        console.log(err)
+      })
+      this.centerDialogVisible = false
     },
     // 确定删除
     deleteRow () {
-      let _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/songList/delete?id=${_this.idx}`)
+      this.$api.deleteSongList(this.idx)
         .then(res => {
           if (res.data) {
-            _this.getData()
-            _this.$notify({
-              title: '删除成功',
-              type: 'success'
-            })
+            this.getData()
+            this.notify('删除成功', 'success')
           } else {
-            _this.$notify({
-              title: '删除失败',
-              type: 'error'
-            })
+            this.notify('删除失败', 'error')
           }
         })
-        .catch(failResponse => {})
+        .catch(err => {
+          console.log(err)
+        })
       this.delVisible = false
     }
   }

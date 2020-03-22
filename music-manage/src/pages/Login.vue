@@ -29,7 +29,10 @@
 </template>
 
 <script>
+import {mixin} from '../mixins'
+
 export default {
+  mixins: [mixin],
   data: function () {
     return {
       ruleForm: {
@@ -46,27 +49,18 @@ export default {
   },
   methods: {
     submitForm () {
-      let _this = this
-      var params = new URLSearchParams()
-      params.append('name', _this.ruleForm.username)
-      params.append('password', _this.ruleForm.password)
-      _this.$axios
-        .post(`${_this.$store.state.HOST}/admin/login/status`, params)
+      this.$api.getLoginStatus(this.ruleForm.username, this.ruleForm.password)
         .then(res => {
           if (res.data.code === 1) {
             this.$router.push('/Info')
-            this.$notify({
-              title: '欢迎回来',
-              type: 'success'
-            })
+            this.notify('欢迎回来', 'success')
           } else {
-            this.$notify({
-              title: '登录失败',
-              type: 'error'
-            })
+            this.notify('登录失败', 'error')
           }
         })
-        .catch(failResponse => {})
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

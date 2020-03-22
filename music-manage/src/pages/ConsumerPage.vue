@@ -355,50 +355,43 @@ export default {
     },
     // 获取用户信息
     getData () {
-      let _this = this
-      _this.tableData = []
-      _this.tempDate = []
-      _this.$axios.get(`${_this.$store.state.HOST}/user`).then((res) => {
-        _this.tableData = res.data
-        _this.tempDate = res.data
-        _this.currentPage = 1
+      this.tableData = []
+      this.tempDate = []
+      this.$api.getAllUser().then((res) => {
+        this.tableData = res.data
+        this.tempDate = res.data
+        this.currentPage = 1
       })
     },
     getCollect (id) {
       this.$router.push({path: '/collect', query: { id }})
     },
     addPeople () {
-      let _this = this
-      let d = _this.registerForm.birth
+      let d = this.registerForm.birth
       var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      var params = new URLSearchParams()
-      params.append('username', _this.registerForm.username)
-      params.append('password', _this.registerForm.password)
-      params.append('sex', _this.registerForm.sex)
-      params.append('phone_num', _this.registerForm.phoneNum)
-      params.append('email', _this.registerForm.email)
-      params.append('birth', datetime)
-      params.append('introduction', _this.registerForm.introduction)
-      params.append('location', _this.registerForm.location)
-      params.append('avator', '/img/user.jpg')
-      _this.$axios.post(`${_this.$store.state.HOST}/user/add`, params)
+      this.$api.userAPI.loginUp(
+        this.registerForm.username,
+        this.registerForm.password,
+        this.registerForm.sex,
+        this.registerForm.phoneNum,
+        this.registerForm.email,
+        datetime,
+        this.registerForm.introduction,
+        this.registerForm.location,
+        '/img/user.jpg')
         .then(res => {
           if (res.data.code === 1) {
-            _this.getData()
-            _this.registerForm = {}
-            _this.$notify({
-              title: '添加成功',
-              type: 'success'
-            })
+            this.getData()
+            this.registerForm = {}
+            this.notify('添加成功', 'success')
           } else {
-            _this.$notify({
-              title: '添加失败',
-              type: 'error'
-            })
+            this.notify('添加失败', 'error')
           }
         })
-        .catch(failResponse => {})
-      _this.centerDialogVisible = false
+        .catch(err => {
+          console.log(err)
+        })
+      this.centerDialogVisible = false
     },
     // 编辑
     handleEdit (row) {
@@ -421,54 +414,41 @@ export default {
     saveEdit () {
       let d = new Date(this.form.birth)
       var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      var params = new URLSearchParams()
-      params.append('id', this.form.id)
-      params.append('username', this.form.username)
-      params.append('password', this.form.password)
-      params.append('sex', this.form.sex)
-      params.append('phone_num', this.form.phoneNum)
-      params.append('email', this.form.email)
-      params.append('birth', datetime)
-      params.append('introduction', this.form.introduction)
-      params.append('location', this.form.location)
-      this.$axios.post(`${this.$store.state.HOST}/user/update`, params)
-        .then(res => {
-          if (res.data.code === 1) {
-            this.getData()
-            this.$notify({
-              title: '修改成功',
-              type: 'success'
-            })
-          } else {
-            this.$notify({
-              title: '修改失败',
-              type: 'error'
-            })
-          }
-        })
-        .catch(failResponse => {})
+      this.$api.userAPI.updateUserMsg(
+        this.form.id,
+        this.form.username,
+        this.form.password,
+        this.form.sex,
+        this.form.phoneNum,
+        this.form.email,
+        datetime,
+        this.form.introduction,
+        this.form.location
+      ).then(res => {
+        if (res.data.code === 1) {
+          this.getData()
+          this.notify('修改成功', 'success')
+        } else {
+          this.notify('修改失败', 'error')
+        }
+      }).catch(err => {
+        console.log(err)
+      })
       this.editVisible = false
     },
     // 确定删除
     deleteRow () {
-      var _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/user/delete?id=${_this.idx}`)
+      this.$api.deleteUser(this.idx)
         .then(res => {
           if (res.data) {
-            _this.getData()
-            _this.$notify({
-              title: '删除成功',
-              type: 'success'
-            })
+            this.getData()
+            this.notify('删除成功', 'success')
           } else {
-            _this.$notify({
-              title: '删除失败',
-              type: 'error'
-            })
+            this.notify('删除失败', 'error')
           }
         })
         .catch(failResponse => {})
-      _this.delVisible = false
+      this.delVisible = false
     }
   }
 }

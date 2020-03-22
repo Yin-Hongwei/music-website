@@ -80,48 +80,43 @@ export default {
   methods: {
     // 通过用户id获取用户收藏的歌曲id
     getData () {
-      var _this = this
-      _this.$axios
-        .get(`${_this.$store.state.HOST}/collection/detail?userId=${this.$route.query.id}`)
+      this.$api.getCollectionOfUser(this.$route.query.id)
         .then(res => {
-          _this.tableData = []
+          this.tableData = []
           for (let item of res.data) {
-            _this.getSongList(item.songId)
+            this.getSongList(item.songId)
           }
+        })
+        .catch(err => {
+          console.log(err)
         })
     },
     // 通过歌曲ID获取歌曲
     getSongList (id) {
-      var _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/song/detail?id=${id}`)
-        .then(function (res) {
-          _this.tableData.push(res.data[0])
-          _this.tempDate.push(res.data[0])
+      this.$api.getSongOfId(id)
+        .then(res => {
+          this.tableData.push(res.data[0])
+          this.tempDate.push(res.data[0])
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     },
     // 删除一首歌曲
     deleteRow () {
-      var _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/collection/delete?songId=${_this.idx}`)
+      this.$api.deleteCollection(this.idx)
         .then(res => {
           if (res.data) {
-            _this.getData()
-            _this.$notify({
-              title: '删除成功',
-              type: 'success'
-            })
+            this.getData()
+            this.notify('删除成功', 'success')
           } else {
-            _this.$notify({
-              title: '删除失败',
-              type: 'error'
-            })
+            this.notify('删除失败', 'error')
           }
         })
-        .catch(failResponse => {})
-      _this.delVisible = false
+        .catch(err => {
+          console.log(err)
+        })
+      this.delVisible = false
     }
   }
 }

@@ -205,44 +205,37 @@ export default {
       return `${this.$store.state.HOST}/singer/avatar/update?id=${id}`
     },
     addsinger () {
-      let _this = this
-      let d = _this.registerForm.birth
-      var datetime =
-        d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      var params = new URLSearchParams()
-      params.append('name', this.registerForm.name)
-      params.append('sex', this.registerForm.sex)
-      params.append('pic', '/img/singerPic/hhh.jpg')
-      params.append('birth', datetime)
-      params.append('location', this.registerForm.location)
-      params.append('introduction', this.registerForm.introduction)
-      _this.$axios.post(`${_this.$store.state.HOST}/singer/add`, params)
+      let d = this.registerForm.birth
+      var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+      this.$api.setSinger(
+        this.registerForm.name,
+        this.registerForm.sex,
+        '/img/singerPic/hhh.jpg',
+        datetime,
+        this.registerForm.location,
+        this.registerForm.introduction
+      )
         .then(res => {
           if (res.data.code === 1) {
-            _this.getData()
-            _this.registerForm = {}
-            _this.$notify({
-              title: '添加成功',
-              type: 'success'
-            })
+            this.getData()
+            this.registerForm = {}
+            this.notify('添加成功', 'success')
           } else {
-            _this.$notify({
-              title: '添加失败',
-              type: 'error'
-            })
+            this.notify('添加失败', 'error')
           }
         })
-        .catch(failResponse => {})
-      _this.centerDialogVisible = false
+        .catch(err => {
+          console.log(err)
+        })
+      this.centerDialogVisible = false
     },
     getData () {
-      var _this = this
-      _this.tableData = []
-      _this.tempDate = []
-      _this.$axios.get(`${_this.$store.state.HOST}/singer`).then(res => {
-        _this.tableData = res.data
-        _this.tempDate = res.data
-        _this.currentPage = 1
+      this.tableData = []
+      this.tempDate = []
+      this.$api.getAllSinger().then(res => {
+        this.tableData = res.data
+        this.tempDate = res.data
+        this.currentPage = 1
       })
     },
     handleEdit (row) {
@@ -261,55 +254,45 @@ export default {
     },
     // 保存编辑
     saveEdit () {
-      let _this = this
-      let d = new Date(_this.form.birth)
+      let d = new Date(this.form.birth)
       let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      let params = new URLSearchParams()
-      params.append('id', _this.form.id)
-      params.append('name', _this.form.name)
-      params.append('sex', _this.form.sex)
-      params.append('pic', _this.form.pic)
-      params.append('birth', datetime)
-      params.append('location', _this.form.location)
-      params.append('introduction', _this.form.introduction)
-      _this.$axios.post(`${_this.$store.state.HOST}/singer/update`, params)
+      this.$api.updateSingerMsg(
+        this.form.id,
+        this.form.name,
+        this.form.sex,
+        this.form.pic,
+        datetime,
+        this.form.location,
+        this.form.introduction
+      )
         .then(res => {
           if (res.data.code === 1) {
-            _this.getData()
-            _this.$notify({
-              title: '编辑成功',
-              type: 'success'
-            })
+            this.getData()
+            this.notify('编辑成功', 'success')
           } else {
-            _this.$notify({
-              title: '编辑失败',
-              type: 'error'
-            })
+            this.notify('编辑失败', 'error')
           }
         })
-        .catch(failResponse => {})
+        .catch(err => {
+          console.log(err)
+        })
       this.editVisible = false
     },
     // 确定删除
     deleteRow () {
-      var _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/singer/delete?id=${_this.idx}`)
+      this.$api.deleteSinger(this.idx)
         .then(res => {
           if (res.data) {
-            _this.getData()
-            _this.$notify({
-              title: '删除成功',
-              type: 'success'
-            })
+            this.getData()
+            this.notify('删除成功', 'success')
           } else {
-            _this.$notify({
-              title: '删除失败',
-              type: 'error'
-            })
+            this.notify('删除失败', 'error')
           }
         })
-        .catch(failResponse => {})
-      _this.delVisible = false
+        .catch(err => {
+          console.log(err)
+        })
+      this.delVisible = false
     }
   }
 }

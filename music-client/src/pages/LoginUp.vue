@@ -88,7 +88,8 @@ export default {
         this.registerForm.email,
         datetime,
         this.registerForm.introduction,
-        this.registerForm.location)
+        this.registerForm.location,
+        '/img/user.jpg')
         .then(res => {
           console.log(res.data)
           if (res.data.code === 1) {
