@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-page">
+  <div class="upload">
     <div class="section">
       <el-upload
         :action="uploadUrl()"
@@ -14,9 +14,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { mixin } from '../mixins'
 
 export default {
-  name: 'upload-page',
+  name: 'upload',
+  mixins: [mixin],
   data () {
     return {
       imageUrl: ''
@@ -29,23 +31,15 @@ export default {
   },
   methods: {
     uploadUrl () {
-      let url = `${this.$store.state.configure.HOST}/user/avatar/update?id=${this.userId}` // 生产环境和开发环境的判断
-      return url
+      return `${this.$store.state.configure.HOST}/user/avatar/update?id=${this.userId}`
     },
     handleAvatarSuccess (res, file) {
-      let _this = this
       if (res.code === 1) {
-        _this.imageUrl = URL.createObjectURL(file.raw)
-        _this.$store.commit('setAvator', res.avator)
-        _this.$notify({
-          title: '上传成功',
-          type: 'success'
-        })
+        this.imageUrl = URL.createObjectURL(file.raw)
+        this.$store.commit('setAvator', res.avator)
+        this.notify('上传成功', 'success')
       } else {
-        _this.$notify({
-          title: '上传失败',
-          type: 'error'
-        })
+        this.notify('上传失败', 'error')
       }
     },
     beforeAvatarUpload (file) {
@@ -55,7 +49,7 @@ export default {
         this.$message.error('上传头像图片只能是 JPG 格式!')
       }
       if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
+        this.$message.error('上传头像图片大小不能超过 10MB!')
       }
       return isJPG && isLt2M
     }
@@ -64,7 +58,7 @@ export default {
 </script>
 
 <style scoped>
-.upload-page {
+.upload {
   width: 100%;
 }
 

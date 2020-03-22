@@ -1,5 +1,5 @@
 <template>
-  <div class="song-list-page">
+  <div class="song-list">
     <div class="song-list-header">
       <ul>
         <li
@@ -28,51 +28,18 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { mapGetters } from 'vuex'
 import ContentList from '../components/ContentList'
+import { mapGetters } from 'vuex'
+import { songStyle } from '../assets/data/songList'
 
 export default {
-  name: 'song-list-page',
+  name: 'song-list',
   components: {
     ContentList
   },
   data () {
     return {
-      songStyle: [
-        {
-          name: '全部歌单',
-          type: 'One'
-        },
-        {
-          name: '华语',
-          type: 'Two'
-        },
-        {
-          name: '粤语',
-          type: 'Three'
-        },
-        {
-          name: '欧美',
-          type: 'Four'
-        },
-        {
-          name: '日韩',
-          type: 'Five'
-        },
-        {
-          name: '轻音乐',
-          type: 'Six'
-        },
-        {
-          name: 'BGM',
-          type: 'Seven'
-        },
-        {
-          name: '乐器',
-          type: 'Eight'
-        }
-      ],
+      songStyle: [], // 歌单导航栏类别
       activeName: '全部歌单',
       pageSize: 15, // 页数
       currentPage: 1, // 当前页
@@ -89,6 +56,7 @@ export default {
     }
   },
   mounted () {
+    this.songStyle = songStyle
     this.handleChangeView('全部歌单')
   },
   methods: {
@@ -108,20 +76,24 @@ export default {
     },
     // 获取全部歌单
     getSongList (page) {
-      let _this = this
-      axios.get(`${_this.$store.state.configure.HOST}/songList`)
-        .then((res) => {
-          _this.currentPage = 1
-          _this.albumDatas = res.data
+      this.$api.songListAPI.getSongList()
+        .then(res => {
+          this.currentPage = 1
+          this.albumDatas = res.data
+        })
+        .catch(err => {
+          console.log(err)
         })
     },
     // 通过类别获取歌单
     getSongListOfStyle (style) {
-      let _this = this
-      axios.get(`${_this.$store.state.configure.HOST}/songList/style/detail?style=${style}`)
+      this.$api.songListAPI.getSongListOfStyle(style)
         .then(res => {
-          _this.currentPage = 1
-          _this.albumDatas = res.data
+          this.currentPage = 1
+          this.albumDatas = res.data
+        })
+        .catch(err => {
+          console.log(err)
         })
     }
   }
@@ -129,7 +101,7 @@ export default {
 </script>
 
 <style scoped>
-.song-list-page {
+.song-list {
   margin: 30px 150px;
   padding-bottom: 50px;
   min-width: 800px;

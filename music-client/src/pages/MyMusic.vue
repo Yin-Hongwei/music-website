@@ -1,5 +1,5 @@
 <template>
-  <div id="album">
+  <div class="my-music">
     <div class="album-bg"></div>
     <div class="album-slide">
       <div class="album-slide">
@@ -10,7 +10,7 @@
           <li>昵称： {{username}}</li>
           <li>性别： {{userSex}}</li>
           <li>生日： {{birth}}</li>
-          <li>地区： {{location}}</li>
+          <li>故乡： {{location}}</li>
         </ul>
       </div>
     </div>
@@ -26,13 +26,12 @@
 </template>
 
 <script>
-import axios from 'axios'
 import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
 import AlbumContent from '../components/AlbumContent'
 
 export default {
-  name: 'my-song-page',
+  name: 'my-music',
   components: {
     AlbumContent
   },
@@ -62,15 +61,17 @@ export default {
   },
   methods: {
     getMsg (id) {
-      let _this = this
-      axios.get(_this.$store.state.configure.HOST + '/user/detail?id=' + id)
-        .then(response => {
-          _this.username = response.data[0].username
-          _this.getuserSex(response.data[0].sex)
-          _this.birth = response.data[0].birth
-          _this.introduction = response.data[0].introduction
-          _this.location = response.data[0].location
-          _this.avator = response.data[0].avator
+      this.$api.userAPI.getUserOfId(id)
+        .then(res => {
+          this.username = res.data[0].username
+          this.getuserSex(res.data[0].sex)
+          this.birth = this.attachBirth(res.data[0].birth)
+          this.introduction = res.data[0].introduction
+          this.location = res.data[0].location
+          this.avator = res.data[0].avator
+        })
+        .catch(err => {
+          console.log(err)
         })
     },
     getuserSex (sex) {
@@ -82,29 +83,27 @@ export default {
     },
     // 收藏的歌曲ID
     getCollection (userId) {
-      let _this = this
-      axios.get(_this.$store.state.configure.HOST + '/collection/detail?userId=' + userId)
-        .then(function (response) {
-          _this.collection = response.data
+      this.$api.collectionAPI.getCollectionOfUser(userId)
+        .then(res => {
+          this.collection = res.data
           // 通过歌曲ID获取歌曲信息
-          for (let item of _this.collection) {
-            _this.getCollectSongs(item.songId)
+          for (let item of this.collection) {
+            this.getCollectSongs(item.songId)
           }
-          _this.$store.commit('setListOfSongs', _this.collectList)
+          this.$store.commit('setListOfSongs', this.collectList)
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     },
     // 获取收藏的歌曲
     getCollectSongs (id) {
-      let _this = this
-      axios.get(_this.$store.state.configure.HOST + '/song/detail?id=' + id)
-        .then(function (response) {
-          _this.collectList.push(response.data[0])
+      this.$api.songAPI.getSongOfId(id)
+        .then(res => {
+          this.collectList.push(res.data[0])
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     }
   }

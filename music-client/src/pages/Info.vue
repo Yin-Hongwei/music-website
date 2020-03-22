@@ -32,7 +32,7 @@
               <el-input  type="textarea" placeholder="签名" v-model="registerForm.introduction" ></el-input>
             </el-form-item>
             <el-form-item prop="location" label="地区">
-              <el-select v-model="registerForm.location" placeholder="地区">
+              <el-select v-model="registerForm.location" placeholder="地区" style="width:100%">
                 <el-option
                   v-for="item in cities"
                   :key="item.value"
@@ -53,11 +53,11 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mapGetters } from 'vuex'
+import { cities } from '../assets/data/form'
 
 export default {
-  name: 'personal',
+  name: 'info',
   data: function () {
     return {
       registerForm: { // 注册
@@ -70,109 +70,7 @@ export default {
         introduction: '',
         location: ''
       },
-      cities: [{
-        value: '北京',
-        label: '北京'
-      }, {
-        value: '天津',
-        label: '天津'
-      }, {
-        value: '河北',
-        label: '河北'
-      }, {
-        value: '山西',
-        label: '山西'
-      }, {
-        value: '内蒙古',
-        label: '内蒙古'
-      }, {
-        value: '辽宁',
-        label: '辽宁'
-      }, {
-        value: '吉林',
-        label: '吉林'
-      }, {
-        value: '黑龙江',
-        label: '黑龙江'
-      }, {
-        value: '上海',
-        label: '上海'
-      }, {
-        value: '江苏',
-        label: '江苏'
-      }, {
-        value: '浙江',
-        label: '浙江'
-      }, {
-        value: '安徽',
-        label: '安徽'
-      }, {
-        value: '福建',
-        label: '福建'
-      }, {
-        value: '江西',
-        label: '江西'
-      }, {
-        value: '山东',
-        label: '山东'
-      }, {
-        value: '河南',
-        label: '河南'
-      }, {
-        value: '湖北',
-        label: '湖北'
-      }, {
-        value: '湖南',
-        label: '湖南'
-      }, {
-        value: '广东',
-        label: '广东'
-      }, {
-        value: '广西',
-        label: '广西'
-      }, {
-        value: '海南',
-        label: '海南'
-      }, {
-        value: '重庆',
-        label: '重庆'
-      }, {
-        value: '四川',
-        label: '四川'
-      }, {
-        value: '贵州',
-        label: '贵州'
-      }, {
-        value: '云南',
-        label: '云南'
-      }, {
-        value: '西藏',
-        label: '西藏'
-      }, {
-        value: '陕西',
-        label: '陕西'
-      }, {
-        value: '甘肃',
-        label: '甘肃'
-      }, {
-        value: '青海',
-        label: '青海'
-      }, {
-        value: '宁夏',
-        label: '宁夏'
-      }, {
-        value: '新疆',
-        label: '新疆'
-      }, {
-        value: '香港',
-        label: '香港'
-      }, {
-        value: '澳门',
-        label: '澳门'
-      }, {
-        value: '台湾',
-        label: '台湾'
-      }]
+      cities: []
     }
   },
   computed: {
@@ -180,66 +78,73 @@ export default {
       'userId'
     ])
   },
+  created () {
+    this.cities = cities
+  },
   mounted () {
     this.getMsg(this.userId)
   },
   methods: {
     getMsg (id) {
-      let _this = this
-      axios.get(`${_this.$store.state.configure.HOST}/user/detail?id=${id}`)
-        .then(response => {
-          _this.registerForm.username = response.data[0].username
-          _this.registerForm.password = response.data[0].password
-          _this.registerForm.sex = response.data[0].sex
-          _this.registerForm.phoneNum = response.data[0].phoneNum
-          _this.registerForm.email = response.data[0].email
-          _this.registerForm.birth = response.data[0].birth
-          _this.registerForm.introduction = response.data[0].introduction
-          _this.registerForm.location = response.data[0].location
-          _this.registerForm.avator = response.data[0].avator
+      this.$api.userAPI.getUserOfId(id)
+        .then(res => {
+          this.registerForm.username = res.data[0].username
+          this.registerForm.password = res.data[0].password
+          this.registerForm.sex = res.data[0].sex
+          this.registerForm.phoneNum = res.data[0].phoneNum
+          this.registerForm.email = res.data[0].email
+          this.registerForm.birth = res.data[0].birth
+          this.registerForm.introduction = res.data[0].introduction
+          this.registerForm.location = res.data[0].location
+          this.registerForm.avator = res.data[0].avator
+        })
+        .catch(err => {
+          console.log(err)
         })
     },
     goback () {
       this.$router.go(-1)
     },
     saveMsg () {
-      let _this = this
-      let d = new Date(_this.registerForm.birth)
+      let d = new Date(this.registerForm.birth)
       var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      var params = new URLSearchParams()
-      params.append('id', _this.userId)
-      params.append('username', _this.registerForm.username)
-      params.append('password', _this.registerForm.password)
-      params.append('sex', _this.registerForm.sex)
-      params.append('phone_num', _this.registerForm.phoneNum)
-      params.append('email', _this.registerForm.email)
-      params.append('birth', datetime)
-      params.append('introduction', _this.registerForm.introduction)
-      params.append('location', _this.registerForm.location)
-      params.append('avator', '/img/user.jpg')
-      axios.post(`${_this.$store.state.configure.HOST}/user/update`, params)
+
+      this.$api.userAPI.updateUserMsg(
+        this.userId,
+        this.registerForm.username,
+        this.registerForm.password,
+        this.registerForm.sex,
+        this.registerForm.phoneNum,
+        this.registerForm.email,
+        datetime,
+        this.registerForm.introduction,
+        this.registerForm.location,
+        '/img/user.jpg'
+      )
         .then(res => {
           if (res.data.code === 1) {
-            _this.showError = false
-            _this.showSuccess = true
-            this.$store.commit('setUsername', _this.registerForm.username)
+            this.showError = false
+            this.showSuccess = true
+            this.$store.commit('setUsername', this.registerForm.username)
             this.$notify.success({
               title: '编辑成功',
               showClose: true
             })
             setTimeout(function () {
-              _this.$router.go(-1)
+              this.$router.go(-1)
             }, 2000)
           } else {
-            _this.showSuccess = false
-            _this.showError = true
+            this.showSuccess = false
+            this.showError = true
             this.$notify.error({
               title: '编辑失败',
               showClose: true
             })
           }
         })
-        .catch(failResponse => {})
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }
@@ -282,6 +187,7 @@ export default {
 .btn {
   width: 100%;
   height: 40px;
+  margin-left: 40px;
   display: flex;
   align-items: center;
   justify-content: center;

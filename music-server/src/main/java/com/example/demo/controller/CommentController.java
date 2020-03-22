@@ -29,7 +29,7 @@ public class CommentController {
         String type = req.getParameter("type");
         String song_list_id=req.getParameter("songListId");
         String song_id=req.getParameter("songId");
-        String comtent = req.getParameter("comtent").trim();
+        String content = req.getParameter("content").trim();
 
         Comment comment = new Comment();
         comment.setUserId(Integer.parseInt(user_id));
@@ -39,7 +39,7 @@ public class CommentController {
         } else if (new Byte(type) == 1) {
             comment.setSongListId(Integer.parseInt(song_list_id));
         }
-        comment.setContent(comtent);
+        comment.setContent(content);
         comment.setCreateTime(new Date());
         boolean res = commentService.addComment(comment);
         if (res){

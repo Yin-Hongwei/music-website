@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import axios from 'axios'
 import ContentList from '../ContentList'
+import api from '../../api/index'
 
 export default {
   name: 'search-song-Lists',
@@ -24,21 +24,14 @@ export default {
   methods: {
     getSearchList () {
       if (!this.$route.query.keywords) {
-        this.$notify({
-          title: '您输入内容为空',
-          type: 'warning'
-        })
+        this.notify('您输入内容为空', 'warning')
       } else if (this.$route.query.keywords) {
-        let _this = this
-        axios.get(`${_this.$store.state.configure.HOST}/songList/likeTitle/detail?title=${_this.$route.query.keywords}`)
+        api.songListAPI.getSongListOfLikeTitle(this.$route.query.keywords)
           .then(res => {
-            _this.albumDatas = res.data
+            this.albumDatas = res.data
           })
       } else {
-        this.$notify({
-          title: '暂无该歌曲内容',
-          type: 'error'
-        })
+        this.notify('暂无该歌曲内容', 'error')
       }
     }
   }

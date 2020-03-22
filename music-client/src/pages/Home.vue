@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page">
+  <div class="home">
     <!--轮播图-->
     <swiper/>
     <!--热门歌单/歌手-->
@@ -11,12 +11,11 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Swiper from '../components/Swiper'
 import ContentList from '../components/ContentList'
 
 export default {
-  name: 'home-page',
+  name: 'home',
   components: {
     Swiper,
     ContentList
@@ -30,24 +29,28 @@ export default {
     }
   },
   created () {
-    this.getSongLists('songList')
-    this.getSongLists('singer')
+    // 获取歌单列表
+    this.getSongList('songList')
+    // 获取歌手列表
+    this.getSinger('singer')
   },
   methods: {
-    getSongLists (path) {
-      let _this = this
-      axios.get(`${_this.$store.state.configure.HOST}/${path}`)
-        .then(function (res) {
-          if (path === 'songList') {
-            // 获取歌单列表
-            _this.songsList[0].list = res.data.slice(0, 10)
-          } else if (path === 'singer') {
-            // 获取歌手列表
-            _this.songsList[1].list = res.data.slice(0, 10)
-          }
+    getSongList (path) {
+      this.$api.songListAPI.getSongList()
+        .then(res => {
+          this.songsList[0].list = res.data.slice(0, 10)
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getSinger () {
+      this.$api.singerAPI.getAllSinger()
+        .then(res => {
+          this.songsList[1].list = res.data.slice(0, 10)
+        })
+        .catch(err => {
+          console.log(err)
         })
     }
   }

@@ -25,7 +25,7 @@
         </svg>
       </div>
       <!--歌曲图片-->
-      <div class="item-img" @click="goPlayerPage()">
+      <div class="item-img" @click="goPlayerPage">
          <img :src=picUrl alt="">
       </div>
       <!--播放进度-->
@@ -52,7 +52,7 @@
         <div class="left-time">{{ songTime }}</div>
       </div>
       <!--添加-->
-      <div class="item" @click="collection()">
+      <div class="item" @click="collection">
         <el-button plain style="border: 0;">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-xihuan-shi"></use>
@@ -60,7 +60,7 @@
         </el-button>
       </div>
       <!--下载-->
-      <div class="item" @click="down">
+      <div class="item" @click="download">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-xiazai"></use>
         </svg>
@@ -76,7 +76,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mapGetters } from 'vuex'
 import { mixin } from '../mixins'
 
@@ -96,12 +95,12 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'loginIn',
-      'userId',
+      'loginIn', // 用户登录状态
+      'userId', // 用户 id
       'isPlay', // 播放状态
       'playButtonUrl', // 播放状态的图标
       'id', // 音乐id
-      'url',
+      'url', // 音乐地址
       'title', // 歌名
       'artist', // 歌手名
       'picUrl', // 歌曲图片
@@ -140,17 +139,12 @@ export default {
   },
   methods: {
     // 下载
-    down () {
-      let _this = this
-      axios({
-        method: 'get',
-        url: _this.url,
-        responseType: 'blob'
-      })
+    download () {
+      this.$api.songAPI.download(this.url)
         .then(res => {
           let content = res.data
           var eleLink = document.createElement('a')
-          eleLink.download = `${_this.artist}-${_this.title}.mp3`
+          eleLink.download = `${this.artist}-${this.title}.mp3`
           eleLink.style.display = 'none'
           // 字符内容转变成blob地址
           var blob = new Blob([content])
@@ -161,7 +155,9 @@ export default {
           // 然后移除
           document.body.removeChild(eleLink)
         })
-        .catch(failResponse => {})
+        .catch(err => {
+          console.log(err)
+        })
     },
     changeAside () {
       let temp = !this.showAside
@@ -299,28 +295,17 @@ export default {
       }
     },
     goPlayerPage () {
-      this.$router.push({path: `/player-page/${this.id}`})
+      this.$router.push({path: `/lyric/${this.id}`})
     },
     collection () {
       if (this.loginIn) {
         // 0 代表歌曲， 1 代表歌单
-        let _this = this
-        var params = new URLSearchParams()
-        params.append('userId', _this.userId)
-        params.append('type', 0)
-        params.append('songId', _this.id || '')
-        axios.post(`${_this.$store.state.configure.HOST}/collection/add`, params)
+        this.$api.collectionAPI.setCollection(this.userId, 0, this.id)
           .then(res => {
             if (res.data.code === 1) {
-              this.$notify({
-                title: '收藏成功',
-                type: 'success'
-              })
+              this.notify('收藏成功', 'success')
             } else if (res.data.code === 2) {
-              this.$notify({
-                title: '已收藏',
-                type: 'warning'
-              })
+              this.notify('已收藏', 'warning')
             } else {
               this.$notify.error({
                 title: '收藏失败',
@@ -328,12 +313,11 @@ export default {
               })
             }
           })
-          .catch(failResponse => {})
+          .catch(err => {
+            console.log(err)
+          })
       } else {
-        this.$notify({
-          title: '请先登录',
-          type: 'warning'
-        })
+        this.notify('请先登录', 'warning')
       }
     }
   }

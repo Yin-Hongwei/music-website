@@ -1,5 +1,5 @@
 <template>
-  <div class="album">
+  <div class="song-list-album">
     <div class="album-bg"></div>
     <div class="album-body">
       <div class="album-slide">
@@ -38,7 +38,7 @@
           <album-content :songList="listOfSongs">
             <template slot="title">歌单</template>
           </album-content>
-          <comment :id="songListId" :type="1"></comment>
+          <comment :playId="songListId" :type="1"></comment>
         </div>
       </div>
     </div>
@@ -46,14 +46,13 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
 import AlbumContent from '../components/AlbumContent'
 import Comment from '../components/Comment'
 
 export default {
-  name: 'song-list-album-page',
+  name: 'song-list-album',
   components: {
     AlbumContent,
     Comment
@@ -87,76 +86,56 @@ export default {
   methods: {
     // 收集歌单里面的歌曲
     getSongId () {
-      let _this = this
-      axios.get(`${_this.$store.state.configure.HOST}/listSong/detail?songListId=${this.songListId}`)
-        .then(function (response) {
+      this.$api.listSongAPI.getListSongOfSongId(this.songListId)
+        .then(res => {
           // 获取歌单里的歌曲信息
-          for (let item of response.data) {
-            _this.getSongList(item.songId)
+          for (let item of res.data) {
+            this.getSongList(item.songId)
           }
-          _this.$store.commit('setListOfSongs', _this.songLists)
+          this.$store.commit('setListOfSongs', this.songLists)
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     },
     // 获取单里的歌曲
     getSongList (id) {
-      let _this = this
-      axios.get(`${_this.$store.state.configure.HOST}/song/detail?id=${id}`)
+      this.$api.songAPI.getSongOfId(id)
         .then(res => {
-          _this.songLists.push(res.data[0])
+          this.songLists.push(res.data[0])
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     },
     // 获取评分
     getRank (id) {
-      let _this = this
-      axios.get(`${_this.$store.state.configure.HOST}/rank?songListId=${id}`)
+      this.$api.rankAPI.getRankOfSongListId(id)
         .then(res => {
-          _this.value5 = res.data / 2
+          this.value5 = res.data / 2
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     },
     // 提交评分
     pushValue () {
       if (this.loginIn) {
-        let _this = this
-        var params = new URLSearchParams()
-        params.append('songListId', _this.songListId)
-        params.append('consumerId', _this.userId)
-        params.append('score', _this.value3 * 2)
-        axios.post(`${_this.$store.state.configure.HOST}/rank/add`, params)
+        this.$api.rankAPI.setRank(this.songListId, this.userId, this.value3 * 2)
           .then(res => {
             if (res.data.code === 1) {
-              _this.getRank(_this.songListId)
-              _this.$notify({
-                title: '评分成功',
-                type: 'success'
-              })
+              this.getRank(this.songListId)
+              this.notify('评分成功', 'success')
             } else {
-              _this.$notify({
-                title: '评分失败',
-                type: 'error'
-              })
+              this.notify('评分失败', 'error')
             }
           })
-          .catch(failResponse => {
-            _this.$notify({
-              title: '您已评价过啦',
-              type: 'warning'
-            })
+          .catch(err => {
+            console.log(err)
           })
       } else {
         this.value3 = null
-        this.$notify({
-          title: '请先登录',
-          type: 'warning'
-        })
+        this.notify('请先登录', 'warning')
       }
     }
   }

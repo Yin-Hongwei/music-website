@@ -16,7 +16,7 @@
           <span class="no-lrc">暂无歌词</span>
         </div>
       </transition-group>
-      <comment :id="id" :type="0"></comment>
+      <comment :playId="id" :type="0"></comment>
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@ import { mapGetters } from 'vuex'
 import Comment from '../components/Comment'
 
 export default {
-  name: 'player-page',
+  name: 'lyric',
   components: {
     Comment
   },

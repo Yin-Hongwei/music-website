@@ -29,9 +29,9 @@ export default {
     goAblum (item, type) {
       this.$store.commit('setTempList', item)
       if (type) {
-        this.$router.push({path: `/singer-album-page/${item.id}`})
+        this.$router.push({path: `/singer-album/${item.id}`})
       } else {
-        this.$router.push({path: `/song-list-album-page/${item.id}`})
+        this.$router.push({path: `/song-list-album/${item.id}`})
       }
     }
   }

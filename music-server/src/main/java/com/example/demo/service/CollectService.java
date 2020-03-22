@@ -8,7 +8,7 @@ public interface CollectService {
 
     boolean addCollection(Collect collect);
 
-    boolean existSongId(Integer songId);
+    boolean existSongId(Integer userId, Integer songId);
 
     boolean updateCollectMsg(Collect collect);
 

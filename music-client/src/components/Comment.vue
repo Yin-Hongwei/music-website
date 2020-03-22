@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
 
@@ -49,7 +48,7 @@ export default {
   name: 'comment',
   mixins: [mixin],
   props: [
-    'id', // 歌曲ID或歌单ID
+    'playId', // 歌曲ID或歌单ID
     'type' // 歌单（1）/歌曲（0）
   ],
   data () {
@@ -62,11 +61,17 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'id',
       'userId', // 用户ID
       'index', // 列表中的序号
       'loginIn', // 用户是否登录
       'avator' // 用户头像
     ])
+  },
+  watch: {
+    id () {
+      this.getComment()
+    }
   },
   mounted () {
     this.getComment()
@@ -74,95 +79,63 @@ export default {
   methods: {
     // 获取所有评论
     getComment () {
-      let _this = this
-      let url = ''
-      if (this.type === 1) {
-        url = '/comment/songList/detail?songListId='
-      } else if (this.type === 0) {
-        url = '/comment/song/detail?songId='
-      }
-      axios.get(_this.$store.state.configure.HOST + url + _this.id)
-        .then(function (res) {
-          _this.commentList = res.data
+      this.$api.commentAPI.getAllComment(this.type, this.playId)
+        .then(res => {
+          this.commentList = res.data
           for (let item of res.data) {
-            _this.getUsers(item.userId)
+            this.getUsers(item.userId)
           }
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     },
     // 获取评论用户的昵称和头像
     getUsers (id) {
-      let _this = this
-      axios.get(`${_this.$store.state.configure.HOST}/user/detail?id=${id}`)
-        .then(function (res) {
-          _this.userPic.push(res.data[0].avator)
-          _this.userName.push(res.data[0].username)
+      this.$api.userAPI.getUserOfId(id)
+        .then(res => {
+          this.userPic.push(res.data[0].avator)
+          this.userName.push(res.data[0].username)
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     },
     // 提交评论
     postComment () {
       if (this.loginIn) {
-        // 0 代表歌曲， 1 代表歌单
-        let _this = this
-        var params = new URLSearchParams()
-        if (this.type === 1) {
-          params.append('songListId', _this.id)
-        } else if (this.type === 0) {
-          params.append('songId', _this.id)
-        }
-        params.append('userId', _this.userId)
-        params.append('type', _this.type)
-        params.append('comtent', _this.textarea)
-        axios.post(`${_this.$store.state.configure.HOST}/comment/add`, params)
+        this.$api.commentAPI.setComment(this.type, this.playId, this.userId, this.textarea)
           .then(res => {
-            console.log(res.data)
             if (res.data.code === 1) {
-              _this.textarea = ''
-              _this.getComment()
-              _this.$notify({
-                title: '评论成功',
-                type: 'success'
-              })
+              this.textarea = ''
+              this.getComment()
+              this.notify('评论成功', 'success')
             } else {
-              _this.$notify({
-                title: '评论失败',
-                type: 'error'
-              })
+              this.notify('评论失败', 'error')
             }
           })
-          .catch(failResponse => {})
+          .catch(err => {
+            console.log(err)
+          })
       } else {
-        this.$notify({
-          title: '请先登录',
-          type: 'warning'
-        })
+        this.notify('请先登录', 'warning')
       }
     },
     // 点赞
     postUp (id, up, index) {
       if (this.loginIn) {
-        let _this = this
-        var params = new URLSearchParams()
-        params.append('id', id)
-        params.append('up', up + 1)
-        axios.post(`${_this.$store.state.configure.HOST}/comment/like`, params)
+        this.$api.commentAPI.setLike(id, up)
           .then(res => {
             if (res.data.code === 1) {
-              _this.$refs.up[index].children[0].style.color = '#2796dd'
-              _this.getComment()
+              this.$refs.up[index].children[0].style.color = '#2796dd'
+              this.getComment()
             }
           })
-          .catch(failResponse => {})
+          .catch(err => {
+            console.log(err)
+          })
       } else {
-        this.$notify({
-          title: '请先登录',
-          type: 'warning'
-        })
+        this.notify('请先登录', 'warning')
       }
     }
   }
