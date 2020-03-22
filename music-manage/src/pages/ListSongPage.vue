@@ -106,81 +106,70 @@ export default {
   methods: {
     // 获取歌单
     getData () {
-      let _this = this
-      _this.tableData = []
-      _this.tempDate = []
-      _this.$axios.get(`${_this.$store.state.HOST}/listSong/detail?songListId=${_this.$route.query.id}`)
+      this.tableData = []
+      this.tempDate = []
+      this.$api.getListSongOfSongId(this.$route.query.id)
         .then(res => {
           console.log(res.data)
           for (let item of res.data) {
-            _this.getSong(item.songId)
+            this.getSong(item.songId)
           }
+        })
+        .catch(err => {
+          console.log(err)
         })
     },
     // 获取歌单里对应的音乐
     getSong (id) {
-      let _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/song/detail?id=${id}`)
-        .then(function (res) {
-          _this.tableData.push(res.data[0])
-          _this.tempDate.push(res.data[0])
+      this.$api.getSongOfId(id)
+        .then(res => {
+          this.tableData.push(res.data[0])
+          this.tempDate.push(res.data[0])
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     },
     // 获取要添加歌曲的ID
     getSongId () {
       let _this = this
       var id = _this.registerForm.singerName + '-' + _this.registerForm.songName
-      _this.$axios.get(`${_this.$store.state.HOST}/song/singerName/detail?name=${id}`)
+      this.$api.getSongOfSingerName(id)
         .then(res => {
-          _this.addSong(res.data[0].id)
+          this.addSong(res.data[0].id)
         })
     },
     // 添加歌曲
     addSong (id) {
-      let _this = this
-      let params = new URLSearchParams()
-      params.append('songId', id)
-      params.append('songListId', _this.$route.query.id)
-      _this.$axios.post(`${_this.$store.state.HOST}/ListSong/add`, params)
+      this.$api.setListSong(id, this.$route.query.id)
         .then(res => {
           if (res.data.code === 1) {
-            _this.getData()
-            _this.$notify({
-              title: '添加成功',
-              type: 'success'
-            })
+            this.getData()
+            this.notify('添加成功', 'success')
           } else {
-            _this.$notify({
-              title: '添加失败',
-              type: 'error'
-            })
+            this.notify('添加失败', 'error')
           }
         })
-      _this.centerDialogVisible = false
+        .catch(err => {
+          console.log(err)
+        })
+      this.centerDialogVisible = false
     },
     // 确定删除
     deleteRow () {
-      let _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/ListSong/delete?songId=${_this.idx}`)
+      this.$api.deleteListSong(this.idx)
         .then(res => {
           if (res.data) {
-            _this.getData()
-            _this.$notify({
-              title: '删除成功',
-              type: 'success'
-            })
+            this.getData()
+            this.notify('删除成功', 'success')
           } else {
-            _this.$notify({
-              title: '删除失败',
-              type: 'error'
-            })
+            this.notify('删除失败', 'error')
           }
         })
-        .catch(failResponse => {})
-      _this.delVisible = false
+        .catch(err => {
+          console.log(err)
+        })
+      this.delVisible = false
     }
   }
 }

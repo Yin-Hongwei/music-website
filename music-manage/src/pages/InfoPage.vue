@@ -74,7 +74,10 @@
 </template>
 
 <script>
+import {mixin} from '../mixins'
+
 export default {
+  mixins: [mixin],
   data () {
     return {
       user: [],
@@ -167,11 +170,10 @@ export default {
   },
   methods: {
     getUser () {
-      let _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/user`).then((res) => {
-        _this.userCount = res.data.length
-        _this.userSex.rows[0]['总数'] = _this.setSex(1, res.data)
-        _this.userSex.rows[1]['总数'] = _this.setSex(0, res.data)
+      this.$api.getAllUser().then(res => {
+        this.userCount = res.data.length
+        this.userSex.rows[0]['总数'] = this.setSex(1, res.data)
+        this.userSex.rows[1]['总数'] = this.setSex(0, res.data)
       })
     },
     setSex (sex, arr) {
@@ -199,29 +201,32 @@ export default {
       }
     },
     getSinger () {
-      let _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/singer`).then((res) => {
-        _this.singerCount = res.data.length
-        _this.singerSex.rows[0]['总数'] = _this.setSex(1, res.data)
-        _this.singerSex.rows[1]['总数'] = _this.setSex(0, res.data)
+      this.$api.getAllSinger().then(res => {
+        this.singerCount = res.data.length
+        this.singerSex.rows[0]['总数'] = this.setSex(1, res.data)
+        this.singerSex.rows[1]['总数'] = this.setSex(0, res.data)
         for (let item of res.data) {
           this.getCountry(item.location)
         }
+      }).catch(err => {
+        console.log(err)
       })
     },
     getSong () {
-      let _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/song`).then((res) => {
-        _this.songCount = res.data.length
+      this.$api.getAllSong().then(res => {
+        this.songCount = res.data.length
+      }).catch(err => {
+        console.log(err)
       })
     },
     getSongList () {
-      let _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/songList`).then((res) => {
-        _this.songListCount = res.data.length
+      this.$api.getSongList().then(res => {
+        this.songListCount = res.data.length
         for (let item of res.data) {
           this.getStyle(item.style)
         }
+      }).catch(err => {
+        console.log(err)
       })
     }
   }

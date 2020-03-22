@@ -223,14 +223,15 @@ export default {
   methods: {
     // 拉取数据
     getData () {
-      var _this = this
-      _this.tableData = []
-      _this.tempDate = []
-      _this.$axios.get(`${_this.$store.state.HOST}/song`).then((res) => {
+      this.tableData = []
+      this.tempDate = []
+      this.$api.getAllSong().then((res) => {
         console.log('歌曲信息===========>', res.data)
-        _this.tableData = res.data
-        _this.tempDate = res.data
-        _this.currentPage = 1
+        this.tableData = res.data
+        this.tempDate = res.data
+        this.currentPage = 1
+      }).catch(err => {
+        console.log(err)
       })
     },
     setSongUrl (url) {
@@ -268,34 +269,23 @@ export default {
     },
     // 添加音乐
     getSingerName () {
-      let _this = this
       let value = document.getElementById('singerName').value
-      _this.$axios.get(`${_this.$store.state.HOST}/singer/name/detail?name=${value}`).then(function (res) {
+      this.$api.getSingerOfName(value).then(res => {
         if (!res.data.length) {
-          _this.$notify({
-            title: '系统暂无该该歌手',
-            type: 'warning'
-          })
+          this.notify('系统暂无该该歌手', 'warning')
         } else {
-          _this.addSong(res.data[0].id)
+          this.addSong(res.data[0].id)
         }
-      }).catch(function (error) {
-        console.log(error)
+      }).catch(err => {
+        console.log(err)
       })
     },
     handleSongSuccess (res, file) {
-      let _this = this
       if (res.code === 1) {
-        _this.getData()
-        _this.$notify({
-          title: '上传成功',
-          type: 'success'
-        })
+        this.getData()
+        this.notify('上传成功', 'success')
       } else {
-        _this.$notify({
-          title: '上传失败',
-          type: 'error'
-        })
+        this.notify('上传失败', 'error')
       }
     },
     addSong (id) {
@@ -309,15 +299,9 @@ export default {
           if (res.code) {
             _this.getData()
             _this.registerForm = {}
-            _this.$notify({
-              title: res.msg,
-              type: 'success'
-            })
+            _this.notify(res.msg, 'success')
           } else if (!res.code) {
-            _this.$notify({
-              title: '上传失败',
-              type: 'error'
-            })
+            _this.notify('上传失败', 'error')
           }
         }
       }
@@ -345,50 +329,41 @@ export default {
     },
     // 保存编辑
     saveEdit () {
-      var params = new URLSearchParams()
-      params.append('id', this.form.id)
-      params.append('singerId', this.form.singerId)
-      params.append('name', this.form.name)
-      params.append('introduction', this.form.introduction)
-      params.append('lyric', this.form.lyric)
-      this.$axios.post(`${this.$store.state.HOST}/song/update`, params)
-        .then(response => {
-          if (response.data) {
+      this.$api.updateSongMsg(
+        this.form.id,
+        this.form.singerId,
+        this.form.name,
+        this.form.introduction,
+        this.form.lyric
+      )
+        .then(res => {
+          if (res.data) {
             this.getData()
-            this.$notify({
-              title: '编辑成功',
-              type: 'success'
-            })
+            this.notify('编辑成功', 'success')
           } else {
-            this.$notify({
-              title: '编辑失败',
-              type: 'error'
-            })
+            this.notify('编辑失败', 'error')
           }
         })
-        .catch(failResponse => {})
+        .catch(err => {
+          console.log(err)
+        })
       this.editVisible = false
     },
     // 确定删除
     deleteRow () {
-      var _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/song/delete?id=${_this.idx}`)
+      this.$api.deleteSong(this.idx)
         .then(response => {
           if (response.data) {
-            _this.getData()
-            _this.$notify({
-              title: '删除成功',
-              type: 'success'
-            })
+            this.getData()
+            this.notify('删除成功', 'success')
           } else {
-            _this.$notify({
-              title: '删除失败',
-              type: 'error'
-            })
+            this.notify('删除失败', 'error')
           }
         })
-        .catch(failResponse => {})
-      _this.delVisible = false
+        .catch(err => {
+          console.log(err)
+        })
+      this.delVisible = false
     },
     parseLyric (text) {
       let lines = text.split('\n')

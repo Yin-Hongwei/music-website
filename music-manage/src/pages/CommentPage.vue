@@ -101,32 +101,30 @@ export default {
   },
   methods: {
     getData () {
-      var _this = this
-      _this.tableData = []
-      _this.tempDate = []
-      let url = ''
-      if (_this.$route.query.type === 0) {
-        url = `${_this.$store.state.HOST}/comment/song/detail?songId=`
-      } else if (_this.$route.query.type === 1) {
-        url = `${_this.$store.state.HOST}/comment/songList/detail?songListId=`
+      this.tableData = []
+      this.tempDate = []
+      let promise
+      if (this.$route.query.type === 0) {
+        promise = this.$api.getCommentOfSongId(this.$route.query.id)
+      } else if (this.$route.query.type === 1) {
+        promise = this.$api.getCommentOfSongListId(this.$route.query.id)
       }
-      _this.$axios.get(url + _this.$route.query.id).then(res => {
+      promise.then(res => {
         for (let item of res.data) {
-          _this.getUsers(item.userId, item)
+          this.getUsers(item.userId, item)
         }
       })
     },
     getUsers (id, item) {
-      let _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/user/detail?id=${id}`)
-        .then(function (res) {
+      this.$api.getUserOfId(id)
+        .then(res => {
           let o = item
           o.name = res.data[0].username
-          _this.tableData.push(o)
-          _this.tempDate.push(o)
+          this.tableData.push(o)
+          this.tempDate.push(o)
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     },
     handleEdit (row) {
@@ -144,60 +142,43 @@ export default {
     },
     // 保存编辑
     saveEdit () {
-      var params = new URLSearchParams()
-      params.append('d', this.form.id)
-      params.append('userId', this.form.userId)
-      if (this.form.songId === null) {
-        params.append('songId', '')
-      } else {
-        params.append('songId', this.form.songId)
-      }
-      if (this.form.songListId === null) {
-        params.append('songListId', '')
-      } else {
-        params.append('songListId', this.form.songListId)
-      }
-      params.append('content', this.form.content)
-      params.append('type', this.form.type)
-      params.append('up', this.form.up)
-      this.$axios.post(`${this.$store.state.HOST}/comment/update`, params)
+      this.$api.updateCommentMsg(
+        this.form.id,
+        this.form.userId,
+        this.form.songId,
+        this.form.songListId,
+        this.form.content,
+        this.form.type,
+        this.form.up
+      )
         .then(res => {
           if (res.data.code === 1) {
             this.getData()
-            this.$notify({
-              title: '编辑成功',
-              type: 'success'
-            })
+            this.notify('编辑成功', 'success')
           } else {
-            this.$notify({
-              title: '编辑失败',
-              type: 'error'
-            })
+            this.notify('编辑失败', 'error')
           }
         })
-        .catch(failResponse => {})
+        .catch(err => {
+          console.log(err)
+        })
       this.editVisible = false
     },
     // 确定删除
     deleteRow () {
-      var _this = this
-      _this.$axios.get(`${_this.$store.state.HOST}/comment/delete?id=${_this.idx}`)
+      this.$api.deleteComment(this.idx)
         .then(res => {
           if (res.data) {
-            _this.getData()
-            _this.$notify({
-              title: '删除成功',
-              type: 'success'
-            })
+            this.getData()
+            this.notify('删除成功', 'success')
           } else {
-            _this.$notify({
-              title: '删除失败',
-              type: 'error'
-            })
+            this.notify('删除失败', 'error')
           }
         })
-        .catch(failResponse => {})
-      _this.delVisible = false
+        .catch(err => {
+          console.log(err)
+        })
+      this.delVisible = false
     }
   }
 }
