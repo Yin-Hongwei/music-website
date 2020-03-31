@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     submitForm () {
-      this.$api.getLoginStatus(this.ruleForm.username, this.ruleForm.password)
+      this.$api.adminAPI.getLoginStatus(this.ruleForm.username, this.ruleForm.password)
         .then(res => {
           if (res.data.code === 1) {
             this.$router.push('/Info')

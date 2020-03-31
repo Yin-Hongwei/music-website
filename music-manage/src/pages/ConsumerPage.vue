@@ -357,7 +357,7 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      this.$api.getAllUser().then((res) => {
+      this.$api.userAPI.getAllUser().then((res) => {
         this.tableData = res.data
         this.tempDate = res.data
         this.currentPage = 1
@@ -438,7 +438,7 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      this.$api.deleteUser(this.idx)
+      this.$api.userAPI.deleteUser(this.idx)
         .then(res => {
           if (res.data) {
             this.getData()

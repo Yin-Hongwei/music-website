@@ -225,7 +225,7 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      this.$api.getAllSong().then((res) => {
+      this.$api.songAPI.getAllSong().then((res) => {
         console.log('歌曲信息===========>', res.data)
         this.tableData = res.data
         this.tempDate = res.data
@@ -270,7 +270,7 @@ export default {
     // 添加音乐
     getSingerName () {
       let value = document.getElementById('singerName').value
-      this.$api.getSingerOfName(value).then(res => {
+      this.$api.singerAPI.getSingerOfName(value).then(res => {
         if (!res.data.length) {
           this.notify('系统暂无该该歌手', 'warning')
         } else {
@@ -329,7 +329,7 @@ export default {
     },
     // 保存编辑
     saveEdit () {
-      this.$api.updateSongMsg(
+      this.$api.songAPI.updateSongMsg(
         this.form.id,
         this.form.singerId,
         this.form.name,
@@ -351,7 +351,7 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      this.$api.deleteSong(this.idx)
+      this.$api.songAPI.deleteSong(this.idx)
         .then(response => {
           if (response.data) {
             this.getData()
@@ -398,7 +398,8 @@ export default {
     z-index: 100;
     width: 80px;
     height: 80px;
-    top: 20px;
+    top: 18px;
+    left: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
