@@ -178,7 +178,7 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      this.$api.getSongList().then((res) => {
+      this.$api.songListAPI.getSongList().then((res) => {
         this.tableData = res.data
         this.tempDate = res.data
         this.currentPage = 1
@@ -207,7 +207,7 @@ export default {
     },
     // 保存编辑
     saveEdit () {
-      this.$api.updateSongListMsg(
+      this.$api.songListAPI.updateSongListMsg(
         this.form.id,
         this.form.title,
         this.form.pic,
@@ -229,7 +229,7 @@ export default {
     },
     // 添加歌单
     addsongList () {
-      this.$api.setSongList(
+      this.$api.songListAPI.setSongList(
         this.registerForm.title,
         '/img/songListPic/123.jpg',
         this.registerForm.introduction,
@@ -249,7 +249,7 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      this.$api.deleteSongList(this.idx)
+      this.$api.songListAPI.deleteSongList(this.idx)
         .then(res => {
           if (res.data) {
             this.getData()

@@ -207,7 +207,7 @@ export default {
     addsinger () {
       let d = this.registerForm.birth
       var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      this.$api.setSinger(
+      this.$api.singerAPI.setSinger(
         this.registerForm.name,
         this.registerForm.sex,
         '/img/singerPic/hhh.jpg',
@@ -232,7 +232,7 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      this.$api.getAllSinger().then(res => {
+      this.$api.singerAPI.getAllSinger().then(res => {
         this.tableData = res.data
         this.tempDate = res.data
         this.currentPage = 1
@@ -256,7 +256,7 @@ export default {
     saveEdit () {
       let d = new Date(this.form.birth)
       let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      this.$api.updateSingerMsg(
+      this.$api.singerAPI.updateSingerMsg(
         this.form.id,
         this.form.name,
         this.form.sex,
@@ -280,7 +280,7 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      this.$api.deleteSinger(this.idx)
+      this.$api.singerAPI.deleteSinger(this.idx)
         .then(res => {
           if (res.data) {
             this.getData()

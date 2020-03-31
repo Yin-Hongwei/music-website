@@ -170,7 +170,7 @@ export default {
   },
   methods: {
     getUser () {
-      this.$api.getAllUser().then(res => {
+      this.$api.userAPI.getAllUser().then(res => {
         this.userCount = res.data.length
         this.userSex.rows[0]['总数'] = this.setSex(1, res.data)
         this.userSex.rows[1]['总数'] = this.setSex(0, res.data)
@@ -201,7 +201,7 @@ export default {
       }
     },
     getSinger () {
-      this.$api.getAllSinger().then(res => {
+      this.$api.singerAPI.getAllSinger().then(res => {
         this.singerCount = res.data.length
         this.singerSex.rows[0]['总数'] = this.setSex(1, res.data)
         this.singerSex.rows[1]['总数'] = this.setSex(0, res.data)
@@ -213,14 +213,14 @@ export default {
       })
     },
     getSong () {
-      this.$api.getAllSong().then(res => {
+      this.$api.songAPI.getAllSong().then(res => {
         this.songCount = res.data.length
       }).catch(err => {
         console.log(err)
       })
     },
     getSongList () {
-      this.$api.getSongList().then(res => {
+      this.$api.songListAPI.getSongList().then(res => {
         this.songListCount = res.data.length
         for (let item of res.data) {
           this.getStyle(item.style)

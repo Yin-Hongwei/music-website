@@ -108,7 +108,7 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      this.$api.getListSongOfSongId(this.$route.query.id)
+      this.$api.listSongAPI.getListSongOfSongId(this.$route.query.id)
         .then(res => {
           console.log(res.data)
           for (let item of res.data) {
@@ -121,7 +121,7 @@ export default {
     },
     // 获取歌单里对应的音乐
     getSong (id) {
-      this.$api.getSongOfId(id)
+      this.$api.songAPI.getSongOfId(id)
         .then(res => {
           this.tableData.push(res.data[0])
           this.tempDate.push(res.data[0])
@@ -134,14 +134,14 @@ export default {
     getSongId () {
       let _this = this
       var id = _this.registerForm.singerName + '-' + _this.registerForm.songName
-      this.$api.getSongOfSingerName(id)
+      this.$api.songAPI.getSongOfSingerName(id)
         .then(res => {
           this.addSong(res.data[0].id)
         })
     },
     // 添加歌曲
     addSong (id) {
-      this.$api.setListSong(id, this.$route.query.id)
+      this.$api.listSongAPI.setListSong(id, this.$route.query.id)
         .then(res => {
           if (res.data.code === 1) {
             this.getData()
@@ -157,7 +157,7 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      this.$api.deleteListSong(this.idx)
+      this.$api.listSongAPI.deleteListSong(this.idx)
         .then(res => {
           if (res.data) {
             this.getData()

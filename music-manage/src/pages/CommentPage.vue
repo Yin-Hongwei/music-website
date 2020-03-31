@@ -105,9 +105,9 @@ export default {
       this.tempDate = []
       let promise
       if (this.$route.query.type === 0) {
-        promise = this.$api.getCommentOfSongId(this.$route.query.id)
+        promise = this.$api.commentAPI.getCommentOfSongId(this.$route.query.id)
       } else if (this.$route.query.type === 1) {
-        promise = this.$api.getCommentOfSongListId(this.$route.query.id)
+        promise = this.$api.commentAPI.getCommentOfSongListId(this.$route.query.id)
       }
       promise.then(res => {
         for (let item of res.data) {
@@ -116,7 +116,7 @@ export default {
       })
     },
     getUsers (id, item) {
-      this.$api.getUserOfId(id)
+      this.$api.userAPI.getUserOfId(id)
         .then(res => {
           let o = item
           o.name = res.data[0].username
@@ -142,7 +142,7 @@ export default {
     },
     // 保存编辑
     saveEdit () {
-      this.$api.updateCommentMsg(
+      this.$api.commentAPI.updateCommentMsg(
         this.form.id,
         this.form.userId,
         this.form.songId,
@@ -166,7 +166,7 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      this.$api.deleteComment(this.idx)
+      this.$api.commentAPI.deleteComment(this.idx)
         .then(res => {
           if (res.data) {
             this.getData()

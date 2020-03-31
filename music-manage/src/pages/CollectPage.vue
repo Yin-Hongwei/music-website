@@ -80,7 +80,7 @@ export default {
   methods: {
     // 通过用户id获取用户收藏的歌曲id
     getData () {
-      this.$api.getCollectionOfUser(this.$route.query.id)
+      this.$api.collectionAPI.getCollectionOfUser(this.$route.query.id)
         .then(res => {
           this.tableData = []
           for (let item of res.data) {
@@ -93,7 +93,7 @@ export default {
     },
     // 通过歌曲ID获取歌曲
     getSongList (id) {
-      this.$api.getSongOfId(id)
+      this.$api.songAPI.getSongOfId(id)
         .then(res => {
           this.tableData.push(res.data[0])
           this.tempDate.push(res.data[0])
@@ -104,7 +104,7 @@ export default {
     },
     // 删除一首歌曲
     deleteRow () {
-      this.$api.deleteCollection(this.idx)
+      this.$api.collectionAPI.deleteCollection(this.idx)
         .then(res => {
           if (res.data) {
             this.getData()
