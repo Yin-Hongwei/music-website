@@ -53,6 +53,7 @@ public class SongController {
     public Object addSong(HttpServletRequest req, @RequestParam("file") MultipartFile mpfile){
         JSONObject jsonObject = new JSONObject();
         String singer_id = req.getParameter("singerId").trim();
+        String singer_name = req.getParameter("singerName").trim();
         String name = req.getParameter("name").trim();
         String introduction = req.getParameter("introduction").trim();
         String pic = "/img/songPic/tubiao.jpg";
@@ -76,7 +77,7 @@ public class SongController {
             mpfile.transferTo(dest);
             Song song = new Song();
             song.setSingerId(Integer.parseInt(singer_id));
-            song.setName(name);
+            song.setName(singer_name + "-" + name);
             song.setIntroduction(introduction);
             song.setCreateTime(new Date());
             song.setUpdateTime(new Date());
