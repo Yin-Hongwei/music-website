@@ -97,8 +97,8 @@
                     </div>
                 </div>
                 <div>
-                    <label>歌曲介绍</label>
-                    <el-input type="textarea" value="" name="introduction"></el-input>
+                    <label>专辑</label>
+                    <el-input type="text" value="" name="introduction"></el-input>
                 </div>
                 <div>
                     <label>歌词</label>
