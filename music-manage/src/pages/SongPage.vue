@@ -84,7 +84,7 @@
 
         <!--添加歌曲-->
         <el-dialog title="添加歌曲" :visible.sync="centerDialogVisible" width="400px" center>
-            <form action="" id="tf">
+            <el-form action="" :model="registerForm" id="tf">
                 <div style="display: flex; justify-content: space-around;">
                     <div style="width:48%">
                         <label>歌手</label>
@@ -109,7 +109,7 @@
                     <br>
                     <input type="file" name="file" id="upadte-file-input">
                 </div>
-            </form>
+            </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="centerDialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="getSingerName">确 定</el-button>
@@ -292,6 +292,9 @@ export default {
       let _this = this
       var form = new FormData(document.getElementById('tf'))
       form.append('singerId', id)
+      if (!form.get('lyric')) {
+        form.set('lyric', '[00:00:00]暂无歌词')
+      }
       var req = new XMLHttpRequest()
       req.onreadystatechange = function () {
         if (req.readyState === 4 && req.status === 200) {
