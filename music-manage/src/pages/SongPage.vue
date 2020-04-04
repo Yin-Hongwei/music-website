@@ -1,149 +1,150 @@
 <template>
-    <div class="table">
-        <div class="container">
-            <div class="handle-box">
-                <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
-                <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-                <el-button type="primary" @click="centerDialogVisible = true">添加歌曲</el-button>
-            </div>
-            <el-table :data="data" stripe border style="width: 100%" ref="multipleTable" height="500px" @selection-change="handleSelectionChange">
-                <el-table-column type="selection" width="40"></el-table-column>
-                <el-table-column label="歌手图片" width="110" align="center">
-                    <template slot-scope="scope">
-                        <img :src="getUrl(scope.row.pic)" alt="" style="width: 80px;"/>
-                        <div class="play" @click="setSongUrl(scope.row.url)">
-                            <div v-if="toggle !== scope.row.url">
-                              <svg class="icon" aria-hidden="true">
-                                <use xlink:href="#icon-bofanganniu"></use>
-                              </svg>
-                            </div>
-                            <div v-if="toggle === scope.row.url">
-                              <svg class="icon" aria-hidden="true">
-                                <use xlink:href="#icon-zanting"></use>
-                              </svg>
-                            </div>
-                        </div>
-                    </template>
-                </el-table-column>
-                <el-table-column label="歌名" prop="name" width="150" align="center"></el-table-column>
-                <el-table-column label="专辑" prop="introduction" width="150" align="center"></el-table-column>
-                <el-table-column label="歌词" align="center">
-                    <template slot-scope="scope">
-                        <ul style="height: 100px; overflow: scroll">
-                            <li>
-                            <li v-for="(item, index) in parseLyric(scope.row.lyric)" :key="index">
-                                {{ item}}
-                            </li>
-                        </ul>
-                    </template>
-                </el-table-column>
-                <el-table-column label="歌曲预览" width="100" align="center">
-                    <template slot-scope="scope">
-                        <el-upload
-                            class="upload-demo"
-                            :action="uploadUrl(scope.row.id)"
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                            <el-button size="small" type="primary">更新图片</el-button>
-                        </el-upload>
-                      <br>
-                        <el-upload
-                            class="upload-demo change"
-                            :action="uploadSongUrl(scope.row.id)"
-                            :show-file-list="false"
-                            :on-success="handleSongSuccess"
-                            :before-upload="beforeSongUpload">
-                            <el-button size="small" type="primary">更新歌曲</el-button>
-                        </el-upload>
-                    </template>
-                </el-table-column>
-                <el-table-column label="评论" width="80" align="center">
-                    <template  slot-scope="scope">
-                        <el-button size="mini" @click="getComment(data[scope.$index].id)">评论</el-button>
-                    </template>
-                </el-table-column>
-                <el-table-column label="操作" width="150" align="center">
-                    <template slot-scope="scope">
-                        <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-                        <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-          <div class="pagination">
-            <el-pagination
-              @current-change="handleCurrentChange"
-              background
-              layout="total, prev, pager, next"
-              :current-page="currentPage"
-              :page-size="pageSize"
-              :total="tableData.length">
-            </el-pagination>
-          </div>
-        </div>
-
-        <!--添加歌曲-->
-        <el-dialog title="添加歌曲" :visible.sync="centerDialogVisible" width="400px" center>
-            <el-form action="" :model="registerForm" id="tf">
-                <div style="display: flex; justify-content: space-around;">
-                    <div style="width:48%">
-                        <label>歌手</label>
-                        <el-input type="text" name="singerName" id="singerName"></el-input>
-                    </div>
-                    <div style="line-height: 80px">-</div>
-                    <div style="width:48%">
-                        <label>歌曲名</label>
-                        <el-input type="text" name="name"></el-input>
-                    </div>
-                </div>
-                <div>
-                    <label>专辑</label>
-                    <el-input type="text" value="" name="introduction"></el-input>
-                </div>
-                <div>
-                    <label>歌词</label>
-                    <el-input type="textarea" value="" name="lyric"></el-input>
-                </div>
-                <div>
-                    <label>歌曲上传</label>
-                    <br>
-                    <input type="file" name="file" id="upadte-file-input">
-                </div>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="centerDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="getSingerName">确 定</el-button>
-            </span>
-        </el-dialog>
-
-        <!-- 编辑弹出框 -->
-        <el-dialog title="编辑" :visible.sync="editVisible" width="400px">
-            <el-form ref="form" :model="form" label-width="80px">
-                <el-form-item label="歌手-歌曲">
-                    <el-input v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item label="简介">
-                    <el-input v-model="form.introduction"></el-input>
-                </el-form-item>
-                <el-form-item label="歌词">
-                    <el-input  type="textarea" v-model="form.lyric"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="editVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveEdit">确 定</el-button>
-            </span>
-        </el-dialog>
-
-        <!-- 删除提示框 -->
-        <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-            <div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="delVisible = false">取 消</el-button>
-                <el-button type="primary" @click="deleteRow">确 定</el-button>
-            </span>
-        </el-dialog>
+  <div class="table">
+    <div class="crumbs">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item>
+          <i class="el-icon-tickets"></i> 歌曲信息
+        </el-breadcrumb-item>
+      </el-breadcrumb>
     </div>
+    <div class="container">
+      <div class="handle-box">
+        <el-button type="primary" size="mini" class="handle-del mr10" @click="delAll">批量删除</el-button>
+        <el-input v-model="select_word" size="mini" placeholder="筛选关键词" class="handle-input mr10"></el-input>
+        <el-button type="primary" size="mini" @click="centerDialogVisible = true">添加歌曲</el-button>
+      </div>
+      <el-table :data="data" size="mini" border style="width: 100%" ref="multipleTable" height="550px" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="40"></el-table-column>
+        <el-table-column label="歌手图片" width="110" align="center">
+          <template slot-scope="scope">
+            <img :src="getUrl(scope.row.pic)" alt="" style="width: 80px;"/>
+            <div class="play" @click="setSongUrl(scope.row.url, scope.row.name)">
+              <div v-if="toggle !== scope.row.name">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-bofanganniu"></use>
+                </svg>
+              </div>
+              <div v-if="toggle === scope.row.name">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-zanting"></use>
+                </svg>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="歌名" prop="name" width="150" align="center"></el-table-column>
+        <el-table-column label="专辑" prop="introduction" width="150" align="center"></el-table-column>
+        <el-table-column label="歌词" align="center">
+          <template slot-scope="scope">
+            <ul style="height: 100px; overflow: scroll">
+              <li>
+              <li v-for="(item, index) in parseLyric(scope.row.lyric)" :key="index">
+                {{ item}}
+              </li>
+            </ul>
+          </template>
+        </el-table-column>
+        <el-table-column label="资源更新" width="100" align="center">
+          <template slot-scope="scope">
+            <el-upload
+              class="upload-demo"
+              :action="uploadUrl(scope.row.id)"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+              >
+                <el-button size="mini">更新图片</el-button>
+            </el-upload>
+            <br>
+            <el-upload
+              class="upload-demo change"
+              :action="uploadSongUrl(scope.row.id)"
+              :show-file-list="false"
+              :on-success="handleSongSuccess"
+              :before-upload="beforeSongUpload">
+              <el-button size="mini">更新歌曲</el-button>
+            </el-upload>
+          </template>
+        </el-table-column>
+        <el-table-column label="评论" width="80" align="center">
+            <template  slot-scope="scope">
+                <el-button size="mini" @click="getComment(data[scope.$index].id)">评论</el-button>
+            </template>
+        </el-table-column>
+        <el-table-column label="操作" width="150" align="center">
+            <template slot-scope="scope">
+                <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+                <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+            </template>
+        </el-table-column>
+      </el-table>
+      <div class="pagination">
+        <el-pagination
+          @current-change="handleCurrentChange"
+          background
+          layout="total, prev, pager, next"
+          :current-page="currentPage"
+          :page-size="pageSize"
+          :total="tableData.length">
+        </el-pagination>
+      </div>
+    </div>
+
+    <!--添加歌曲-->
+    <el-dialog title="添加歌曲" :visible.sync="centerDialogVisible" width="400px" center>
+      <el-form action="" :model="registerForm" id="tf">
+        <div>
+          <label>歌曲名</label>
+          <el-input type="text" name="name"></el-input>
+        </div>
+        <div>
+          <label>专辑</label>
+          <el-input type="text" value="" name="introduction"></el-input>
+        </div>
+        <div>
+          <label>歌词</label>
+          <el-input type="textarea" value="" name="lyric"></el-input>
+        </div>
+        <div>
+          <label>歌曲上传</label>
+          <br>
+          <input type="file" name="file" id="upadte-file-input">
+        </div>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addSong">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 编辑弹出框 -->
+    <el-dialog title="编辑" :visible.sync="editVisible" width="400px">
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="歌手-歌曲" size="mini">
+          <el-input v-model="form.name"></el-input>
+        </el-form-item>
+        <el-form-item label="简介" size="mini">
+          <el-input v-model="form.introduction"></el-input>
+        </el-form-item>
+        <el-form-item label="歌词" size="mini">
+          <el-input  type="textarea" v-model="form.lyric"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="editVisible = false">取 消</el-button>
+        <el-button type="primary" size="mini" @click="saveEdit">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 删除提示框 -->
+    <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
+      <div class="del-dialog-cnt" align="center">删除不可恢复，是否确定删除？</div>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="delVisible = false">取 消</el-button>
+        <el-button type="primary" size="mini" @click="deleteRow">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -160,7 +161,9 @@ export default {
   mixins: [mixin],
   data () {
     return {
-      toggle: false,
+      toggle: false, // 控制播放图标状态
+      singerId: '',
+      singerName: '',
       registerForm: {
         name: '',
         singerName: '',
@@ -215,18 +218,20 @@ export default {
     }
   },
   created () {
+    this.singerId = this.$route.query.id
+    this.singerName = this.$route.query.name
     this.getData()
   },
   destroyed () {
     this.$store.commit('setIsPlay', false)
   },
   methods: {
-    // 拉取数据
+    // 获取歌曲
     getData () {
       this.tableData = []
       this.tempDate = []
-      this.$api.songAPI.getAllSong().then((res) => {
-        console.log('歌曲信息===========>', res.data)
+      this.$api.songAPI.getSongOfSingerId(this.singerId).then((res) => {
+        console.log('歌手作品===========>', res.data)
         this.tableData = res.data
         this.tempDate = res.data
         this.currentPage = 1
@@ -234,14 +239,13 @@ export default {
         console.log(err)
       })
     },
-    setSongUrl (url) {
+    setSongUrl (url, name) {
       this.$store.commit('setUrl', this.$store.state.HOST + url)
+      this.toggle = name
       if (this.isPlay) {
         this.$store.commit('setIsPlay', false)
-        this.toggle = ''
       } else {
         this.$store.commit('setIsPlay', true)
-        this.toggle = url
       }
     },
     // 更新歌曲图片
@@ -267,19 +271,6 @@ export default {
     handleCurrentChange (val) {
       this.currentPage = val
     },
-    // 添加音乐
-    getSingerName () {
-      let value = document.getElementById('singerName').value
-      this.$api.singerAPI.getSingerOfName(value).then(res => {
-        if (!res.data.length) {
-          this.notify('系统暂无该该歌手', 'warning')
-        } else {
-          this.addSong(res.data[0].id)
-        }
-      }).catch(err => {
-        console.log(err)
-      })
-    },
     handleSongSuccess (res, file) {
       if (res.code === 1) {
         this.getData()
@@ -288,10 +279,12 @@ export default {
         this.notify('上传失败', 'error')
       }
     },
-    addSong (id) {
+    // 添加音乐
+    addSong () {
       let _this = this
       var form = new FormData(document.getElementById('tf'))
-      form.append('singerId', id)
+      form.append('singerId', this.singerId)
+      form.set('name', this.singerName + '-' + form.get('name'))
       if (!form.get('lyric')) {
         form.set('lyric', '[00:00:00]暂无歌词')
       }
@@ -312,6 +305,7 @@ export default {
       req.send(form)
       _this.centerDialogVisible = false
     },
+    // 编辑
     handleEdit (row) {
       this.idx = row.id
       this.form = {
@@ -368,10 +362,16 @@ export default {
         })
       this.delVisible = false
     },
+    // 解析歌词
     parseLyric (text) {
       let lines = text.split('\n')
       let pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g
       let result = []
+
+      // 对于歌词格式不对的特殊处理
+      if (!(/\[.+\]/.test(text))) {
+        return [text]
+      }
       for (let item of lines) {
         if (pattern.test(item)) {
           let value = item.replace(pattern, '') // 存歌词

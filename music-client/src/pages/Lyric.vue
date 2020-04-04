@@ -51,6 +51,7 @@ export default {
   watch: {
     id: function () {
       this.lyr = this.parseLyric(this.listOfSongs[this.listIndex].lyric)
+      console.log('lyr ===>', this.lyr[1])
     },
     // 播放时间的开始和结束
     curTime: function () {
@@ -110,9 +111,9 @@ export default {
   line-height: 40px;
 }
 .no-lyric {
-  /* margin: 200px 0;
+  margin: 200px 0;
   width: 100%;
-  text-align: center; */
+  text-align: center;
 }
 .no-lrc {
   font-size: 30px;

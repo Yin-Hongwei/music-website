@@ -38,15 +38,15 @@
 
 ![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hhhu4n7tj31c00u04qq.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/00831rSTly1gcu22b795vj31c00u0qbf.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gdie7r340pj31c00u0wmo.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/00831rSTly1gd387588m9j31c00u0wte.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gdie89mujrj31c00u07kx.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/00831rSTly1gd3890so5wj31c00u0k6w.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gdie8sox6uj31c00u01gb.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/00831rSTly1gd3897mblvj31c00u0h6c.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gdie9beckpj31c00u0qh9.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/00831rSTly1gd389f4en6j31c00u0k8h.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gdie9qq7yhj31c00u0ttq.jpg)<br/>
 
 ## 功能
 
@@ -67,11 +67,11 @@
 
 #### 后端
 
-spring boot + MyBatis
+SpringBoot + MyBatis
 
 #### 前端
 
-vue + vue-router + vuex + axios +  element-ui
+Vue + Vue-Router + Vuex + Axios +  ElementUI
 
 <br/>
 
@@ -90,7 +90,7 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 #### 3、修改
 1）数据库：将sql文件夹中的 tp_music.sql 文件导入数据库。（mysql 版本不能低于5.7）
 
-2）music-server：启动后端服务之前，有一些地方需要修改，先去 /music-website/music-server/src/main/resources 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password，并且修改下圈出来的的文件中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。（Mac 和 win 下路径有些差异，我的是Mac上的路径，win 上 需要在 file:后标明是哪个盘，例如："file:C:/user/XXX"）
+2）music-server：启动后端服务之前，有一些地方需要修改，先去 /music-website/music-server/src/main/resources 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password，并且修改下圈出来的的文件中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。（Mac 和 win 下路径有些差异，我的是 Mac 上的路径，win 上需要在 file: 后标明是哪个盘，例如："file:C:\\\user\\\XXX\\\\"）
 
 ![](https://tva1.sinaimg.cn/large/00831rSTly1gd38cq6yhrj31zk0juk02.jpg)
 

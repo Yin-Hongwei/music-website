@@ -7,6 +7,16 @@ export default {
   getAllSong () {
     return axios.get(`${host}/song`)
   },
+
+  /**
+   * @msg: 返回指定歌手ID的歌曲
+   * @param {Number} id
+   * @return: {Promise}
+   */
+  getSongOfSingerId (id) {
+    return axios.get(`${host}/song/singer/detail?singerId=${id}`)
+  },
+
   // 返回的指定用户ID收藏列表
   getSongOfId (id) {
     return axios.get(`${host}/song/detail?id=${id}`)

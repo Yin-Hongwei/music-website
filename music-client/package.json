@@ -16,8 +16,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.4.11",
-    "vue": "^2.5.2",
-    "vue-router": "^3.0.1",
+    "vue": "^2.6.11",
+    "vue-router": "^3.0.7",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -71,6 +71,7 @@
     "url-loader": "^0.5.8",
     "vue-jest": "^1.0.2",
     "vue-loader": "^13.3.0",
+    "vue-router": "^3.0.7",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",

@@ -41,6 +41,11 @@ export const mixin = {
       let pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g
       let result = []
 
+      // 对于歌词格式不对的特殊处理
+      if (!(/\[.+\]/.test(text))) {
+        return [[0, text]]
+      }
+
       while (!pattern.test(lines[0])) {
         lines = lines.slice(1)
       }

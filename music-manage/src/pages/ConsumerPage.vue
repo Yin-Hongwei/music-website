@@ -1,151 +1,151 @@
 <template>
-    <div class="table">
-        <div class="container">
-          <div class="handle-box">
-                <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
-                <el-input v-model="select_word" placeholder="筛选相关用户" class="handle-input mr10"></el-input>
-                <el-button type="primary" @click="centerDialogVisible = true">添加新用户</el-button>
-            </div>
-          <el-table :data="data" border stripe style="width: 100%" ref="multipleTable" height="500px" @selection-change="handleSelectionChange">
-                <el-table-column type="selection" width="40" align="center"></el-table-column>
-                <el-table-column label="歌手图片" width="102" align="center">
-                    <template slot-scope="scope">
-                        <img :src="getUrl(scope.row.avator)" alt="" style="width: 80px;"/>
-                        <el-upload
-                            class="upload-demo"
-                            :action="uploadUrl(scope.row.id)"
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                            <el-button size="small" type="primary">更新图片</el-button>
-                        </el-upload>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="username" label="用户名" width="80" align="center"></el-table-column>
-                <el-table-column prop="password" label="密码" width="80" align="center"></el-table-column>
-                <el-table-column label="性别" width="50" align="center">
-                    <template slot-scope="scope">
-                        <div>{{changeSex(scope.row.sex) }}</div>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="phoneNum" label="手机号码" width="120" align="center"></el-table-column>
-                <el-table-column prop="email" label="邮箱" width="120" align="center"></el-table-column>
-                <el-table-column label="生日" width="120" align="center">
-                    <template slot-scope="scope">
-                        <div>{{attachBirth(scope.row.birth) }}</div>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="introduction" label="签名" align="center"></el-table-column>
-                <el-table-column prop="location" label="地区" width="80" align="center"></el-table-column>
-                <el-table-column label="收藏" width="80" align="center">
-                    <template  slot-scope="scope">
-                        <el-button size="mini" @click="getCollect(data[scope.$index].id)">收藏</el-button>
-                    </template>
-                </el-table-column>
-                <el-table-column label="操作" width="150" align="center">
-                    <template slot-scope="scope">
-                        <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-                        <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-          <div class="pagination">
-            <el-pagination
-              @current-change="handleCurrentChange"
-              background
-              layout="total, prev, pager, next"
-              :current-page="currentPage"
-              :page-size="pageSize"
-              :total="tableData.length">
-            </el-pagination>
-          </div>
-        </div>
-
-        <!--添加新用户-->
-        <el-dialog title="添加用户" :visible.sync="centerDialogVisible" width="400px" center>
-            <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="70px" class="demo-ruleForm">
-                <el-form-item prop="username" label="用户名">
-                    <el-input v-model="registerForm.username" placeholder="用户名"></el-input>
-                </el-form-item>
-                <el-form-item prop="password" label="密码">
-                    <el-input type="password" placeholder="密码" v-model="registerForm.password"></el-input>
-                </el-form-item>
-                <el-form-item label="性别">
-                    <el-radio-group v-model="registerForm.sex">
-                        <el-radio :label="0">女</el-radio>
-                        <el-radio :label="1">男</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item prop="phoneNum" label="手机" >
-                    <el-input  placeholder="手机" v-model="registerForm.phoneNum"></el-input>
-                </el-form-item>
-                <el-form-item prop="email" label="邮箱">
-                    <el-input v-model="registerForm.email" placeholder="邮箱"></el-input>
-                </el-form-item>
-                <el-form-item prop="birth" label="生日">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="registerForm.birth" style="width: 100%;"></el-date-picker>
-                </el-form-item>
-                <el-form-item prop="introduction" label="签名">
-                    <el-input  type="textarea" placeholder="签名" v-model="registerForm.introduction" ></el-input>
-                </el-form-item>
-                <el-form-item prop="location" label="地区">
-                    <el-select v-model="registerForm.location" placeholder="地区">
-                        <el-option v-for="item in cities" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-    <el-button @click="centerDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="addPeople">确 定</el-button>
-  </span>
-        </el-dialog>
-
-        <!-- 编辑弹出框 -->
-        <el-dialog title="编辑" :visible.sync="editVisible" width="400px">
-            <el-form ref="form" :model="form" label-width="60px">
-                <el-form-item label="用户名">
-                    <el-input v-model="form.username" :disabled="true"></el-input>
-                </el-form-item>
-                <el-form-item label="密码">
-                    <el-input v-model="form.password"></el-input>
-                </el-form-item>
-                <el-form-item label="性别">
-                    <el-radio-group v-model="form.sex">
-                        <el-radio :label="0">女</el-radio>
-                        <el-radio :label="1">男</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item label="手机">
-                    <el-input v-model="form.phoneNum"></el-input>
-                </el-form-item>
-                <el-form-item label="邮箱">
-                    <el-input v-model="form.email"></el-input>
-                </el-form-item>
-                <el-form-item prop="birth" label="生日">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="form.birth" style="width: 100%;"></el-date-picker>
-                </el-form-item>
-                <el-form-item label="签名">
-                    <el-input v-model="form.introduction"></el-input>
-                </el-form-item>
-                <el-form-item label="地区">
-                    <el-input v-model="form.location"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="editVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveEdit">确 定</el-button>
-            </span>
-        </el-dialog>
-
-        <!-- 删除提示框 -->
-        <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-            <div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="delVisible = false">取 消</el-button>
-                <el-button type="primary" @click="deleteRow">确 定</el-button>
-            </span>
-        </el-dialog>
+  <div class="table">
+    <div class="container">
+      <div class="handle-box">
+        <el-button type="primary" size="mini" class="handle-del mr10" @click="delAll">批量删除</el-button>
+        <el-input v-model="select_word" size="mini" placeholder="筛选相关用户" class="handle-input mr10"></el-input>
+        <el-button type="primary" size="mini" @click="centerDialogVisible = true">添加新用户</el-button>
+      </div>
+      <el-table :data="data" border size="mini" style="width: 100%" ref="multipleTable" height="550px" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="40" align="center"></el-table-column>
+        <el-table-column label="歌手图片" width="102" align="center">
+          <template slot-scope="scope">
+            <img :src="getUrl(scope.row.avator)" alt="" style="width: 80px;"/>
+            <el-upload
+              class="upload-demo"
+              :action="uploadUrl(scope.row.id)"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload">
+              <el-button size="mini">更新图片</el-button>
+            </el-upload>
+          </template>
+        </el-table-column>
+        <el-table-column label="用户名" prop="username" width="80" align="center"></el-table-column>
+        <el-table-column label="密码" prop="password" width="80" align="center"></el-table-column>
+        <el-table-column label="性别" width="50" align="center">
+            <template slot-scope="scope">
+                <div>{{changeSex(scope.row.sex) }}</div>
+            </template>
+        </el-table-column>
+        <el-table-column label="手机号码" prop="phoneNum" width="120" align="center"></el-table-column>
+        <el-table-column label="邮箱" prop="email" width="120" align="center"></el-table-column>
+        <el-table-column label="生日" width="120" align="center">
+            <template slot-scope="scope">
+                <div>{{attachBirth(scope.row.birth)}}</div>
+            </template>
+        </el-table-column>
+        <el-table-column prop="introduction" label="签名" align="center"></el-table-column>
+        <el-table-column prop="location" label="地区" width="80" align="center"></el-table-column>
+        <el-table-column label="收藏" width="80" align="center">
+            <template  slot-scope="scope">
+                <el-button size="mini" @click="getCollect(data[scope.$index].id)">收藏</el-button>
+            </template>
+        </el-table-column>
+        <el-table-column label="操作" width="150" align="center">
+            <template slot-scope="scope">
+                <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+                <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+            </template>
+        </el-table-column>
+      </el-table>
+      <div class="pagination">
+        <el-pagination
+          @current-change="handleCurrentChange"
+          background
+          layout="total, prev, pager, next"
+          :current-page="currentPage"
+          :page-size="pageSize"
+          :total="tableData.length">
+        </el-pagination>
+      </div>
     </div>
+
+    <!--添加新用户-->
+    <el-dialog title="添加用户" :visible.sync="centerDialogVisible" width="400px" center>
+      <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="70px" class="demo-ruleForm">
+        <el-form-item label="用户名" prop="username" size="mini">
+          <el-input v-model="registerForm.username" placeholder="用户名"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password" size="mini">
+          <el-input type="password" placeholder="密码" v-model="registerForm.password"></el-input>
+        </el-form-item>
+        <el-form-item label="性别" size="mini">
+          <el-radio-group v-model="registerForm.sex">
+            <el-radio :label="0">女</el-radio>
+            <el-radio :label="1">男</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="手机" prop="phoneNum" size="mini">
+          <el-input  placeholder="手机" v-model="registerForm.phoneNum"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email" size="mini">
+          <el-input v-model="registerForm.email" placeholder="邮箱"></el-input>
+        </el-form-item>
+        <el-form-item label="生日" prop="birth" size="mini">
+            <el-date-picker type="date" placeholder="选择日期" v-model="registerForm.birth" style="width: 100%;"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="签名" prop="introduction" size="mini">
+          <el-input  type="textarea" placeholder="签名" v-model="registerForm.introduction" ></el-input>
+        </el-form-item>
+        <el-form-item label="地区" prop="location" size="mini">
+          <el-select v-model="registerForm.location" placeholder="地区">
+            <el-option v-for="item in cities" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" size="mini" @click="addPeople">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 编辑弹出框 -->
+    <el-dialog title="编辑" :visible.sync="editVisible" width="400px">
+      <el-form ref="form" :model="form" label-width="60px">
+        <el-form-item label="用户名" size="mini">
+          <el-input v-model="form.username" :disabled="true"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" size="mini">
+          <el-input v-model="form.password"></el-input>
+        </el-form-item>
+        <el-form-item label="性别" size="mini">
+          <el-radio-group v-model="form.sex">
+            <el-radio :label="0">女</el-radio>
+            <el-radio :label="1">男</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="手机" size="mini">
+          <el-input v-model="form.phoneNum"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" size="mini">
+          <el-input v-model="form.email"></el-input>
+        </el-form-item>
+        <el-form-item label="生日" prop="birth" size="mini">
+          <el-date-picker type="date" placeholder="选择日期" v-model="form.birth" style="width: 100%;"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="签名" size="mini">
+          <el-input v-model="form.introduction"></el-input>
+        </el-form-item>
+        <el-form-item label="地区" size="mini">
+          <el-input v-model="form.location"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="editVisible = false">取 消</el-button>
+        <el-button type="primary" size="mini" @click="saveEdit">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 删除提示框 -->
+    <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
+      <div class="del-dialog-cnt" align="center">删除不可恢复，是否确定删除？</div>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="delVisible = false">取 消</el-button>
+        <el-button size="mini" type="primary" @click="deleteRow">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -366,6 +366,7 @@ export default {
     getCollect (id) {
       this.$router.push({path: '/collect', query: { id }})
     },
+    // 添加用户
     addPeople () {
       let d = this.registerForm.birth
       var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
@@ -457,12 +458,13 @@ export default {
 
 <style scoped>
 .handle-box {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+  font-size: 12px;
 }
 
 .handle-input {
-    width: 300px;
-    display: inline-block;
+  width: 300px;
+  display: inline-block;
 }
 
 .pagination {

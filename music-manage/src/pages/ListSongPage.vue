@@ -9,14 +9,14 @@
     </div>
     <div class="container">
       <div class="handle-box">
-        <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
-        <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-        <el-button type="primary" @click="centerDialogVisible = true">添加歌曲</el-button>
+        <el-button type="primary" size="mini" class="handle-del mr10" @click="delAll">批量删除</el-button>
+        <el-input v-model="select_word" size="mini" placeholder="筛选关键词" class="handle-input mr10"></el-input>
+        <el-button type="primary" size="mini" @click="centerDialogVisible = true">添加歌曲</el-button>
       </div>
       <el-table
         :data="tableData"
         border
-        stripe
+        size="mini"
         style="width: 100%"
         ref="multipleTable"
         @selection-change="handleSelectionChange"
@@ -40,25 +40,25 @@
         label-width="80px"
         class="demo-ruleForm"
       >
-        <el-form-item prop="singerName" label="歌手名字">
+        <el-form-item prop="singerName" label="歌手名字" size="mini">
           <el-input v-model="registerForm.singerName" placeholder="歌手名字"></el-input>
         </el-form-item>
-        <el-form-item prop="songName" label="歌曲名字">
+        <el-form-item prop="songName" label="歌曲名字" size="mini">
           <el-input v-model="registerForm.songName" placeholder="歌曲名字"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="getSongId">确 定</el-button>
+        <el-button size="mini" @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" size="mini" @click="getSongId">确 定</el-button>
       </span>
     </el-dialog>
 
     <!-- 删除提示框 -->
     <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-      <div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>
+      <div class="del-dialog-cnt" align="center">删除不可恢复，是否确定删除？</div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="delVisible = false">取 消</el-button>
-        <el-button type="primary" @click="deleteRow">确 定</el-button>
+        <el-button size="mini" @click="delVisible = false">取 消</el-button>
+        <el-button type="primary" size="mini" @click="deleteRow">确 定</el-button>
       </span>
     </el-dialog>
   </div>
