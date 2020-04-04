@@ -34,7 +34,7 @@ a {
 
 .content {
   width: auto;
-  padding: 40px;
+  padding: 20px;
 }
 
 .content-collapse {
@@ -42,7 +42,7 @@ a {
 }
 
 .container {
-  padding: 30px;
+  padding: 20px;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -90,4 +90,7 @@ a {
 }
 .table{
   min-width: 800px;
+}
+.el-dialog__body {
+  padding: 10px  20px 0px 10px;
 }

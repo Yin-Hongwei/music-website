@@ -5,30 +5,17 @@
       :default-active="onRoutes"
       :collapse="collapse"
       background-color="#324157"
-      text-color="#bfcbd9"
+      text-color="#ffffff"
       active-text-color="#20a0ff"
       unique-opened
       router
     >
       <template v-for="item in items">
-        <template v-if="item.subs">
-          <el-submenu :index="item.index" :key="item.index">
-            <template slot="title">
+          <template>
+            <el-menu-item :index="item.index" :key="item.index">
               <i :class="item.icon"></i>
               <span slot="title">{{ item.title }}</span>
-            </template>
-            <el-menu-item
-              v-for="(subItem,i) in item.subs"
-              :key="i"
-              :index="subItem.index"
-            >{{ subItem.title }}</el-menu-item>
-          </el-submenu>
-        </template>
-        <template v-else>
-          <el-menu-item :index="item.index" :key="item.index">
-            <i :class="item.icon"></i>
-            <span slot="title">{{ item.title }}</span>
-          </el-menu-item>
+            </el-menu-item>
         </template>
       </template>
     </el-menu>
@@ -46,57 +33,22 @@ export default {
         {
           icon: 'el-icon-document',
           index: 'info',
-          title: '系统首页',
-          subs: [
-            {
-              index: 'info',
-              title: '系统首页'
-            }
-          ]
+          title: '系统首页'
         },
         {
           icon: 'el-icon-document',
           index: 'consumer',
-          title: '用户管理',
-          subs: [
-            {
-              index: 'consumer',
-              title: '用户信息'
-            }
-          ]
-        },
-        {
-          icon: 'el-icon-document',
-          index: 'song',
-          title: '歌曲管理',
-          subs: [
-            {
-              index: 'song',
-              title: '歌曲信息'
-            }
-          ]
+          title: '用户管理'
         },
         {
           icon: 'el-icon-document',
           index: 'singer',
-          title: '歌手管理',
-          subs: [
-            {
-              index: 'singer',
-              title: '歌手信息'
-            }
-          ]
+          title: '歌手管理'
         },
         {
           icon: 'el-icon-document',
           index: 'songList',
-          title: '歌单管理',
-          subs: [
-            {
-              index: 'songList',
-              title: '歌单信息'
-            }
-          ]
+          title: '歌单管理'
         }
       ]
     }
