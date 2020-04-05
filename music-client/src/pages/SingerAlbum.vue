@@ -6,7 +6,7 @@
           <img :src=attachImageUrl(singer.pic) alt="">
         </div>
         <ul class="info">
-          <li>性别：{{attachSex(singer.sex)}}</li>
+          <li v-if="singer.sex !== 2">性别：{{attachSex(singer.sex)}}</li>
           <li>生日：{{attachBirth(singer.birth)}}</li>
           <li>故乡：{{singer.location}}</li>
         </ul>
@@ -100,6 +100,7 @@ export default {
   left: 50px;
   border-radius: 10%;
   overflow: hidden;
+  background-color: #ffffff;
   border: 5px solid white;
 }
 

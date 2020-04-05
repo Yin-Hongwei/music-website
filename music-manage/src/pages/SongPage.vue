@@ -17,7 +17,9 @@
         <el-table-column type="selection" width="40"></el-table-column>
         <el-table-column label="歌手图片" width="110" align="center">
           <template slot-scope="scope">
-            <img :src="getUrl(scope.row.pic)" alt="" style="width: 80px;"/>
+            <div style="width: 80px; height: 80px; overflow: hidden">
+              <img :src="getUrl(scope.row.pic)" alt="" style="width: 100%;"/>
+            </div>
             <div class="play" @click="setSongUrl(scope.row.url, scope.row.name)">
               <div v-if="toggle !== scope.row.name">
                 <svg class="icon" aria-hidden="true">

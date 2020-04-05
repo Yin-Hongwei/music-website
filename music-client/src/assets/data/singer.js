@@ -1,7 +1,7 @@
 const singerStyle = [
   {
     name: '全部歌手',
-    type: '3'
+    type: '-1'
   },
   {
     name: '男歌手',
@@ -10,6 +10,10 @@ const singerStyle = [
   {
     name: '女歌手',
     type: '0'
+  },
+  {
+    name: '组合歌手',
+    type: '2'
   }
 ]
 

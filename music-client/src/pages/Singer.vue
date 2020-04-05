@@ -58,12 +58,12 @@ export default {
     handleCurrentChange (val) {
       this.currentPage = val
     },
-    handleChangeView: function (item) {
+    handleChangeView (item) {
       this.activeName = item.name
       this.albumDatas = []
       if (item.name === '全部歌手') {
         this.getAllSinger()
-      } else if (item.name === '男歌手' || item.name === '女歌手') {
+      } else {
         this.getSingerSex(item.type)
       }
     },
