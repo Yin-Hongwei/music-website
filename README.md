@@ -2,8 +2,9 @@
 <br/>
 
 <p align="center">
-  <a href=""><img alt="license" src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat"></a>
+  <a href=""><img alt="license" src="https://img.shields.io/github/license/Yin-Hongwei/music-website"></a>
 </p>
+
 
 
 ## 项目说明
