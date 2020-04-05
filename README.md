@@ -2,19 +2,19 @@
 <br/>
 
 <p align="center">
-  <a href=""><img alt="license" src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat"></a>
+  <a href=""><img alt="license" src="https://img.shields.io/github/license/Yin-Hongwei/music-website"></a>
 </p>
 
 
 ## 项目说明
 
-本音乐网站的开发主要利用前端框架VUE开发客户端和管理端，后端接口用Spring Boot来实现，数据持久化用的是 MyBatis，数据用MySQL来进行存储。实现思路可以参考[这里](https://yin-hongwei.github.io/2019/03/04/music/)。
+本音乐网站的开发主要利用 VUE 框架开发前台和后台，后端接口用 Spring Boot + MyBatis 来实现，数据库使用的是 MySQL。实现思路可以参考[这里](https://yin-hongwei.github.io/2019/03/04/music/)。
 
 <br/>
 
 ## 项目截图
 
-> 客户端
+> 前台截图预览
 
 ![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hkbfdtbej31c00u0jyu.jpg)<br/>
 
@@ -34,7 +34,7 @@
 
 ![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9d8b2ukj31c00u0dof.jpg)<br/>
 
-> 管理端
+> 后台截图预览
 
 ![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hhhu4n7tj31c00u04qq.jpg)<br/>
 
@@ -96,6 +96,8 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 
 #### 4、启动项目
 
+music-server 是本项目的后端，用于监听前端发来的请求，提供接口。music-client 和 music-manage 都是本项目的前端部分，前者是前台，后者是后台。运行时后端必须启动，两个前端项目可以都启动，也可以只启动其中一个，他们是独立的。
+
 然后进入 music-server 文件夹，运行下面命令启动服务器
 
 ```js
@@ -117,6 +119,14 @@ npm install // 安装依赖
 
 npm run dev // 启动后台管理项目
 ```
+
+<br/>
+
+#### 5、最后
+
+如果对这个项目有什么疑惑，可以联系我
+
+📮：yinhongwei96@126.com
 
 <br/>
 
