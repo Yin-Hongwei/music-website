@@ -46,6 +46,10 @@ export const mixin = {
         return '女'
       } else if (value === 1) {
         return '男'
+      } else if (value === 2) {
+        return '组合'
+      } else if (value === 3) {
+        return '不明'
       } else if (value === '男' || value === '女') {
         return value
       }
@@ -75,7 +79,7 @@ export const mixin = {
       }
     },
     beforeAvatarUpload (file) {
-      const isJPG = file.type === 'image/jpeg'
+      const isJPG = (file.type === 'image/jpeg') || (file.type === 'image/png')
       const isLt2M = file.size / 1024 / 1024 < 2
       if (!isJPG) {
         this.$message.error('上传头像图片只能是 JPG 格式!')

@@ -10,7 +10,9 @@
         <el-table-column type="selection" width="40"></el-table-column>
         <el-table-column label="歌手图片" width="110" align="center">
           <template slot-scope="scope">
-            <img :src="getUrl(scope.row.pic)" alt style="width: 80px;" />
+            <div class="singer-img">
+              <img :src="getUrl(scope.row.pic)" alt="" style="width: 100%;"/>
+            </div>
             <el-upload
               class="upload-demo"
               :action="uploadUrl(scope.row.id)"
@@ -78,6 +80,8 @@
           <el-radio-group v-model="registerForm.sex">
             <el-radio :label="0">女</el-radio>
             <el-radio :label="1">男</el-radio>
+            <el-radio :label="2">组合</el-radio>
+            <el-radio :label="3">不明</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item prop="location" label="故乡" size="mini">
@@ -92,7 +96,7 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item prop="introduction" label="歌手介绍" size="mini">
-          <el-input v-model="registerForm.introduction" placeholder="歌手介绍"></el-input>
+          <el-input v-model="registerForm.introduction" type="textarea" placeholder="歌手介绍"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -111,6 +115,8 @@
           <el-radio-group v-model="form.sex">
             <el-radio :label="0">女</el-radio>
             <el-radio :label="1">男</el-radio>
+            <el-radio :label="2">组合</el-radio>
+            <el-radio :label="3">不明</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="生日" size="mini">
@@ -317,6 +323,14 @@ export default {
 .handle-input {
   width: 300px;
   display: inline-block;
+}
+
+.singer-img {
+  width: 100%;
+  height: 80px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  overflow: hidden;
 }
 
 .pagination {
