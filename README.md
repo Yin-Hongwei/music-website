@@ -24,7 +24,7 @@
 
 ![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hl4b9jjdj31c00u0nmn.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/00831rSTly1gd385qvgmej31c00u0x6p.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gdj8iqeynwj31c00u0kjm.jpg)<br/>
 
 ![](https://tva1.sinaimg.cn/large/00831rSTly1gd3867tq24j31c00u0tnw.jpg)<br/>
 
@@ -38,7 +38,7 @@
 
 ![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hhhu4n7tj31c00u04qq.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/00831rSTly1gdie7r340pj31c00u0wmo.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/00831rSTly1gdj8jf3uusj31c00u0n5b.jpg)<br/>
 
 ![](https://tva1.sinaimg.cn/large/00831rSTly1gdie89mujrj31c00u07kx.jpg)<br/>
 
@@ -85,7 +85,7 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 
 #### 2、下载数据库中记录的资源
 
-去https://pan.baidu.com/s/1PjdvJ8SCJ0kUwrL1m7Dp7Q 下载网站依赖的歌曲及图片，将 data 夹里的文件直接放到 music-server 文件夹下（因为音乐有的不是无损的，可能有部分音乐会失效，只需要替换掉失效的即可）。下载资源可能有点儿慢，这是百度云破解版[https://pan.baidu.com/disk/home#/all?vmode=list&path=%2F%E8%BD%AF%E4%BB%B6%2FPanDownload](https://pan.baidu.com/disk/home#/all?vmode=list&path=%2F软件%2FPanDownload)（适合win用户，Mac上还没发现。
+去【链接: https://pan.baidu.com/s/1Qv0ohAIPeTthPK_CDwpfWg 提取码: gwa4 】下载网站依赖的歌曲及图片，将 data 夹里的文件直接放到 music-server 文件夹下。
 
 #### 3、修改
 1）数据库：将sql文件夹中的 tp_music.sql 文件导入数据库。（mysql 版本不能低于5.7）
