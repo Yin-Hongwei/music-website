@@ -96,6 +96,9 @@ export default {
       this.$store.commit('setActiveName', value)
     },
     goMenuList (path) {
+      if (path === 0) {
+        this.$store.commit('setIsActive', false)
+      }
       document.querySelector('.menu').classList.remove('show')
       if (path) {
         this.$router.push({path: path})

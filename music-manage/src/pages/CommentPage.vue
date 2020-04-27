@@ -58,6 +58,7 @@
 
 <script>
 import { mixin } from '../mixins'
+import { getCommentOfSongId, getCommentOfSongListId, updateCommentMsg, getUserOfId, deleteComment } from '../api/index'
 
 export default {
   name: 'comment-page',
@@ -106,21 +107,21 @@ export default {
       this.tempDate = []
       let promise
       if (this.$route.query.type === 0) {
-        promise = this.$api.commentAPI.getCommentOfSongId(this.$route.query.id)
+        promise = getCommentOfSongId(this.$route.query.id)
       } else if (this.$route.query.type === 1) {
-        promise = this.$api.commentAPI.getCommentOfSongListId(this.$route.query.id)
+        promise = getCommentOfSongListId(this.$route.query.id)
       }
       promise.then(res => {
-        for (let item of res.data) {
+        for (let item of res) {
           this.getUsers(item.userId, item)
         }
       })
     },
     getUsers (id, item) {
-      this.$api.userAPI.getUserOfId(id)
+      getUserOfId(id)
         .then(res => {
           let o = item
-          o.name = res.data[0].username
+          o.name = res[0].username
           this.tableData.push(o)
           this.tempDate.push(o)
         })
@@ -144,17 +145,17 @@ export default {
     },
     // 保存编辑
     saveEdit () {
-      this.$api.commentAPI.updateCommentMsg(
-        this.form.id,
-        this.form.userId,
-        this.form.songId,
-        this.form.songListId,
-        this.form.content,
-        this.form.type,
-        this.form.up
-      )
+      let params = new URLSearchParams()
+      params.append('id', this.form.id)
+      params.append('userId', this.form.userId)
+      params.append('songId', this.form.songId === null ? '' : this.form.songId)
+      params.append('songListId', this.form.songId === null ? '' : this.form.songListId)
+      params.append('content', this.form.content)
+      params.append('type', this.form.type)
+      params.append('up', this.form.up)
+      updateCommentMsg(params)
         .then(res => {
-          if (res.data.code === 1) {
+          if (res.code === 1) {
             this.getData()
             this.notify('编辑成功', 'success')
           } else {
@@ -168,9 +169,9 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      this.$api.commentAPI.deleteComment(this.idx)
+      deleteComment(this.idx)
         .then(res => {
-          if (res.data) {
+          if (res) {
             this.getData()
             this.notify('删除成功', 'success')
           } else {

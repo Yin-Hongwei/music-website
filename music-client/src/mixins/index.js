@@ -1,4 +1,13 @@
+import { getSongOfSingerName, getCollectionOfUser } from '../api/index'
+import { mapGetters } from 'vuex'
+
 export const mixin = {
+  computed: {
+    ...mapGetters([
+      'userId',
+      'loginIn'
+    ])
+  },
   methods: {
     // 提示信息
     notify (title, type) {
@@ -34,6 +43,21 @@ export const mixin = {
       this.$store.commit('setTitle', this.replaceFName(name))
       this.$store.commit('setArtist', this.replaceLName(name))
       this.$store.commit('setLyric', this.parseLyric(lyric))
+      if (this.loginIn) {
+        this.$store.commit('setIsActive', false)
+        getCollectionOfUser(this.userId)
+          .then(res => {
+            for (let item of res) {
+              if (item.songId === id) {
+                this.$store.commit('setIsActive', true)
+                break
+              }
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
     },
     // 解析歌词
     parseLyric (text) {
@@ -57,7 +81,7 @@ export const mixin = {
         // console.log(time) // 时间
         // console.log(value) // 歌词数据
         for (let item1 of time) {
-          var t = item1.slice(1, -1).split(':')
+          let t = item1.slice(1, -1).split(':')
           if (value !== '') {
             result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value])
           }
@@ -74,13 +98,13 @@ export const mixin = {
         this.$store.commit('setListOfSongs', [])
         this.notify('您输入内容为空', 'warning')
       } else {
-        this.$api.songAPI.getSongOfSingerName(this.$route.query.keywords)
+        getSongOfSingerName(this.$route.query.keywords)
           .then(res => {
-            if (!res.data.length) {
+            if (!res.length) {
               this.$store.commit('setListOfSongs', [])
               this.notify('系统暂无该歌曲', 'warning')
             } else {
-              this.$store.commit('setListOfSongs', res.data)
+              this.$store.commit('setListOfSongs', res)
             }
           })
           .catch(err => {

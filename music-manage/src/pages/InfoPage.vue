@@ -74,7 +74,8 @@
 </template>
 
 <script>
-import {mixin} from '../mixins'
+import { mixin } from '../mixins'
+import { getAllSinger, getSongList, getAllSong, getAllUser } from '../api/index'
 
 export default {
   mixins: [mixin],
@@ -170,10 +171,10 @@ export default {
   },
   methods: {
     getUser () {
-      this.$api.userAPI.getAllUser().then(res => {
-        this.userCount = res.data.length
-        this.userSex.rows[0]['总数'] = this.setSex(1, res.data)
-        this.userSex.rows[1]['总数'] = this.setSex(0, res.data)
+      getAllUser().then(res => {
+        this.userCount = res.length
+        this.userSex.rows[0]['总数'] = this.setSex(1, res)
+        this.userSex.rows[1]['总数'] = this.setSex(0, res)
       })
     },
     setSex (sex, arr) {
@@ -201,11 +202,11 @@ export default {
       }
     },
     getSinger () {
-      this.$api.singerAPI.getAllSinger().then(res => {
-        this.singerCount = res.data.length
-        this.singerSex.rows[0]['总数'] = this.setSex(1, res.data)
-        this.singerSex.rows[1]['总数'] = this.setSex(0, res.data)
-        for (let item of res.data) {
+      getAllSinger().then(res => {
+        this.singerCount = res.length
+        this.singerSex.rows[0]['总数'] = this.setSex(1, res)
+        this.singerSex.rows[1]['总数'] = this.setSex(0, res)
+        for (let item of res) {
           this.getCountry(item.location)
         }
       }).catch(err => {
@@ -213,16 +214,16 @@ export default {
       })
     },
     getSong () {
-      this.$api.songAPI.getAllSong().then(res => {
-        this.songCount = res.data.length
+      getAllSong().then(res => {
+        this.songCount = res.length
       }).catch(err => {
         console.log(err)
       })
     },
     getSongList () {
-      this.$api.songListAPI.getSongList().then(res => {
-        this.songListCount = res.data.length
-        for (let item of res.data) {
+      getSongList().then(res => {
+        this.songListCount = res.length
+        for (let item of res) {
           this.getStyle(item.style)
         }
       }).catch(err => {

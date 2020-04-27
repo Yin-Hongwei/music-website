@@ -14,7 +14,7 @@
       </el-form-item>
       <div class="login-btn">
         <el-button @click="goLoginUp()">注册</el-button>
-        <el-button type="primary" @click="loginIn">登录</el-button>
+        <el-button type="primary" @click="handleleLoginIn">登录</el-button>
       </div>
     </el-form>
   </div>
@@ -24,6 +24,7 @@
 <script>
 import { mixin } from '../mixins'
 import LoginLogo from '../components/LoginLogo'
+import { loginIn } from '../api/index'
 
 export default {
   name: 'login-in',
@@ -32,14 +33,14 @@ export default {
   },
   mixins: [mixin],
   data: function () {
-    var validateName = (rule, value, callback) => {
+    let validateName = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('用户名不能为空'))
       } else {
         callback()
       }
     }
-    var validatePassword = (rule, value, callback) => {
+    let validatePassword = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
       } else {
@@ -68,14 +69,17 @@ export default {
     changeIndex (value) {
       this.$store.commit('setActiveName', value)
     },
-    loginIn () {
+    handleleLoginIn () {
       let _this = this
-      _this.$api.userAPI.loginIn(this.loginForm.username, this.loginForm.password)
+      let params = new URLSearchParams()
+      params.append('username', this.loginForm.username)
+      params.append('password', this.loginForm.password)
+      loginIn(params)
         .then(res => {
           // console.log('-----------获取登录信息---------------')
-          if (res.data.code === 1) {
+          if (res.code === 1) {
             _this.notify('登录成功', 'success')
-            _this.setUserMsg(res.data.userMsg[0])
+            _this.setUserMsg(res.userMsg[0])
             _this.$store.commit('setLoginIn', true)
             setTimeout(function () {
               _this.changeIndex('首页')
