@@ -54,7 +54,7 @@
       <!--添加-->
       <div class="item" @click="collection">
         <el-button plain style="border: 0;">
-          <svg class="icon" aria-hidden="true">
+          <svg :class="{ active: isActive }" class="icon" aria-hidden="true">
             <use xlink:href="#icon-xihuan-shi"></use>
           </svg>
         </el-button>
@@ -78,6 +78,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { mixin } from '../mixins'
+import { setCollection, download } from '../api/index'
 
 export default {
   name: 'play-bar',
@@ -109,7 +110,8 @@ export default {
       'listOfSongs', // 当前歌单列表
       'listIndex', // 当前歌曲在歌曲列表的位置
       'showAside', // 是否显示侧边栏
-      'autoNext' // 用于触发自动播放下一首
+      'autoNext', // 用于触发自动播放下一首
+      'isActive'
     ])
   },
   watch: {
@@ -140,14 +142,14 @@ export default {
   methods: {
     // 下载
     download () {
-      this.$api.songAPI.download(this.url)
+      download(this.url)
         .then(res => {
           let content = res.data
-          var eleLink = document.createElement('a')
+          let eleLink = document.createElement('a')
           eleLink.download = `${this.artist}-${this.title}.mp3`
           eleLink.style.display = 'none'
           // 字符内容转变成blob地址
-          var blob = new Blob([content])
+          let blob = new Blob([content])
           eleLink.href = URL.createObjectURL(blob)
           // 触发点击
           document.body.appendChild(eleLink)
@@ -299,12 +301,16 @@ export default {
     },
     collection () {
       if (this.loginIn) {
-        // 0 代表歌曲， 1 代表歌单
-        this.$api.collectionAPI.setCollection(this.userId, 0, this.id)
+        var params = new URLSearchParams()
+        params.append('userId', this.userId)
+        params.append('type', 0) // 0 代表歌曲， 1 代表歌单
+        params.append('songId', this.id)
+        setCollection(params)
           .then(res => {
-            if (res.data.code === 1) {
+            if (res.code === 1) {
+              this.$store.commit('setIsActive', true)
               this.notify('收藏成功', 'success')
-            } else if (res.data.code === 2) {
+            } else if (res.code === 2) {
               this.notify('已收藏', 'warning')
             } else {
               this.$notify.error({
@@ -325,6 +331,9 @@ export default {
 </script>
 
 <style scoped>
+.active {
+  color: red !important;
+}
 .play-bar{
   position: fixed;
   bottom: 0;

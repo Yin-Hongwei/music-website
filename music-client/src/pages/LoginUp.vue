@@ -48,6 +48,7 @@
 import loginLogo from '../components/LoginLogo'
 import { mixin } from '../mixins'
 import { rules, cities } from '../assets/data/form'
+import { loginUp } from '../api/index'
 
 export default {
   name: 'loginUp-page',
@@ -79,20 +80,21 @@ export default {
     loginUp () {
       let _this = this
       let d = this.registerForm.birth
-      var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      this.$api.userAPI.loginUp(
-        this.registerForm.username,
-        this.registerForm.password,
-        this.registerForm.sex,
-        this.registerForm.phoneNum,
-        this.registerForm.email,
-        datetime,
-        this.registerForm.introduction,
-        this.registerForm.location,
-        '/img/user.jpg')
+      let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+      let params = new URLSearchParams()
+      params.append('username', this.registerForm.username)
+      params.append('password', this.registerForm.password)
+      params.append('sex', this.registerForm.sex)
+      params.append('phone_num', this.registerForm.phoneNum)
+      params.append('email', this.registerForm.email)
+      params.append('birth', datetime)
+      params.append('introduction', this.registerForm.introduction)
+      params.append('location', this.registerForm.location)
+      params.append('avator', '/img/user.jpg')
+      loginUp(params)
         .then(res => {
-          console.log(res.data)
-          if (res.data.code === 1) {
+          console.log(res)
+          if (res.code === 1) {
             _this.notify('注册成功', 'success')
             setTimeout(function () {
               _this.$router.push({path: '/'})

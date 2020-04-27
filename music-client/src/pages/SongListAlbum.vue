@@ -50,6 +50,7 @@ import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
 import AlbumContent from '../components/AlbumContent'
 import Comment from '../components/Comment'
+import { getRankOfSongListId, setRank, getSongOfId, getListSongOfSongId } from '../api/index'
 
 export default {
   name: 'song-list-album',
@@ -86,10 +87,10 @@ export default {
   methods: {
     // 收集歌单里面的歌曲
     getSongId () {
-      this.$api.listSongAPI.getListSongOfSongId(this.songListId)
+      getListSongOfSongId(this.songListId)
         .then(res => {
           // 获取歌单里的歌曲信息
-          for (let item of res.data) {
+          for (let item of res) {
             this.getSongList(item.songId)
           }
           this.$store.commit('setListOfSongs', this.songLists)
@@ -100,9 +101,9 @@ export default {
     },
     // 获取单里的歌曲
     getSongList (id) {
-      this.$api.songAPI.getSongOfId(id)
+      getSongOfId(id)
         .then(res => {
-          this.songLists.push(res.data[0])
+          this.songLists.push(res[0])
         })
         .catch(err => {
           console.log(err)
@@ -110,9 +111,9 @@ export default {
     },
     // 获取评分
     getRank (id) {
-      this.$api.rankAPI.getRankOfSongListId(id)
+      getRankOfSongListId(id)
         .then(res => {
-          this.value5 = res.data / 2
+          this.value5 = res / 2
         })
         .catch(err => {
           console.log(err)
@@ -121,9 +122,13 @@ export default {
     // 提交评分
     pushValue () {
       if (this.loginIn) {
-        this.$api.rankAPI.setRank(this.songListId, this.userId, this.value3 * 2)
+        let params = new URLSearchParams()
+        params.append('songListId', this.songListId)
+        params.append('consumerId', this.userId)
+        params.append('score', this.value3 * 2)
+        setRank(params)
           .then(res => {
-            if (res.data.code === 1) {
+            if (res.code === 1) {
               this.getRank(this.songListId)
               this.notify('评分成功', 'success')
             } else {

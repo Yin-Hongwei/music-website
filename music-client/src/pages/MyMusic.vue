@@ -29,6 +29,7 @@
 import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
 import AlbumContent from '../components/AlbumContent'
+import { getCollectionOfUser, getUserOfId, getSongOfId } from '../api/index'
 
 export default {
   name: 'my-music',
@@ -61,14 +62,14 @@ export default {
   },
   methods: {
     getMsg (id) {
-      this.$api.userAPI.getUserOfId(id)
+      getUserOfId(id)
         .then(res => {
-          this.username = res.data[0].username
-          this.getuserSex(res.data[0].sex)
-          this.birth = this.attachBirth(res.data[0].birth)
-          this.introduction = res.data[0].introduction
-          this.location = res.data[0].location
-          this.avator = res.data[0].avator
+          this.username = res[0].username
+          this.getuserSex(res[0].sex)
+          this.birth = this.attachBirth(res[0].birth)
+          this.introduction = res[0].introduction
+          this.location = res[0].location
+          this.avator = res[0].avator
         })
         .catch(err => {
           console.log(err)
@@ -83,9 +84,9 @@ export default {
     },
     // 收藏的歌曲ID
     getCollection (userId) {
-      this.$api.collectionAPI.getCollectionOfUser(userId)
+      getCollectionOfUser(userId)
         .then(res => {
-          this.collection = res.data
+          this.collection = res
           // 通过歌曲ID获取歌曲信息
           for (let item of this.collection) {
             this.getCollectSongs(item.songId)
@@ -98,9 +99,9 @@ export default {
     },
     // 获取收藏的歌曲
     getCollectSongs (id) {
-      this.$api.songAPI.getSongOfId(id)
+      getSongOfId(id)
         .then(res => {
-          this.collectList.push(res.data[0])
+          this.collectList.push(res[0])
         })
         .catch(err => {
           console.log(err)

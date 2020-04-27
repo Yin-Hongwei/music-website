@@ -13,6 +13,7 @@
 <script>
 import Swiper from '../components/Swiper'
 import ContentList from '../components/ContentList'
+import { getSongList, getAllSinger } from '../api/index'
 
 export default {
   name: 'home',
@@ -36,19 +37,18 @@ export default {
   },
   methods: {
     getSongList (path) {
-      this.$api.songListAPI.getSongList()
+      getSongList()
         .then(res => {
-          this.songsList[0].list = res.data.slice(0, 10)
+          this.songsList[0].list = res.slice(0, 10)
         })
         .catch(err => {
           console.log(err)
         })
     },
     getSinger () {
-      this.$api.singerAPI.getAllSinger()
-        .then(res => {
-          this.songsList[1].list = res.data.slice(0, 10)
-        })
+      getAllSinger().then(res => {
+        this.songsList[1].list = res.slice(0, 10)
+      })
         .catch(err => {
           console.log(err)
         })

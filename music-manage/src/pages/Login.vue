@@ -30,6 +30,7 @@
 
 <script>
 import {mixin} from '../mixins'
+import { getLoginStatus } from '../api/index'
 
 export default {
   mixins: [mixin],
@@ -49,9 +50,12 @@ export default {
   },
   methods: {
     submitForm () {
-      this.$api.adminAPI.getLoginStatus(this.ruleForm.username, this.ruleForm.password)
+      let params = new URLSearchParams()
+      params.append('name', this.ruleForm.username)
+      params.append('password', this.ruleForm.password)
+      getLoginStatus(params)
         .then(res => {
-          if (res.data.code === 1) {
+          if (res.code === 1) {
             this.$router.push('/Info')
             this.notify('欢迎回来', 'success')
           } else {

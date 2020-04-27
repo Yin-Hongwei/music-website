@@ -66,6 +66,7 @@
 
 <script>
 import { mixin } from '../mixins'
+import { setListSong, getListSongOfSongId, deleteListSong, getSongOfId, getSongOfSingerName } from '../api/index'
 
 export default {
   name: 'list-song-page',
@@ -108,10 +109,10 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      this.$api.listSongAPI.getListSongOfSongId(this.$route.query.id)
+      getListSongOfSongId(this.$route.query.id)
         .then(res => {
-          console.log(res.data)
-          for (let item of res.data) {
+          console.log(res)
+          for (let item of res) {
             this.getSong(item.songId)
           }
         })
@@ -121,10 +122,10 @@ export default {
     },
     // 获取歌单里对应的音乐
     getSong (id) {
-      this.$api.songAPI.getSongOfId(id)
+      getSongOfId(id)
         .then(res => {
-          this.tableData.push(res.data[0])
-          this.tempDate.push(res.data[0])
+          this.tableData.push(res[0])
+          this.tempDate.push(res[0])
         })
         .catch(err => {
           console.log(err)
@@ -134,16 +135,19 @@ export default {
     getSongId () {
       let _this = this
       var id = _this.registerForm.singerName + '-' + _this.registerForm.songName
-      this.$api.songAPI.getSongOfSingerName(id)
+      getSongOfSingerName(id)
         .then(res => {
-          this.addSong(res.data[0].id)
+          this.addSong(res[0].id)
         })
     },
     // 添加歌曲
     addSong (id) {
-      this.$api.listSongAPI.setListSong(id, this.$route.query.id)
+      let params = new URLSearchParams()
+      params.append('songId', id)
+      params.append('songListId', this.$route.query.id)
+      setListSong(params)
         .then(res => {
-          if (res.data.code === 1) {
+          if (res.code === 1) {
             this.getData()
             this.notify('添加成功', 'success')
           } else {
@@ -157,9 +161,9 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      this.$api.listSongAPI.deleteListSong(this.idx)
+      deleteListSong(this.idx)
         .then(res => {
-          if (res.data) {
+          if (res) {
             this.getData()
             this.notify('删除成功', 'success')
           } else {

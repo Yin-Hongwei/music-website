@@ -43,6 +43,7 @@
 <script>
 import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
+import { getUserOfId, setComment, setLike, getAllComment } from '../api/index'
 
 export default {
   name: 'comment',
@@ -79,10 +80,10 @@ export default {
   methods: {
     // 获取所有评论
     getComment () {
-      this.$api.commentAPI.getAllComment(this.type, this.playId)
+      getAllComment(this.type, this.playId)
         .then(res => {
-          this.commentList = res.data
-          for (let item of res.data) {
+          this.commentList = res
+          for (let item of res) {
             this.getUsers(item.userId)
           }
         })
@@ -92,10 +93,10 @@ export default {
     },
     // 获取评论用户的昵称和头像
     getUsers (id) {
-      this.$api.userAPI.getUserOfId(id)
+      getUserOfId(id)
         .then(res => {
-          this.userPic.push(res.data[0].avator)
-          this.userName.push(res.data[0].username)
+          this.userPic.push(res[0].avator)
+          this.userName.push(res[0].username)
         })
         .catch(err => {
           console.log(err)
@@ -104,9 +105,19 @@ export default {
     // 提交评论
     postComment () {
       if (this.loginIn) {
-        this.$api.commentAPI.setComment(this.type, this.playId, this.userId, this.textarea)
+        // 0 代表歌曲， 1 代表歌单
+        let params = new URLSearchParams()
+        if (this.type === 1) {
+          params.append('songListId', this.playId)
+        } else if (this.type === 0) {
+          params.append('songId', this.playId)
+        }
+        params.append('userId', this.userId)
+        params.append('type', this.type)
+        params.append('content', this.textarea)
+        setComment(params)
           .then(res => {
-            if (res.data.code === 1) {
+            if (res.code === 1) {
               this.textarea = ''
               this.getComment()
               this.notify('评论成功', 'success')
@@ -124,9 +135,12 @@ export default {
     // 点赞
     postUp (id, up, index) {
       if (this.loginIn) {
-        this.$api.commentAPI.setLike(id, up)
+        let params = new URLSearchParams()
+        params.append('id', id)
+        params.append('up', up + 1)
+        setLike(params)
           .then(res => {
-            if (res.data.code === 1) {
+            if (res.code === 1) {
               this.$refs.up[index].children[0].style.color = '#2796dd'
               this.getComment()
             }

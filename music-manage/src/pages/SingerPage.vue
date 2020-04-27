@@ -148,6 +148,7 @@
 
 <script>
 import { mixin } from '../mixins'
+import { setSinger, getAllSinger, updateSingerMsg, deleteSinger } from '../api/index'
 
 export default {
   name: 'singer-page',
@@ -218,17 +219,17 @@ export default {
     // 添加歌手
     addsinger () {
       let d = this.registerForm.birth
-      var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      this.$api.singerAPI.setSinger(
-        this.registerForm.name,
-        this.registerForm.sex,
-        '/img/singerPic/hhh.jpg',
-        datetime,
-        this.registerForm.location,
-        this.registerForm.introduction
-      )
+      let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+      let params = new URLSearchParams()
+      params.append('name', this.registerForm.name)
+      params.append('sex', this.registerForm.sex)
+      params.append('pic', '/img/singerPic/hhh.jpg')
+      params.append('birth', datetime)
+      params.append('location', this.registerForm.location)
+      params.append('introduction', this.registerForm.introduction)
+      setSinger(params)
         .then(res => {
-          if (res.data.code === 1) {
+          if (res.code === 1) {
             this.getData()
             this.registerForm = {}
             this.notify('添加成功', 'success')
@@ -245,9 +246,9 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      this.$api.singerAPI.getAllSinger().then(res => {
-        this.tableData = res.data
-        this.tempDate = res.data
+      getAllSinger().then(res => {
+        this.tableData = res
+        this.tempDate = res
         this.currentPage = 1
       })
     },
@@ -270,17 +271,17 @@ export default {
     saveEdit () {
       let d = new Date(this.form.birth)
       let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      this.$api.singerAPI.updateSingerMsg(
-        this.form.id,
-        this.form.name,
-        this.form.sex,
-        this.form.pic,
-        datetime,
-        this.form.location,
-        this.form.introduction
-      )
+      let params = new URLSearchParams()
+      params.append('id', this.form.id)
+      params.append('name', this.form.name)
+      params.append('sex', this.form.sex)
+      params.append('pic', this.form.pic)
+      params.append('birth', datetime)
+      params.append('location', this.form.location)
+      params.append('introduction', this.form.introduction)
+      updateSingerMsg(params)
         .then(res => {
-          if (res.data.code === 1) {
+          if (res.code === 1) {
             this.getData()
             this.notify('编辑成功', 'success')
           } else {
@@ -294,9 +295,9 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      this.$api.singerAPI.deleteSinger(this.idx)
+      deleteSinger(this.idx)
         .then(res => {
-          if (res.data) {
+          if (res) {
             this.getData()
             this.notify('删除成功', 'success')
           } else {

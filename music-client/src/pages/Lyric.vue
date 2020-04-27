@@ -57,9 +57,9 @@ export default {
     curTime: function () {
       // 处理歌词位置及颜色
       if (this.lyr.length !== 0) {
-        for (var i = 0; i < this.lyr.length; i++) {
+        for (let i = 0; i < this.lyr.length; i++) {
           if (this.curTime >= this.lyr[i][0]) {
-            for (var j = 0; j < this.lyr.length; j++) {
+            for (let j = 0; j < this.lyr.length; j++) {
               document.querySelectorAll('.lrc li')[j].style.color = '#000'
               document.querySelectorAll('.lrc li')[j].style.fontSize = '15px'
             }
