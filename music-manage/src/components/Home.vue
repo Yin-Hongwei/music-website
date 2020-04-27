@@ -1,7 +1,7 @@
 <template>
-  <div class="wrapper">
-    <v-head></v-head>
-    <v-sidebar></v-sidebar>
+  <div>
+    <the-header></the-header>
+    <the-aside></the-aside>
     <div class="content-box" :class="{'content-collapse':collapse}">
       <div class="content">
         <transition name="move" mode="out-in">
@@ -15,14 +15,14 @@
 </template>
 
 <script>
-import vHead from './Header.vue'
-import vSidebar from './Sidebar.vue'
+import TheHeader from './TheHeader.vue'
+import TheAside from './TheAside.vue'
 import bus from '../assets/js/bus'
 
 export default {
   components: {
-    vHead,
-    vSidebar
+    TheHeader,
+    TheAside
   },
   data () {
     return {
@@ -48,5 +48,4 @@ export default {
 </script>
 
 <style>
-
 </style>

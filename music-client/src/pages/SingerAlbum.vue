@@ -30,6 +30,7 @@
 import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
 import AlbumContent from '../components/AlbumContent'
+import { getSongOfSingerId } from '../api/index'
 
 export default {
   name: 'singer-album',
@@ -56,9 +57,9 @@ export default {
   },
   methods: {
     getSongList () {
-      this.$api.songAPI.getSongOfSingerId(this.singerId)
+      getSongOfSingerId(this.singerId)
         .then(res => {
-          this.$store.commit('setListOfSongs', res.data)
+          this.$store.commit('setListOfSongs', res)
         })
         .catch(err => {
           console.log(err)

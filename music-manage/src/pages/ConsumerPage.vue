@@ -149,7 +149,8 @@
 </template>
 
 <script>
-import {mixin} from '../mixins'
+import { mixin } from '../mixins'
+import { setUser, updateUserMsg, getAllUser, deleteUser } from '../api/index'
 
 export default {
   name: 'consumer-page',
@@ -357,9 +358,9 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      this.$api.userAPI.getAllUser().then((res) => {
-        this.tableData = res.data
-        this.tempDate = res.data
+      getAllUser().then((res) => {
+        this.tableData = res
+        this.tempDate = res
         this.currentPage = 1
       })
     },
@@ -369,19 +370,20 @@ export default {
     // 添加用户
     addPeople () {
       let d = this.registerForm.birth
-      var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      this.$api.userAPI.loginUp(
-        this.registerForm.username,
-        this.registerForm.password,
-        this.registerForm.sex,
-        this.registerForm.phoneNum,
-        this.registerForm.email,
-        datetime,
-        this.registerForm.introduction,
-        this.registerForm.location,
-        '/img/user.jpg')
+      let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+      let params = new URLSearchParams()
+      params.append('username', this.registerForm.username)
+      params.append('password', this.registerForm.password)
+      params.append('sex', this.registerForm.sex)
+      params.append('phone_num', this.registerForm.phoneNum)
+      params.append('email', this.registerForm.email)
+      params.append('birth', datetime)
+      params.append('introduction', this.registerForm.introduction)
+      params.append('location', this.registerForm.location)
+      params.append('avator', '/img/user.jpg')
+      setUser(params)
         .then(res => {
-          if (res.data.code === 1) {
+          if (res.code === 1) {
             this.getData()
             this.registerForm = {}
             this.notify('添加成功', 'success')
@@ -414,19 +416,19 @@ export default {
     // 保存编辑
     saveEdit () {
       let d = new Date(this.form.birth)
-      var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      this.$api.userAPI.updateUserMsg(
-        this.form.id,
-        this.form.username,
-        this.form.password,
-        this.form.sex,
-        this.form.phoneNum,
-        this.form.email,
-        datetime,
-        this.form.introduction,
-        this.form.location
-      ).then(res => {
-        if (res.data.code === 1) {
+      let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+      let params = new URLSearchParams()
+      params.append('id', this.form.id)
+      params.append('username', this.form.username)
+      params.append('password', this.form.password)
+      params.append('sex', this.form.sex)
+      params.append('phone_num', this.form.phoneNum)
+      params.append('email', this.form.email)
+      params.append('birth', datetime)
+      params.append('introduction', this.form.introduction)
+      params.append('location', this.form.location)
+      updateUserMsg(params).then(res => {
+        if (res.code === 1) {
           this.getData()
           this.notify('修改成功', 'success')
         } else {
@@ -439,9 +441,9 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      this.$api.userAPI.deleteUser(this.idx)
+      deleteUser(this.idx)
         .then(res => {
-          if (res.data) {
+          if (res) {
             this.getData()
             this.notify('删除成功', 'success')
           } else {

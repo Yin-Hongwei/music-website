@@ -31,6 +31,7 @@
 import ContentList from '../components/ContentList'
 import { mapGetters } from 'vuex'
 import { songStyle } from '../assets/data/songList'
+import { getSongList, getSongListOfStyle } from '../api/index'
 
 export default {
   name: 'song-list',
@@ -76,10 +77,10 @@ export default {
     },
     // 获取全部歌单
     getSongList (page) {
-      this.$api.songListAPI.getSongList()
+      getSongList()
         .then(res => {
           this.currentPage = 1
-          this.albumDatas = res.data
+          this.albumDatas = res
         })
         .catch(err => {
           console.log(err)
@@ -87,10 +88,10 @@ export default {
     },
     // 通过类别获取歌单
     getSongListOfStyle (style) {
-      this.$api.songListAPI.getSongListOfStyle(style)
+      getSongListOfStyle(style)
         .then(res => {
           this.currentPage = 1
-          this.albumDatas = res.data
+          this.albumDatas = res
         })
         .catch(err => {
           console.log(err)

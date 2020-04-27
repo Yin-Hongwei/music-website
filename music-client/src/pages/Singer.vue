@@ -28,6 +28,7 @@
 <script>
 import ContentList from '../components/ContentList'
 import { singerStyle } from '../assets/data/singer'
+import { getAllSinger, getSingerOfSex } from '../api/index'
 
 export default {
   name: 'singer',
@@ -69,10 +70,10 @@ export default {
     },
     // 获取所有歌手
     getAllSinger () {
-      this.$api.singerAPI.getAllSinger()
+      getAllSinger()
         .then(res => {
           this.currentPage = 1
-          this.albumDatas = res.data
+          this.albumDatas = res
         })
         .catch(err => {
           console.log(err)
@@ -80,10 +81,10 @@ export default {
     },
     // 通过性别对歌手分类
     getSingerSex (sex) {
-      this.$api.singerAPI.getSingerOfSex(sex)
+      getSingerOfSex(sex)
         .then(res => {
           this.currentPage = 1
-          this.albumDatas = res.data
+          this.albumDatas = res
         })
         .catch(err => {
           console.log(err)

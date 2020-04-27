@@ -150,10 +150,11 @@
 </template>
 
 <script>
-import {mixin} from '../mixins'
-import { mapGetters } from 'vuex'
 import SongAudio from '../components/SongAudio'
+import { mixin } from '../mixins'
+import { mapGetters } from 'vuex'
 import '@/assets/js/iconfont.js'
+import { getSongOfSingerId, updateSongMsg, deleteSong } from '../api/index'
 
 export default {
   name: 'song-page',
@@ -232,10 +233,10 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      this.$api.songAPI.getSongOfSingerId(this.singerId).then((res) => {
-        console.log('歌手作品===========>', res.data)
-        this.tableData = res.data
-        this.tempDate = res.data
+      getSongOfSingerId(this.singerId).then((res) => {
+        console.log('歌手作品===========>', res)
+        this.tableData = res
+        this.tempDate = res
         this.currentPage = 1
       }).catch(err => {
         console.log(err)
@@ -328,15 +329,15 @@ export default {
     },
     // 保存编辑
     saveEdit () {
-      this.$api.songAPI.updateSongMsg(
-        this.form.id,
-        this.form.singerId,
-        this.form.name,
-        this.form.introduction,
-        this.form.lyric
-      )
+      let params = new URLSearchParams()
+      params.append('id', this.form.id)
+      params.append('singerId', this.form.singerId)
+      params.append('name', this.form.name)
+      params.append('introduction', this.form.introduction)
+      params.append('lyric', this.form.lyric)
+      updateSongMsg(params)
         .then(res => {
-          if (res.data) {
+          if (res) {
             this.getData()
             this.notify('编辑成功', 'success')
           } else {
@@ -350,9 +351,9 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      this.$api.songAPI.deleteSong(this.idx)
+      deleteSong(this.idx)
         .then(response => {
-          if (response.data) {
+          if (response) {
             this.getData()
             this.notify('删除成功', 'success')
           } else {
