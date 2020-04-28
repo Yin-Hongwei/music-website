@@ -64,17 +64,18 @@ div {
 
 .section {
   width: 100%;
-  margin-bottom: 80px;
+  margin-top: 20px;
   padding: 0 120px 50px 120px;
   background-color: #ffffff;
 }
 
 .section-head {
-  height: 100px;
+  height: 60px;
+  line-height: 60px;
+  padding-top: 10px;
   font-size: 28px;
   font-weight: 500;
   text-align: center;
-  line-height: 100px;
   color: black;
 }
 </style>

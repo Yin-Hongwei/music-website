@@ -1,12 +1,17 @@
 <template>
   <div class="upload">
+    <p class="title">修改头像</p>
+    <hr/>
     <div class="section">
       <el-upload
+        drag
         :action="uploadUrl()"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload">
-        <el-button size="small" type="primary">点击上传</el-button>
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">将文件拖到此处，或<em>修改头像</em></div>
+        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过10M</div>
       </el-upload>
     </div>
   </div>
@@ -37,9 +42,12 @@ export default {
       if (res.code === 1) {
         this.imageUrl = URL.createObjectURL(file.raw)
         this.$store.commit('setAvator', res.avator)
-        this.notify('上传成功', 'success')
+        this.$message({
+          message: '修改成功',
+          type: 'success'
+        })
       } else {
-        this.notify('上传失败', 'error')
+        this.notify('修改失败', 'error')
       }
     },
     beforeAvatarUpload (file) {
@@ -62,9 +70,21 @@ export default {
   width: 100%;
 }
 
+.title {
+  height: 50px;
+  line-height: 50px;
+  padding-left: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: black;
+}
+
+hr{
+  width: 98%;
+}
+
 .section {
-  height: 600px;
-  background-color: #e6ecf0;
+  height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
