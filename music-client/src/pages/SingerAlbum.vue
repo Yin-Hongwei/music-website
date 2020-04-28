@@ -1,7 +1,7 @@
 <template>
   <div class="singer-album">
     <div class="album">
-      <div class="slide">
+      <div class="album-slide">
         <div class="singer-img">
           <img :src=attachImageUrl(singer.pic) alt="">
         </div>
@@ -11,7 +11,7 @@
           <li>故乡：{{singer.location}}</li>
         </ul>
       </div>
-      <div class="section">
+      <div class="album-content">
         <div class="intro">
           <h2>{{singer.name}}</h2>
           <span>{{singer.introduction}}</span>
@@ -82,12 +82,12 @@ export default {
 }
 
 .album {
-  margin-top: 200px;
+  margin-top: 150px;
   background-color: #e6ecf0;
 }
 
 /*左*/
-.slide {
+.album-slide {
   float: left;
   width: 400px;
 }
@@ -97,6 +97,7 @@ export default {
   width: 300px;
   display: inline-block;
   position: relative;
+  margin-bottom: -50px;
   top: -100px;
   left: 50px;
   border-radius: 10%;
@@ -122,7 +123,7 @@ export default {
 }
 
 /*右*/
-.section{
+.album-content{
   margin-left: 300px;
   padding: 30px 100px;
 }

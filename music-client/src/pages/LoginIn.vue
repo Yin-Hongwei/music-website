@@ -78,12 +78,15 @@ export default {
         .then(res => {
           // console.log('-----------获取登录信息---------------')
           if (res.code === 1) {
-            _this.notify('登录成功', 'success')
+            _this.$message({
+              message: '登录成功',
+              type: 'success'
+            })
             _this.setUserMsg(res.userMsg[0])
             _this.$store.commit('setLoginIn', true)
             setTimeout(function () {
               _this.changeIndex('首页')
-              _this.$router.push({path: '/home'})
+              _this.$router.push({path: '/'})
               _this.$router.go(0)
             }, 2000)
           } else {

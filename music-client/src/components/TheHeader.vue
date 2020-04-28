@@ -81,7 +81,7 @@ export default {
       }, false)
     },
     goHome () {
-      this.$router.push({path: '/home'})
+      this.$router.push({path: '/'})
     },
     goPage (path, value) {
       document.querySelector('.menu').classList.remove('show')
@@ -121,7 +121,7 @@ export default {
   width: 100%;
   height: 80px;
   position: relative;
-  box-shadow: 0 0 10px black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .head-logo {
@@ -150,7 +150,6 @@ export default {
 /*nav*/
 .navbar {
   box-sizing: border-box;
-  height: 80px;
 }
 
 .navbar li {
