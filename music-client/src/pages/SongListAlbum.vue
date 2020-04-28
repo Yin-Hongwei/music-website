@@ -1,7 +1,6 @@
 <template>
   <div class="song-list-album">
-    <div class="album-bg"></div>
-    <div class="album-body">
+    <div class="album">
       <div class="album-slide">
         <div class="album-img">
           <img :src=attachImageUrl(singers.pic) alt="">
@@ -149,14 +148,16 @@ export default {
 
 <style scoped>
 /*歌单背景*/
-.album-bg {
+.song-list-album {
   width: 100%;
   height: 200px;
   background-color: #93d2f8;
 }
 
-.album-body {
+.album {
+  background-color: #e6ecf0;
   width: 100%;
+  margin-top: 150px;
   display: inline-block;
 }
 

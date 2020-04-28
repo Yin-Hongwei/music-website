@@ -18,17 +18,21 @@
 
 ![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hkbfdtbej31c00u0jyu.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e97bwxifj31c00u0npe.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gea010xehtj31c00u0b2b.jpg)<br/>
 
 ![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e98u647cj31c00u0x6q.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hl4b9jjdj31c00u0nmn.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gea00cibpoj31c00u0ki0.jpg)<br/>
 
 ![](https://tva1.sinaimg.cn/large/00831rSTly1gdj8iqeynwj31c00u0kjm.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/00831rSTly1gd3867tq24j31c00u0tnw.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gea01ej755j31c00u0ap5.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/00831rSTly1gd386h28hqj31c00u07vj.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gea01nkz0hj31c00u0dop.jpg)
+
+<br/>
+
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gea00pdwuxj31c00u0x5n.jpg)<br/>
 
 ![](https://tva1.sinaimg.cn/large/00831rSTly1gd388evmh0j31c00u07ha.jpg)<br/>
 
@@ -50,13 +54,13 @@
 
 ## 功能
 
-- WEB 端音乐播放
+- 音乐播放
 - 用户登录注册
-- 用户信息编辑
+- 用户信息编辑、头像修改
 - 歌曲、歌单搜索
 - 歌单打分
 - 歌单、歌曲评论
-- 分页显示
+- 歌单列表、歌手列表分页显示
 - 歌词同步显示
 - 音乐收藏、下载、拖动控制
 - 后台对用户、歌曲、歌手、歌单信息的管理

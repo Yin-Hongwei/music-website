@@ -339,7 +339,7 @@ export default {
   bottom: 0;
   width: 100%;
   transition: all .5s;
-  box-shadow: 0 0 10px black;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
 }
 
 .item-up {

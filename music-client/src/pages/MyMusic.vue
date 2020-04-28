@@ -115,7 +115,7 @@ export default {
 /*歌单背景*/
 .album-bg {
   width: 100%;
-  height: 200px;
+  height: 150px;
   background-color: #93d2f8;
 }
 
