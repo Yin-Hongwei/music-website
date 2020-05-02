@@ -1,0 +1,12 @@
+@import "var.scss";
+@import "global.scss";
+
+.the-footer {
+  width: 100%;
+  height: $footer-height;
+  background-color: $theme-footer-color;
+  @include layout(center, center, column);
+  p {
+    height: 30px;
+  }
+}

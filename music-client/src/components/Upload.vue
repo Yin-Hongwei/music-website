@@ -65,28 +65,6 @@ export default {
 }
 </script>
 
-<style scoped>
-.upload {
-  width: 100%;
-}
-
-.title {
-  height: 50px;
-  line-height: 50px;
-  padding-left: 20px;
-  font-size: 20px;
-  font-weight: 600;
-  color: black;
-}
-
-hr{
-  width: 98%;
-}
-
-.section {
-  height: 400px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+<style lang="scss" scoped>
+@import '../assets/css/upload.scss';
 </style>

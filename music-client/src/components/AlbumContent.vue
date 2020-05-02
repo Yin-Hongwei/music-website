@@ -48,64 +48,6 @@ export default {
 }
 </script>
 
-<style scoped>
-  *{
-    box-sizing: border-box;
-  }
-  .content {
-    background-color: white;
-    border-radius: 12px;
-    padding: 20px 40px;
-    min-width: 700px;
-  }
-  .content .title {
-    text-align: center;
-  }
-  .content > ul {
-    width: 100%;
-    padding-bottom: 50px;
-  }
-  .content > ul > li {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    display: block;
-    height: 50px;
-    line-height: 50px;
-    text-indent: 20px;
-  }
-  .list-content {
-    cursor: pointer;
-  }
-  .song-item {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow: hidden;
-    align-items: center;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-  }
-  .item-index {
-    width: 5%;
-  }
-  .item-title {
-    width: 30%;
-  }
-  .item-name {
-    width: 20%;
-  }
-  .item-intro {
-    width: 45%;
-  }
-  .is-play{
-    color: #30a4fc;
-    font-weight: bold;
-   }
-  .icon {
-    width: 1.5em;
-    height: 1.5em;
-    vertical-align: -0.3em;
-    position: relative;
-    right: 5px;
-    fill: currentColor;
-    overflow: hidden;
-  }
+<style lang="scss" scoped>
+@import '../assets/css/album-content.scss';
 </style>

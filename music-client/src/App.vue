@@ -31,13 +31,6 @@ export default {
 }
 </script>
 
-<style>
-#app{
-  background-color: #e6ecf0;
-  display: flex;
-  flex-direction: column;
-}
-.music-content{
-  flex: 1;
-}
+<style  lang="scss" scoped>
+@import './assets/css/app.scss';
 </style>

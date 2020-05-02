@@ -1,6 +1,6 @@
 <template>
   <div class="play-bar" :class="{show:!toggle}">
-    <div @click="toggle=!toggle" class="item-up" :class="{turn:toggle}">
+    <div @click="toggle=!toggle" class="item-up" :class="{turn: toggle}">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-jiantou-xia-cuxiantiao"></use>
       </svg>
@@ -42,7 +42,7 @@
             <div ref="bg" class="bg" @click="updatemove">
               <div ref="curProgress" class="cur-progress" :style="{width: curLength+'%'}"></div>
             </div>
-              <!--进度条 end -->
+            <!--进度条 end -->
             <!--拖动的点点-->
             <div ref="idot" class="idot" :style="{left: curLength+'%'}" @mousedown="mousedown" @mouseup="mouseup"></div>
             <!--拖动的点点 end -->
@@ -51,13 +51,21 @@
         <!--播放结束时间-->
         <div class="left-time">{{ songTime }}</div>
       </div>
+      <!--音量-->
+      <div class="item icon-volume" >
+        <svg v-if="volume !== 0" class="icon" aria-hidden="true">
+          <use xlink:href="#icon-yinliang1"></use>
+        </svg>
+        <svg v-else class="icon" aria-hidden="true">
+          <use xlink:href="#icon-yinliangjingyinheix"></use>
+        </svg>
+        <el-slider class="volume" v-model="volume" :vertical="true"></el-slider>
+      </div>
       <!--添加-->
       <div class="item" @click="collection">
-        <el-button plain style="border: 0;">
-          <svg :class="{ active: isActive }" class="icon" aria-hidden="true">
-            <use xlink:href="#icon-xihuan-shi"></use>
-          </svg>
-        </el-button>
+        <svg :class="{ active: isActive }" class="icon" aria-hidden="true">
+          <use xlink:href="#icon-xihuan-shi"></use>
+        </svg>
       </div>
       <!--下载-->
       <div class="item" @click="download">
@@ -91,7 +99,8 @@ export default {
       curLength: 0, // 进度条的位置
       progressLength: 0, // 进度条长度
       mouseStartX: 0, // 拖拽开始位置
-      toggle: true
+      toggle: true,
+      volume: 50
     }
   },
   computed: {
@@ -123,6 +132,9 @@ export default {
         this.$store.commit('setPlayButtonUrl', '#icon-bofang')
       }
     },
+    volume () {
+      this.$store.commit('setVolume', this.volume / 100)
+    },
     // 播放时间的开始和结束
     curTime () {
       this.nowTime = this.formatSeconds(this.curTime)
@@ -138,6 +150,16 @@ export default {
   },
   mounted () {
     this.progressLength = this.$refs.progress.getBoundingClientRect().width
+    document.querySelector('.icon-volume').addEventListener('click', function (e) {
+      document.querySelector('.volume').classList.add('show-volume')
+      e.stopPropagation()
+    }, false)
+    document.querySelector('.volume').addEventListener('click', function (e) {
+      e.stopPropagation()
+    }, false)
+    document.addEventListener('click', function () {
+      document.querySelector('.volume').classList.remove('show-volume')
+    }, false)
   },
   methods: {
     // 下载
@@ -330,121 +352,6 @@ export default {
 }
 </script>
 
-<style scoped>
-.active {
-  color: red !important;
-}
-.play-bar{
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  transition: all .5s;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-}
-
-.item-up {
-  position: absolute;
-  bottom: 70px;
-  left: 20px;
-  cursor: pointer;
-}
-
-.kongjian {
-  bottom: 0;
-  height: 60px;
-  width: 100%;
-  background-color: #fefefe;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-  min-width: 1000px;
-}
-
-.show {
-  bottom: -60px;
-}
-
-.turn{
-  transform: rotate(180deg);
-}
-
-.item{
-  width: 80px;
-  height: 50px;
-  line-height: 60px;
-  text-align: center;
-  cursor: pointer;
-}
-
-.item-img {
-  width: 50px;
-  height: 50px;
-}
-
-.item-img img {
-  width: 100%;
-}
-
-.item-song-title {
-  display: flex;
-  justify-content: space-between;
-  height: 20px;
-  line-height: 10px;
-}
-
-.playing-speed {
-  height: 50px;
-  width: 600px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.playing-speed .current-time,
-.playing-speed .left-time {
-  width: 70px;
-  text-align: center;
-  font-size: 13px;
-  color:black;
-  font-weight: 500;
-  top: -10px;
-}
-
-.playing-speed .progress-box {
-  flex: 1;
-}
-
-.playing-speed .progress-box .progress {
-  width: 100%;
-  background: #a9dbf9;
-  height: 6px;
-}
-
-.bg {
-  height: 100%;
-}
-
-.cur-progress {
-  height: 100%;
-  background: #30a4fc;
-}
-
-.playing-speed>.progress-box .idot {
-  width: 16px;
-  height: 16px;
-  position: relative;
-  border-radius: 50%;
-  background-color: black;
-  top: -11px;
-  vertical-align: middle;
-}
-
-.icon {
-  width: 1em;
-  height: 1em;
-  fill: currentColor;
-  color: black;
-  font-size: 1.5em;
-}
+<style lang="scss" scoped>
+@import '../assets/css/play-bar.scss';
 </style>
