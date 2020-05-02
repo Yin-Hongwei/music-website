@@ -16,27 +16,27 @@
 
 > 前台截图预览
 
-![](https://tva1.sinaimg.cn/large/006tNbRwly1g9hkbfdtbej31c00u0jyu.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1geec0a2vd9j31c00u0n4z.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/007S8ZIlly1gea010xehtj31c00u0b2b.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1geec0qtdxrj31c00u07wj.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e98u647cj31c00u0x6q.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1geec19x0e6j31c00u0npe.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/007S8ZIlly1gea00cibpoj31c00u0ki0.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1geec1nmbt4j31c00u0hcf.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/00831rSTly1gdj8iqeynwj31c00u0kjm.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1geec1yc0gkj31c00u0kjm.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/007S8ZIlly1gea01ej755j31c00u0ap5.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1geec29vvdtj31c00u0nok.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/007S8ZIlly1gea01nkz0hj31c00u0dop.jpg)
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1geec2ixqk1j31c00u0qf8.jpg)
 
 <br/>
 
-![](https://tva1.sinaimg.cn/large/007S8ZIlly1gea00pdwuxj31c00u0x5n.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1geec31i06gj31c00u0wtw.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/00831rSTly1gd388evmh0j31c00u07ha.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1geec3ozxt9j31c00u0qbv.jpg)<br/>
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g9e9d8b2ukj31c00u0dof.jpg)<br/>
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1geec41r7onj31c00u047y.jpg)<br/>
 
 > 后台截图预览
 
@@ -123,14 +123,6 @@ npm install // 安装依赖
 
 npm run dev // 启动后台管理项目
 ```
-
-<br/>
-
-#### 5、最后
-
-如果对这个项目有什么疑惑，可以联系我
-
-📮：yinhongwei96@126.com
 
 <br/>
 

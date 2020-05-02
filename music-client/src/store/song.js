@@ -14,7 +14,8 @@ const song = {
     lyric: [], // 未处理的歌词数据
     listOfSongs: [], // 当前歌单列表
     tempList: {}, // 单个歌单信息
-    listIndex: null // 当前歌曲在歌曲列表的位置
+    listIndex: null, // 当前歌曲在歌曲列表的位置
+    volume: 50
   },
   getters: {
     isPlay: state => state.isPlay,
@@ -42,21 +43,21 @@ const song = {
     duration: state => {
       let duration = state.duration
       if (!duration) {
-        duration = JSON.parse(window.sessionStorage.getItem('duration') || null)
+        duration = JSON.parse(window.sessionStorage.getItem('duration') || 0)
       }
       return duration
     },
     curTime: state => {
       let curTime = state.curTime
       if (!curTime) {
-        curTime = JSON.parse(window.sessionStorage.getItem('curTime') || null)
+        curTime = JSON.parse(window.sessionStorage.getItem('curTime') || 0)
       }
       return curTime
     },
     changeTime: state => {
       let changeTime = state.changeTime
       if (!changeTime) {
-        changeTime = JSON.parse(window.sessionStorage.getItem('changeTime') || null)
+        changeTime = JSON.parse(window.sessionStorage.getItem('changeTime') || 0)
       }
       return changeTime
     },
@@ -115,6 +116,13 @@ const song = {
         listIndex = JSON.parse(window.sessionStorage.getItem('listIndex') || null)
       }
       return listIndex
+    },
+    volume: state => {
+      let volume = state.volume
+      if (!volume) {
+        volume = JSON.parse(window.sessionStorage.getItem('volume') || null)
+      }
+      return volume
     }
   },
   mutations: {
@@ -177,6 +185,10 @@ const song = {
     setListIndex: (state, listIndex) => {
       state.listIndex = listIndex
       window.sessionStorage.setItem('listIndex', JSON.stringify(listIndex))
+    },
+    setVolume: (state, volume) => {
+      state.volume = volume
+      window.sessionStorage.setItem('volume', JSON.stringify(volume))
     }
   },
   actions: {}

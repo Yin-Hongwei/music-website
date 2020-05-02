@@ -1,0 +1,27 @@
+@import "var.scss";
+@import "global.scss";
+
+.search{
+  margin: auto;
+  margin-top: $header-height + 20px;
+  background-color: $color-white;
+  border-radius: 12px;
+  width: 900px;
+  position: relative;
+}
+
+.searchList-nav {
+  @include layout(space-around);
+  margin-top: 20px;
+  font-size: 1.5rem;
+  color: $color-black;
+  span {
+    line-height: 50px;
+    cursor: pointer;
+  }
+}
+
+.isActive {
+  font-weight: 600;
+  border-bottom:5px solid $color-black;
+}

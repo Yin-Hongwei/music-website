@@ -13,7 +13,7 @@
         <el-input type="password" placeholder="密码" v-model="loginForm.password" @keyup.enter.native="loginIn"></el-input>
       </el-form-item>
       <div class="login-btn">
-        <el-button @click="goLoginUp()">注册</el-button>
+        <el-button @click="goSignUp()">注册</el-button>
         <el-button type="primary" @click="handleleLoginIn">登录</el-button>
       </div>
     </el-form>
@@ -100,39 +100,13 @@ export default {
       this.$store.commit('setUsername', item.username)
       this.$store.commit('setAvator', item.avator)
     },
-    goLoginUp () {
-      this.$router.push({path: '/login-up'})
+    goSignUp () {
+      this.$router.push({path: '/sign-up'})
     }
   }
 }
 </script>
 
-<style scoped>
-.login{
-  position: absolute;
-  margin-left: 800px;
-  top: 150px;
-  padding: 30px 50px;
-  width: 300px;
-  background-color: white;
-  height: 210px;
-  border-radius: 10px;
-}
-
-.login-head {
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.login-btn {
-  display: flex;
-  justify-content: space-between;
-}
-
-.login-btn button{
-  display: block;
-  width: 50%;
-}
+<style lang="scss" scoped>
+@import '../assets/css/login-in.scss';
 </style>

@@ -19,7 +19,7 @@ const loginMsg = [{
   path: '/login-in'
 }, {
   name: '注册',
-  path: '/login-up'
+  path: '/sign-up'
 }]
 
 // 用户下拉菜单项
