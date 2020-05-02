@@ -1,0 +1,11 @@
+@import "var.scss";
+@import "global.scss";
+
+#app {
+  background-color: $theme-background-color;
+  @include layout(flex-start, stretch, column);
+}
+
+.music-content {
+  flex: 1;
+}

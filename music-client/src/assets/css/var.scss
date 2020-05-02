@@ -1,0 +1,60 @@
+//Colors
+$color-white: #ffffff;
+$color-light-white: #fefefe;
+$color-grey: #67757f;
+$color-light-grey: #ebeef0;
+$color-black: #000000;
+$color-blue-shallow: #a9dbf9;
+$color-blue: #95d2f6;
+$color-blue-active: #30a4fc;
+$color-blue-light: #2aa3ef;
+$color-blue-dark: #2796dd;
+
+// Theme Global Color
+$theme-color: $color-blue;
+$theme-background-color: #e6ecf0;
+$theme-header-color: $color-light-white;
+$theme-footer-color: $theme-background-color;
+$theme-play-bar-color: $color-light-white;
+
+// Fonts
+$font-family: Lato, Helvetica Neue For Number, -apple-system, BlinkMacSystemFont,
+  Segoe UI, Roboto, PingFang SC, Hiragino Sans GB, Microsoft YaHei,
+  Helvetica Neue, Helvetica, Arial, sans-serif;
+$font-size-default: 14px;
+$font-size-logo: 26px;
+$font-size-header: 18px;
+
+// header
+$header-height: 70px;
+$header-padding: 0 80px;
+$header-margin: 0;
+$header-logo-width: 150px;
+$header-logo-margin: 0 10px;
+$header-nav-padding: 0 10px;
+$header-nav-margin: 0 10px;
+$header-search-radius: 5px;
+$header-search-height: ($header-height / 2);
+$header-search-width: 270px;
+$header-search-btn-height: ($header-height / 2);
+$header-search-btn-width: 60px;
+$header-user-height: ($header-height / 3) * 2;
+$header-user-width: ($header-height / 3) * 2;
+$header-user-margin: 0 25px;
+$header-user-radius: 50%;
+$header-menu-width: 150px;
+$header-menu-padding: 7px 0px;
+$header-menu-radius: 4px;
+
+// page
+$content-padding: 0 120px 50px 120px;
+$border-radius-songlist: 12px;
+
+// footer
+$footer-height: 180px;
+
+// play-bar
+$play-bar-height: 60px;
+
+// style
+$box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);

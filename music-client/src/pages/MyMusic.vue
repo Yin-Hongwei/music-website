@@ -1,18 +1,15 @@
 <template>
   <div class="my-music">
-    <div class="album-bg"></div>
     <div class="album-slide">
-      <div class="album-slide">
-        <div class="album-img">
-          <img :src=attachImageUrl(avator) alt="">
-        </div>
-        <ul class="album-info">
-          <li>昵称： {{username}}</li>
-          <li>性别： {{userSex}}</li>
-          <li>生日： {{birth}}</li>
-          <li>故乡： {{location}}</li>
-        </ul>
+      <div class="album-img">
+        <img :src=attachImageUrl(avator) alt="">
       </div>
+      <ul class="album-info">
+        <li>昵称： {{username}}</li>
+        <li>性别： {{userSex}}</li>
+        <li>生日： {{birth}}</li>
+        <li>故乡： {{location}}</li>
+      </ul>
     </div>
     <div class="album-content">
       <div class="album-title">个性签名: {{introduction}}</div>
@@ -111,66 +108,6 @@ export default {
 }
 </script>
 
-<style scoped>
-/*歌单背景*/
-.album-bg {
-  width: 100%;
-  height: 150px;
-  background-color: #93d2f8;
-}
-
-/*歌单左侧*/
-.album-slide {
-  float: left;
-  width: 400px;
-}
-
-/*歌单图像*/
-.album-img {
-  height: 200px;
-  width: 200px;
-  display: inline-block;
-  position: relative;
-  top:-100px;
-  left: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 5px solid white;
-}
-
-.album-img img {
-  width: 100%;
-}
-
-/*歌单信息*/
-.album-info {
-  color: black;
-  width: 500px;
-  font-size: 20px;
-  font-weight: 500;
-  margin-top: -100px;
-  margin-left: 100px;
-  padding: 30px 30px;
-}
-
-.album-info li {
-  width: 100%;
-  line-height: 40px;
-}
-
-/*歌单内容*/
-.album-content{
-  margin-left: 300px;
-  padding: 40px 100px;
-}
-
-/*歌单题目*/
-.album-title {
-  font-size: 30px;
-  font-weight: 600;
-}
-
-.songs-body {
-  margin-top: 50px;
-}
+<style lang="scss" scoped>
+@import '../assets/css/my-music.scss';
 </style>

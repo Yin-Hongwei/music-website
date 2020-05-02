@@ -1,6 +1,6 @@
 <template>
   <div class="song-audio">
-    <audio :src='url' controls="controls" ref="player" preload="true"  @canplay="startPlay" @timeupdate="timeupdate" @ended="ended">
+    <audio :src='url' controls="controls" ref="player" preload="true" @canplay="startPlay" @timeupdate="timeupdate" @ended="ended">
       <!--（1）属性：controls，preload（2）事件：canplay，timeupdate，ended（3）方法：play()，pause() -->
       <!--controls：向用户显示音频控件（播放/暂停/进度条/音量）-->
       <!--preload：属性规定是否在页面加载后载入音频-->
@@ -22,6 +22,7 @@ export default {
       'url', // 音乐链接
       'listOfSongs', // 存放的音乐
       'isPlay', // 播放状态
+      'volume', // 音量
       'curTime', // 当前音乐的播放位置
       'changeTime', // 指定播放时刻
       'autoNext' // 用于触发自动播放下一首
@@ -29,13 +30,16 @@ export default {
   },
   watch: {
     // 监听播放还是暂停
-    isPlay: function () {
+    isPlay () {
       this.togglePlay()
     },
     // 跳到指定时刻播放
-    changeTime: function () {
+    changeTime () {
       let player = this.$refs.player
       player.currentTime = this.changeTime
+    },
+    volume (val) {
+      this.$refs.player.volume = val
     }
   },
   methods: {
@@ -72,8 +76,6 @@ export default {
 }
 </script>
 
-<style>
-audio {
-  display: none;
-}
+<style lang="scss" scoped>
+@import '../assets/css/song-audio.scss';
 </style>

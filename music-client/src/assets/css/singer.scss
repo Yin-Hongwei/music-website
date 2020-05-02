@@ -1,0 +1,38 @@
+@import "var.scss";
+@import "global.scss";
+
+div,
+ul,
+li {
+  box-sizing: border-box;
+}
+
+.singer {
+  margin: 30px 10%;
+  margin-top: $header-height + 20px;
+  padding-bottom: 50px;
+  background-color: $color-white;
+  .singer-header {
+    width: 100%;
+    padding: 0 40px;
+    li {
+      display: inline-block;
+      line-height: 40px;
+      margin: 40px 20px 15px 20px;
+      font-size: 20px;
+      font-weight: 400;
+      color: $color-grey;
+      border-bottom: none;
+      cursor: pointer;
+    }
+    li.active {
+      color: $color-black;
+      font-weight: 600;
+      border-bottom: 4px solid $color-black;
+    }
+  }
+}
+
+.pagination {
+  @include layout;
+}

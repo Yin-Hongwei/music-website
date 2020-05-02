@@ -26,13 +26,6 @@ export default {
 }
 </script>
 
-<style scoped>
-.swiper{
-  width: 90%;
-  margin: auto;
-  margin-top: 40px;
-}
-img{
-  width: 100%;
-}
+<style lang="scss" scoped>
+@import '../assets/css/swiper.scss';
 </style>

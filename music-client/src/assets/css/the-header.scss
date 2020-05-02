@@ -1,0 +1,143 @@
+@import "var.scss";
+@import "global.scss";
+
+.the-header {
+  position: fixed;
+  @include layout;
+  width: 100%;
+  height: $header-height;
+  line-height: $header-height;
+  padding: $header-padding;
+  margin: $header-margin;
+  background-color: $theme-header-color;
+  @include box-shadow($box-shadow);
+  box-sizing: border-box;
+  z-index: 100;
+}
+
+.header-logo {
+  margin: $header-logo-margin;
+  font-size: $font-size-logo;
+  font-weight: bold;
+  white-space: nowrap;
+  cursor: pointer;
+  .icon {
+    @include icon(($header-height / 3) * 2, $color-black);
+    vertical-align: middle;
+  }
+}
+
+/*nav*/
+.navbar {
+  height: $header-height;
+  white-space: nowrap;
+  li {
+    margin: $header-nav-margin;
+    padding: $header-nav-padding;
+    font-size: $font-size-header;
+    color: $color-grey;
+    text-align: center;
+    border-bottom: none;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+}
+
+/*搜索*/
+.header-search {
+  @include layout;
+  border-radius: $header-search-radius;
+  overflow: hidden;
+  input {
+    height: $header-search-height;
+    width: $header-search-width;
+    font-size: $font-size-default;
+    border: 0;
+    text-indent: 10px;
+    background-color: $color-light-grey;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .search-btn {
+    @include layout(center, center);
+    background-color: $color-blue-active;
+    width: $header-search-btn-width;
+    height: $header-search-btn-height;
+    cursor: pointer;
+    .icon {
+      @include icon(1.2em, $color-white);
+    }
+  }
+}
+
+/*用户*/
+.header-right {
+  position: relative;
+  @include layout(center, center);
+  #user {
+    overflow: hidden;
+    width: $header-user-width;
+    height: $header-user-height;
+    border-radius: $header-user-radius;
+    margin: $header-user-margin;
+    cursor: pointer;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.menu {
+  display: none;
+  line-height: 0px;
+  position: absolute;
+  background-color: $color-white;
+  @include box-shadow(1px 1px 10px rgba(0, 0, 0, 0.4));
+  width: $header-menu-width;
+  padding: $header-menu-padding;
+  border-radius: $header-menu-radius;
+  top: $header-height + 10px;
+  right: -20px;
+  z-index: 5;
+  text-align: center;
+  cursor: pointer;
+
+  li {
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+
+    &:hover {
+      background-color: $theme-color;
+      color: $color-white;
+    }
+  }
+
+  :nth-child(1):before {
+    content: " ";
+    display: block; /*独占一行*/
+    position: absolute;
+    right: 45px;
+    top: -5px; /*果断的露出上半部分*/
+    width: 10px;
+    height: 10px;
+    background-color: $color-white;
+    /*一个正方形倾斜四十五度就是三角了但是要把下半部分藏起来*/
+    transform: rotate(45deg);
+  }
+  // :nth-child(1):hover:before {
+  // background-color: $theme-color;
+  // }
+}
+
+.show {
+  display: block;
+}
+
+.active {
+  color: $theme-color !important;
+  border-bottom: 5px solid $theme-color !important;
+}

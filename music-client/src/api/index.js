@@ -6,7 +6,7 @@ import { get, post } from './http'
 // 登录
 export const loginIn = (params) => post(`user/login/status`, params)
 // 注册
-export const loginUp = (params) => post(`user/add`, params)
+export const SignUp = (params) => post(`user/add`, params)
 // 更新用户信息
 export const updateUserMsg = (params) => post(`user/update`, params)
 // 返回指定ID的用户

@@ -1,0 +1,16 @@
+@import "var.scss";
+@import "global.scss";
+
+.error-page {
+  @include layout(center);
+  width: 100%;
+  height: 100%;
+  padding: 11rem 0;
+  box-sizing: border-box;
+
+  .error-code {
+    font-size: 250px;
+    font-weight: bolder;
+    color: $theme-color;
+  }
+}

@@ -38,9 +38,6 @@ export default {
 }
 </script>
 
-<style scoped>
-.search-song-Lists{
-  min-height: 300px;
-  margin-top: 50px;
-}
+<style lang="scss" scoped>
+@import '../../assets/css/search-song-Lists.scss';
 </style>

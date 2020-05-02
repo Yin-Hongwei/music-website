@@ -144,47 +144,6 @@ export default {
 }
 </script>
 
-<style scoped>
-.info {
-  padding-bottom: 30px;
-}
-
-.title {
-  height: 50px;
-  line-height: 50px;
-  padding-left: 20px;
-  font-size: 20px;
-  font-weight: 600;
-  color: black;
-}
-
-hr{
-  width: 98%;
-}
-
-.personal {
-  padding-right: 50px;
-  padding-top: 40px;
-}
-
-.btn {
-  width: 100%;
-  height: 40px;
-  margin-left: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.btn div {
-  display: inline-block;
-  width: 100px;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  background-color: #30a4fc;
-  margin: 0 20px;
-  color: white;
-}
+<style lang="scss" scoped>
+@import '../assets/css/info.scss';
 </style>

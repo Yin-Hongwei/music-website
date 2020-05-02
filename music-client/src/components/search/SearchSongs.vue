@@ -26,8 +26,6 @@ export default {
 }
 </script>
 
-<style scoped>
-  .search-songs{
-    min-height: 300px;
-  }
+<style lang="scss" scoped>
+@import '../../assets/css/search-songs.scss';
 </style>

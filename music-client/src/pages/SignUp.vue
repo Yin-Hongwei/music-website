@@ -1,11 +1,11 @@
 <template>
-<div class="loginUp-page">
+<div class="signUp-page">
   <loginLogo/>
-  <div class="loginUp">
-    <div class="loginUp-head">
+  <div class="signUp">
+    <div class="signUp-head">
       <span>用户注册</span>
     </div>
-    <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="80px" class="demo-ruleForm">
+    <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="70px" class="demo-ruleForm">
       <el-form-item prop="username" label="用户名">
         <el-input v-model="registerForm.username" placeholder="用户名"></el-input>
       </el-form-item>
@@ -37,7 +37,7 @@
       </el-form-item>
       <div class="login-btn">
         <el-button @click="goback(-1)">取消</el-button>
-        <el-button type="primary" @click="loginUp">确定</el-button>
+        <el-button type="primary" @click="SignUp">确定</el-button>
       </div>
     </el-form>
   </div>
@@ -48,10 +48,10 @@
 import loginLogo from '../components/LoginLogo'
 import { mixin } from '../mixins'
 import { rules, cities } from '../assets/data/form'
-import { loginUp } from '../api/index'
+import { SignUp } from '../api/index'
 
 export default {
-  name: 'loginUp-page',
+  name: 'SignUp-page',
   components: {
     loginLogo
   },
@@ -77,7 +77,7 @@ export default {
     this.cities = cities
   },
   methods: {
-    loginUp () {
+    SignUp () {
       let _this = this
       let d = this.registerForm.birth
       let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
@@ -91,7 +91,7 @@ export default {
       params.append('introduction', this.registerForm.introduction)
       params.append('location', this.registerForm.location)
       params.append('avator', '/img/user.jpg')
-      loginUp(params)
+      SignUp(params)
         .then(res => {
           console.log(res)
           if (res.code === 1) {
@@ -114,39 +114,6 @@ export default {
 }
 </script>
 
-<style scoped>
-.loginUp{
-  position: absolute;
-  top:150px;
-  background-color: white;
-  border-radius: 10px;
-  width: 350px;
-  margin-left: 750px;
-  padding: 30px 30px;
-}
-
-.loginUp-head {
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.login-btn {
-  display: flex;
-  justify-content: space-between;
-}
-
-.login-btn button{
-  display: block;
-  width: 50%;
-}
-
-.local {
-  position: absolute;
-  width: 270px;
-  top: 550px;
-  margin-left: 80px;
-}
-
+<style lang="scss" scoped>
+@import '../assets/css/sign-up.scss';
 </style>

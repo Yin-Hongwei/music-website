@@ -49,63 +49,6 @@ export default {
 }
 </script>
 
-<style>
-.setting {
-  margin: 30px 10%;
-  min-height: 500px;
-  display: flex;
-  background-color: #ffffff;
-  border-radius: 12px;
-}
-
-/* 左侧导航栏 */
-.leftCol {
-  margin-top: 10px;
-  padding: 0 20px;
-  box-sizing: border-box;
-  width: 200px;
-}
-
-.settingsMainHeader {
-  font-size: 20px;
-  height: 60px;
-  line-height: 60px;
-  font-size: 22px;
-  font-weight: 500;
-}
-
-.setting-aside {
-  width: 100%;
-}
-
-.setting-aside li{
-  display: block;
-  height: 40px;
-  line-height: 40px;
-  font-size: 18px;
-  padding: 0 10px;
-  box-sizing: border-box;
-  border-radius: 5px;
-  margin-right: 2px;
-}
-
-.setting-aside li:hover{
-  background-color: #26a2ff;
-  color: #ffffff;
-}
-
-.setting-aside li:active{
-  background-color: #93d2f8;
-}
-
-.activeColor{
-  background-color: #93d2f8 !important;
-  color: #ffffff;
-}
-
-/* 右边内容 */
-.contentCol {
-  flex: 1;
-  padding-top: 20px;
-}
+<style lang="scss" scoped>
+@import '../assets/css/setting.scss';
 </style>

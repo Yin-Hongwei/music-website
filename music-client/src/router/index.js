@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import LoginIn from '@/pages/LoginIn'
-import LoginUp from '@/pages/LoginUp'
+import SignUp from '@/pages/SignUp'
 import Home from '@/pages/Home'
 import SongList from '@/pages/SongList'
 import Singer from '@/pages/Singer'
@@ -30,9 +30,9 @@ export default new Router({
       component: LoginIn
     },
     {
-      path: '/login-up',
-      name: 'login-up',
-      component: LoginUp
+      path: '/sign-up',
+      name: 'sign-up',
+      component: SignUp
     },
     {
       path: '/',

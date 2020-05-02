@@ -4,7 +4,7 @@
     <swiper/>
     <!--热门歌单/歌手-->
     <div class="section" v-for="(item, index) in songsList" :key="index">
-      <div class="section-head">{{item.name}}</div>
+      <div class="section-title">{{item.name}}</div>
       <content-list :contentList="item.list"></content-list>
     </div>
   </div>
@@ -57,25 +57,6 @@ export default {
 }
 </script>
 
-<style scoped>
-div {
-  box-sizing: border-box;
-}
-
-.section {
-  width: 100%;
-  margin-top: 20px;
-  padding: 0 120px 50px 120px;
-  background-color: #ffffff;
-}
-
-.section-head {
-  height: 60px;
-  line-height: 60px;
-  padding-top: 10px;
-  font-size: 28px;
-  font-weight: 500;
-  text-align: center;
-  color: black;
-}
+<style lang="scss" scoped>
+@import '../assets/css/home.scss';
 </style>

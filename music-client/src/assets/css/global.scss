@@ -1,0 +1,32 @@
+@import "var.scss";
+
+// 上下左右居中
+@mixin layout(
+  $justify-content: flex-start,
+  $align-items: stretch,
+  $flex-direction: row,
+  $flex-wrap: nowrap
+) {
+  display: flex;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  flex-direction: $flex-direction;
+  flex-wrap: $flex-wrap;
+}
+
+// 图标
+@mixin icon($size: 1.5em, $color: $color-black) {
+  width: $size;
+  height: $size;
+  font-size: $size;
+  color: $color;
+  fill: currentColor;
+  overflow: hidden;
+  position: relative;
+}
+
+@mixin box-shadow($box-shadow) {
+  -webkit-box-shadow: $box-shadow;
+  -moz-box-shadow: $box-shadow;
+  box-shadow: $box-shadow;
+}
