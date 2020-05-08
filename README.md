@@ -132,24 +132,6 @@ npm run dev // 启动后台管理项目
 
 <br/>
 
-## 声明
-
-这个项目我拿出来是纯分享技术的，没有在任何地方收费，但凡发现有收费的地方，有发现的人把那个链接发我邮箱 yinhongwei96@126.com ，或者在 Issues 中补充一下，谢谢。也希望大家和我一起举报这些人，那些盗了项目还死不要脸的我就走法律程序。
-
-下面是目前发现拿我项目骗钱的人及证据。
-
-### 1、[第一个骗钱的]
-
-- B站：https://space.bilibili.com/356629729?spm_id_from=333.788.b_765f7570696e666f.1
-
-![](https://tva1.sinaimg.cn/large/007S8ZIlly1gekw732jwpj31f60u0b2a.jpg)
-
-- csdn：https://blog.csdn.net/qq_40985788/
-
-![](https://tva1.sinaimg.cn/large/007S8ZIlly1gekwcta099j31gb0u01ae.jpg)
-
-
-
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
