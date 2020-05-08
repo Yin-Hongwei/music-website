@@ -12,7 +12,7 @@ public interface CollectService {
 
     boolean updateCollectMsg(Collect collect);
 
-    boolean deleteCollect(Integer songId);
+    boolean deleteCollect(Integer userId, Integer songId);
 
     List<Collect> allCollect();
 
