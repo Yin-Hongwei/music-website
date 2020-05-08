@@ -91,8 +91,10 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 
 去【链接: https://pan.baidu.com/s/1Qv0ohAIPeTthPK_CDwpfWg 提取码: gwa4 】下载网站依赖的歌曲及图片，将 data 夹里的文件直接放到 music-server 文件夹下。
 
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gekwp2wqxuj311v0u0du2.jpg" height="200px"/>
+
 #### 3、修改
-1）数据库：将sql文件夹中的 tp_music.sql 文件导入数据库。（mysql 版本不能低于5.7）
+1）数据库：将sql文件夹中的 tp_music.sql 文件导入数据库。
 
 2）music-server：启动后端服务之前，有一些地方需要修改，先去 /music-website/music-server/src/main/resources 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password，并且修改下圈出来的的文件中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。（Mac 和 win 下路径有些差异，我的是 Mac 上的路径，win 上需要在 file: 后标明是哪个盘，例如："file:C:\\\user\\\XXX\\\\"）
 
@@ -105,7 +107,11 @@ music-server 是本项目的后端，用于监听前端发来的请求，提供�
 然后进入 music-server 文件夹，运行下面命令启动服务器
 
 ```js
+// 方法一
 ./mvnw spring-boot:run
+
+// 方法二
+mvn spring-boot:run // 前提装了 maven
 ```
 
 进入 music-client 文件夹，运行下面命令启动前台项目
@@ -125,6 +131,24 @@ npm run dev // 启动后台管理项目
 ```
 
 <br/>
+
+## 声明
+
+这个项目我拿出来是纯分享技术的，没有在任何地方收费，但凡发现有收费的地方，有发现的人把那个链接发我邮箱 yinhongwei96@126.com ，或者在 Issues 中补充一下，谢谢。也希望大家和我一起举报这些人，那些盗了项目还死不要脸的我就走法律程序。
+
+下面是目前发现拿我项目骗钱的人及证据。
+
+### 1、[第一个骗钱的]
+
+- B站：https://space.bilibili.com/356629729?spm_id_from=333.788.b_765f7570696e666f.1
+
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gekw732jwpj31f60u0b2a.jpg)
+
+- csdn：https://blog.csdn.net/qq_40985788/
+
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gekwcta099j31gb0u01ae.jpg)
+
+
 
 ## License
 
