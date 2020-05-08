@@ -1,5 +1,5 @@
 /* eslint-disable*/
-import { get, post } from './http'
+import { get, post, deletes } from './http'
 
 // =======================> 管理员 API
 // 是否登录成功
@@ -23,8 +23,7 @@ export const deleteUser = (id) => get(`user/delete?id=${id}`)
 // 返回的指定用户ID收藏列表
 export const getCollectionOfUser = (userId) => get(`collection/detail?userId=${userId}`)
 // 删除收藏的歌曲
-export const deleteCollection = (songId) => get(`collection/delete?songId=${songId}`)
-
+export const deleteCollection = (userId, songId) => get(`/collection/delete?userId=${userId}&&songId=${songId}`)
 
 // =======================> 评论列表 API
 // 获得指定歌曲ID的评论列表

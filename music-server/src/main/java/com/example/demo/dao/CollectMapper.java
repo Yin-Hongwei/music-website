@@ -24,7 +24,7 @@ public interface CollectMapper {
 
     int updateCollectMsg(Collect collect);
 
-    int deleteCollect(Integer id);
+    int deleteCollect(@Param("userId") Integer userId, @Param("songId") Integer songId);
 
     List<Collect> allCollect();
 
