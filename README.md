@@ -1,4 +1,4 @@
-<h1 align="center" style="background:black">music-website</h1>
+<h1 align="center">music-website</h1>
 
 <br/>
 
@@ -15,11 +15,11 @@
 
 - B站地址：https://space.bilibili.com/356629729?spm_id_from=333.788.b_765f7570696e666f.1
 
-![](https://tva1.sinaimg.cn/large/007S8ZIlly1gekw732jwpj31f60u0b2a.jpg)
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gemeqxzs27j310i0iutu4.jpg)
 
 - csdn地址：https://blog.csdn.net/qq_40985788/
 
-![](https://tva1.sinaimg.cn/large/007S8ZIlly1gekwcta099j31gb0u01ae.jpg)
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gemeuatiagj31740oykaq.jpg)
 
 <br/>
 
