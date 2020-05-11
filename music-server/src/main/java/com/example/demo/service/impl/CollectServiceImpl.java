@@ -29,8 +29,8 @@ public class CollectServiceImpl implements CollectService {
     }
 
     @Override
-    public boolean deleteCollect(Integer songId) {
-        return collectMapper.deleteCollect(songId) >0 ?true:false;
+    public boolean deleteCollect(Integer userId, Integer songId) {
+        return collectMapper.deleteCollect(userId, songId) >0 ?true:false;
     }
 
     @Override
