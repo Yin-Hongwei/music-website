@@ -13,7 +13,7 @@
 
 ## 项目说明
 
-本音乐网站的开发主要利用 VUE 框架开发前台和后台，后端接口用 Spring Boot + MyBatis 来实现，数据库使用的是 MySQL。
+本音乐网站的开发主要利用 VUE 框架开发前台和后台，后端接口用 Spring Boot + MyBatis 来实现，数据库使用的是 MySQL。实现思路可以看[这里](https://yin-hongwei.github.io/2019/03/04/music/#more)。
 
 <br/>
 
