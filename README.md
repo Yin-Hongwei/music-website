@@ -139,7 +139,7 @@ npm run dev // 启动后台管理项目
 
 ## License
 
-[MIT](http://opensource.org/licenses/MIT)
+[GNU General Public License]
 
 Copyright (c) 2018 Yin-Hongwei 
 
