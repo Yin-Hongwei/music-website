@@ -139,7 +139,5 @@ npm run dev // 启动后台管理项目
 
 ## License
 
-[GNU General Public License]
-
 Copyright (c) 2018 Yin-Hongwei 
 
