@@ -28,7 +28,7 @@
               </div>
               <div v-if="toggle === scope.row.name">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-zanting"></use>
+                  <use :xlink:href="playIcon"></use>
                 </svg>
               </div>
             </div>
@@ -204,6 +204,13 @@ export default {
     // 计算当前表格中的数据
     data () {
       return this.tableData.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
+    },
+    playIcon () {
+      if (this.isPlay) {
+        return '#icon-zanting'
+      } else {
+        return '#icon-bofanganniu'
+      }
     }
   },
   watch: {
@@ -234,7 +241,6 @@ export default {
       this.tableData = []
       this.tempDate = []
       getSongOfSingerId(this.singerId).then((res) => {
-        console.log('歌手作品===========>', res)
         this.tableData = res
         this.tempDate = res
         this.currentPage = 1

@@ -4,9 +4,9 @@
       class="sidebar-el-menu"
       :default-active="onRoutes"
       :collapse="collapse"
-      background-color="#324157"
-      text-color="#ffffff"
-      active-text-color="#20a0ff"
+      background-color="#242526"
+      text-color="#B0B3B2"
+      active-text-color="#ffffff"
       unique-opened
       router
     >
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import bus from '../assets/js/bus'
+import _ctrEvent from '../assets/js/ctr-event'
 
 export default {
   data () {
@@ -31,17 +31,17 @@ export default {
       collapse: false,
       items: [
         {
-          icon: 'el-icon-document',
+          icon: 'el-icon-s-data',
           index: 'info',
           title: '系统首页'
         },
         {
-          icon: 'el-icon-document',
+          icon: 'el-icon-user-solid',
           index: 'consumer',
           title: '用户管理'
         },
         {
-          icon: 'el-icon-document',
+          icon: 'el-icon-service',
           index: 'singer',
           title: '歌手管理'
         },
@@ -59,8 +59,7 @@ export default {
     }
   },
   created () {
-    // 通过 Event Bus 进行组件间通信，来折叠侧边栏
-    bus.$on('collapse', msg => {
+    _ctrEvent.$on('collapse', msg => {
       this.collapse = msg
     })
   }

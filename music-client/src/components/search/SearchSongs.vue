@@ -6,15 +6,15 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { mixin } from '../../mixins'
+import mixin from '../../mixins'
 import AlbumContent from '../AlbumContent'
 
 export default {
   name: 'search-songs',
+  mixins: [mixin],
   components: {
     AlbumContent
   },
-  mixins: [mixin],
   computed: {
     ...mapGetters([
       'listOfSongs' // 存放的音乐

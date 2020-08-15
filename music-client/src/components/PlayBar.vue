@@ -85,7 +85,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { mixin } from '../mixins'
+import mixin from '../mixins'
 import { setCollection, download } from '../api/index'
 
 export default {

@@ -3,10 +3,10 @@
     <div class="ms-title">Yin-music 后台管理</div>
     <div class="ms-login">
       <el-form
-        :model="ruleForm"
-        :rules="rules"
         ref="ruleForm"
         class="demo-ruleForm"
+        :model="ruleForm"
+        :rules="rules"
       >
         <el-form-item prop="username">
           <el-input v-model="ruleForm.username" placeholder="username"></el-input>
@@ -80,6 +80,7 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .ms-title {
   position: absolute;
   top: 50%;
@@ -90,6 +91,7 @@ export default {
   font-weight: 600;
   color: #fff;
 }
+
 .ms-login {
   position: absolute;
   left: 50%;
@@ -101,9 +103,11 @@ export default {
   border-radius: 5px;
   background: #fff;
 }
+
 .login-btn {
   text-align: center;
 }
+
 .login-btn button {
   width: 100%;
   height: 36px;

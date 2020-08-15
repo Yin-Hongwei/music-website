@@ -1,6 +1,6 @@
 <template>
   <div class="the-footer">
-    <p v-for="(item, index) in list" :key="index">
+    <p v-for="(item, index) in footerList" :key="index">
       {{item}}
     </p>
   </div>
@@ -11,10 +11,9 @@ export default {
   name: 'the-footer',
   data () {
     return {
-      list: [
+      footerList: [
         `关于 | 帮助 | 条款 | 反馈`,
-        `Copyright © 2019`,
-        `Designed by Yin-Hongwei`
+        `Copyright © 2019 Yin-Hongwei`
       ]
     }
   }

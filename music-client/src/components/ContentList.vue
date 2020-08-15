@@ -2,9 +2,9 @@
   <div class="content-list">
     <ul class="section-content">
       <li class="content-item" v-for="(item, index) in contentList" :key="index">
-        <div class="kuo" @click="goAblum(item, item.name)">
+        <div class="kuo" @click="goAblum(item)">
           <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
-          <div class="mask"  @click="goAblum(item, item.name)">
+          <div class="mask"  @click="goAblum(item)">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-bofang"></use>
             </svg>
@@ -17,22 +17,19 @@
 </template>
 
 <script>
-import { mixin } from '../mixins'
+import mixin from '../mixins'
 
 export default {
   name: 'content-list',
   mixins: [mixin],
-  props: [
-    'contentList'
-  ],
+  props: {
+    contentList: Array,
+    path: String
+  },
   methods: {
-    goAblum (item, type) {
+    goAblum (item) {
       this.$store.commit('setTempList', item)
-      if (type) {
-        this.$router.push({path: `/singer-album/${item.id}`})
-      } else {
-        this.$router.push({path: `/song-list-album/${item.id}`})
-      }
+      this.$router.push({path: `/${this.path}/${item.id}`})
     }
   }
 }

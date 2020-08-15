@@ -49,11 +49,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import mixin from '../mixins'
 import { cities } from '../assets/data/form'
 import { updateUserMsg, getUserOfId } from '../api/index'
 
 export default {
   name: 'info',
+  mixins: [mixin],
   data: function () {
     return {
       registerForm: { // 注册

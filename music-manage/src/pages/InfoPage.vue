@@ -45,13 +45,13 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <h3 style="margin-bottom: 20px">用户性别比例</h3>
-        <div  style="background-color: white">
+        <div class="cav-info" style="background-color: white">
           <ve-pie :data="userSex" :theme="options"></ve-pie>
         </div>
       </el-col>
       <el-col :span="12">
         <h3 style="margin-bottom: 20px">歌曲类型分布</h3>
-        <div  style="background-color: white">
+        <div class="cav-info" style="background-color: white">
           <ve-histogram :data="songStyle" :theme="options3"></ve-histogram>
         </div>
       </el-col>
@@ -59,13 +59,13 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <h3 style="margin: 20px 0">歌手性别比例</h3>
-        <div  style="background-color: white">
+        <div class="cav-info" style="background-color: white">
           <ve-pie :data="singerSex" :theme="options1"></ve-pie>
         </div>
       </el-col>
       <el-col :span="12">
         <h3 style="margin: 20px 0">歌手国籍分布</h3>
-        <div  style="background-color: white">
+        <div class="cav-info" style="background-color: white">
           <ve-histogram :data="country" :theme="options2"></ve-histogram>
         </div>
       </el-col>
@@ -251,5 +251,10 @@ export default {
   .grid-num {
     font-size: 30px;
     font-weight: bold;
+  }
+
+  .cav-info {
+    border-radius: 6px;
+    overflow: hidden;
   }
 </style>

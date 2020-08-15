@@ -1,9 +1,4 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-
-Vue.use(Router)
-
-export default new Router({
+const router = {
   routes: [
     {
       path: '/Home',
@@ -57,4 +52,6 @@ export default new Router({
       component: resolve => require(['../pages/Login.vue'], resolve)
     }
   ]
-})
+}
+
+export default router

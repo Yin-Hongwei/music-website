@@ -9,7 +9,7 @@
         {{item.name}}
       </li>
     </ul>
-    <content-list :contentList="data"></content-list>
+    <content-list :contentList="data" path="singer-album"></content-list>
     <div class="pagination">
       <el-pagination
         @current-change="handleCurrentChange"

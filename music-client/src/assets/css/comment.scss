@@ -3,30 +3,34 @@
 
 /*评论*/
 .comment {
+  position: relative;
+
   h2 {
-    margin-bottom: 20px;
-    text-align: center;
+    margin-bottom: 10px;
     height: 50px;
     line-height: 50px;
-    border-bottom: 1px solid $color-black;
+  }
+
+  .part__tit_desc {
+    font-size: 14px;
+    font-weight: 400;
+    color: $color-grey;
+    margin-left: 10px;
   }
 
   .comment-msg {
     display: flex;
-    .comment-img {
-      width: 70px;
-      img {
-        width: 100%;
-      }
-    }
+    margin-bottom: 30px;
+
     .comment-input {
-      margin-left: 10px;
       flex: 1;
     }
   }
+
   .sub-btn {
-    margin-top: 10px;
-    margin-left: 90%;
+    margin-top: -15px;
+    position: absolute;
+    right: 0;
   }
 }
 
@@ -49,9 +53,13 @@
       flex: 1;
       li {
         width: 100%;
+        height: 25px;
       }
       .time {
         font-size: 0.6rem;
+        color: rgba(0, 0, 0, 0.5);
+      }
+      .name {
         color: rgba(0, 0, 0, 0.5);
       }
       .content {
@@ -60,8 +68,9 @@
     }
 
     .up {
-      width: 50px;
-      line-height: 60px;
+      width: 70px;
+      line-height: 77px;
+      font-size: 18px;
     }
   }
 }

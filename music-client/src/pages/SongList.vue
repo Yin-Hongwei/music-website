@@ -10,7 +10,7 @@
       </li>
     </ul>
     <div class="song-content">
-      <content-list :contentList="data"></content-list>
+      <content-list :contentList="data" path="song-list-album"></content-list>
       <div class="pagination">
         <el-pagination
           @current-change="handleCurrentChange"

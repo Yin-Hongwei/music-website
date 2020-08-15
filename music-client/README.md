@@ -1,4 +1,4 @@
-# music
+# music-client
 
 > A Vue.js project
 

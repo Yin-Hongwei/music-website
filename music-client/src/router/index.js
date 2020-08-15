@@ -1,20 +1,4 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import LoginIn from '@/pages/LoginIn'
-import SignUp from '@/pages/SignUp'
-import Home from '@/pages/Home'
-import SongList from '@/pages/SongList'
-import Singer from '@/pages/Singer'
-import MyMusic from '@/pages/MyMusic'
-import SongListAlbum from '@/pages/SongListAlbum'
-import SingerAlbum from '@/pages/SingerAlbum'
-import Search from '@/pages/Search'
-import Setting from '@/pages/Setting'
-import Lyric from '@/pages/Lyric'
-
-Vue.use(Router)
-
-export default new Router({
+const router = {
   routes: [
     {
       path: '*',
@@ -22,65 +6,67 @@ export default new Router({
     },
     {
       path: '/404',
-      component: resolve => require(['../pages/404.vue'], resolve)
+      component: () => import('@/pages/404.vue')
     },
     {
       path: '/login-in',
       name: 'login-in',
-      component: LoginIn
+      component: () => import('@/pages/LoginIn'),
     },
     {
       path: '/sign-up',
       name: 'sign-up',
-      component: SignUp
+      component: () => import('@/pages/SignUp')
     },
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: () => import('@/pages/Home')
     },
     {
       path: '/song-list',
       name: 'song-list',
-      component: SongList
+      component: () => import('@/pages/SongList')
     },
     {
       path: '/my-music',
       name: 'my-music',
-      component: MyMusic
+      component: () => import('@/pages/MyMusic')
     },
     {
       path: '/song-list-album/:id',
       name: 'song-list-album',
-      component: SongListAlbum
+      component: () => import('@/pages/SongListAlbum')
     },
     {
       path: '/singer',
       name: 'singer',
-      component: Singer
+      component: () => import('@/pages/Singer')
     },
     {
       path: '/singer-album/:id',
       name: 'singer-album',
-      component: SingerAlbum
+      component: () => import('@/pages/SingerAlbum')
     },
     {
       path: '/lyric/:id',
       name: 'lyric',
-      component: Lyric
+      component: () => import('@/pages/Lyric')
     },
     {
       path: '/search',
       name: 'search',
-      component: Search
+      component: () => import('@/pages/Search')
     },
     {
       path: '/setting',
       name: 'setting',
-      component: Setting
+      component: () => import('@/pages/Setting')
     }
   ],
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     return { x: 0, y: 0 }
   }
-})
+}
+
+export default router
