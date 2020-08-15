@@ -17,11 +17,8 @@
 </template>
 
 <script>
-import { mixin } from '../mixins'
-
 export default {
   name: 'content-list',
-  mixins: [mixin],
   props: [
     'contentList'
   ],

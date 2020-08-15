@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
 import AlbumContent from '../components/AlbumContent'
 import { getCollectionOfUser, getUserOfId, getSongOfId } from '../api/index'
@@ -33,7 +32,6 @@ export default {
   components: {
     AlbumContent
   },
-  mixins: [mixin],
   data () {
     return {
       avator: '',

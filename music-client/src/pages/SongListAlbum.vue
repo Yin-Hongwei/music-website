@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
 import AlbumContent from '../components/AlbumContent'
 import Comment from '../components/Comment'
@@ -80,7 +79,6 @@ export default {
     this.getSongId() // 获取歌单里面的歌曲ID
     this.getRank(this.songListId) // 获取评分
   },
-  mixins: [mixin],
   methods: {
     // 收集歌单里面的歌曲
     getSongId () {

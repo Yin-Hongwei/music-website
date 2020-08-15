@@ -1,7 +1,7 @@
 import { getSongOfSingerName, getCollectionOfUser } from '../api/index'
 import { mapGetters } from 'vuex'
 
-export const mixin = {
+const mixin = {
   computed: {
     ...mapGetters([
       'userId',
@@ -10,27 +10,27 @@ export const mixin = {
   },
   methods: {
     // 提示信息
-    notify (title, type) {
+    notify(title, type) {
       this.$notify({
         title: title,
         type: type
       })
     },
     // 获取图片信息
-    attachImageUrl (srcUrl) {
+    attachImageUrl(srcUrl) {
       return srcUrl ? this.$store.state.configure.HOST + srcUrl || '../assets/img/user.jpg' : ''
     },
-    attachBirth (val) {
+    attachBirth(val) {
       let birth = String(val).match(/[0-9-]+(?=\s)/)
       return Array.isArray(birth) ? birth[0] : birth
     },
     // 得到名字后部分
-    replaceFName (str) {
+    replaceFName(str) {
       let arr = str.split('-')
       return arr[1]
     },
     // 得到名字前部分
-    replaceLName (str) {
+    replaceLName(str) {
       let arr = str.split('-')
       return arr[0]
     },
@@ -60,7 +60,7 @@ export const mixin = {
       }
     },
     // 解析歌词
-    parseLyric (text) {
+    parseLyric(text) {
       let lines = text.split('\n')
       let pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g
       let result = []
@@ -93,24 +93,25 @@ export const mixin = {
       return result
     },
     // 搜索音乐
-    getSong () {
+    getSong() {
       if (!this.$route.query.keywords) {
         this.$store.commit('setListOfSongs', [])
-        this.notify('您输入内容为空', 'warning')
-      } else {
-        getSongOfSingerName(this.$route.query.keywords)
-          .then(res => {
-            if (!res.length) {
-              this.$store.commit('setListOfSongs', [])
-              this.notify('系统暂无该歌曲', 'warning')
-            } else {
-              this.$store.commit('setListOfSongs', res)
-            }
-          })
-          .catch(err => {
-            console.log(err)
-          })
+        return
       }
+      getSongOfSingerName(this.$route.query.keywords)
+        .then(res => {
+          if (!res.length) {
+            this.$store.commit('setListOfSongs', [])
+            this.notify('系统暂无该歌曲', 'warning')
+          } else {
+            this.$store.commit('setListOfSongs', res)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }
+
+export default mixin

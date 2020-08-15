@@ -19,11 +19,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { mixin } from '../mixins'
 
 export default {
   name: 'upload',
-  mixins: [mixin],
   data () {
     return {
       imageUrl: ''

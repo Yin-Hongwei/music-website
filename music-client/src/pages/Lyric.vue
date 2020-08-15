@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
 import Comment from '../components/Comment'
 
@@ -27,7 +26,6 @@ export default {
   components: {
     Comment
   },
-  mixins: [mixin],
   data () {
     return {
       lrcTop: '200px', // 歌词滑动
@@ -68,7 +66,7 @@ export default {
     }
   },
   created () {
-    this.lyr = this.lyric
+    this.lyr = this.lyric ? this.lyric : []
   }
 }
 </script>

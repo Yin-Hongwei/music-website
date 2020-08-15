@@ -30,5 +30,6 @@
 }
 
 .pagination {
-  @include layout;
+  @include layout(center);
+  transform: translateY(15px);
 }

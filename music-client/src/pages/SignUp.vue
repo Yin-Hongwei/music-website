@@ -46,7 +46,6 @@
 
 <script>
 import loginLogo from '../components/LoginLogo'
-import { mixin } from '../mixins'
 import { rules, cities } from '../assets/data/form'
 import { SignUp } from '../api/index'
 
@@ -55,7 +54,6 @@ export default {
   components: {
     loginLogo
   },
-  mixins: [mixin],
   data () {
     return {
       registerForm: { // 注册

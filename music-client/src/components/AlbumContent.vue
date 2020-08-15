@@ -31,12 +31,10 @@
 </template>
 
 <script>
-import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'album-content',
-  mixins: [mixin],
   props: [
     'songList'
   ],

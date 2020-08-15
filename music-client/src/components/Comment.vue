@@ -41,13 +41,11 @@
 </template>
 
 <script>
-import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
 import { getUserOfId, setComment, setLike, getAllComment } from '../api/index'
 
 export default {
   name: 'comment',
-  mixins: [mixin],
   props: [
     'playId', // 歌曲ID或歌单ID
     'type' // 歌单（1）/歌曲（0）
