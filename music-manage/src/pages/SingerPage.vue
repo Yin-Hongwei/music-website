@@ -2,8 +2,8 @@
   <div class="table">
     <div class="container">
       <div class="handle-box">
-        <el-button type="primary" size="mini" class="handle-del mr10" @click="delAll">批量删除</el-button>
-        <el-input v-model="select_word" size="mini" placeholder="筛选关键词" class="handle-input mr10"></el-input>
+        <el-button class="handle-del mr10" type="primary" size="mini" @click="delAll">批量删除</el-button>
+        <el-input v-model="select_word" class="handle-input mr10" size="mini" placeholder="筛选关键词"></el-input>
         <el-button type="primary" size="mini" @click="centerDialogVisible = true">添加歌手</el-button>
       </div>
       <el-table ref="multipleTable" size="mini" border style="width: 100%" height="550px" :data="data" @selection-change="handleSelectionChange">
@@ -55,23 +55,23 @@
       </el-table>
       <div class="pagination">
         <el-pagination
-          @current-change="handleCurrentChange"
           background
           layout="total, prev, pager, next"
           :current-page="currentPage"
           :page-size="pageSize"
-          :total="tableData.length">
+          :total="tableData.length"
+          @current-change="handleCurrentChange">
         </el-pagination>
       </div>
     </div>
 
     <el-dialog title="添加歌手" :visible.sync="centerDialogVisible" width="400px" center>
       <el-form
+        class="demo-ruleForm"
         :model="registerForm"
         status-icon
         ref="registerForm"
         label-width="80px"
-        class="demo-ruleForm"
         >
         <el-form-item prop="name" label="歌手名" size="mini">
           <el-input v-model="registerForm.name" placeholder="歌手名"></el-input>
@@ -99,7 +99,7 @@
           <el-input v-model="registerForm.introduction" type="textarea" placeholder="歌手介绍"></el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
+      <span class="dialog-footer" slot="footer">
         <el-button size="mini" @click="centerDialogVisible = false">取 消</el-button>
         <el-button type="primary" size="mini" @click="addsinger">确 定</el-button>
       </span>

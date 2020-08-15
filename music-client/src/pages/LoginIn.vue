@@ -13,7 +13,7 @@
         <el-input type="password" placeholder="密码" v-model="loginForm.password" @keyup.enter.native="loginIn"></el-input>
       </el-form-item>
       <div class="login-btn">
-        <el-button @click="goSignUp()">注册</el-button>
+        <el-button @click="goSignUp">注册</el-button>
         <el-button type="primary" @click="handleleLoginIn">登录</el-button>
       </div>
     </el-form>
@@ -22,16 +22,16 @@
 </template>
 
 <script>
-import { mixin } from '../mixins'
 import LoginLogo from '../components/LoginLogo'
+import mixin from '../mixins'
 import { loginIn } from '../api/index'
 
 export default {
   name: 'login-in',
+  mixins: [mixin],
   components: {
     LoginLogo
   },
-  mixins: [mixin],
   data: function () {
     let validateName = (rule, value, callback) => {
       if (!value) {

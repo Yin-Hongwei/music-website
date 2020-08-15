@@ -11,17 +11,10 @@
 </template>
 
 <script>
-import { swiperList } from '../assets/data/swiper'
-
 export default {
   name: 'swiper',
-  data () {
-    return {
-      swiperList: []
-    }
-  },
-  created () {
-    this.swiperList = swiperList
+  props: {
+    swiperList: Array
   }
 }
 </script>

@@ -25,17 +25,17 @@
 </template>
 
 <script>
-import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
+import mixin from '../mixins'
 import AlbumContent from '../components/AlbumContent'
 import { getSongOfSingerId } from '../api/index'
 
 export default {
   name: 'singer-album',
+  mixins: [mixin],
   components: {
     AlbumContent
   },
-  mixins: [mixin],
   data () {
     return {
       singerId: '',

@@ -1,32 +1,31 @@
 <template>
   <div>
     <div class="comment">
-      <h2>评论</h2>
+      <h2>
+        <span>评论</span>
+        <span class="part__tit_desc">共 {{commentList.length}} 条评论</span>
+      </h2>
       <div class="comment-msg">
-        <div class="comment-img">
-          <img :src=attachImageUrl(avator) alt="">
-        </div>
         <el-input
           class="comment-input"
           type="textarea"
+          placeholder="期待您的精彩评论..."
           :rows="2"
-          placeholder="请输入内容"
           v-model="textarea">
         </el-input>
       </div>
-      <el-button type="primary" class="sub-btn" @click="postComment()">评论</el-button>
+      <el-button type="primary" class="sub-btn" @click="postComment()">发表评论</el-button>
     </div>
-    <p>精彩评论: 共 {{commentList.length}} 条评论</p>
     <ul class="popular" v-for="(item, index) in commentList" :key="index">
       <li>
         <div class="popular-img">
-          <img :src=attachImageUrl(userPic[index]) alt="">
+          <img :src="attachImageUrl(userPic[index])" alt="">
         </div>
         <div class="popular-msg">
           <ul>
             <li class="name">{{userName[index]}}</li>
-            <li class="time">{{item.createTime}}</li>
             <li class="content">{{item.content}}</li>
+            <li class="time">{{item.createTime}}</li>
           </ul>
         </div>
         <div class="up" ref="up" @click="postUp(item.id, item.up, index)">
@@ -41,17 +40,17 @@
 </template>
 
 <script>
-import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
+import mixin from '../mixins'
 import { getUserOfId, setComment, setLike, getAllComment } from '../api/index'
 
 export default {
   name: 'comment',
   mixins: [mixin],
-  props: [
-    'playId', // 歌曲ID或歌单ID
-    'type' // 歌单（1）/歌曲（0）
-  ],
+  props: {
+    playId: Number, // 歌曲ID或歌单ID
+    type: Number // 歌单（1）/歌曲（0）
+  },
   data () {
     return {
       commentList: [], // 存放评论内容

@@ -31,15 +31,15 @@
 </template>
 
 <script>
-import {mixin} from '../mixins'
 import { mapGetters } from 'vuex'
+import mixin from '../mixins'
 
 export default {
   name: 'album-content',
   mixins: [mixin],
-  props: [
-    'songList'
-  ],
+  props: {
+    songList: Array
+  },
   computed: {
     ...mapGetters([
       'id' // 音乐ID

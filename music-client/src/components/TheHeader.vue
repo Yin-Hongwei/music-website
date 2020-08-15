@@ -21,7 +21,7 @@
           </div>
         </div>
       </li>
-      <li v-if="!loginIn" :class="{active: item.name === activeName}" v-for="item in loginMsg" :key="item.type" @click="goPage(item.path, item.name)">{{item.name}}</li>
+      <li v-show="!loginIn" :class="{active: item.name === activeName}" v-for="item in loginMsg" :key="item.type" @click="goPage(item.path, item.name)">{{item.name}}</li>
     </ul>
     <!--设置-->
     <div class="header-right" v-show="loginIn">
@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
+import mixin from '../mixins'
 import { navMsg, loginMsg, menuList } from '../assets/data/header'
 
 export default {

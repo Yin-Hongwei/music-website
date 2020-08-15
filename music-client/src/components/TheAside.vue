@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
+import mixin from '../mixins'
 
 export default {
   name: 'the-aside',

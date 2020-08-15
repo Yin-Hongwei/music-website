@@ -1,15 +1,17 @@
 <template>
   <div class="search-song-Lists">
-    <content-list :contentList="albumDatas"></content-list>
+    <content-list :contentList="albumDatas" path="song-list-album"></content-list>
   </div>
 </template>
 
 <script>
 import ContentList from '../ContentList'
+import mixin from '../../mixins'
 import { getSongListOfLikeTitle } from '../../api/index'
 
 export default {
   name: 'search-song-Lists',
+  mixins: [mixin],
   components: {
     ContentList
   },
@@ -23,16 +25,15 @@ export default {
   },
   methods: {
     getSearchList () {
-      if (!this.$route.query.keywords) {
-        this.notify('您输入内容为空', 'warning')
-      } else if (this.$route.query.keywords) {
-        getSongListOfLikeTitle(this.$route.query.keywords)
-          .then(res => {
-            this.albumDatas = res
-          })
-      } else {
-        this.notify('暂无该歌曲内容', 'error')
-      }
+      if (!this.$route.query.keywords) return
+      getSongListOfLikeTitle(this.$route.query.keywords)
+      .then(res => {
+        if (!res.length) {
+          this.notify('暂无该歌曲内容', 'warning')
+        } else {
+          this.albumDatas = res
+        }
+      })
     }
   }
 }
