@@ -78,8 +78,6 @@ const mixin = {
       for (let item of lines) {
         let time = item.match(pattern) // 存前面的时间段
         let value = item.replace(pattern, '') // 存歌词
-        // console.log(time) // 时间
-        // console.log(value) // 歌词数据
         for (let item1 of time) {
           let t = item1.slice(1, -1).split(':')
           if (value !== '') {

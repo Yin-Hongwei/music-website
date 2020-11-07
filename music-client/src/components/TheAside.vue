@@ -13,9 +13,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import mixin from '../mixins'
 
 export default {
   name: 'the-aside',
+  mixins: [mixin],
   computed: {
     ...mapGetters([
       'id', // 音乐id

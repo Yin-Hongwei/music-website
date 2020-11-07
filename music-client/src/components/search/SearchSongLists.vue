@@ -1,15 +1,17 @@
 <template>
   <div class="search-song-Lists">
-    <content-list :contentList="albumDatas"></content-list>
+    <content-list :contentList="albumDatas" path="song-list-album"></content-list>
   </div>
 </template>
 
 <script>
 import ContentList from '../ContentList'
+import mixin from '../../mixins'
 import { getSongListOfLikeTitle } from '../../api/index'
 
 export default {
   name: 'search-song-Lists',
+  mixins: [mixin],
   components: {
     ContentList
   },

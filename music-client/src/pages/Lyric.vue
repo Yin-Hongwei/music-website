@@ -19,10 +19,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import mixin from '../mixins'
 import Comment from '../components/Comment'
 
 export default {
   name: 'lyric',
+  mixins: [mixin],
   components: {
     Comment
   },

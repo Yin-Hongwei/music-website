@@ -32,12 +32,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import mixin from '../mixins'
 
 export default {
   name: 'album-content',
-  props: [
-    'songList'
-  ],
+  mixins: [mixin],
+  props: {
+    songList: Array
+  },
   computed: {
     ...mapGetters([
       'id' // 音乐ID

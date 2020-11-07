@@ -1,16 +1,22 @@
 <template>
   <div class="home">
     <!--轮播图-->
-    <swiper/>
-    <!--热门歌单/歌手-->
-    <div class="section" v-for="(item, index) in songsList" :key="index">
-      <div class="section-title">{{item.name}}</div>
-      <content-list :contentList="item.list"></content-list>
+    <swiper :swiperList="swiperList"/>
+    <!--热门歌单-->
+    <div class="section">
+      <div class="section-title">歌单</div>
+      <content-list :contentList="songList" path="song-list-album"></content-list>
+    </div>
+    <!--热门歌手-->
+    <div class="section">
+      <div class="section-title">歌手</div>
+      <content-list :contentList="singerList" path="singer-album"></content-list>
     </div>
   </div>
 </template>
 
 <script>
+import { swiperList } from '../assets/data/swiper'
 import Swiper from '../components/Swiper'
 import ContentList from '../components/ContentList'
 import { getSongList, getAllSinger } from '../api/index'
@@ -23,32 +29,33 @@ export default {
   },
   data () {
     return {
-      songsList: [
-        {name: '歌单', list: []},
-        {name: '歌手', list: []}
-      ]
+      swiperList: [], // 轮播图列表
+      songList: [], // 歌单列表
+      singerList: [] // 歌手列表
     }
   },
   created () {
+    this.swiperList = swiperList
     // 获取歌单列表
-    this.getSongList('songList')
+    this.getSongList()
     // 获取歌手列表
-    this.getSinger('singer')
+    this.getSingerList()
   },
   methods: {
-    getSongList (path) {
+    getSongList () {
       getSongList()
         .then(res => {
-          this.songsList[0].list = res.slice(0, 10)
+          this.songList = res.sort().slice(0, 10)
         })
         .catch(err => {
           console.log(err)
         })
     },
-    getSinger () {
-      getAllSinger().then(res => {
-        this.songsList[1].list = res.slice(0, 10)
-      })
+    getSingerList () {
+      getAllSinger()
+        .then(res => {
+          this.singerList = res.sort().slice(0, 10)
+        })
         .catch(err => {
           console.log(err)
         })

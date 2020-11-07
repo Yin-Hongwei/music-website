@@ -24,11 +24,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import mixin from '../mixins'
 import AlbumContent from '../components/AlbumContent'
 import { getCollectionOfUser, getUserOfId, getSongOfId } from '../api/index'
 
 export default {
   name: 'my-music',
+  mixins: [mixin],
   components: {
     AlbumContent
   },

@@ -37,10 +37,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import mixin from '../mixins'
 import { navMsg, loginMsg, menuList } from '../assets/data/header'
 
 export default {
   name: 'the-header',
+  mixins: [mixin],
   data () {
     return {
       musicName: 'Yin-music',

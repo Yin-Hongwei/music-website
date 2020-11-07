@@ -85,10 +85,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import mixin from '../mixins'
 import { setCollection, download } from '../api/index'
 
 export default {
   name: 'play-bar',
+  mixins: [mixin],
   data () {
     return {
       tag: false,
