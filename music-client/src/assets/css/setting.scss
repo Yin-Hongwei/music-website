@@ -3,7 +3,8 @@
 
 .setting {
   margin: 30px 10%;
-  margin-top: $header-height + 20px;
+  margin-top: 0;
+  padding-top: $header-height;
   min-height: 65vh;
   @include layout;
   background-color: $color-white;

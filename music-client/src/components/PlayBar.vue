@@ -2,14 +2,14 @@
   <div class="play-bar" :class="{show:!toggle}">
     <div @click="toggle=!toggle" class="item-up" :class="{turn: toggle}">
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-jiantou-xia-cuxiantiao"></use>
+        <use :xlink:href="ZHEDIE"></use>
       </svg>
     </div>
     <div class="kongjian" >
       <!--上一首-->
       <div class="item" @click="prev">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-ziyuanldpi"></use>
+          <use :xlink:href="SHANGYISHOU"></use>
         </svg>
       </div>
       <!--播放-->
@@ -21,7 +21,7 @@
       <!--下一首-->
       <div class="item" @click="next">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-ziyuanldpi1"></use>
+          <use :xlink:href="XIAYISHOU"></use>
         </svg>
       </div>
       <!--歌曲图片-->
@@ -54,29 +54,29 @@
       <!--音量-->
       <div class="item icon-volume" >
         <svg v-if="volume !== 0" class="icon" aria-hidden="true">
-          <use xlink:href="#icon-yinliang1"></use>
+          <use :xlink:href="YINLIANG"></use>
         </svg>
         <svg v-else class="icon" aria-hidden="true">
-          <use xlink:href="#icon-yinliangjingyinheix"></use>
+          <use :xlink:href="JINGYIN"></use>
         </svg>
         <el-slider class="volume" v-model="volume" :vertical="true"></el-slider>
       </div>
       <!--添加-->
       <div class="item" @click="collection">
         <svg :class="{ active: isActive }" class="icon" aria-hidden="true">
-          <use xlink:href="#icon-xihuan-shi"></use>
+          <use :xlink:href="XIHUAN"></use>
         </svg>
       </div>
       <!--下载-->
-      <div class="item" @click="download">
+      <div class="item" @click="downloadMusic">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-xiazai"></use>
+          <use :xlink:href="XIAZAI"></use>
         </svg>
       </div>
       <!--歌曲列表-->
       <div class="item" @click="changeAside">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-liebiao"></use>
+          <use :xlink:href="LIEBIAO"></use>
         </svg>
       </div>
     </div>
@@ -84,9 +84,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import mixin from '../mixins'
-import { setCollection, download } from '../api/index'
+import { mapGetters } from 'vuex'
+import { HttpManager } from '../api/index'
+import { ICON } from '../assets/icon/index'
 
 export default {
   name: 'play-bar',
@@ -100,7 +101,15 @@ export default {
       progressLength: 0, // 进度条长度
       mouseStartX: 0, // 拖拽开始位置
       toggle: true,
-      volume: 50
+      volume: 50,
+      XIAZAI: ICON.XIAZAI,
+      ZHEDIE: ICON.ZHEDIE,
+      SHANGYISHOU: ICON.SHANGYISHOU,
+      XIAYISHOU: ICON.XIAYISHOU,
+      YINLIANG: ICON.YINLIANG1,
+      JINGYIN: ICON.JINGYIN,
+      LIEBIAO: ICON.LIEBIAO,
+      XIHUAN: ICON.XIHUAN
     }
   },
   computed: {
@@ -127,9 +136,9 @@ export default {
     // 切换播放状态的图标
     isPlay (val) {
       if (val) {
-        this.$store.commit('setPlayButtonUrl', '#icon-zanting')
+        this.$store.commit('setPlayButtonUrl', ICON.ZANTING)
       } else {
-        this.$store.commit('setPlayButtonUrl', '#icon-bofang')
+        this.$store.commit('setPlayButtonUrl', ICON.BOFANG)
       }
     },
     volume () {
@@ -163,8 +172,8 @@ export default {
   },
   methods: {
     // 下载
-    download () {
-      download(this.url)
+    downloadMusic () {
+      HttpManager.downloadMusic(this.url)
         .then(res => {
           let content = res.data
           let eleLink = document.createElement('a')
@@ -327,7 +336,7 @@ export default {
         params.append('userId', this.userId)
         params.append('type', 0) // 0 代表歌曲， 1 代表歌单
         params.append('songId', this.id)
-        setCollection(params)
+        HttpManager.setCollection(params)
           .then(res => {
             if (res.code === 1) {
               this.$store.commit('setIsActive', true)

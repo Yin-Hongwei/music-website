@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import mixin from '../mixins'
 import Comment from '../components/Comment'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'lyric',
