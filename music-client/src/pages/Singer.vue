@@ -26,7 +26,7 @@
 <script>
 import ContentList from '../components/ContentList'
 import { singerStyle } from '../assets/data/singer'
-import { getAllSinger, getSingerOfSex } from '../api/index'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'singer',
@@ -35,7 +35,7 @@ export default {
   },
   data () {
     return {
-      singerStyle: [], // 歌手导航栏类别
+      singerStyle: singerStyle, // 歌手导航栏类别
       activeName: '全部歌手',
       pageSize: 15, // 页数
       currentPage: 1, // 当前页
@@ -49,7 +49,6 @@ export default {
     }
   },
   created () {
-    this.singerStyle = singerStyle
     this.getAllSinger()
   },
   methods: {
@@ -68,7 +67,7 @@ export default {
     },
     // 获取所有歌手
     getAllSinger () {
-      getAllSinger()
+      HttpManager.getAllSinger()
         .then(res => {
           this.currentPage = 1
           this.albumDatas = res
@@ -79,7 +78,7 @@ export default {
     },
     // 通过性别对歌手分类
     getSingerSex (sex) {
-      getSingerOfSex(sex)
+      HttpManager.getSingerOfSex(sex)
         .then(res => {
           this.currentPage = 1
           this.albumDatas = res

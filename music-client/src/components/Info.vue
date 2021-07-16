@@ -48,10 +48,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import mixin from '../mixins'
+import { mapGetters } from 'vuex'
 import { cities } from '../assets/data/form'
-import { updateUserMsg, getUserOfId } from '../api/index'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'info',
@@ -68,7 +68,7 @@ export default {
         introduction: '',
         location: ''
       },
-      cities: []
+      cities: cities
     }
   },
   computed: {
@@ -76,15 +76,12 @@ export default {
       'userId'
     ])
   },
-  created () {
-    this.cities = cities
-  },
   mounted () {
     this.getMsg(this.userId)
   },
   methods: {
     getMsg (id) {
-      getUserOfId(id)
+      HttpManager.getUserOfId(id)
         .then(res => {
           this.registerForm.username = res[0].username
           this.registerForm.password = res[0].password
@@ -116,7 +113,7 @@ export default {
       params.append('birth', datetime)
       params.append('introduction', this.registerForm.introduction)
       params.append('location', this.registerForm.location)
-      updateUserMsg(params)
+      HttpManager.updateUserMsg(params)
         .then(res => {
           if (res.code === 1) {
             this.showError = false

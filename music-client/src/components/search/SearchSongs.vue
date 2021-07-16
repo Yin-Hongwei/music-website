@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import mixin from '../../mixins'
 import AlbumContent from '../AlbumContent'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'search-songs',

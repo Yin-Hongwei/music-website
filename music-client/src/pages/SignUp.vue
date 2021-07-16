@@ -45,10 +45,10 @@
 </template>
 
 <script>
-import loginLogo from '../components/LoginLogo'
 import mixin from '../mixins'
+import loginLogo from '../components/LoginLogo'
 import { rules, cities } from '../assets/data/form'
-import { SignUp } from '../api/index'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'SignUp-page',
@@ -68,13 +68,9 @@ export default {
         introduction: '',
         location: ''
       },
-      rules: {},
-      cities: []
+      rules: rules,
+      cities: cities
     }
-  },
-  created () {
-    this.rules = rules
-    this.cities = cities
   },
   methods: {
     SignUp () {
@@ -91,7 +87,7 @@ export default {
       params.append('introduction', this.registerForm.introduction)
       params.append('location', this.registerForm.location)
       params.append('avator', '/img/user.jpg')
-      SignUp(params)
+      HttpManager.SignUp(params)
         .then(res => {
           console.log(res)
           if (res.code === 1) {

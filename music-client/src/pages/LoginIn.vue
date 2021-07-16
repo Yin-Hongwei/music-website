@@ -22,9 +22,9 @@
 </template>
 
 <script>
-import LoginLogo from '../components/LoginLogo'
 import mixin from '../mixins'
-import { loginIn } from '../api/index'
+import LoginLogo from '../components/LoginLogo'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'login-in',
@@ -74,7 +74,7 @@ export default {
       let params = new URLSearchParams()
       params.append('username', this.loginForm.username)
       params.append('password', this.loginForm.password)
-      loginIn(params)
+      HttpManager.loginIn(params)
         .then(res => {
           // console.log('-----------获取登录信息---------------')
           if (res.code === 1) {

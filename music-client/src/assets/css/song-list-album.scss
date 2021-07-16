@@ -2,8 +2,7 @@
 
 /*歌单背景*/
 .song-list-album {
-  margin-top: $header-height;
-  padding-top: 150px;
+  padding-top: $header-height + 150px;
   background-color: $theme-background-color;
 
   &::before {

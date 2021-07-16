@@ -1,7 +1,10 @@
+import { BASE_URL } from '../api/config'
+import { ICON } from '../assets/icon/index'
+
 const song = {
   state: {
     isPlay: false, // 播放状态
-    playButtonUrl: '#icon-bofang', // 播放状态的图标
+    playButtonUrl: ICON.BOFANG, // 播放状态的图标
     id: null, // 音乐ID
     url: '', // 歌曲URL
     duration: 0, //  音乐时长
@@ -78,7 +81,7 @@ const song = {
     picUrl: state => {
       let picUrl = state.picUrl
       if (!picUrl) {
-        picUrl = JSON.parse(window.sessionStorage.getItem('picUrl')) || 'http://localhost:8888/img/tubiao.jpg'
+        picUrl = JSON.parse(window.sessionStorage.getItem('picUrl')) || `${BASE_URL}/img/tubiao.jpg`
       }
       return picUrl
     },

@@ -39,7 +39,6 @@ export default {
       }]
     }
   },
-  mounted () {},
   methods: {
     handleClick (item) {
       this.activeName = item.name

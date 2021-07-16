@@ -18,7 +18,7 @@
           <span class="item-index">
             <span v-if="id !== item.id">{{index + 1}}</span>
             <svg v-if="id === item.id" class="icon" aria-hidden="true">
-              <use xlink:href="#icon-yinliang"></use>
+              <use :xlink:href="YINLIANG"></use>
             </svg>
           </span>
           <span class="item-title">{{replaceFName(item.name)}}</span>
@@ -31,14 +31,20 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import mixin from '../mixins'
+import { mapGetters } from 'vuex'
+import { ICON } from '../assets/icon/index'
 
 export default {
   name: 'album-content',
   mixins: [mixin],
   props: {
     songList: Array
+  },
+  data () {
+    return {
+      YINLIANG: ICON.YINLIANG
+    }
   },
   computed: {
     ...mapGetters([
