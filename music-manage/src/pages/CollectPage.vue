@@ -44,7 +44,7 @@
 
 <script>
 import { mixin } from '../mixins'
-import { getCollectionOfUser, deleteCollection, getSongOfId } from '../api/index'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'collect-page',
@@ -81,7 +81,7 @@ export default {
   methods: {
     // 通过用户id获取用户收藏的歌曲id
     getData () {
-      getCollectionOfUser(this.$route.query.id)
+      HttpManager.getCollectionOfUser(this.$route.query.id)
         .then(res => {
           this.tableData = []
           for (let item of res) {
@@ -94,7 +94,7 @@ export default {
     },
     // 通过歌曲ID获取歌曲
     getSongList (id) {
-      getSongOfId(id)
+      HttpManager.getSongOfId(id)
         .then(res => {
           this.tableData.push(res[0])
           this.tempDate.push(res[0])
@@ -105,7 +105,7 @@ export default {
     },
     // 删除一首歌曲
     deleteRow () {
-      deleteCollection(this.$route.query.id, this.idx.id)
+      HttpManager.deleteCollection(this.$route.query.id, this.idx.id)
         .then(res => {
           if (res) {
             this.getData()

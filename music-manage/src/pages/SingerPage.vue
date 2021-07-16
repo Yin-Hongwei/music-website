@@ -148,7 +148,7 @@
 
 <script>
 import { mixin } from '../mixins'
-import { setSinger, getAllSinger, updateSingerMsg, deleteSinger } from '../api/index'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'singer-page',
@@ -227,7 +227,7 @@ export default {
       params.append('birth', datetime)
       params.append('location', this.registerForm.location)
       params.append('introduction', this.registerForm.introduction)
-      setSinger(params)
+      HttpManager.setSinger(params)
         .then(res => {
           if (res.code === 1) {
             this.getData()
@@ -246,7 +246,7 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      getAllSinger().then(res => {
+      HttpManager.getAllSinger().then(res => {
         this.tableData = res
         this.tempDate = res
         this.currentPage = 1
@@ -279,7 +279,7 @@ export default {
       params.append('birth', datetime)
       params.append('location', this.form.location)
       params.append('introduction', this.form.introduction)
-      updateSingerMsg(params)
+      HttpManager.updateSingerMsg(params)
         .then(res => {
           if (res.code === 1) {
             this.getData()
@@ -295,7 +295,7 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      deleteSinger(this.idx)
+      HttpManager.deleteSinger(this.idx)
         .then(res => {
           if (res) {
             this.getData()

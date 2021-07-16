@@ -30,7 +30,7 @@
 
 <script>
 import {mixin} from '../mixins'
-import { getLoginStatus } from '../api/index'
+import { HttpManager } from '../api/index'
 
 export default {
   mixins: [mixin],
@@ -53,7 +53,7 @@ export default {
       let params = new URLSearchParams()
       params.append('name', this.ruleForm.username)
       params.append('password', this.ruleForm.password)
-      getLoginStatus(params)
+      HttpManager.getLoginStatus(params)
         .then(res => {
           if (res.code === 1) {
             this.$router.push('/Info')

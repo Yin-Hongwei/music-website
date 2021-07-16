@@ -23,7 +23,7 @@
             <div class="play" @click="setSongUrl(scope.row.url, scope.row.name)">
               <div v-if="toggle !== scope.row.name">
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-bofanganniu"></use>
+                  <use :xlink:href="BOFANG"></use>
                 </svg>
               </div>
               <div v-if="toggle === scope.row.name">
@@ -153,8 +153,8 @@
 import SongAudio from '../components/SongAudio'
 import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
-import '@/assets/js/iconfont.js'
-import { getSongOfSingerId, updateSongMsg, deleteSong } from '../api/index'
+import { ICON } from '../assets/icon/index'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'song-page',
@@ -194,7 +194,9 @@ export default {
       },
       pageSize: 5, // 页数
       currentPage: 1, // 当前页
-      idx: -1
+      idx: -1,
+      BOFANG: ICON.BOFANG,
+      ZANTING: ICON.ZANTING
     }
   },
   computed: {
@@ -207,9 +209,9 @@ export default {
     },
     playIcon () {
       if (this.isPlay) {
-        return '#icon-zanting'
+        return this.ZANTING
       } else {
-        return '#icon-bofanganniu'
+        return this.BOFANG
       }
     }
   },
@@ -240,7 +242,7 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      getSongOfSingerId(this.singerId).then((res) => {
+      HttpManager.getSongOfSingerId(this.singerId).then((res) => {
         this.tableData = res
         this.tempDate = res
         this.currentPage = 1
@@ -341,7 +343,7 @@ export default {
       params.append('name', this.form.name)
       params.append('introduction', this.form.introduction)
       params.append('lyric', this.form.lyric)
-      updateSongMsg(params)
+      HttpManager.updateSongMsg(params)
         .then(res => {
           if (res) {
             this.getData()
@@ -357,7 +359,7 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      deleteSong(this.idx)
+      HttpManager.deleteSong(this.idx)
         .then(response => {
           if (response) {
             this.getData()

@@ -75,7 +75,7 @@
 
 <script>
 import { mixin } from '../mixins'
-import { getAllSinger, getSongList, getAllSong, getAllUser } from '../api/index'
+import { HttpManager } from '../api/index'
 
 export default {
   mixins: [mixin],
@@ -171,7 +171,7 @@ export default {
   },
   methods: {
     getUser () {
-      getAllUser().then(res => {
+      HttpManager.getAllUser().then(res => {
         this.userCount = res.length
         this.userSex.rows[0]['总数'] = this.setSex(1, res)
         this.userSex.rows[1]['总数'] = this.setSex(0, res)
@@ -202,7 +202,7 @@ export default {
       }
     },
     getSinger () {
-      getAllSinger().then(res => {
+      HttpManager.getAllSinger().then(res => {
         this.singerCount = res.length
         this.singerSex.rows[0]['总数'] = this.setSex(1, res)
         this.singerSex.rows[1]['总数'] = this.setSex(0, res)
@@ -214,14 +214,14 @@ export default {
       })
     },
     getSong () {
-      getAllSong().then(res => {
+      HttpManager.getAllSong().then(res => {
         this.songCount = res.length
       }).catch(err => {
         console.log(err)
       })
     },
     getSongList () {
-      getSongList().then(res => {
+      HttpManager.getSongList().then(res => {
         this.songListCount = res.length
         for (let item of res) {
           this.getStyle(item.style)

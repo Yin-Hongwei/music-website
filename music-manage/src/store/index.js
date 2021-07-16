@@ -1,6 +1,8 @@
+import { BASE_URL } from '../api/config'
+
 const store = {
   state: {
-    HOST: 'http://localhost:8888',
+    HOST: BASE_URL,
     isPlay: false,
     url: '',
     id: ''
