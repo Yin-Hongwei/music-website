@@ -120,7 +120,7 @@
 
 <script>
 import { mixin } from '../mixins'
-import { setSongList, getSongList, updateSongListMsg, deleteSongList } from '../api/index'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'song-list-page',
@@ -182,7 +182,7 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      getSongList().then((res) => {
+      HttpManager.getSongList().then((res) => {
         this.tableData = res
         this.tempDate = res
         this.currentPage = 1
@@ -218,7 +218,7 @@ export default {
       params.append('pic', this.form.pic)
       params.append('introduction', this.form.introduction)
       params.append('style', this.form.style)
-      updateSongListMsg(params)
+      HttpManager.updateSongListMsg(params)
         .then(res => {
           if (res.code === 1) {
             this.notify('编辑成功', 'success')
@@ -239,7 +239,7 @@ export default {
       params.append('pic', '/img/songListPic/123.jpg')
       params.append('introduction', this.registerForm.introduction)
       params.append('style', this.registerForm.style)
-      setSongList(params).then(res => {
+      HttpManager.setSongList(params).then(res => {
         if (res.code === 1) {
           this.getData()
           this.registerForm = {}
@@ -254,7 +254,7 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      deleteSongList(this.idx)
+      HttpManager.deleteSongList(this.idx)
         .then(res => {
           if (res) {
             this.getData()
