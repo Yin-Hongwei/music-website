@@ -150,7 +150,7 @@
 
 <script>
 import { mixin } from '../mixins'
-import { setUser, updateUserMsg, getAllUser, deleteUser } from '../api/index'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'consumer-page',
@@ -358,7 +358,7 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      getAllUser().then((res) => {
+      HttpManager.getAllUser().then((res) => {
         this.tableData = res
         this.tempDate = res
         this.currentPage = 1
@@ -381,7 +381,7 @@ export default {
       params.append('introduction', this.registerForm.introduction)
       params.append('location', this.registerForm.location)
       params.append('avator', '/img/user.jpg')
-      setUser(params)
+      HttpManager.setUser(params)
         .then(res => {
           if (res.code === 1) {
             this.getData()
@@ -427,7 +427,7 @@ export default {
       params.append('birth', datetime)
       params.append('introduction', this.form.introduction)
       params.append('location', this.form.location)
-      updateUserMsg(params).then(res => {
+      HttpManager.updateUserMsg(params).then(res => {
         if (res.code === 1) {
           this.getData()
           this.notify('修改成功', 'success')
@@ -441,7 +441,7 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      deleteUser(this.idx)
+      HttpManager.deleteUser(this.idx)
         .then(res => {
           if (res) {
             this.getData()

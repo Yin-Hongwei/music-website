@@ -58,7 +58,7 @@
 
 <script>
 import { mixin } from '../mixins'
-import { getCommentOfSongId, getCommentOfSongListId, updateCommentMsg, getUserOfId, deleteComment } from '../api/index'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'comment-page',
@@ -107,9 +107,9 @@ export default {
       this.tempDate = []
       let promise
       if (this.$route.query.type === 0) {
-        promise = getCommentOfSongId(this.$route.query.id)
+        promise = HttpManager.getCommentOfSongId(this.$route.query.id)
       } else if (this.$route.query.type === 1) {
-        promise = getCommentOfSongListId(this.$route.query.id)
+        promise = HttpManager.getCommentOfSongListId(this.$route.query.id)
       }
       promise.then(res => {
         for (let item of res) {
@@ -118,7 +118,7 @@ export default {
       })
     },
     getUsers (id, item) {
-      getUserOfId(id)
+      HttpManager.getUserOfId(id)
         .then(res => {
           let o = item
           o.name = res[0].username
@@ -153,7 +153,7 @@ export default {
       params.append('content', this.form.content)
       params.append('type', this.form.type)
       params.append('up', this.form.up)
-      updateCommentMsg(params)
+      HttpManager.updateCommentMsg(params)
         .then(res => {
           if (res.code === 1) {
             this.getData()
@@ -169,7 +169,7 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      deleteComment(this.idx)
+      HttpManager.deleteComment(this.idx)
         .then(res => {
           if (res) {
             this.getData()

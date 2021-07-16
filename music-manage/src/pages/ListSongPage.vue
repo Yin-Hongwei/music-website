@@ -66,7 +66,7 @@
 
 <script>
 import { mixin } from '../mixins'
-import { setListSong, getListSongOfSongId, deleteListSong, getSongOfId, getSongOfSingerName } from '../api/index'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'list-song-page',
@@ -109,7 +109,7 @@ export default {
     getData () {
       this.tableData = []
       this.tempDate = []
-      getListSongOfSongId(this.$route.query.id)
+      HttpManager.getListSongOfSongId(this.$route.query.id)
         .then(res => {
           console.log(res)
           for (let item of res) {
@@ -122,7 +122,7 @@ export default {
     },
     // 获取歌单里对应的音乐
     getSong (id) {
-      getSongOfId(id)
+      HttpManager.getSongOfId(id)
         .then(res => {
           this.tableData.push(res[0])
           this.tempDate.push(res[0])
@@ -135,7 +135,7 @@ export default {
     getSongId () {
       let _this = this
       var id = _this.registerForm.singerName + '-' + _this.registerForm.songName
-      getSongOfSingerName(id)
+      HttpManager.getSongOfSingerName(id)
         .then(res => {
           this.addSong(res[0].id)
         })
@@ -145,7 +145,7 @@ export default {
       let params = new URLSearchParams()
       params.append('songId', id)
       params.append('songListId', this.$route.query.id)
-      setListSong(params)
+      HttpManager.setListSong(params)
         .then(res => {
           if (res.code === 1) {
             this.getData()
@@ -161,7 +161,7 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      deleteListSong(this.idx)
+      HttpManager.deleteListSong(this.idx)
         .then(res => {
           if (res) {
             this.getData()
