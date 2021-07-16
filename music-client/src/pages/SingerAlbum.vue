@@ -25,10 +25,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import mixin from '../mixins'
 import AlbumContent from '../components/AlbumContent'
-import { getSongOfSingerId } from '../api/index'
+import { mapGetters } from 'vuex'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'singer-album',
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     getSongList () {
-      getSongOfSingerId(this.singerId)
+      HttpManager.getSongOfSingerId(this.singerId)
         .then(res => {
           this.$store.commit('setListOfSongs', res)
         })

@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import ContentList from '../ContentList'
 import mixin from '../../mixins'
-import { getSongListOfLikeTitle } from '../../api/index'
+import ContentList from '../ContentList'
+import { HttpManager } from '../../api/index'
 
 export default {
   name: 'search-song-Lists',
@@ -26,14 +26,14 @@ export default {
   methods: {
     getSearchList () {
       if (!this.$route.query.keywords) return
-      getSongListOfLikeTitle(this.$route.query.keywords)
-      .then(res => {
-        if (!res.length) {
-          this.notify('暂无该歌曲内容', 'warning')
-        } else {
-          this.albumDatas = res
-        }
-      })
+      HttpManager.getSongListOfLikeTitle(this.$route.query.keywords)
+        .then(res => {
+          if (!res.length) {
+            this.notify('暂无该歌曲内容', 'warning')
+          } else {
+            this.albumDatas = res
+          }
+        })
     }
   }
 }

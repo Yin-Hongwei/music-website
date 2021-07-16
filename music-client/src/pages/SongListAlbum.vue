@@ -43,11 +43,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import mixin from '../mixins'
 import AlbumContent from '../components/AlbumContent'
 import Comment from '../components/Comment'
-import { getRankOfSongListId, setRank, getSongOfId, getListSongOfSongId } from '../api/index'
+import { mapGetters } from 'vuex'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'song-list-album',
@@ -84,7 +84,7 @@ export default {
   methods: {
     // 收集歌单里面的歌曲
     getSongId () {
-      getListSongOfSongId(this.songListId)
+      HttpManager.getListSongOfSongId(this.songListId)
         .then(res => {
           // 获取歌单里的歌曲信息
           for (let item of res) {
@@ -98,7 +98,7 @@ export default {
     },
     // 获取单里的歌曲
     getSongList (id) {
-      getSongOfId(id)
+      HttpManager.getSongOfId(id)
         .then(res => {
           this.songLists.push(res[0])
         })
@@ -108,7 +108,7 @@ export default {
     },
     // 获取评分
     getRank (id) {
-      getRankOfSongListId(id)
+      HttpManager.getRankOfSongListId(id)
         .then(res => {
           this.value5 = res / 2
         })
@@ -123,7 +123,7 @@ export default {
         params.append('songListId', this.songListId)
         params.append('consumerId', this.userId)
         params.append('score', this.value3 * 2)
-        setRank(params)
+        HttpManager.setRank(params)
           .then(res => {
             if (res.code === 1) {
               this.getRank(this.songListId)

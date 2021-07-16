@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import mixin from '../mixins'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'upload',

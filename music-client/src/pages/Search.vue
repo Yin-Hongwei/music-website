@@ -9,10 +9,10 @@
 </template>
 
 <script>
+import mixin from '../mixins'
 import searchSongs from '../components/search/SearchSongs'
 import searchSongLists from '../components/search/SearchSongLists'
 import { mapGetters } from 'vuex'
-import mixin from '../mixins'
 
 export default {
   name: 'search',

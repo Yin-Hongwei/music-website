@@ -6,7 +6,7 @@
           <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
           <div class="mask"  @click="goAblum(item)">
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-bofang"></use>
+              <use :xlink:href="BOFANG"></use>
             </svg>
           </div>
         </div>
@@ -18,6 +18,7 @@
 
 <script>
 import mixin from '../mixins'
+import { ICON } from '../assets/icon/index'
 
 export default {
   name: 'content-list',
@@ -25,6 +26,11 @@ export default {
   props: {
     contentList: Array,
     path: String
+  },
+  data () {
+    return {
+      BOFANG: ICON.BOFANG
+    }
   },
   methods: {
     goAblum (item) {

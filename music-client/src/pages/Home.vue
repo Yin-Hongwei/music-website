@@ -1,7 +1,11 @@
 <template>
   <div class="home">
     <!--轮播图-->
-    <swiper :swiperList="swiperList"/>
+    <el-carousel class="swiper-container" :interval="4000" type="card" height="280px">
+      <el-carousel-item v-for="(item, index) in swiperList" :key="index">
+        <img :src="item.picImg"/>
+      </el-carousel-item>
+    </el-carousel>
     <!--热门歌单-->
     <div class="section">
       <div class="section-title">歌单</div>
@@ -16,26 +20,23 @@
 </template>
 
 <script>
-import { swiperList } from '../assets/data/swiper'
-import Swiper from '../components/Swiper'
 import ContentList from '../components/ContentList'
-import { getSongList, getAllSinger } from '../api/index'
+import { swiperList } from '../assets/data/swiper'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'home',
   components: {
-    Swiper,
     ContentList
   },
   data () {
     return {
-      swiperList: [], // 轮播图列表
+      swiperList: swiperList, // 轮播图列表
       songList: [], // 歌单列表
       singerList: [] // 歌手列表
     }
   },
   created () {
-    this.swiperList = swiperList
     // 获取歌单列表
     this.getSongList()
     // 获取歌手列表
@@ -43,7 +44,7 @@ export default {
   },
   methods: {
     getSongList () {
-      getSongList()
+      HttpManager.getSongList()
         .then(res => {
           this.songList = res.sort().slice(0, 10)
         })
@@ -52,7 +53,7 @@ export default {
         })
     },
     getSingerList () {
-      getAllSinger()
+      HttpManager.getAllSinger()
         .then(res => {
           this.singerList = res.sort().slice(0, 10)
         })

@@ -8,8 +8,9 @@ li {
 }
 
 .singer {
-  margin: 30px 10%;
-  margin-top: $header-height + 20px;
+  margin: 30px 150px;
+  margin-top: 0;
+  padding-top: $header-height;
   padding-bottom: 50px;
   background-color: $color-white;
   .singer-header {

@@ -3,7 +3,8 @@
 
 .search{
   margin: auto;
-  margin-top: $header-height + 20px;
+  margin-top: 0;
+  padding-top: $header-height;
   background-color: $color-white;
   border-radius: 12px;
   width: 900px;

@@ -23,10 +23,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import mixin from '../mixins'
 import AlbumContent from '../components/AlbumContent'
-import { getCollectionOfUser, getUserOfId, getSongOfId } from '../api/index'
+import { mapGetters } from 'vuex'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'my-music',
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     getMsg (id) {
-      getUserOfId(id)
+      HttpManager.getUserOfId(id)
         .then(res => {
           this.username = res[0].username
           this.getuserSex(res[0].sex)
@@ -81,7 +81,7 @@ export default {
     },
     // 收藏的歌曲ID
     getCollection (userId) {
-      getCollectionOfUser(userId)
+      HttpManager.getCollectionOfUser(userId)
         .then(res => {
           this.collection = res
           // 通过歌曲ID获取歌曲信息
@@ -96,7 +96,7 @@ export default {
     },
     // 获取收藏的歌曲
     getCollectSongs (id) {
-      getSongOfId(id)
+      HttpManager.getSongOfId(id)
         .then(res => {
           this.collectList.push(res[0])
         })

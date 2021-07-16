@@ -3,7 +3,8 @@
 
 .song-list {
   margin: 30px 150px;
-  margin-top: $header-height + 20px;
+  margin-top: 0;
+  padding-top: $header-height;
   padding-bottom: 50px;
   min-width: 800px;
   background-color: $color-white;

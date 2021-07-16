@@ -3,7 +3,7 @@
     <!--图标-->
     <div class="header-logo" @click="goHome">
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-erji"></use>
+        <use :xlink:href="ERJI"></use>
       </svg>
       <span>{{musicName}}</span>
     </div>
@@ -16,7 +16,7 @@
           <input type="text" placeholder="搜索音乐" @keyup.enter="goSearch()" v-model="keywords">
           <div class="search-btn"  @click="goSearch()" >
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-sousuo"></use>
+              <use :xlink:href="SOUSUO"></use>
             </svg>
           </div>
         </div>
@@ -36,9 +36,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import mixin from '../mixins'
+import { mapGetters } from 'vuex'
 import { navMsg, loginMsg, menuList } from '../assets/data/header'
+import { ICON } from '../assets/icon/index'
 
 export default {
   name: 'the-header',
@@ -46,10 +47,12 @@ export default {
   data () {
     return {
       musicName: 'Yin-music',
-      navMsg: [], // 左侧导航栏
-      loginMsg: [], // 右侧导航栏
-      menuList: [], // 用户下拉菜单项
-      keywords: ''
+      navMsg: navMsg, // 左侧导航栏
+      loginMsg: loginMsg, // 右侧导航栏
+      menuList: menuList, // 用户下拉菜单项
+      keywords: '',
+      ERJI: ICON.ERJI,
+      SOUSUO: ICON.SOUSUO
     }
   },
   computed: {
@@ -60,11 +63,6 @@ export default {
       'username',
       'loginIn'
     ])
-  },
-  created () {
-    this.navMsg = navMsg
-    this.loginMsg = loginMsg
-    this.menuList = menuList
   },
   mounted () {
     document.querySelector('#user').addEventListener('click', function (e) {

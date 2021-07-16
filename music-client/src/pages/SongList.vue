@@ -29,7 +29,7 @@
 import ContentList from '../components/ContentList'
 import { mapGetters } from 'vuex'
 import { songStyle } from '../assets/data/songList'
-import { getSongList, getSongListOfStyle } from '../api/index'
+import { HttpManager } from '../api/index'
 
 export default {
   name: 'song-list',
@@ -38,7 +38,7 @@ export default {
   },
   data () {
     return {
-      songStyle: [], // 歌单导航栏类别
+      songStyle: songStyle, // 歌单导航栏类别
       activeName: '全部歌单',
       pageSize: 15, // 页数
       currentPage: 1, // 当前页
@@ -55,7 +55,6 @@ export default {
     }
   },
   mounted () {
-    this.songStyle = songStyle
     this.handleChangeView('全部歌单')
   },
   methods: {
@@ -75,7 +74,7 @@ export default {
     },
     // 获取全部歌单
     getSongList (page) {
-      getSongList()
+      HttpManager.getSongList()
         .then(res => {
           this.currentPage = 1
           this.albumDatas = res
@@ -86,7 +85,7 @@ export default {
     },
     // 通过类别获取歌单
     getSongListOfStyle (style) {
-      getSongListOfStyle(style)
+      HttpManager.getSongListOfStyle(style)
         .then(res => {
           this.currentPage = 1
           this.albumDatas = res

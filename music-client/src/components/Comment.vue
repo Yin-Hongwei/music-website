@@ -30,7 +30,7 @@
         </div>
         <div class="up" ref="up" @click="postUp(item.id, item.up, index)">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-zan"></use>
+            <use :xlink:href="ZAN"></use>
           </svg>
           {{item.up}}
         </div>
@@ -40,9 +40,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import mixin from '../mixins'
-import { getUserOfId, setComment, setLike, getAllComment } from '../api/index'
+import { mapGetters } from 'vuex'
+import { HttpManager } from '../api/index'
+import { ICON } from '../assets/icon/index'
 
 export default {
   name: 'comment',
@@ -56,7 +57,8 @@ export default {
       commentList: [], // 存放评论内容
       userPic: [], // 保存评论用户头像
       userName: [], // 保存评论用户名字
-      textarea: '' // 存放输入内容
+      textarea: '', // 存放输入内容
+      ZAN: ICON.ZAN
     }
   },
   computed: {
@@ -79,7 +81,7 @@ export default {
   methods: {
     // 获取所有评论
     getComment () {
-      getAllComment(this.type, this.playId)
+      HttpManager.getAllComment(this.type, this.playId)
         .then(res => {
           this.commentList = res
           for (let item of res) {
@@ -92,7 +94,7 @@ export default {
     },
     // 获取评论用户的昵称和头像
     getUsers (id) {
-      getUserOfId(id)
+      HttpManager.getUserOfId(id)
         .then(res => {
           this.userPic.push(res[0].avator)
           this.userName.push(res[0].username)
@@ -114,7 +116,7 @@ export default {
         params.append('userId', this.userId)
         params.append('type', this.type)
         params.append('content', this.textarea)
-        setComment(params)
+        HttpManager.setComment(params)
           .then(res => {
             if (res.code === 1) {
               this.textarea = ''
@@ -137,7 +139,7 @@ export default {
         let params = new URLSearchParams()
         params.append('id', id)
         params.append('up', up + 1)
-        setLike(params)
+        HttpManager.setLike(params)
           .then(res => {
             if (res.code === 1) {
               this.$refs.up[index].children[0].style.color = '#2796dd'
