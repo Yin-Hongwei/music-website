@@ -31,10 +31,10 @@ public class SongListController {
             String os = System.getProperty("os.name");
             if (os.toLowerCase().startsWith("win")) { // windos系统
                 registry.addResourceHandler("/img/songListPic/**")
-                        .addResourceLocations("file:" + Constants.RESOURCE_PATH + "\\img\\songListPic\\");
+                        .addResourceLocations("file:" + Constants.RESOURCE_WIN_PATH + "\\img\\songListPic\\");
             } else { // MAC、Linux系统
                 registry.addResourceHandler("/img/songListPic/**")
-                        .addResourceLocations("file:" + Constants.RESOURCE_PATH + "/img/songListPic/");
+                        .addResourceLocations("file:" + Constants.RESOURCE_MAC_PATH + "/img/songListPic/");
             }
         }
     }

@@ -5,16 +5,9 @@
 <p align="center">
   <a href=""><img alt="license" src="https://img.shields.io/github/license/Yin-Hongwei/music-website"></a>
 </p>
-
-<h1 align="center">声明</h1>
-
-这项目我一直作为技术分享，不做收费（版权归我个人独有，大家拿来学习交流随时欢迎，拒绝商用）。希望大家可以尊重下我的劳动成果，谢谢。
-
-<br/>
-
 ## 项目说明
 
-本音乐网站的客户端和管理端使用 **VUE** 框架来实现，服务端用 **Spring Boot + MyBatis** 来实现，数据库使用的是 **MySQL**。实现思路可以看**[这里](https://yin-hongwei.github.io/2019/03/04/music/#more)**。
+本音乐网站的客户端和管理端使用 **VUE** 框架来实现，服务端使用 **Spring Boot + MyBatis** 来实现，数据库使用了 **MySQL**。实现思路可以看**[这里](https://yin-hongwei.github.io/2019/03/04/music/#more)**；项目启动方法看文章末尾。
 
 <br/>
 
@@ -73,11 +66,11 @@
 
 ## 技术栈
 
-#### 后端
+### 后端
 
 **SpringBoot + MyBatis**
 
-#### 前端
+### 前端
 
 **Vue + Vue-Router + Vuex + Axios +  ElementUI**
 
@@ -105,25 +98,28 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 
 #### 2、下载数据库中记录的资源
 
-去【链接: https://pan.baidu.com/s/1Qv0ohAIPeTthPK_CDwpfWg 提取码: gwa4 】下载网站依赖的歌曲及图片，将 data 夹里的文件直接放到 music-server 文件夹下。
+去**【链接: https://pan.baidu.com/s/1Qv0ohAIPeTthPK_CDwpfWg 提取码: gwa4 】**下载网站依赖的歌曲及图片，将 data 夹里的文件放到 music-server 文件夹下。
 
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gekwp2wqxuj311v0u0du2.jpg" height="200px"/>
+> 注意：资源整理了一下，按照下面的截图存放。
+
+<img src="https://tva1.sinaimg.cn/large/008i3skNly1gsk65seqd8j30y00ocjt4.jpg" height="200px"/>
 
 #### 3、修改配置文件
 1）创建数据库
-将 `music-website/music-server/sql` 文件夹中的 tp_music.sql 文件导入数据库。
+将 `music-website/music-server/sql` 文件夹中的 `tp_music.sql` 文件导入数据库。
 
-2）修改后端配置文件
-去 `music-website/music-server/src/main/resources` 这个目录下的文件里修改自己的 spring.datasource.username 和 spring.datasource.password；
-修改下图圈出来的的文件中 MyPicConfig 类下的 addResourceLocations方法中的路径，否则资源加载不了。（Mac 和 win 下路径有些差异，我的是 Mac 上的路径，win 上需要在 file: 后标明是哪个盘，例如：`file:C:\\user\\XXX\\`）
+2）修改用户名密码
+修改 `music-website/music-server/src/main/resources/application.properties` 文件里的 `spring.datasource.username` 和 `spring.datasource.password`；
 
-![](https://tva1.sinaimg.cn/large/00831rSTly1gd38cq6yhrj31zk0juk02.jpg)
+3）修改资源路径
+
+修改 `music-server/src/main/java/com/example/yin/constant/Constants.java` 文件中的 `RESOURCE_PATH`，**否则资源加载不了**。
+
+![](https://tva1.sinaimg.cn/large/008i3skNly1gske6w6kk8j33aq0u0wn2.jpg)
 
 #### 4、启动项目
 
-music-server 是本项目的后端，用于监听前端发来的请求，提供响应。music-client 和 music-manage 都是本项目的前端部分，前者是前台，后者是后台。运行时后端必须启动，两个前端项目可以都启动，也可以只启动其中一个，他们是独立的。
-
-- **启动后端**：进入 music-server 文件夹，运行下面命令启动服务器
+- **启动管理端**：进入 music-server 文件夹，运行下面命令启动服务器
 
 ```js
 // 方法一
@@ -133,7 +129,7 @@ music-server 是本项目的后端，用于监听前端发来的请求，提供�
 mvn spring-boot:run // 前提装了 maven
 ```
 
-- **启动前台**：进入 music-client 文件夹，运行下面命令启动前台项目
+- **启动客户端**：进入 music-client 目录，运行下面命令
 
 ```js
 npm install // 安装依赖
@@ -141,7 +137,7 @@ npm install // 安装依赖
 npm run dev // 启动前台项目
 ```
 
-- **启动后台**：进入 music-manage 文件夹，运行下面命令启动后台管理项目
+- **启动管理端**：进入 music-manage 目录，运行下面命令
 
 ```js
 npm install // 安装依赖
@@ -153,7 +149,7 @@ npm run dev // 启动后台管理项目
 
 ## 赞助
 
-如果此项目对你确实有帮助，欢迎给我打赏一杯咖啡哈😄
+如果此项目对你确实有帮助，欢迎给我打赏一杯咖啡～😄
 
 
 

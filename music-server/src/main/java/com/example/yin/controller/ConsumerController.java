@@ -34,10 +34,10 @@ public class ConsumerController {
             String os = System.getProperty("os.name");
             if (os.toLowerCase().startsWith("win")) { // windos系统
                 registry.addResourceHandler("/img/avatorImages/**")
-                        .addResourceLocations("file:" + Constants.RESOURCE_PATH + "\\img\\avatorImages\\");
+                        .addResourceLocations("file:" + Constants.RESOURCE_WIN_PATH + "\\img\\avatorImages\\");
             } else { // MAC、Linux系统
                 registry.addResourceHandler("/img/avatorImages/**")
-                        .addResourceLocations("file:" + Constants.RESOURCE_PATH + "/img/avatorImages/");
+                        .addResourceLocations("file:" + Constants.RESOURCE_MAC_PATH + "/img/avatorImages/");
             }
         }
     }
