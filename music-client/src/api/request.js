@@ -76,7 +76,6 @@ axios.interceptors.response.use(
    */
 export function get (url, params = {}, responseType = 'json') {
   return new Promise((resolve, reject) => {
-    console.log(responseType)
     axios.get(url, {
       params: params,
       responseType

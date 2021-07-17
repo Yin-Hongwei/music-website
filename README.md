@@ -14,11 +14,11 @@
 
 ## 项目说明
 
-本音乐网站的开发主要利用 VUE 框架开发前台和后台，后端接口用 Spring Boot + MyBatis 来实现，数据库使用的是 MySQL。实现思路可以看[这里](https://yin-hongwei.github.io/2019/03/04/music/#more)。
+本音乐网站的客户端和管理端使用 **VUE** 框架来实现，服务端用 **Spring Boot + MyBatis** 来实现，数据库使用的是 **MySQL**。实现思路可以看**[这里](https://yin-hongwei.github.io/2019/03/04/music/#more)**。
 
 <br/>
 
-## 项目截图
+## 项目预览
 
 > 前台截图预览
 
@@ -56,7 +56,7 @@
 
 ![](https://tva1.sinaimg.cn/large/007S8ZIlly1ghrnszq403j31c00u07nq.jpg)<br/>
 
-## 功能
+## 项目功能
 
 - 音乐播放
 - 用户登录注册
@@ -75,19 +75,31 @@
 
 #### 后端
 
-SpringBoot + MyBatis
+**SpringBoot + MyBatis**
 
 #### 前端
 
-Vue + Vue-Router + Vuex + Axios +  ElementUI
+**Vue + Vue-Router + Vuex + Axios +  ElementUI**
 
 <br/>
 
-## 安装
+## 开发环境
+
+JDK： jdk-8u141
+
+mysql：mysql-5.7.21-1-macos10.13-x86_64
+
+node：v12.4.0
+
+IDE：IntelliJ IDEA 2018、VSCode
+
+<br/>
+
+## 下载运行
 
 #### 1、下载项目到本地
 
-```
+```bash
 git clone https://github.com/Yin-Hongwei/music-website.git
 ```
 
@@ -141,7 +153,13 @@ npm run dev // 启动后台管理项目
 
 ## 赞助
 
+如果此项目对你确实有帮助，欢迎给我打赏一杯咖啡哈😄
+
+
+
 ![](https://tva1.sinaimg.cn/large/008i3skNgy1gsgm6jokvaj30gs0feadd.jpg)
+
+
 
 ## License
 
