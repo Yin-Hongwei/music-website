@@ -81,7 +81,7 @@ const song = {
     picUrl: state => {
       let picUrl = state.picUrl
       if (!picUrl) {
-        picUrl = JSON.parse(window.sessionStorage.getItem('picUrl')) || `${BASE_URL}/img/tubiao.jpg`
+        picUrl = JSON.parse(window.sessionStorage.getItem('picUrl')) || `${BASE_URL}/img/songPic/tubiao.jpg`
       }
       return picUrl
     },

@@ -21,7 +21,7 @@
     </javaTypeResolver>
 
     <!-- 实体类生成的位置 -->
-    <javaModelGenerator targetPackage="com.example.demo.domain" targetProject="src/main/java">
+    <javaModelGenerator targetPackage="com.example.yin.domain" targetProject="src/main/java">
       <property name="enableSubPackages" value="true"/>
       <property name="trimStrings" value="true"/>
     </javaModelGenerator>
@@ -32,7 +32,7 @@
     </sqlMapGenerator>
 
     <!-- Mapper 接口文件的位置 -->
-    <javaClientGenerator targetPackage="com.example.demo.dao" targetProject="src/main/java" type="XMLMAPPER">
+    <javaClientGenerator targetPackage="com.example.yin.dao" targetProject="src/main/java" type="XMLMAPPER">
       <property name="enableSubPackages" value="false"/>
     </javaClientGenerator>
 
