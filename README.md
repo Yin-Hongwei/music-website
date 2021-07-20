@@ -2,7 +2,11 @@
 
 <br/>
 
-![GitHub](https://img.shields.io/github/license/Yin-Hongwei/music-website?style=flat-square)
+<p align="center">
+  <a href=""><img alt="license" src="https://img.shields.io/github/license/Yin-Hongwei/music-website?style=flat-square"></a>
+</p>
+
+
 
 ## 项目说明
 
