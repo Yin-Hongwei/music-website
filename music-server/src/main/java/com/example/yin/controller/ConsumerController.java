@@ -214,14 +214,14 @@ public class ConsumerController {
             return jsonObject;
         }
         String fileName = System.currentTimeMillis()+avatorFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "avatorImages" ;
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "avatorImages" ;
         File file1 = new File(filePath);
         if (!file1.exists()){
             file1.mkdir();
         }
 
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeAvatorPath = "/avatorImages/"+fileName;
+        String storeAvatorPath = "/img/avatorImages/"+fileName;
         try {
             avatorFile.transferTo(dest);
             Consumer consumer = new Consumer();
