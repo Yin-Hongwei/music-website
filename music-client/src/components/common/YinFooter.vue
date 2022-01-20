@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'yin-footer',
+  name: 'YinFooter',
   data () {
     return {
       footerList: [

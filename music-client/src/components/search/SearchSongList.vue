@@ -1,6 +1,6 @@
 <template>
-  <div class="search-song-Lists">
-    <play-list :playList="albumDatas" path="song-sheet-detail"></play-list>
+  <div class="search-song-list">
+    <play-list :playList="playList" path="song-sheet-detail"></play-list>
   </div>
 </template>
 
@@ -10,14 +10,14 @@ import PlayList from '../PlayList'
 import { HttpManager } from '../../api/index'
 
 export default {
-  name: 'search-song-sheet',
+  name: 'SearchSongList',
   mixins: [mixin],
   components: {
     PlayList
   },
   data () {
     return {
-      albumDatas: []
+      playList: []
     }
   },
   mounted () {
@@ -34,7 +34,7 @@ export default {
               type: 'warning'
             })
           } else {
-            this.albumDatas = res
+            this.playList = res
           }
         })
     }
@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style scoped>
-.search-song-Lists {
+.search-song-list {
   height: 480px !important;
 }
 </style>

@@ -1,39 +1,48 @@
 @import "var.scss";
 @import "global.scss";
 
-.slide-fade-enter-active {
-  transition: all .3s ease;
+.aside-fade-enter-active {
+  transition: all 0.3s ease;
 }
 
-.slide-fade-leave-active {
-  transition: all .2s ease;
+.aside-fade-leave-active {
+  transition: all 0.2s ease;
 }
 
-.slide-fade-enter, .slide-fade-leave-to {
+.aside-fade-enter,
+.aside-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
 }
 
-.the-aside {
+.yin-current-play {
   font-size: 14px;
-  width: 250px;
-  height: 370px;
+  width: $current-play;
   position: fixed;
   right: 0;
-  top: 150px;
+  top: $header-height;
+  bottom: 0;
+  padding-bottom: $footer-height;
   z-index: 99;
   background-color: $color-white;
   @include box-shadow(1px 1px 10px rgba(0, 0, 0, 0.4));
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
   overflow: hidden;
 }
 
-.title {
+.title,
+.control,
+.menus li {
   padding-left: 20px;
-  margin: 10px 0;
   box-sizing: border-box;
+}
+
+.title {
+  margin: 10px 0;
+}
+
+.control {
+  margin: 3px 0;
+  color: $color-grey;
 }
 
 .menus {
@@ -49,17 +58,15 @@
     width: 100%;
     height: 40px;
     line-height: 40px;
-    padding-left: 20px;
-    box-sizing: border-box;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
-    &:hover{
+    &:hover {
       background-color: $color-blue;
       color: $color-white;
     }
   }
 }
 
-.is-play{
+.is-play {
   color: $color-blue-active;
   font-weight: bold;
 }

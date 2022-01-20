@@ -31,6 +31,7 @@ export default {
     }
   },
   created () {
+    console.log('%c welcome to https://github.com/Yin-Hongwei/music-website', 'font-size: 16px; font-weight: bold')
     // 获取歌单列表
     this.getSongList()
     // 获取歌手列表

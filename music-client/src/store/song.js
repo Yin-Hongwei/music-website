@@ -17,8 +17,9 @@ const song = {
     autoNext: true, // 用于触发自动播放下一首
     lyric: [], // 未处理的歌词数据
     listOfSongs: [], // 当前歌单列表
-    tempList: {}, // 单个歌单信息
-    listIndex: null, // 当前歌曲在歌曲列表的位置
+    currentPlay: [], // 当前播放
+    songDetails: {}, // 单个歌单信息
+    listIndex: -1, // 当前歌曲在歌曲列表的位置
     volume: 50
   },
   getters: {
@@ -100,12 +101,12 @@ const song = {
       }
       return lyric
     },
-    tempList: state => {
-      let tempList = state.tempList
-      if (JSON.stringify(tempList) === '{}') {
-        tempList = JSON.parse(window.sessionStorage.getItem('tempList') || null)
+    songDetails: state => {
+      let songDetails = state.songDetails
+      if (JSON.stringify(songDetails) === '{}') {
+        songDetails = JSON.parse(window.sessionStorage.getItem('songDetails') || null)
       }
-      return tempList
+      return songDetails
     },
     listOfSongs: state => {
       let listOfSongs = state.listOfSongs
@@ -113,6 +114,13 @@ const song = {
         listOfSongs = JSON.parse(window.sessionStorage.getItem('listOfSongs') || null)
       }
       return listOfSongs
+    },
+    currentPlay: state => {
+      let currentPlay = state.currentPlay
+      if (!currentPlay.length) {
+        currentPlay = JSON.parse(window.sessionStorage.getItem('currentPlay') || null)
+      }
+      return currentPlay
     },
     listIndex: state => {
       let listIndex = state.listIndex
@@ -178,13 +186,17 @@ const song = {
       state.lyric = lyric
       window.sessionStorage.setItem('lyric', JSON.stringify(lyric))
     },
-    setTempList: (state, tempList) => {
-      state.tempList = tempList
-      window.sessionStorage.setItem('tempList', JSON.stringify(tempList))
+    setSongDetails: (state, songDetails) => {
+      state.songDetails = songDetails
+      window.sessionStorage.setItem('songDetails', JSON.stringify(songDetails))
     },
     setListOfSongs: (state, listOfSongs) => {
       state.listOfSongs = listOfSongs
       window.sessionStorage.setItem('listOfSongs', JSON.stringify(listOfSongs))
+    },
+    setCurrentPlay: (state, currentPlay) => {
+      state.currentPlay = currentPlay
+      window.sessionStorage.setItem('currentPlay', JSON.stringify(currentPlay))
     },
     setListIndex: (state, listIndex) => {
       state.listIndex = listIndex

@@ -1,8 +1,8 @@
 <template>
-<div class="signUp-page">
+<div>
   <yin-login-logo></yin-login-logo>
-  <div class="signUp">
-    <div class="signUp-head">
+  <div class="sign-up">
+    <div class="sign-up-head">
       <span>用户注册</span>
     </div>
     <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="70px" class="demo-ruleForm">
@@ -35,9 +35,9 @@
           <el-option v-for="item in cities" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
       </el-form-item>
-      <div class="login-btn">
-        <el-button @click="goback(-1)">取消</el-button>
-        <el-button type="primary" @click="SignUp">确定</el-button>
+      <div class="sign-up-btn">
+        <el-button @click="goback">取消</el-button>
+        <el-button type="primary" @click="handleSignUp">确定</el-button>
       </div>
     </el-form>
   </div>
@@ -51,7 +51,7 @@ import { rules, cities } from '../assets/data/form'
 import { HttpManager } from '../api/index'
 
 export default {
-  name: 'sign-up',
+  name: 'SignUp',
   mixins: [mixin],
   components: {
     YinLoginLogo
@@ -73,28 +73,24 @@ export default {
     }
   },
   methods: {
-    SignUp () {
-      let d = this.registerForm.birth
-      let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      let params = new URLSearchParams()
-      params.append('username', this.registerForm.username)
+    handleSignUp () {
+      const params = new URLSearchParams()
       params.append('password', this.registerForm.password)
       params.append('sex', this.registerForm.sex)
       params.append('phone_num', this.registerForm.phoneNum)
       params.append('email', this.registerForm.email)
-      params.append('birth', datetime)
+      params.append('birth', this.getDateTime())
       params.append('introduction', this.registerForm.introduction)
       params.append('location', this.registerForm.location)
       params.append('avator', '/img/user.jpg')
-      HttpManager.SignUp(params)
+      HttpManager.handleSignUp(params)
         .then(res => {
-          console.log(res)
           if (res.code === 1) {
             this.$notify({
               title: '注册成功',
               type: 'success'
             })
-            setTimeout(function () {
+            setTimeout(() => {
               this.$router.push({path: '/'})
             }, 2000)
           } else {
@@ -107,9 +103,6 @@ export default {
         .catch(err => {
           console.error(err)
         })
-    },
-    goback (index) {
-      this.$router.go(index)
     }
   }
 }

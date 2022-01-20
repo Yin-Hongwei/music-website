@@ -1,24 +1,24 @@
 <template>
-<div class="login-in">
-  <yin-login-logo></yin-login-logo>
-  <div class="login">
-    <div class="login-head">
-      <span>帐号登录</span>
-    </div>
-    <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" class="demo-ruleForm" >
-      <el-form-item prop="username">
-        <el-input placeholder="用户名" v-model="loginForm.username"></el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input type="password" placeholder="密码" v-model="loginForm.password" @keyup.enter.native="loginIn"></el-input>
-      </el-form-item>
-      <div class="login-btn">
-        <el-button @click="goSignUp">注册</el-button>
-        <el-button type="primary" @click="handleleLoginIn">登录</el-button>
+  <div class="login-in">
+    <yin-login-logo></yin-login-logo>
+    <div class="login">
+      <div class="login-head">
+        <span>帐号登录</span>
       </div>
-    </el-form>
+      <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" class="demo-ruleForm" >
+        <el-form-item prop="username">
+          <el-input placeholder="用户名" v-model="loginForm.username"></el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input type="password" placeholder="密码" v-model="loginForm.password" @keyup.enter.native="loginIn"></el-input>
+        </el-form-item>
+        <div class="login-btn">
+          <el-button @click="handleSignUp">注册</el-button>
+          <el-button type="primary" @click="handleLoginIn">登录</el-button>
+        </div>
+      </el-form>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -27,12 +27,12 @@ import YinLoginLogo from '../components/common/YinLoginLogo'
 import { HttpManager } from '../api/index'
 
 export default {
-  name: 'login-in',
+  name: 'LoginIn',
   mixins: [mixin],
   components: {
     YinLoginLogo
   },
-  data: function () {
+  data () {
     let validateName = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('用户名不能为空'))
@@ -69,7 +69,7 @@ export default {
     changeIndex (value) {
       this.$store.commit('setActiveName', value)
     },
-    handleleLoginIn () {
+    handleLoginIn () {
       let params = new URLSearchParams()
       params.append('username', this.loginForm.username)
       params.append('password', this.loginForm.password)
@@ -83,7 +83,7 @@ export default {
             })
             this.setUserMsg(res.userMsg[0])
             this.$store.commit('setLoginIn', true)
-            setTimeout(function () {
+            setTimeout(() => {
               this.changeIndex('首页')
               this.$router.push({path: '/'})
               this.$router.go(0)
@@ -104,7 +104,7 @@ export default {
       this.$store.commit('setUsername', item.username)
       this.$store.commit('setAvator', item.avator)
     },
-    goSignUp () {
+    handleSignUp () {
       this.$router.push({path: '/sign-up'})
     }
   }

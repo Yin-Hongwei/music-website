@@ -104,65 +104,67 @@ export default {
     },
     // 提交评论
     postComment () {
-      if (this.loginIn) {
-        // 0 代表歌曲， 1 代表歌单
-        let params = new URLSearchParams()
-        if (this.type === 1) {
-          params.append('songListId', this.playId)
-        } else if (this.type === 0) {
-          params.append('songId', this.playId)
-        }
-        params.append('userId', this.userId)
-        params.append('type', this.type)
-        params.append('content', this.textarea)
-        HttpManager.setComment(params)
-          .then(res => {
-            if (res.code === 1) {
-              this.textarea = ''
-              this.getComment()
-              this.$notify({
-                title: '评论成功',
-                type: 'success'
-              })
-            } else {
-              this.$notify({
-                title: '评论失败',
-                type: 'error'
-              })
-            }
-          })
-          .catch(err => {
-            console.error(err)
-          })
-      } else {
+      if (!this.loginIn) {
         this.$notify({
           title: '请先登录',
           type: 'warning'
         })
+        return
       }
+
+      // 0 代表歌曲， 1 代表歌单
+      let params = new URLSearchParams()
+      if (this.type === 1) {
+        params.append('songListId', this.playId)
+      } else if (this.type === 0) {
+        params.append('songId', this.playId)
+      }
+      params.append('userId', this.userId)
+      params.append('type', this.type)
+      params.append('content', this.textarea)
+      HttpManager.setComment(params)
+        .then(res => {
+          if (res.code === 1) {
+            this.textarea = ''
+            this.getComment()
+            this.$notify({
+              title: '评论成功',
+              type: 'success'
+            })
+          } else {
+            this.$notify({
+              title: '评论失败',
+              type: 'error'
+            })
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
     },
     // 点赞
     postUp (id, up, index) {
-      if (this.loginIn) {
-        let params = new URLSearchParams()
-        params.append('id', id)
-        params.append('up', up + 1)
-        HttpManager.setLike(params)
-          .then(res => {
-            if (res.code === 1) {
-              this.$refs.up[index].children[0].style.color = '#2796dd'
-              this.getComment()
-            }
-          })
-          .catch(err => {
-            console.error(err)
-          })
-      } else {
+      if (!this.loginIn) {
         this.$notify({
           title: '请先登录',
           type: 'warning'
         })
+        return
       }
+
+      let params = new URLSearchParams()
+      params.append('id', id)
+      params.append('up', up + 1)
+      HttpManager.setLike(params)
+        .then(res => {
+          if (res.code === 1) {
+            this.$refs.up[index].children[0].style.color = '#2796dd'
+            this.getComment()
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
     }
   }
 }

@@ -23,7 +23,7 @@ import Comment from '../components/Comment'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'lyric',
+  name: 'Lyric',
   mixins: [mixin],
   components: {
     Comment
@@ -45,11 +45,11 @@ export default {
     ])
   },
   watch: {
-    id: function () {
+    id () {
       this.lyr = this.parseLyric(this.listOfSongs[this.listIndex].lyric)
     },
     // 播放时间的开始和结束
-    curTime: function () {
+    curTime () {
       // 处理歌词位置及颜色
       if (this.lyr.length !== 0) {
         for (let i = 0; i < this.lyr.length; i++) {

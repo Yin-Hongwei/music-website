@@ -25,7 +25,6 @@
 <script>
 import mixin from '../mixins'
 import SongList from '../components/SongList'
-import { mapGetters } from 'vuex'
 import { HttpManager } from '../api/index'
 
 export default {
@@ -45,12 +44,6 @@ export default {
       collection: [], // 存放收藏的歌曲ID
       collectList: [] // 收藏的歌曲
     }
-  },
-  computed: {
-    ...mapGetters([
-      'id',
-      'listOfSongs' // 存放的音乐
-    ])
   },
   mounted () {
     this.getMsg(this.userId)

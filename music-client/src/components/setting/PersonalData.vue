@@ -53,9 +53,9 @@ import { cities } from '../../assets/data/form'
 import { HttpManager } from '../../api/index'
 
 export default {
-  name: 'personal-data',
+  name: 'PersonalData',
   mixins: [mixin],
-  data: function () {
+  data () {
     return {
       registerForm: { // 注册
         username: '',
@@ -91,20 +91,15 @@ export default {
           console.error(err)
         })
     },
-    goback () {
-      this.$router.go(-1)
-    },
     saveMsg () {
-      let d = new Date(this.registerForm.birth)
-      let datetime = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
-      let params = new URLSearchParams()
+      const params = new URLSearchParams()
       params.append('id', this.userId)
       params.append('username', this.registerForm.username)
       params.append('password', this.registerForm.password)
       params.append('sex', this.registerForm.sex)
       params.append('phone_num', this.registerForm.phoneNum)
       params.append('email', this.registerForm.email)
-      params.append('birth', datetime)
+      params.append('birth', this.getDateTime())
       params.append('introduction', this.registerForm.introduction)
       params.append('location', this.registerForm.location)
       HttpManager.updateUserMsg(params)
@@ -117,7 +112,7 @@ export default {
               title: '编辑成功',
               showClose: true
             })
-            setTimeout(function () {
+            setTimeout(() => {
               this.$router.go(-1)
             }, 2000)
           } else {

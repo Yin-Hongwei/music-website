@@ -158,14 +158,14 @@ export default {
   },
   mounted () {
     this.progressLength = this.$refs.progress.getBoundingClientRect().width
-    document.querySelector('.icon-volume').addEventListener('click', function (e) {
+    document.querySelector('.icon-volume').addEventListener('click', (e) => {
       document.querySelector('.volume').classList.add('show-volume')
       e.stopPropagation()
     }, false)
-    document.querySelector('.volume').addEventListener('click', function (e) {
+    document.querySelector('.volume').addEventListener('click', (e) => {
       e.stopPropagation()
     }, false)
-    document.addEventListener('click', function () {
+    document.addEventListener('click', () => {
       document.querySelector('.volume').classList.remove('show-volume')
     }, false)
   },
@@ -192,8 +192,7 @@ export default {
         })
     },
     changeAside () {
-      let temp = !this.showAside
-      this.$store.commit('setShowAside', temp)
+      this.$store.commit('setShowAside', !this.showAside)
     },
     // 控制音乐播放 / 暂停
     togglePlay () {
@@ -218,8 +217,9 @@ export default {
         }
       }
       // 多少秒
+      let result = ''
       if (parseInt(theTime) < 10) {
-        var result = '0:0' + parseInt(theTime)
+        result = '0:0' + parseInt(theTime)
       } else {
         result = '0:' + parseInt(theTime)
       }

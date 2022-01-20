@@ -14,7 +14,18 @@
         </div>
       </li>
       <li class="list-content" v-for="(item, index) in songList" :key="index">
-        <div class="song-item" :class="{'is-play': id === item.id}"  @click="toplay(item.id, item.url, item.pic, index, item.name, item.lyric)">
+        <div
+          class="song-item"
+          :class="{'is-play': id === item.id}"
+          @click="toplay({
+            id:item.id,
+            url: item.url,
+            pic: item.pic,
+            index: index,
+            name: item.name,
+            lyric: item.lyric
+          })"
+        >
           <span class="item-index">
             <span v-if="id !== item.id">{{index + 1}}</span>
             <svg v-if="id === item.id" class="icon" aria-hidden="true">

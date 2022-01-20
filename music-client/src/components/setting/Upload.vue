@@ -21,7 +21,7 @@
 import mixin from '../../mixins'
 
 export default {
-  name: 'yin-upload',
+  name: 'Upload',
   mixins: [mixin],
   data () {
     return {

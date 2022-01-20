@@ -9,6 +9,10 @@ const mixin = {
     ])
   },
   methods: {
+    getDateTime () {
+      const date = this.registerForm.birth
+      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    },
     // 获取图片信息
     attachImageUrl (srcUrl) {
       return srcUrl ? this.$store.state.configure.HOST + srcUrl || '../assets/img/user.jpg' : ''
@@ -28,7 +32,7 @@ const mixin = {
       return arr[0]
     },
     // 播放
-    toplay: function (id, url, pic, index, name, lyric) {
+    toplay ({ id, url, pic, index, name, lyric }) {
       this.$store.commit('setId', id)
       this.$store.commit('setListIndex', index)
       this.$store.commit('setUrl', this.$store.state.configure.HOST + url)
@@ -36,6 +40,7 @@ const mixin = {
       this.$store.commit('setTitle', this.replaceFName(name))
       this.$store.commit('setArtist', this.replaceLName(name))
       this.$store.commit('setLyric', this.parseLyric(lyric))
+      this.$store.commit('setCurrentPlay', this.$store.state.song.listOfSongs)
       if (this.loginIn) {
         this.$store.commit('setIsActive', false)
         HttpManager.getCollectionOfUser(this.userId)
@@ -78,9 +83,7 @@ const mixin = {
           }
         }
       }
-      result.sort(function (a, b) {
-        return a[0] - b[0]
-      })
+      result.sort((a, b) => a[0] - b[0])
       return result
     },
     // 搜索音乐
@@ -104,6 +107,9 @@ const mixin = {
         .catch(err => {
           console.error(err)
         })
+    },
+    goback (index = -1) {
+      this.$router.go(index)
     }
   }
 }

@@ -1,9 +1,21 @@
 <template>
-  <transition name="slide-fade">
-    <div class="the-aside" v-if="showAside">
-      <h2 class="title">播放列表</h2>
+  <transition name="aside-fade">
+    <div class="yin-current-play" v-if="showAside">
+      <h2 class="title">当前播放</h2>
+      <div class="control">共 {{currentPlay && currentPlay.length || 0}} 首</div>
       <ul class="menus">
-        <li v-for="(item, index) in listOfSongs" :class="{'is-play': id === item.id}" :key="index" @click="toplay(item.id, item.url, item.pic, index, item.name, item.lyric)">
+        <li
+          v-for="(item, index) in currentPlay"
+          :class="{'is-play': id === item.id}"
+          :key="index"
+          @click="toplay({
+            id:item.id,
+            url: item.url,
+            pic: item.pic,
+            index: index,
+            name: item.name,
+            lyric: item.lyric
+          })">
           {{replaceFName(item.name)}}
         </li>
       </ul>
@@ -21,7 +33,7 @@ export default {
   computed: {
     ...mapGetters([
       'id', // 音乐id
-      'listOfSongs', // 当前歌单列表
+      'currentPlay', // 当前播放
       'showAside' // 是否显示侧边栏
     ])
   },

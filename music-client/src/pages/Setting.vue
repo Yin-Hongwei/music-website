@@ -19,7 +19,7 @@ import PersonalData from '../components/setting/PersonalData'
 import Upload from '../components/setting/Upload'
 
 export default {
-  name: 'setting',
+  name: 'Setting',
   components: {
     PersonalData,
     Upload

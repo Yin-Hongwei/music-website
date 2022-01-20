@@ -57,7 +57,7 @@ export default {
       this.currentPage = val
     },
     // 获取歌单
-    handleChangeView: function (item) {
+    handleChangeView (item) {
       this.activeName = item.name
       this.allPlayList = []
       if (item.name === '全部歌单') {

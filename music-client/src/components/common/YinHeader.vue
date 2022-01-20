@@ -28,7 +28,7 @@
       <div id="user" ref="user">
         <img :src="attachImageUrl(avator)" alt="">
       </div>
-      <ul class="menu" ref="menu">
+      <ul class="menu" ref="menu" :class="showMenu ? 'show' : ''">
         <li v-for="(item, index) in menuList" :key="index" @click="goMenuList(item.path)">{{item.name}}</li>
       </ul>
     </div>
@@ -43,7 +43,7 @@ import { ICON } from '../../assets/icon/index'
 import { MUSICNAME } from '../../assets/data/contant'
 
 export default {
-  name: 'yin-header',
+  name: 'YinHeader',
   mixins: [mixin],
   data () {
     return {
@@ -52,6 +52,7 @@ export default {
       loginMsg: loginMsg, // 右侧导航栏
       menuList: menuList, // 用户下拉菜单项
       keywords: '',
+      showMenu: false,
       ERJI: ICON.ERJI,
       SOUSUO: ICON.SOUSUO
     }
@@ -60,13 +61,12 @@ export default {
     ...mapGetters([
       'activeName',
       'avator',
-      'username',
       'loginIn'
     ])
   },
   mounted () {
     this.$refs.user.addEventListener('click', e => {
-      this.$refs.menu.classList.add('show')
+      this.showMenu = true
       e.stopPropagation()// 关键在于阻止冒泡
     }, false)
     // 点击“菜单”内部时，阻止事件冒泡。(这样点击内部时，菜单不会关闭)
@@ -74,7 +74,7 @@ export default {
       e.stopPropagation()
     }, false)
     document.addEventListener('click', () => {
-      this.$refs.menu.classList.remove('show')
+      this.showMenu = false
     }, false)
   },
   methods: {
@@ -82,7 +82,7 @@ export default {
       this.$router.push({path: '/'})
     },
     goPage (path, value) {
-      this.$refs.menu.classList.remove('show')
+      this.showMenu = false
       this.changeIndex(value)
       if (!this.loginIn && path === '/my-music') {
         this.$notify({
@@ -97,10 +97,10 @@ export default {
       this.$store.commit('setActiveName', value)
     },
     goMenuList (path) {
-      if (path === 0) {
-        this.$store.commit('setIsActive', false)
-      }
-      document.querySelector('.menu').classList.remove('show')
+      this.showMenu = false
+
+      if (path === 0) this.$store.commit('setIsActive', false)
+
       if (path) {
         this.$router.push({path: path})
       } else {

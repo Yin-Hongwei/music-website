@@ -69,14 +69,14 @@ export default {
   computed: {
     ...mapGetters([
       'loginIn', // 登录标识
-      'tempList', // 单个歌单信息
+      'songDetails', // 单个歌单信息
       'listOfSongs', // 存放的音乐
       'avator' // 用户头像
     ])
   },
   created () {
-    this.songListId = this.tempList.id // 给歌单ID赋值
-    this.singers = this.tempList
+    this.songListId = this.songDetails.id // 给歌单ID赋值
+    this.singers = this.songDetails
     this.getSongId() // 获取歌单里面的歌曲ID
     this.getRank(this.songListId) // 获取评分
   },

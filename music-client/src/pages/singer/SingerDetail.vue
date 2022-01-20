@@ -44,13 +44,13 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'tempList',
+      'songDetails',
       'listOfSongs'
     ])
   },
   mounted () {
     this.singerId = this.$route.params.id // 给歌单ID赋值
-    this.singer = this.tempList
+    this.singer = this.songDetails
     this.getSongList()
   },
   methods: {

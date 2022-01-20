@@ -1,6 +1,6 @@
 <template>
   <div class="play-list">
-    <div class="section-title">{{title}}</div>
+    <div class="section-title" v-if="title">{{title}}</div>
     <ul class="section-content">
       <li class="content-item" v-for="(item, index) in playList" :key="index">
         <div class="kuo" @click="goAblum(item)">
@@ -22,7 +22,7 @@ import mixin from '../mixins'
 import { ICON } from '../assets/icon/index'
 
 export default {
-  name: 'play-list',
+  name: 'PlayList',
   mixins: [mixin],
   props: {
     title: String,
@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     goAblum (item) {
-      this.$store.commit('setTempList', item)
+      this.$store.commit('setSongDetails', item)
       this.$router.push({path: `/${this.path}/${item.id}`})
     }
   }

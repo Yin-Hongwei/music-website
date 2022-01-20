@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'yin-scroll-top',
+  name: 'YinScrollTop',
   methods: {
     returnTop () {
       let timer = null

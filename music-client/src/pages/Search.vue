@@ -15,7 +15,7 @@ import searchSongList from '../components/search/SearchSongList'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'search',
+  name: 'Search',
   mixins: [mixin],
   components: {
     SearchSong,
@@ -33,13 +33,13 @@ export default {
     ])
   },
   watch: {
-    searchword: function () {
+    searchword () {
       this.getSong()
     }
   },
   methods: {
     // 切换组件
-    handleChangeView: function (component) {
+    handleChangeView (component) {
       this.currentView = 'search' + component
       this.toggle = component
     }

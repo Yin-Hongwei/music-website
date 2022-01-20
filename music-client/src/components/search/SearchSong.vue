@@ -1,5 +1,5 @@
 <template>
-  <div class="search-songs">
+  <div class="search-song">
     <song-list :songList="listOfSongs"></song-list>
   </div>
 </template>
@@ -10,7 +10,7 @@ import SongList from '../SongList'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'search-songs',
+  name: 'SearchSong',
   mixins: [mixin],
   components: {
     SongList
@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style scoped>
-.search-songs {
+.search-song {
   min-height: 480px;
 }
 </style>

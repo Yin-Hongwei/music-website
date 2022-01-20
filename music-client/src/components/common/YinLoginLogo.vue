@@ -10,7 +10,7 @@
 import { ICON } from '../../assets/icon/index'
 
 export default {
-  name: 'yin-login-logo',
+  name: 'YinLoginLogo',
   data () {
     return {
       ERJI: ICON.ERJI
