@@ -1,25 +1,12 @@
 import axios from 'axios'
-import { BASE_URL } from './config'
 import router from '../router'
+import { BASE_URL } from '../enums'
 
 axios.defaults.timeout = 5000 // 超时时间设置
 axios.defaults.withCredentials = true // true允许跨域
+axios.defaults.baseURL = BASE_URL
 // Content-Type 响应头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-
-if (process.env.NODE_ENV === 'production') {
-  // 第二层if，根据.env文件中的VUE_APP_FLAG判断是生产环境还是测试环境
-  if (process.env.VUE_APP_FLAG === 'pro') {
-    // production 生产环境
-    axios.defaults.baseURL = BASE_URL
-  } else {
-    // test 测试环境
-    axios.defaults.baseURL = BASE_URL
-  }
-} else {
-  // dev 开发环境
-  axios.defaults.baseURL = BASE_URL
-}
 
 // 响应拦截器
 axios.interceptors.response.use(
@@ -76,7 +63,6 @@ axios.interceptors.response.use(
    */
 export function get (url, params = {}, responseType = 'json') {
   return new Promise((resolve, reject) => {
-    console.log(responseType)
     axios.get(url, {
       params: params,
       responseType

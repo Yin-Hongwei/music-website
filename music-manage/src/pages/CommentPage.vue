@@ -46,23 +46,21 @@
     </el-dialog>
 
     <!-- 删除提示框 -->
-    <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-      <div class="del-dialog-cnt" align="center">删除不可恢复，是否确定删除？</div>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="delVisible = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="deleteRow">确 定</el-button>
-      </span>
-    </el-dialog>
+    <yin-del-dialog :delVisible="delVisible" @deleteRow="deleteRow" @cancelRow="delVisible = $event"></yin-del-dialog>
   </div>
 </template>
 
 <script>
 import { mixin } from '../mixins'
 import { HttpManager } from '../api/index'
+import YinDelDialog from '@/components/dialog/YinDelDialog'
 
 export default {
-  name: 'comment-page',
+  name: 'CommentPage',
   mixins: [mixin],
+  components: {
+    YinDelDialog
+  },
   data () {
     return {
       tableData: [],
@@ -111,6 +109,7 @@ export default {
       } else if (this.$route.query.type === 1) {
         promise = HttpManager.getCommentOfSongListId(this.$route.query.id)
       }
+      console.log('promise', promise)
       promise.then(res => {
         for (let item of res) {
           this.getUsers(item.userId, item)
@@ -126,7 +125,7 @@ export default {
           this.tempDate.push(o)
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 编辑
@@ -157,13 +156,19 @@ export default {
         .then(res => {
           if (res.code === 1) {
             this.getData()
-            this.notify('编辑成功', 'success')
+            this.$notify({
+              title: '编辑成功',
+              type: 'success'
+            })
           } else {
-            this.notify('编辑失败', 'error')
+            this.$notify({
+              title: '编辑失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.editVisible = false
     },
@@ -173,13 +178,19 @@ export default {
         .then(res => {
           if (res) {
             this.getData()
-            this.notify('删除成功', 'success')
+            this.$notify({
+              title: '删除成功',
+              type: 'success'
+            })
           } else {
-            this.notify('删除失败', 'error')
+            this.$notify({
+              title: '删除失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.delVisible = false
     }

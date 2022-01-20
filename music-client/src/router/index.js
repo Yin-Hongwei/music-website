@@ -10,17 +10,22 @@ const constantRoutes = [
   },
   {
     path: '/404',
-    component: () => import('@/pages/404.vue')
+    component: () => import('@/pages/error/404.vue')
   },
   {
     path: '/',
-    name: 'main',
-    component: () => import('@/pages/Main'),
+    name: 'yin-container',
+    component: () => import('@/pages/YinContainer'),
     children: [
       {
-        path: '/login-in',
-        name: 'login-in',
-        component: () => import('@/pages/LoginIn')
+        path: '/',
+        name: 'home',
+        component: () => import('@/pages/Home')
+      },
+      {
+        path: '/sign-in',
+        name: 'sign-in',
+        component: () => import('@/pages/SignIn')
       },
       {
         path: '/sign-up',
@@ -28,34 +33,32 @@ const constantRoutes = [
         component: () => import('@/pages/SignUp')
       },
       {
-        path: '/',
-        name: 'home',
-        component: () => import('@/pages/Home')
-      },
-      {
-        path: '/song-list',
-        name: 'song-list',
-        component: () => import('@/pages/SongList')
-      },
-      {
         path: '/my-music',
         name: 'my-music',
+        meta: {
+          requireAuth: true
+        },
         component: () => import('@/pages/MyMusic')
       },
       {
-        path: '/song-list-album/:id',
-        name: 'song-list-album',
-        component: () => import('@/pages/SongListAlbum')
+        path: '/song-sheet',
+        name: 'song-sheet',
+        component: () => import('@/pages/song-sheet/SongSheet')
+      },
+      {
+        path: '/song-sheet-detail/:id',
+        name: 'song-sheet-detail',
+        component: () => import('@/pages/song-sheet/SongSheetDetail')
       },
       {
         path: '/singer',
         name: 'singer',
-        component: () => import('@/pages/Singer')
+        component: () => import('@/pages/singer/Singer')
       },
       {
-        path: '/singer-album/:id',
-        name: 'singer-album',
-        component: () => import('@/pages/SingerAlbum')
+        path: '/singer-detail/:id',
+        name: 'singer-detail',
+        component: () => import('@/pages/singer/SingerDetail')
       },
       {
         path: '/lyric/:id',
@@ -65,19 +68,26 @@ const constantRoutes = [
       {
         path: '/search',
         name: 'search',
-        component: () => import('@/pages/Search')
+        component: () => import('@/pages/search/Search')
       },
       {
         path: '/setting',
         name: 'setting',
-        component: () => import('@/pages/Setting')
+        meta: {
+          requireAuth: true
+        },
+        component: () => import('@/pages/setting/Setting')
       }
     ]
   }
 ]
 
-export default new Router({
-  mode: 'history', // 去掉url中的#
-  scrollBehavior: (o, from, savedPosition) => ({ x: 0, y: 0 }),
+const router = new Router({
+  mode: 'history',
+  scrollBehavior: () => ({ x: 0, y: 0 }),
   routes: constantRoutes
 })
+
+// TODO: 路由拦截
+
+export default router

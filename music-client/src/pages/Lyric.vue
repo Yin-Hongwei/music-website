@@ -3,8 +3,8 @@
     <h1 class="lyric-title">歌词</h1>
     <transition-group name="lyric-fade">
       <!--有歌词-->
-      <ul :style="{top:lrcTop}" class="has-lyric" v-if="lyr.length" key="has-lyric">
-        <li v-for="(item, index) in lyr" v-bind:key="index">
+      <ul :style="{top:lrcTop}" class="has-lyric" v-if="lyricArr.length" key="has-lyric">
+        <li v-for="(item, index) in lyricArr" :key="index">
           {{ item[1] }}
         </li>
       </ul>
@@ -13,17 +13,18 @@
         <span>暂无歌词</span>
       </div>
     </transition-group>
-    <comment :playId="id" :type="0"></comment>
+    <comment :playId="songId" :type="0"></comment>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import mixin from '../mixins'
 import Comment from '../components/Comment'
-import { mapGetters } from 'vuex'
+import { parseLyric } from '../utils'
 
 export default {
-  name: 'lyric',
+  name: 'Lyric',
   mixins: [mixin],
   components: {
     Comment
@@ -32,29 +33,29 @@ export default {
     return {
       lrcTop: '200px', // 歌词滑动
       showLrc: false, // 切换唱片和歌词
-      lyr: [] // 当前歌曲的歌词
+      lyricArr: [] // 当前歌曲的歌词
     }
   },
   computed: {
     ...mapGetters([
       'curTime',
-      'id', // 歌曲ID
+      'songId', // 歌曲ID
       'lyric', // 歌词
-      'listOfSongs', // 存放的音乐
-      'listIndex' // 当前歌曲在歌曲列表的位置
+      'currentPlayList', // 存放的音乐
+      'currentPlayIndex' // 当前歌曲在歌曲列表的位置
     ])
   },
   watch: {
-    id: function () {
-      this.lyr = this.parseLyric(this.listOfSongs[this.listIndex].lyric)
+    songId () {
+      this.lyricArr = parseLyric(this.currentPlayList[this.currentPlayIndex].lyric)
     },
     // 播放时间的开始和结束
-    curTime: function () {
+    curTime () {
       // 处理歌词位置及颜色
-      if (this.lyr.length !== 0) {
-        for (let i = 0; i < this.lyr.length; i++) {
-          if (this.curTime >= this.lyr[i][0]) {
-            for (let j = 0; j < this.lyr.length; j++) {
+      if (this.lyricArr.length !== 0) {
+        for (let i = 0; i < this.lyricArr.length; i++) {
+          if (this.curTime >= this.lyricArr[i][0]) {
+            for (let j = 0; j < this.lyricArr.length; j++) {
               document.querySelectorAll('.has-lyric li')[j].style.color = '#000'
               document.querySelectorAll('.has-lyric li')[j].style.fontSize = '15px'
             }
@@ -68,11 +69,11 @@ export default {
     }
   },
   created () {
-    this.lyr = this.lyric ? this.lyric : []
+    this.lyricArr = this.lyric ? parseLyric(this.lyric) : []
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/lyric.scss';
+@import '@/assets/css/lyric.scss';
 </style>

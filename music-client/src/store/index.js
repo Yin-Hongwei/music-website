@@ -2,12 +2,10 @@ import configure from './configure'
 import user from './user'
 import song from './song'
 
-const store = {
+export default {
   modules: {
     configure,
     user,
     song
   }
 }
-
-export default store

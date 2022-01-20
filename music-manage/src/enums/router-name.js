@@ -1,0 +1,12 @@
+export const HOME = '/home'
+export const INFO = '/info'
+export const SONG = '/song'
+export const SINGER = '/singer'
+export const SONG_LIST = '/songList'
+export const LIST_SONG = '/listSong'
+export const COMMENT = '/comment'
+export const CONSUMER = '/consumer'
+export const COLLECT = '/collect'
+export const SIGN_IN = '/'
+export const ERROR = '/404'
+export const SIGN_OUT = 0

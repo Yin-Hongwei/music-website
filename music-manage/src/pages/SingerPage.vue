@@ -32,7 +32,7 @@
         </el-table-column>
         <el-table-column label="出生" width="120" align="center">
           <template slot-scope="scope">
-              <div>{{attachBirth(scope.row.birth) }}</div>
+              <div>{{getBirth(scope.row.birth) }}</div>
           </template>
         </el-table-column>
         <el-table-column prop="location" label="地区" width="100" align="center"></el-table-column>
@@ -136,23 +136,23 @@
     </el-dialog>
 
     <!-- 删除提示框 -->
-    <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-      <div class="del-dialog-cnt" align="center">删除不可恢复，是否确定删除？</div>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="delVisible = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="deleteRow">确 定</el-button>
-      </span>
-    </el-dialog>
+    <yin-del-dialog :delVisible="delVisible" @deleteRow="deleteRow" @cancelRow="delVisible = $event"></yin-del-dialog>
   </div>
 </template>
 
 <script>
 import { mixin } from '../mixins'
 import { HttpManager } from '../api/index'
+import { SONG } from '../enums'
+import YinDelDialog from '@/components/dialog/YinDelDialog'
+import { getDateTime } from '../utils'
 
 export default {
-  name: 'singer-page',
+  name: 'SingerPage',
   mixins: [mixin],
+  components: {
+    YinDelDialog
+  },
   data () {
     return {
       registerForm: {
@@ -218,12 +218,11 @@ export default {
     },
     // 添加歌手
     addsinger () {
-      let d = this.registerForm.birth
-      let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+      let datetime = getDateTime(this.registerForm.birth)
       let params = new URLSearchParams()
       params.append('name', this.registerForm.name)
       params.append('sex', this.registerForm.sex)
-      params.append('pic', '/img/singerPic/hhh.jpg')
+      params.append('pic', '/images/singerPic/hhh.jpg')
       params.append('birth', datetime)
       params.append('location', this.registerForm.location)
       params.append('introduction', this.registerForm.introduction)
@@ -232,13 +231,19 @@ export default {
           if (res.code === 1) {
             this.getData()
             this.registerForm = {}
-            this.notify('添加成功', 'success')
+            this.$notify({
+              title: '添加成功',
+              type: 'success'
+            })
           } else {
-            this.notify('添加失败', 'error')
+            this.$notify({
+              title: '添加失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.centerDialogVisible = false
     },
@@ -269,8 +274,7 @@ export default {
     },
     // 保存编辑
     saveEdit () {
-      let d = new Date(this.form.birth)
-      let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+      let datetime = getDateTime(new Date(this.form.birth))
       let params = new URLSearchParams()
       params.append('id', this.form.id)
       params.append('name', this.form.name)
@@ -283,13 +287,19 @@ export default {
         .then(res => {
           if (res.code === 1) {
             this.getData()
-            this.notify('编辑成功', 'success')
+            this.$notify({
+              title: '编辑成功',
+              type: 'success'
+            })
           } else {
-            this.notify('编辑失败', 'error')
+            this.$notify({
+              title: '编辑失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.editVisible = false
     },
@@ -299,18 +309,24 @@ export default {
         .then(res => {
           if (res) {
             this.getData()
-            this.notify('删除成功', 'success')
+            this.$notify({
+              title: '删除成功',
+              type: 'success'
+            })
           } else {
-            this.notify('删除失败', 'error')
+            this.$notify({
+              title: '删除失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.delVisible = false
     },
     songEdit (id, name) {
-      this.$router.push({path: `/song`, query: {id: id, name: name}})
+      this.routerManager(SONG, {path: SONG, query: {id: id, name: name}})
     }
   }
 }

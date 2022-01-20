@@ -21,7 +21,7 @@ public class ListSongController {
 
 //    给歌单添加歌曲
     @ResponseBody
-    @RequestMapping(value = "/ListSong/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/listSong/add", method = RequestMethod.POST)
     public Object addListSong(HttpServletRequest req){
     JSONObject jsonObject = new JSONObject();
     String song_id = req.getParameter("songId").trim();
@@ -57,7 +57,7 @@ public class ListSongController {
     }
 
 //    删除歌单里的歌曲
-    @RequestMapping(value = "/ListSong/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/listSong/delete", method = RequestMethod.GET)
     public Object deleteListSong(HttpServletRequest req){
         String songId = req.getParameter("songId");
         return listSongService.deleteListSong(Integer.parseInt(songId));

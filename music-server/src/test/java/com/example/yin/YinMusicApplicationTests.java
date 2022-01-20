@@ -19,7 +19,7 @@ public class YinMusicApplicationTests {
 //    private SingerServiceImpl singerService;
 //    private SongListServiceImpl songListService;
     private ConsumerServiceImpl consumerService;
-//    private RankServiceImpl rankService;
+//    private RankListServiceImpl rankListService;
 
 //    @Test
 //    public void contextLoads() {
@@ -28,12 +28,12 @@ public class YinMusicApplicationTests {
 
 //    @Test
 //    public void testRank(){
-//        Rank rank = new Rank();
-//        rank.setConsumerId(2L);
-//        rank.setScore(3);
-//        rank.setSongListId(2L);
-//        rankService.insert(rank);
-//        System.out.println("歌单均分为"+rankService.selectAverScore(2L));
+//        Rank rank_list = new Rank();
+//        rank_list.setConsumerId(2L);
+//        rank_list.setScore(3);
+//        rank_list.setSongListId(2L);
+//        rankListService.insert(rank_list);
+//        System.out.println("歌单均分为"+rankListService.selectAverScore(2L));
 //    }
 
 //歌曲

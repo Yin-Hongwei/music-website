@@ -3,7 +3,7 @@ import { get, post } from './request'
 const HttpManager = {
   // =======================> 用户 API
   // 登录
-  loginIn: (params) => post(`user/login/status`, params),
+  signIn: (params) => post(`user/login/status`, params),
   // 注册
   SignUp: (params) => post(`user/add`, params),
   // 更新用户信息
@@ -35,9 +35,9 @@ const HttpManager = {
 
   // =======================> 评分 API
   // 提交评分
-  setRank: (params) => post(`rank/add`, params),
+  setRank: (params) => post(`rankList/add`, params),
   // 获取指定歌单的评分
-  getRankOfSongListId: (songListId) => get(`rank?songListId=${songListId}`),
+  getRankOfSongListId: (songListId) => get(`rankList?songListId=${songListId}`),
 
   // =======================> 评论 API
   // 添加评论

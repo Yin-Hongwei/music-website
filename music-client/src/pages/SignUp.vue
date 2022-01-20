@@ -1,8 +1,8 @@
 <template>
-<div class="signUp-page">
-  <loginLogo/>
-  <div class="signUp">
-    <div class="signUp-head">
+<div>
+  <yin-login-logo></yin-login-logo>
+  <div class="sign-up">
+    <div class="sign-up-head">
       <span>用户注册</span>
     </div>
     <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="70px" class="demo-ruleForm">
@@ -32,12 +32,12 @@
       </el-form-item>
       <el-form-item prop="location" label="地区">
         <el-select v-model="registerForm.location" placeholder="地区" style="width:100%">
-          <el-option v-for="item in cities" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          <el-option v-for="item in area" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
       </el-form-item>
-      <div class="login-btn">
-        <el-button @click="goback(-1)">取消</el-button>
-        <el-button type="primary" @click="SignUp">确定</el-button>
+      <div class="sign-up-btn">
+        <el-button @click="goBack">取消</el-button>
+        <el-button type="primary" @click="handleSignUp">确定</el-button>
       </div>
     </el-form>
   </div>
@@ -46,15 +46,16 @@
 
 <script>
 import mixin from '../mixins'
-import loginLogo from '../components/LoginLogo'
-import { rules, cities } from '../assets/data/form'
-import { HttpManager } from '../api/index'
+import YinLoginLogo from '../components/layouts/YinLoginLogo'
+import { HttpManager } from '../api'
+import { getDateTime } from '../utils'
+import { RULES, AREA, HOME } from '../enums'
 
 export default {
-  name: 'SignUp-page',
+  name: 'SignUp',
   mixins: [mixin],
   components: {
-    loginLogo
+    YinLoginLogo
   },
   data () {
     return {
@@ -68,48 +69,47 @@ export default {
         introduction: '',
         location: ''
       },
-      rules: rules,
-      cities: cities
+      rules: RULES,
+      area: AREA,
+      defaultUserPic: '/img/user.jpg'
     }
   },
   methods: {
-    SignUp () {
-      let _this = this
-      let d = this.registerForm.birth
-      let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      let params = new URLSearchParams()
-      params.append('username', this.registerForm.username)
+    handleSignUp () {
+      const params = new URLSearchParams()
       params.append('password', this.registerForm.password)
       params.append('sex', this.registerForm.sex)
       params.append('phone_num', this.registerForm.phoneNum)
       params.append('email', this.registerForm.email)
-      params.append('birth', datetime)
+      params.append('birth', getDateTime(this.registerForm.birth))
       params.append('introduction', this.registerForm.introduction)
       params.append('location', this.registerForm.location)
-      params.append('avator', '/img/user.jpg')
-      HttpManager.SignUp(params)
+      params.append('avator', this.defaultUserPic)
+      HttpManager.handleSignUp(params)
         .then(res => {
-          console.log(res)
           if (res.code === 1) {
-            _this.notify('注册成功', 'success')
-            setTimeout(function () {
-              _this.$router.push({path: '/'})
-            }, 2000)
+            this.$notify({
+              title: '注册成功',
+              type: 'success'
+            })
+            setTimeout(() => {
+              this.routerManager(HOME, { path: HOME })
+            }, 1000)
           } else {
-            _this.notify('注册失败', 'error')
+            this.$notify({
+              title: '注册失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
-    },
-    goback (index) {
-      this.$router.go(index)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/sign-up.scss';
+@import '@/assets/css/sign-up.scss';
 </style>

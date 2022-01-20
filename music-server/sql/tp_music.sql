@@ -162,13 +162,13 @@ INSERT INTO `list_song` VALUES (1,36,1),(3,5,2),(4,7,2),(5,11,2),(6,38,6),(7,39,
 UNLOCK TABLES;
 
 --
--- Table structure for table `rank`
+-- Table structure for table `rank_list`
 --
 
-DROP TABLE IF EXISTS `rank`;
+DROP TABLE IF EXISTS `rank_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rank` (
+CREATE TABLE `rank_list` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `songListId` bigint(20) unsigned NOT NULL,
   `consumerId` bigint(20) unsigned NOT NULL,
@@ -179,13 +179,13 @@ CREATE TABLE `rank` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rank`
+-- Dumping data for table `rank_list`
 --
 
-LOCK TABLES `rank` WRITE;
-/*!40000 ALTER TABLE `rank` DISABLE KEYS */;
-INSERT INTO `rank` VALUES (1,2,1,7),(2,2,2,3),(3,1,1,4),(7,13,1,5),(19,21,1,5),(20,31,1,5),(21,5,1,0),(24,11,1,4),(25,10,1,10),(27,6,1,6),(28,7,1,10),(29,1,26,4),(30,7,26,2),(32,3,26,5),(33,14,26,9);
-/*!40000 ALTER TABLE `rank` ENABLE KEYS */;
+LOCK TABLES `rank_list` WRITE;
+/*!40000 ALTER TABLE `rank_list` DISABLE KEYS */;
+INSERT INTO `rank_list` VALUES (1,2,1,7),(2,2,2,3),(3,1,1,4),(7,13,1,5),(19,21,1,5),(20,31,1,5),(21,5,1,0),(24,11,1,4),(25,10,1,10),(27,6,1,6),(28,7,1,10),(29,1,26,4),(30,7,26,2),(32,3,26,5),(33,14,26,9);
+/*!40000 ALTER TABLE `rank_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
