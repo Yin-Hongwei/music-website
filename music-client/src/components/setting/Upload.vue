@@ -18,21 +18,15 @@
 </template>
 
 <script>
-import mixin from '../mixins'
-import { mapGetters } from 'vuex'
+import mixin from '../../mixins'
 
 export default {
-  name: 'upload',
+  name: 'yin-upload',
   mixins: [mixin],
   data () {
     return {
       imageUrl: ''
     }
-  },
-  computed: {
-    ...mapGetters([
-      'userId'
-    ])
   },
   methods: {
     uploadUrl () {
@@ -47,7 +41,10 @@ export default {
           type: 'success'
         })
       } else {
-        this.notify('修改失败', 'error')
+        this.$notify({
+          title: '修改失败',
+          type: 'error'
+        })
       }
     },
     beforeAvatarUpload (file) {
@@ -66,5 +63,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/upload.scss';
+@import '../../assets/css/upload.scss';
 </style>

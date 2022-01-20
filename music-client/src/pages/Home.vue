@@ -7,27 +7,21 @@
       </el-carousel-item>
     </el-carousel>
     <!--热门歌单-->
-    <div class="section">
-      <div class="section-title">歌单</div>
-      <content-list :contentList="songList" path="song-list-album"></content-list>
-    </div>
+    <play-list :playList="songList" title="歌单" path="song-sheet-detail" class="section"></play-list>
     <!--热门歌手-->
-    <div class="section">
-      <div class="section-title">歌手</div>
-      <content-list :contentList="singerList" path="singer-album"></content-list>
-    </div>
+    <play-list :playList="singerList" title="歌手" path="singer-detail" class="section"></play-list>
   </div>
 </template>
 
 <script>
-import ContentList from '../components/ContentList'
+import PlayList from '../components/PlayList'
 import { swiperList } from '../assets/data/swiper'
 import { HttpManager } from '../api/index'
 
 export default {
-  name: 'home',
+  name: 'Home',
   components: {
-    ContentList
+    PlayList
   },
   data () {
     return {
@@ -49,7 +43,7 @@ export default {
           this.songList = res.sort().slice(0, 10)
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     getSingerList () {
@@ -58,7 +52,7 @@ export default {
           this.singerList = res.sort().slice(0, 10)
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     }
   }

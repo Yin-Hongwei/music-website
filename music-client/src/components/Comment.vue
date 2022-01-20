@@ -46,7 +46,7 @@ import { HttpManager } from '../api/index'
 import { ICON } from '../assets/icon/index'
 
 export default {
-  name: 'comment',
+  name: 'Comment',
   mixins: [mixin],
   props: {
     playId: Number, // 歌曲ID或歌单ID
@@ -64,7 +64,6 @@ export default {
   computed: {
     ...mapGetters([
       'id',
-      'userId', // 用户ID
       'index', // 列表中的序号
       'loginIn', // 用户是否登录
       'avator' // 用户头像
@@ -89,7 +88,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 获取评论用户的昵称和头像
@@ -100,7 +99,7 @@ export default {
           this.userName.push(res[0].username)
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 提交评论
@@ -121,16 +120,25 @@ export default {
             if (res.code === 1) {
               this.textarea = ''
               this.getComment()
-              this.notify('评论成功', 'success')
+              this.$notify({
+                title: '评论成功',
+                type: 'success'
+              })
             } else {
-              this.notify('评论失败', 'error')
+              this.$notify({
+                title: '评论失败',
+                type: 'error'
+              })
             }
           })
           .catch(err => {
-            console.log(err)
+            console.error(err)
           })
       } else {
-        this.notify('请先登录', 'warning')
+        this.$notify({
+          title: '请先登录',
+          type: 'warning'
+        })
       }
     },
     // 点赞
@@ -147,10 +155,13 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err)
+            console.error(err)
           })
       } else {
-        this.notify('请先登录', 'warning')
+        this.$notify({
+          title: '请先登录',
+          type: 'warning'
+        })
       }
     }
   }

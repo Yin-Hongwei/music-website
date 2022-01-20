@@ -11,12 +11,12 @@
         <li>故乡： {{location}}</li>
       </ul>
     </div>
-    <div class="album-content">
+    <div class="song-list">
       <div class="album-title">个性签名: {{introduction}}</div>
       <div class="songs-body">
-        <album-content :songList="collectList">
+        <song-list :songList="collectList">
           <template slot="title">我的收藏</template>
-        </album-content>
+        </song-list>
       </div>
     </div>
   </div>
@@ -24,15 +24,15 @@
 
 <script>
 import mixin from '../mixins'
-import AlbumContent from '../components/AlbumContent'
+import SongList from '../components/SongList'
 import { mapGetters } from 'vuex'
 import { HttpManager } from '../api/index'
 
 export default {
-  name: 'my-music',
+  name: 'MyMusic',
   mixins: [mixin],
   components: {
-    AlbumContent
+    SongList
   },
   data () {
     return {
@@ -48,7 +48,6 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'userId',
       'id',
       'listOfSongs' // 存放的音乐
     ])
@@ -69,7 +68,7 @@ export default {
           this.avator = res[0].avator
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     getuserSex (sex) {
@@ -91,7 +90,7 @@ export default {
           this.$store.commit('setListOfSongs', this.collectList)
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 获取收藏的歌曲
@@ -101,7 +100,7 @@ export default {
           this.collectList.push(res[0])
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     }
   }

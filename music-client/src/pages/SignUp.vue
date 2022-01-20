@@ -1,6 +1,6 @@
 <template>
 <div class="signUp-page">
-  <loginLogo/>
+  <yin-login-logo></yin-login-logo>
   <div class="signUp">
     <div class="signUp-head">
       <span>用户注册</span>
@@ -46,15 +46,15 @@
 
 <script>
 import mixin from '../mixins'
-import loginLogo from '../components/LoginLogo'
+import YinLoginLogo from '../components/common/YinLoginLogo'
 import { rules, cities } from '../assets/data/form'
 import { HttpManager } from '../api/index'
 
 export default {
-  name: 'SignUp-page',
+  name: 'sign-up',
   mixins: [mixin],
   components: {
-    loginLogo
+    YinLoginLogo
   },
   data () {
     return {
@@ -74,7 +74,6 @@ export default {
   },
   methods: {
     SignUp () {
-      let _this = this
       let d = this.registerForm.birth
       let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
       let params = new URLSearchParams()
@@ -91,16 +90,22 @@ export default {
         .then(res => {
           console.log(res)
           if (res.code === 1) {
-            _this.notify('注册成功', 'success')
+            this.$notify({
+              title: '注册成功',
+              type: 'success'
+            })
             setTimeout(function () {
-              _this.$router.push({path: '/'})
+              this.$router.push({path: '/'})
             }, 2000)
           } else {
-            _this.notify('注册失败', 'error')
+            this.$notify({
+              title: '注册失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     goback (index) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="song-list-album">
+  <div class="song-sheet-detail">
     <div class="album-slide">
       <div class="album-img">
         <img :src=attachImageUrl(singers.pic) alt="">
@@ -11,7 +11,7 @@
         </span>
       </div>
     </div>
-    <div class="album-content">
+    <div class="song-list">
       <div class="album-title">
         <p>{{singers.title}}</p>
       </div>
@@ -33,9 +33,9 @@
       </div>
       <!--歌曲-->
       <div class="songs-body">
-        <album-content :songList="listOfSongs">
+        <song-list :songList="listOfSongs">
           <template slot="title">歌单</template>
-        </album-content>
+        </song-list>
         <comment :playId="songListId" :type="1"></comment>
       </div>
     </div>
@@ -43,17 +43,17 @@
 </template>
 
 <script>
-import mixin from '../mixins'
-import AlbumContent from '../components/AlbumContent'
-import Comment from '../components/Comment'
+import mixin from '../../mixins'
+import SongList from '../../components/SongList'
+import Comment from '../../components/Comment'
 import { mapGetters } from 'vuex'
-import { HttpManager } from '../api/index'
+import { HttpManager } from '../../api/index'
 
 export default {
-  name: 'song-list-album',
+  name: 'song-sheet-detail',
   mixins: [mixin],
   components: {
-    AlbumContent,
+    SongList,
     Comment
   },
   data () {
@@ -71,7 +71,6 @@ export default {
       'loginIn', // 登录标识
       'tempList', // 单个歌单信息
       'listOfSongs', // 存放的音乐
-      'userId', // 用户ID
       'avator' // 用户头像
     ])
   },
@@ -93,7 +92,7 @@ export default {
           this.$store.commit('setListOfSongs', this.songLists)
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 获取单里的歌曲
@@ -103,7 +102,7 @@ export default {
           this.songLists.push(res[0])
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 获取评分
@@ -113,7 +112,7 @@ export default {
           this.value5 = res / 2
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 提交评分
@@ -127,17 +126,26 @@ export default {
           .then(res => {
             if (res.code === 1) {
               this.getRank(this.songListId)
-              this.notify('评分成功', 'success')
+              this.$notify({
+                title: '评分成功',
+                type: 'success'
+              })
             } else {
-              this.notify('评分失败', 'error')
+              this.$notify({
+                title: '评分失败',
+                type: 'error'
+              })
             }
           })
           .catch(err => {
-            console.log(err)
+            console.error(err)
           })
       } else {
         this.value3 = null
-        this.notify('请先登录', 'warning')
+        this.$notify({
+          title: '请先登录',
+          type: 'warning'
+        })
       }
     }
   }
@@ -145,5 +153,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/song-list-album.scss';
+@import '../../assets/css/song-sheet-detail.scss';
 </style>

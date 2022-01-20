@@ -1,5 +1,6 @@
-import { BASE_URL } from '../api/config'
 import { ICON } from '../assets/icon/index'
+
+const BASE_URL = process.env.NODE_HOST
 
 const song = {
   state: {

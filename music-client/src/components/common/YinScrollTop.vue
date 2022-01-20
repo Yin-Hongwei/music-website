@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'scroll-top',
+  name: 'yin-scroll-top',
   methods: {
     returnTop () {
       let timer = null
@@ -29,5 +29,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/scroll-top.scss';
+@import '../../assets/css/yin-scroll-top.scss';
 </style>

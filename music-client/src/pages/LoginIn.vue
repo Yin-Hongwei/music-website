@@ -1,6 +1,6 @@
 <template>
 <div class="login-in">
-  <login-logo/>
+  <yin-login-logo></yin-login-logo>
   <div class="login">
     <div class="login-head">
       <span>帐号登录</span>
@@ -23,14 +23,14 @@
 
 <script>
 import mixin from '../mixins'
-import LoginLogo from '../components/LoginLogo'
+import YinLoginLogo from '../components/common/YinLoginLogo'
 import { HttpManager } from '../api/index'
 
 export default {
   name: 'login-in',
   mixins: [mixin],
   components: {
-    LoginLogo
+    YinLoginLogo
   },
   data: function () {
     let validateName = (rule, value, callback) => {
@@ -70,7 +70,6 @@ export default {
       this.$store.commit('setActiveName', value)
     },
     handleleLoginIn () {
-      let _this = this
       let params = new URLSearchParams()
       params.append('username', this.loginForm.username)
       params.append('password', this.loginForm.password)
@@ -78,22 +77,27 @@ export default {
         .then(res => {
           // console.log('-----------获取登录信息---------------')
           if (res.code === 1) {
-            _this.$message({
+            this.$message({
               message: '登录成功',
               type: 'success'
             })
-            _this.setUserMsg(res.userMsg[0])
-            _this.$store.commit('setLoginIn', true)
+            this.setUserMsg(res.userMsg[0])
+            this.$store.commit('setLoginIn', true)
             setTimeout(function () {
-              _this.changeIndex('首页')
-              _this.$router.push({path: '/'})
-              _this.$router.go(0)
+              this.changeIndex('首页')
+              this.$router.push({path: '/'})
+              this.$router.go(0)
             }, 2000)
           } else {
-            _this.notify('用户名或密码错误', 'error')
+            this.$notify({
+              title: '用户名或密码错误',
+              type: 'error'
+            })
           }
         })
-        .catch(failResponse => {})
+        .catch(error => {
+          console.error(error)
+        })
     },
     setUserMsg (item) {
       this.$store.commit('setUserId', item.id)

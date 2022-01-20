@@ -1,19 +1,19 @@
 <template>
   <div class="search-song-Lists">
-    <content-list :contentList="albumDatas" path="song-list-album"></content-list>
+    <play-list :playList="albumDatas" path="song-sheet-detail"></play-list>
   </div>
 </template>
 
 <script>
 import mixin from '../../mixins'
-import ContentList from '../ContentList'
+import PlayList from '../PlayList'
 import { HttpManager } from '../../api/index'
 
 export default {
-  name: 'search-song-Lists',
+  name: 'search-song-sheet',
   mixins: [mixin],
   components: {
-    ContentList
+    PlayList
   },
   data () {
     return {
@@ -29,7 +29,10 @@ export default {
       HttpManager.getSongListOfLikeTitle(this.$route.query.keywords)
         .then(res => {
           if (!res.length) {
-            this.notify('暂无该歌曲内容', 'warning')
+            this.$notify({
+              title: '暂无该歌曲内容',
+              type: 'warning'
+            })
           } else {
             this.albumDatas = res
           }
@@ -39,6 +42,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import '../../assets/css/search-song-Lists.scss';
+<style scoped>
+.search-song-Lists {
+  height: 480px !important;
+}
 </style>

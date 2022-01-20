@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import mixin from '../mixins'
+import mixin from '../../mixins'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'the-aside',
+  name: 'YinCurrentPlay',
   mixins: [mixin],
   computed: {
     ...mapGetters([
@@ -26,14 +26,13 @@ export default {
     ])
   },
   mounted () {
-    let _this = this
-    document.addEventListener('click', function () {
-      _this.$store.commit('setShowAside', false)
+    document.addEventListener('click', () => {
+      this.$store.commit('setShowAside', false)
     }, true)
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/the-aside.scss';
+@import '../../assets/css/yin-current-play.scss';
 </style>

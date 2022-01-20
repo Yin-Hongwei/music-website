@@ -1,5 +1,5 @@
 <template>
-  <div class="info">
+  <div class="personal-data">
     <p class="title">编辑个人资料</p>
     <hr/>
     <div class="personal">
@@ -40,21 +40,20 @@
         </el-form-item>
       </el-form>
     <div class="btn">
-      <div @click="saveMsg()">保存</div>
-      <div @click="goback">取消</div>
+      <el-button type="primary" @click="saveMsg()">保存</el-button>
+      <el-button @click="goback">取消</el-button>
     </div>
     </div>
 </div>
 </template>
 
 <script>
-import mixin from '../mixins'
-import { mapGetters } from 'vuex'
-import { cities } from '../assets/data/form'
-import { HttpManager } from '../api/index'
+import mixin from '../../mixins'
+import { cities } from '../../assets/data/form'
+import { HttpManager } from '../../api/index'
 
 export default {
-  name: 'info',
+  name: 'personal-data',
   mixins: [mixin],
   data: function () {
     return {
@@ -70,11 +69,6 @@ export default {
       },
       cities: cities
     }
-  },
-  computed: {
-    ...mapGetters([
-      'userId'
-    ])
   },
   mounted () {
     this.getMsg(this.userId)
@@ -94,7 +88,7 @@ export default {
           this.registerForm.avator = res[0].avator
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     goback () {
@@ -102,7 +96,7 @@ export default {
     },
     saveMsg () {
       let d = new Date(this.registerForm.birth)
-      let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+      let datetime = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
       let params = new URLSearchParams()
       params.append('id', this.userId)
       params.append('username', this.registerForm.username)
@@ -136,7 +130,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     }
   }
@@ -144,5 +138,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/info.scss';
+@import '../../assets/css/personal-data.scss';
 </style>

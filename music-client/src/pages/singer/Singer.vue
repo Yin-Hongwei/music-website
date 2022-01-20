@@ -9,7 +9,7 @@
         {{item.name}}
       </li>
     </ul>
-    <content-list :contentList="data" path="singer-album"></content-list>
+    <play-list :playList="data" path="singer-detail"></play-list>
     <div class="pagination">
       <el-pagination
         @current-change="handleCurrentChange"
@@ -17,21 +17,21 @@
         layout="total, prev, pager, next"
         :current-page="currentPage"
         :page-size="pageSize"
-        :total="albumDatas.length">
+        :total="allPlayList.length">
       </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import ContentList from '../components/ContentList'
-import { singerStyle } from '../assets/data/singer'
-import { HttpManager } from '../api/index'
+import PlayList from '../../components/PlayList'
+import { singerStyle } from '../../assets/data/singer'
+import { HttpManager } from '../../api/index'
 
 export default {
-  name: 'singer',
+  name: 'Singer',
   components: {
-    ContentList
+    PlayList
   },
   data () {
     return {
@@ -39,13 +39,13 @@ export default {
       activeName: '全部歌手',
       pageSize: 15, // 页数
       currentPage: 1, // 当前页
-      albumDatas: []
+      allPlayList: []
     }
   },
   computed: {
     // 计算当前表格中的数据
     data () {
-      return this.albumDatas.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
+      return this.allPlayList.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
     }
   },
   created () {
@@ -58,7 +58,7 @@ export default {
     },
     handleChangeView (item) {
       this.activeName = item.name
-      this.albumDatas = []
+      this.allPlayList = []
       if (item.name === '全部歌手') {
         this.getAllSinger()
       } else {
@@ -70,10 +70,10 @@ export default {
       HttpManager.getAllSinger()
         .then(res => {
           this.currentPage = 1
-          this.albumDatas = res
+          this.allPlayList = res
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 通过性别对歌手分类
@@ -81,10 +81,10 @@ export default {
       HttpManager.getSingerOfSex(sex)
         .then(res => {
           this.currentPage = 1
-          this.albumDatas = res
+          this.allPlayList = res
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     }
   }
@@ -92,5 +92,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/singer.scss';
+@import '../../assets/css/singer.scss';
 </style>

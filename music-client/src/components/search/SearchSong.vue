@@ -1,19 +1,19 @@
 <template>
   <div class="search-songs">
-    <album-content :songList="listOfSongs"></album-content>
+    <song-list :songList="listOfSongs"></song-list>
   </div>
 </template>
 
 <script>
 import mixin from '../../mixins'
-import AlbumContent from '../AlbumContent'
+import SongList from '../SongList'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'search-songs',
   mixins: [mixin],
   components: {
-    AlbumContent
+    SongList
   },
   computed: {
     ...mapGetters([
@@ -26,6 +26,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import '../../assets/css/search-songs.scss';
+<style scoped>
+.search-songs {
+  min-height: 480px;
+}
 </style>

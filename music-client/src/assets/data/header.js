@@ -4,7 +4,7 @@ const navMsg = [{
   path: '/'
 }, {
   name: '歌单',
-  path: '/song-list'
+  path: '/song-sheet'
 }, {
   name: '歌手',
   path: '/singer'

@@ -15,7 +15,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'song-audio',
+  name: 'yin-audio',
   computed: {
     ...mapGetters([
       'id', // 音乐id
@@ -77,5 +77,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/song-audio.scss';
+@import '../../assets/css/yin-audio.scss';
 </style>

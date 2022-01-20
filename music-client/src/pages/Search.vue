@@ -1,8 +1,8 @@
 <template>
   <div class="search">
     <nav class="searchList-nav" ref="change">
-      <span :class="{isActive: toggle === 'Songs'}" @click="handleChangeView('Songs', 0)">歌曲</span>
-      <span :class="{isActive: toggle === 'SongLists'}" @click="handleChangeView('SongLists', 1)">歌单</span>
+      <span :class="{isActive: toggle === 'Song'}" @click="handleChangeView('Song', 0)">歌曲</span>
+      <span :class="{isActive: toggle === 'SongSheet'}" @click="handleChangeView('SongSheet', 1)">歌单</span>
     </nav>
     <component :is="currentView"></component>
   </div>
@@ -10,21 +10,21 @@
 
 <script>
 import mixin from '../mixins'
-import searchSongs from '../components/search/SearchSongs'
-import searchSongLists from '../components/search/SearchSongLists'
+import SearchSong from '../components/search/SearchSong'
+import searchSongList from '../components/search/SearchSongList'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'search',
   mixins: [mixin],
   components: {
-    searchSongs,
-    searchSongLists
+    SearchSong,
+    searchSongList
   },
   data () {
     return {
-      toggle: 'Songs',
-      currentView: 'searchSongs'
+      toggle: 'Song',
+      currentView: 'SearchSong'
     }
   },
   computed: {

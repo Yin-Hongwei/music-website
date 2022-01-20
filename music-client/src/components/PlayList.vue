@@ -1,7 +1,8 @@
 <template>
-  <div class="content-list">
+  <div class="play-list">
+    <div class="section-title">{{title}}</div>
     <ul class="section-content">
-      <li class="content-item" v-for="(item, index) in contentList" :key="index">
+      <li class="content-item" v-for="(item, index) in playList" :key="index">
         <div class="kuo" @click="goAblum(item)">
           <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
           <div class="mask"  @click="goAblum(item)">
@@ -21,10 +22,11 @@ import mixin from '../mixins'
 import { ICON } from '../assets/icon/index'
 
 export default {
-  name: 'content-list',
+  name: 'play-list',
   mixins: [mixin],
   props: {
-    contentList: Array,
+    title: String,
+    playList: Array,
     path: String
   },
   data () {
@@ -42,5 +44,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/content-list.scss';
+@import '../assets/css/play-list.scss';
 </style>

@@ -1,12 +1,23 @@
 @import "var.scss";
 @import "global.scss";
 
-.content-list {
+.play-list {
   min-height: 500px;
   padding: 0 20px;
   .section-content {
     @include layout(flex-start, stretch, row, wrap);
   }
+}
+
+.section-title {
+  height: 60px;
+  line-height: 60px;
+  padding-top: 10px;
+  font-size: 28px;
+  font-weight: 500;
+  text-align: center;
+  color: $color-black;
+  box-sizing: border-box;
 }
 
 .content-item {

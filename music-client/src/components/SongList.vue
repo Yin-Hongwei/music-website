@@ -36,7 +36,7 @@ import { mapGetters } from 'vuex'
 import { ICON } from '../assets/icon/index'
 
 export default {
-  name: 'album-content',
+  name: 'SongList',
   mixins: [mixin],
   props: {
     songList: Array
@@ -55,5 +55,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/album-content.scss';
+@import '../assets/css/song-list.scss';
 </style>

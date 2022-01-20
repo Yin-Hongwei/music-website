@@ -1,5 +1,5 @@
 <template>
-  <div class="the-header">
+  <div class="yin-header">
     <!--图标-->
     <div class="header-logo" @click="goHome">
       <svg class="icon" aria-hidden="true">
@@ -7,7 +7,7 @@
       </svg>
       <span>{{musicName}}</span>
     </div>
-    <ul class="navbar" ref="change">
+    <ul class="navbar">
       <li :class="{active: item.name === activeName}" v-for="item in navMsg" :key="item.path" @click="goPage(item.path, item.name)">
         {{item.name}}
       </li>
@@ -25,10 +25,10 @@
     </ul>
     <!--设置-->
     <div class="header-right" v-show="loginIn">
-      <div id="user">
+      <div id="user" ref="user">
         <img :src="attachImageUrl(avator)" alt="">
       </div>
-      <ul class="menu">
+      <ul class="menu" ref="menu">
         <li v-for="(item, index) in menuList" :key="index" @click="goMenuList(item.path)">{{item.name}}</li>
       </ul>
     </div>
@@ -36,17 +36,18 @@
 </template>
 
 <script>
-import mixin from '../mixins'
+import mixin from '../../mixins'
 import { mapGetters } from 'vuex'
-import { navMsg, loginMsg, menuList } from '../assets/data/header'
-import { ICON } from '../assets/icon/index'
+import { navMsg, loginMsg, menuList } from '../../assets/data/header'
+import { ICON } from '../../assets/icon/index'
+import { MUSICNAME } from '../../assets/data/contant'
 
 export default {
-  name: 'the-header',
+  name: 'yin-header',
   mixins: [mixin],
   data () {
     return {
-      musicName: 'Yin-music',
+      musicName: MUSICNAME,
       navMsg: navMsg, // 左侧导航栏
       loginMsg: loginMsg, // 右侧导航栏
       menuList: menuList, // 用户下拉菜单项
@@ -57,7 +58,6 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'userId',
       'activeName',
       'avator',
       'username',
@@ -65,16 +65,16 @@ export default {
     ])
   },
   mounted () {
-    document.querySelector('#user').addEventListener('click', function (e) {
-      document.querySelector('.menu').classList.add('show')
+    this.$refs.user.addEventListener('click', e => {
+      this.$refs.menu.classList.add('show')
       e.stopPropagation()// 关键在于阻止冒泡
     }, false)
     // 点击“菜单”内部时，阻止事件冒泡。(这样点击内部时，菜单不会关闭)
-    document.querySelector('.menu').addEventListener('click', function (e) {
+    this.$refs.menu.addEventListener('click', e => {
       e.stopPropagation()
     }, false)
-    document.addEventListener('click', function () {
-      document.querySelector('.menu').classList.remove('show')
+    document.addEventListener('click', () => {
+      this.$refs.menu.classList.remove('show')
     }, false)
   },
   methods: {
@@ -82,10 +82,13 @@ export default {
       this.$router.push({path: '/'})
     },
     goPage (path, value) {
-      document.querySelector('.menu').classList.remove('show')
+      this.$refs.menu.classList.remove('show')
       this.changeIndex(value)
       if (!this.loginIn && path === '/my-music') {
-        this.notify('请先登录', 'warning')
+        this.$notify({
+          title: '请先登录',
+          type: 'warning'
+        })
       } else {
         this.$router.push({path: path})
       }
@@ -114,5 +117,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/the-header.scss';
+@import '../../assets/css/yin-header.scss';
 </style>

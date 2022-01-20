@@ -1,4 +1,4 @@
-import { BASE_URL } from '../api/config'
+const BASE_URL = process.env.NODE_HOST
 
 const configure = {
   state: {

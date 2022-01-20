@@ -15,23 +15,23 @@
 </template>
 
 <script>
-import Info from '../components/Info'
-import Upload from '../components/Upload'
+import PersonalData from '../components/setting/PersonalData'
+import Upload from '../components/setting/Upload'
 
 export default {
   name: 'setting',
   components: {
-    Info,
+    PersonalData,
     Upload
   },
   data () {
     return {
       activeName: '个人信息',
-      componentSrc: 'Info',
+      componentSrc: 'PersonalData',
       settingList: [{
         icon: '',
         name: '个人信息',
-        path: 'Info'
+        path: 'PersonalData'
       }, {
         icon: '',
         name: '修改头像',

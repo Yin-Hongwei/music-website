@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import { ICON } from '../assets/icon/index'
+import { ICON } from '../../assets/icon/index'
 
 export default {
-  name: 'login-logo',
+  name: 'yin-login-logo',
   data () {
     return {
       ERJI: ICON.ERJI
@@ -20,5 +20,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/login-logo.scss';
+@import '../../assets/css/yin-login-logo.scss';
 </style>

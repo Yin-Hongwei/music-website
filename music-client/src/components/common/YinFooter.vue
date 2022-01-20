@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'the-footer',
+  name: 'yin-footer',
   data () {
     return {
       footerList: [
@@ -21,5 +21,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/the-footer.scss';
+@import '../../assets/css/yin-footer.scss';
 </style>

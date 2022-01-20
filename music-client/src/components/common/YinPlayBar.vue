@@ -84,13 +84,13 @@
 </template>
 
 <script>
-import mixin from '../mixins'
+import mixin from '../../mixins'
 import { mapGetters } from 'vuex'
-import { HttpManager } from '../api/index'
-import { ICON } from '../assets/icon/index'
+import { HttpManager } from '../../api/index'
+import { ICON } from '../../assets/icon/index'
 
 export default {
-  name: 'play-bar',
+  name: 'yin-play-bar',
   mixins: [mixin],
   data () {
     return {
@@ -115,7 +115,6 @@ export default {
   computed: {
     ...mapGetters([
       'loginIn', // 用户登录状态
-      'userId', // 用户 id
       'isPlay', // 播放状态
       'playButtonUrl', // 播放状态的图标
       'id', // 音乐id
@@ -189,7 +188,7 @@ export default {
           document.body.removeChild(eleLink)
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     changeAside () {
@@ -340,9 +339,15 @@ export default {
           .then(res => {
             if (res.code === 1) {
               this.$store.commit('setIsActive', true)
-              this.notify('收藏成功', 'success')
+              this.$notify({
+                title: '收藏成功',
+                type: 'success'
+              })
             } else if (res.code === 2) {
-              this.notify('已收藏', 'warning')
+              this.$notify({
+                title: '已收藏',
+                type: 'warning'
+              })
             } else {
               this.$notify.error({
                 title: '收藏失败',
@@ -351,10 +356,13 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err)
+            console.error(err)
           })
       } else {
-        this.notify('请先登录', 'warning')
+        this.$notify({
+          title: '请先登录',
+          type: 'warning'
+        })
       }
     }
   }
@@ -362,5 +370,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/play-bar.scss';
+@import '../../assets/css/yin-play-bar.scss';
 </style>

@@ -4,18 +4,11 @@ import { HttpManager } from '../api/index'
 const mixin = {
   computed: {
     ...mapGetters([
-      'userId',
+      'userId', // 用户 id
       'loginIn'
     ])
   },
   methods: {
-    // 提示信息
-    notify (title, type) {
-      this.$notify({
-        title: title,
-        type: type
-      })
-    },
     // 获取图片信息
     attachImageUrl (srcUrl) {
       return srcUrl ? this.$store.state.configure.HOST + srcUrl || '../assets/img/user.jpg' : ''
@@ -55,7 +48,7 @@ const mixin = {
             }
           })
           .catch(err => {
-            console.log(err)
+            console.error(err)
           })
       }
     },
@@ -100,13 +93,16 @@ const mixin = {
         .then(res => {
           if (!res.length) {
             this.$store.commit('setListOfSongs', [])
-            this.notify('系统暂无该歌曲', 'warning')
+            this.$notify({
+              title: '系统暂无该歌曲',
+              type: 'warning'
+            })
           } else {
             this.$store.commit('setListOfSongs', res)
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     }
   }

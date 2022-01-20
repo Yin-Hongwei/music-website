@@ -1,5 +1,5 @@
 <template>
-  <div class="singer-album">
+  <div class="singer-detail">
     <div class="album-slide">
       <div class="singer-img">
         <img :src="attachImageUrl(singer.pic)" alt="">
@@ -10,31 +10,31 @@
         <li>故乡：{{singer.location}}</li>
       </ul>
     </div>
-    <div class="album-content">
+    <div class="song-list">
       <div class="intro">
         <h2>{{singer.name}}</h2>
         <span>{{singer.introduction}}</span>
       </div>
       <div class="content">
-        <album-content :songList="listOfSongs">
+        <song-list :songList="listOfSongs">
           <template slot="title">歌单</template>
-        </album-content>
+        </song-list>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import mixin from '../mixins'
-import AlbumContent from '../components/AlbumContent'
+import mixin from '../../mixins'
+import SongList from '../../components/SongList'
 import { mapGetters } from 'vuex'
-import { HttpManager } from '../api/index'
+import { HttpManager } from '../../api/index'
 
 export default {
-  name: 'singer-album',
+  name: 'SingerDetail',
   mixins: [mixin],
   components: {
-    AlbumContent
+    SongList
   },
   data () {
     return {
@@ -60,7 +60,7 @@ export default {
           this.$store.commit('setListOfSongs', res)
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     attachSex (value) {
@@ -75,5 +75,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/singer-album.scss';
+@import '../../assets/css/singer-detail.scss';
 </style>

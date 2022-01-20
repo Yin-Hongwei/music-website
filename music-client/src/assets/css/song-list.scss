@@ -1,36 +1,55 @@
 @import "var.scss";
 @import "global.scss";
 
-.song-list {
-  margin: 30px 150px;
-  margin-top: 0;
-  padding-top: $header-height;
-  padding-bottom: 50px;
-  min-width: 800px;
+.content {
   background-color: $color-white;
+  border-radius: $border-radius-songlist;
+  padding: 20px 40px;
+  min-width: 700px;
+
+  .title {
+    text-align: center;
+  }
+  > ul {
+    width: 100%;
+    padding-bottom: 50px;
+    > li {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      display: block;
+      height: 50px;
+      line-height: 50px;
+      text-indent: 20px;
+      cursor: pointer;
+    }
+  }
 }
 
-.song-list-header {
-  width: 100%;
-  padding: 0 40px;
-  li {
-    display: inline-block;
-    line-height: 40px;
-    margin: 40px 20px 15px 20px;
-    font-size: 20px;
-    font-weight: 400;
-    color: $color-grey;
-    border-bottom: none;
-    cursor: pointer;
+.song-item {
+  @include layout;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  .item-index {
+    width: 5%;
   }
-  li.active {
-    color: $color-black;
-    font-weight: 600;
-    border-bottom: 4px solid $color-black;
+  .item-title {
+    width: 30%;
+  }
+  .item-name {
+    width: 25%;
+  }
+  .item-intro {
+    width: 40%;
   }
 }
 
-.pagination {
-  @include layout(center);
-  transform: translateY(15px);
+.is-play {
+  color: $color-blue-active;
+  font-weight: bold;
+}
+
+.icon {
+  @include icon(1.3em, $color-blue-active);
+  vertical-align: -0.3em;
+  right: 5px;
 }
