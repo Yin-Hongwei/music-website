@@ -2,21 +2,21 @@
   <div class="my-music">
     <div class="album-slide">
       <div class="album-img">
-        <img :src=attachImageUrl(avator) alt="">
+        <img :src="attachImageUrl(userPic)" alt="">
       </div>
       <ul class="album-info">
         <li>昵称： {{username}}</li>
-        <li>性别： {{userSex}}</li>
-        <li>生日： {{birth}}</li>
+        <li>性别： {{getUserSex(userSex)}}</li>
+        <li>生日： {{getBirth(birth)}}</li>
         <li>故乡： {{location}}</li>
       </ul>
     </div>
-    <div class="album-content">
+    <div class="song-list">
       <div class="album-title">个性签名: {{introduction}}</div>
       <div class="songs-body">
-        <album-content :songList="collectList">
+        <song-list :songList="collectSongList">
           <template slot="title">我的收藏</template>
-        </album-content>
+        </song-list>
       </div>
     </div>
   </div>
@@ -24,84 +24,67 @@
 
 <script>
 import mixin from '../mixins'
-import AlbumContent from '../components/AlbumContent'
-import { mapGetters } from 'vuex'
-import { HttpManager } from '../api/index'
+import SongList from '../components/SongList'
+import { HttpManager } from '../api'
 
 export default {
-  name: 'my-music',
+  name: 'MyMusic',
   mixins: [mixin],
   components: {
-    AlbumContent
+    SongList
   },
   data () {
     return {
-      avator: '',
+      userPic: '',
       username: '',
       userSex: '',
       birth: '',
       location: '',
       introduction: '',
-      collection: [], // 存放收藏的歌曲ID
-      collectList: [] // 收藏的歌曲
+      collectSongList: [] // 收藏的歌曲
     }
   },
-  computed: {
-    ...mapGetters([
-      'userId',
-      'id',
-      'listOfSongs' // 存放的音乐
-    ])
-  },
   mounted () {
-    this.getMsg(this.userId)
+    this.getUserInfo(this.userId)
     this.getCollection(this.userId)
   },
   methods: {
-    getMsg (id) {
+    getUserInfo (id) {
       HttpManager.getUserOfId(id)
         .then(res => {
           this.username = res[0].username
-          this.getuserSex(res[0].sex)
-          this.birth = this.attachBirth(res[0].birth)
+          this.userSex = res[0].sex
+          this.birth = res[0].birth
           this.introduction = res[0].introduction
           this.location = res[0].location
-          this.avator = res[0].avator
+          this.userPic = res[0].avator
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
-    },
-    getuserSex (sex) {
-      if (sex === 0) {
-        this.userSex = '女'
-      } else if (sex === 1) {
-        this.userSex = '男'
-      }
     },
     // 收藏的歌曲ID
     getCollection (userId) {
       HttpManager.getCollectionOfUser(userId)
         .then(res => {
-          this.collection = res
+          const collectIDList = res || [] // 存放收藏的歌曲ID
           // 通过歌曲ID获取歌曲信息
-          for (let item of this.collection) {
-            this.getCollectSongs(item.songId)
+          for (let item of collectIDList) {
+            this.getCollectSongList(item.songId)
           }
-          this.$store.commit('setListOfSongs', this.collectList)
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 获取收藏的歌曲
-    getCollectSongs (id) {
+    getCollectSongList (id) {
       HttpManager.getSongOfId(id)
         .then(res => {
-          this.collectList.push(res[0])
+          this.collectSongList.push(res[0])
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     }
   }
@@ -109,5 +92,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/my-music.scss';
+@import '@/assets/css/my-music.scss';
 </style>

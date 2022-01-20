@@ -139,29 +139,23 @@
     </el-dialog>
 
     <!-- 删除提示框 -->
-    <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-      <div class="del-dialog-cnt" align="center">删除不可恢复，是否确定删除？</div>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="delVisible = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="deleteRow">确 定</el-button>
-      </span>
-    </el-dialog>
+    <yin-del-dialog :delVisible="delVisible" @deleteRow="deleteRow" @cancelRow="delVisible = $event"></yin-del-dialog>
   </div>
 </template>
 
 <script>
-import SongAudio from '../components/SongAudio'
 import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
-import { ICON } from '../assets/icon/index'
+import { ICON, COMMENT } from '../enums'
 import { HttpManager } from '../api/index'
+import YinDelDialog from '@/components/dialog/YinDelDialog'
 
 export default {
-  name: 'song-page',
-  components: {
-    SongAudio
-  },
+  name: 'SongPage',
   mixins: [mixin],
+  components: {
+    YinDelDialog
+  },
   data () {
     return {
       toggle: false, // 控制播放图标状态
@@ -247,7 +241,7 @@ export default {
         this.tempDate = res
         this.currentPage = 1
       }).catch(err => {
-        console.log(err)
+        console.error(err)
       })
     },
     setSongUrl (url, name) {
@@ -261,7 +255,7 @@ export default {
     },
     // 更新歌曲图片
     uploadUrl (id) {
-      return `${this.$store.state.HOST}/song/img/update?id=${id}`
+      return `${this.$store.state.HOST}/song/images/update?id=${id}`
     },
     // 更新歌曲url
     uploadSongUrl (id) {
@@ -285,14 +279,19 @@ export default {
     handleSongSuccess (res, file) {
       if (res.code === 1) {
         this.getData()
-        this.notify('上传成功', 'success')
+        this.$notify({
+          title: '上传成功',
+          type: 'success'
+        })
       } else {
-        this.notify('上传失败', 'error')
+        this.$notify({
+          title: '上传失败',
+          type: 'error'
+        })
       }
     },
     // 添加音乐
     addSong () {
-      let _this = this
       var form = new FormData(document.getElementById('tf'))
       form.append('singerId', this.singerId)
       form.set('name', this.singerName + '-' + form.get('name'))
@@ -300,21 +299,27 @@ export default {
         form.set('lyric', '[00:00:00]暂无歌词')
       }
       var req = new XMLHttpRequest()
-      req.onreadystatechange = function () {
+      req.onreadystatechange = () => {
         if (req.readyState === 4 && req.status === 200) {
           let res = JSON.parse(req.response)
           if (res.code) {
-            _this.getData()
-            _this.registerForm = {}
-            _this.notify(res.msg, 'success')
+            this.getData()
+            this.registerForm = {}
+            this.$notify({
+              title: '添加成功',
+              type: 'success'
+            })
           } else if (!res.code) {
-            _this.notify('上传失败', 'error')
+            this.$notify({
+              title: '添加失败',
+              type: 'error'
+            })
           }
         }
       }
-      req.open('post', `${_this.$store.state.HOST}/song/add`, false)
+      req.open('post', `${this.$store.state.HOST}/song/add`, false)
       req.send(form)
-      _this.centerDialogVisible = false
+      this.centerDialogVisible = false
     },
     // 编辑
     handleEdit (row) {
@@ -333,7 +338,7 @@ export default {
       this.editVisible = true
     },
     getComment (id) {
-      this.$router.push({path: '/Comment', query: {id: id, type: 0}})
+      this.routerManager(COMMENT, { path: COMMENT, query: { id, type: 0 } })
     },
     // 保存编辑
     saveEdit () {
@@ -347,13 +352,19 @@ export default {
         .then(res => {
           if (res) {
             this.getData()
-            this.notify('编辑成功', 'success')
+            this.$notify({
+              title: '编辑成功',
+              type: 'success'
+            })
           } else {
-            this.notify('编辑失败', 'error')
+            this.$notify({
+              title: '删除失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.editVisible = false
     },
@@ -363,13 +374,19 @@ export default {
         .then(response => {
           if (response) {
             this.getData()
-            this.notify('删除成功', 'success')
+            this.$notify({
+              title: '删除成功',
+              type: 'success'
+            })
           } else {
-            this.notify('删除失败', 'error')
+            this.$notify({
+              title: '删除失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.delVisible = false
     },

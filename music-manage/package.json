@@ -2,7 +2,8 @@
   "name": "music-manage",
   "version": "1.0.0",
   "description": "music-website",
-  "author": "Yin-Hongwei",
+  "author": "Yin-Hongwei <yinhongwei96@126.com>",
+  "repository": "git@github.com:Yin-Hongwei/music-website.git",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -14,7 +15,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.2",
     "babel-polyfill": "^6.23.0",
     "echarts": "^4.5.0",
     "element-ui": "2.13.2",
@@ -59,7 +60,7 @@
     "jest": "^22.0.4",
     "jest-serializer-vue": "^0.3.0",
     "nightwatch": "^0.9.12",
-    "node-notifier": "^5.1.2",
+    "node-notifier": "^8.0.1",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",
     "portfinder": "^1.0.13",
@@ -69,7 +70,7 @@
     "rimraf": "^2.6.0",
     "selenium-server": "^3.0.1",
     "semver": "^5.3.0",
-    "shelljs": "^0.7.6",
+    "shelljs": "^0.8.5",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
     "vue-jest": "^1.0.2",

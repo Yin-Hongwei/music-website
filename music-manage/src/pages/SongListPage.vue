@@ -108,27 +108,33 @@
     </el-dialog>
 
     <!-- 删除提示框 -->
-    <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-      <div class="del-dialog-cnt" align="center">删除不可恢复，是否确定删除？</div>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="delVisible = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="deleteRow">确 定</el-button>
-      </span>
-    </el-dialog>
+    <yin-del-dialog :delVisible="delVisible" @deleteRow="deleteRow" @cancelRow="delVisible = $event"></yin-del-dialog>
   </div>
 </template>
 
 <script>
 import { mixin } from '../mixins'
 import { HttpManager } from '../api/index'
+import { LIST_SONG, COMMENT } from '../enums'
+import YinDelDialog from '@/components/dialog/YinDelDialog'
 
 export default {
-  name: 'song-list-page',
+  name: 'SongListPage',
   mixins: [mixin],
+  components: {
+    YinDelDialog
+  },
   data () {
     return {
       registerForm: {
         title: '',
+        introduction: '',
+        style: ''
+      },
+      form: {
+        id: '',
+        title: '',
+        pic: '',
         introduction: '',
         style: ''
       },
@@ -139,13 +145,6 @@ export default {
       editVisible: false,
       delVisible: false,
       select_word: '',
-      form: {
-        id: '',
-        title: '',
-        pic: '',
-        introduction: '',
-        style: ''
-      },
       pageSize: 5, // 页数
       currentPage: 1, // 当前页
       idx: -1
@@ -176,7 +175,7 @@ export default {
   },
   methods: {
     uploadUrl (id) {
-      return `${this.$store.state.HOST}/songList/img/update?id=${id}`
+      return `${this.$store.state.HOST}/songList/images/update?id=${id}`
     },
     // 获取歌单信息
     getData () {
@@ -193,10 +192,10 @@ export default {
       this.currentPage = val
     },
     getContent (id) {
-      this.$router.push({path: '/listSong', query: {id: id}})
+      this.routerManager(LIST_SONG, { path: LIST_SONG, query: { id } })
     },
     getComment (id) {
-      this.$router.push({path: '/Comment', query: {id: id, type: 1}})
+      this.routerManager(COMMENT, { path: COMMENT, query: { id, type: 1 } })
     },
     // 编辑啊
     handleEdit (row) {
@@ -221,14 +220,20 @@ export default {
       HttpManager.updateSongListMsg(params)
         .then(res => {
           if (res.code === 1) {
-            this.notify('编辑成功', 'success')
+            this.$notify({
+              title: '编辑成功',
+              type: 'success'
+            })
             this.getData()
           } else {
-            this.notify('编辑失败', 'error')
+            this.$notify({
+              title: '编辑失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.editVisible = false
     },
@@ -236,19 +241,25 @@ export default {
     addsongList () {
       let params = new URLSearchParams()
       params.append('title', this.registerForm.title)
-      params.append('pic', '/img/songListPic/123.jpg')
+      params.append('pic', '/images/songListPic/123.jpg')
       params.append('introduction', this.registerForm.introduction)
       params.append('style', this.registerForm.style)
       HttpManager.setSongList(params).then(res => {
         if (res.code === 1) {
           this.getData()
           this.registerForm = {}
-          this.notify('添加成功', 'success')
+          this.$notify({
+            title: '添加成功',
+            type: 'success'
+          })
         } else {
-          this.notify('添加失败', 'error')
+          this.$notify({
+            title: '添加失败',
+            type: 'error'
+          })
         }
       }).catch(err => {
-        console.log(err)
+        console.error(err)
       })
       this.centerDialogVisible = false
     },
@@ -258,13 +269,19 @@ export default {
         .then(res => {
           if (res) {
             this.getData()
-            this.notify('删除成功', 'success')
+            this.$notify({
+              title: '删除成功',
+              type: 'success'
+            })
           } else {
-            this.notify('删除失败', 'error')
+            this.$notify({
+              title: '删除失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.delVisible = false
     }

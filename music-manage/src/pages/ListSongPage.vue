@@ -54,23 +54,21 @@
     </el-dialog>
 
     <!-- 删除提示框 -->
-    <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-      <div class="del-dialog-cnt" align="center">删除不可恢复，是否确定删除？</div>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="delVisible = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="deleteRow">确 定</el-button>
-      </span>
-    </el-dialog>
+    <yin-del-dialog :delVisible="delVisible" @deleteRow="deleteRow" @cancelRow="delVisible = $event"></yin-del-dialog>
   </div>
 </template>
 
 <script>
 import { mixin } from '../mixins'
 import { HttpManager } from '../api/index'
+import YinDelDialog from '@/components/dialog/YinDelDialog'
 
 export default {
-  name: 'list-song-page',
+  name: 'ListSongPage',
   mixins: [mixin],
+  components: {
+    YinDelDialog
+  },
   data () {
     return {
       registerForm: {
@@ -117,7 +115,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 获取歌单里对应的音乐
@@ -128,13 +126,12 @@ export default {
           this.tempDate.push(res[0])
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 获取要添加歌曲的ID
     getSongId () {
-      let _this = this
-      var id = _this.registerForm.singerName + '-' + _this.registerForm.songName
+      var id = this.registerForm.singerName + '-' + this.registerForm.songName
       HttpManager.getSongOfSingerName(id)
         .then(res => {
           this.addSong(res[0].id)
@@ -149,13 +146,19 @@ export default {
         .then(res => {
           if (res.code === 1) {
             this.getData()
-            this.notify('添加成功', 'success')
+            this.$notify({
+              title: '添加成功',
+              type: 'success'
+            })
           } else {
-            this.notify('添加失败', 'error')
+            this.$notify({
+              title: '添加失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.centerDialogVisible = false
     },
@@ -165,13 +168,19 @@ export default {
         .then(res => {
           if (res) {
             this.getData()
-            this.notify('删除成功', 'success')
+            this.$notify({
+              title: '删除成功',
+              type: 'success'
+            })
           } else {
-            this.notify('删除失败', 'error')
+            this.$notify({
+              title: '删除失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.delVisible = false
     }

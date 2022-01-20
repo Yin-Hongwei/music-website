@@ -69,11 +69,11 @@ const HttpManager = {
 
   // =======================> 歌单歌曲 API
   // 给歌单添加歌曲
-  setListSong: (params) => post(`ListSong/add`, params),
+  setListSong: (params) => post(`listSong/add`, params),
   // 返回歌单里指定歌单ID的歌曲
   getListSongOfSongId: (songListId) => get(`listSong/detail?songListId=${songListId}`),
   // 删除歌单里的歌曲
-  deleteListSong: (songId) => get(`ListSong/delete?songId=${songId}`)
+  deleteListSong: (songId) => get(`listSong/delete?songId=${songId}`)
 
 }
 

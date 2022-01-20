@@ -1,7 +1,7 @@
 @import "var.scss";
 @import "global.scss";
 
-.signUp {
+.sign-up {
   position: absolute;
   top: $header-height + 20px;
   background-color: $color-white;
@@ -10,14 +10,14 @@
   margin-left: 850px;
   padding: 30px 30px;
 
-  .signUp-head {
+  .sign-up-head {
     text-align: center;
     margin-bottom: 10px;
     font-size: 20px;
     font-weight: 600;
   }
 
-  .login-btn {
+  .sign-up-btn {
     @include layout(space-between);
     button {
       display: block;
