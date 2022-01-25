@@ -1,14 +1,14 @@
 package com.example.yin.dao;
 
-import com.example.yin.domain.Rank;
+import com.example.yin.domain.RankList;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RankMapper {
+public interface RankListMapper {
 
-    int insert(Rank record);
+    int insert(RankList record);
 
-    int insertSelective(Rank record);
+    int insertSelective(RankList record);
 
     /**
      * 查总分

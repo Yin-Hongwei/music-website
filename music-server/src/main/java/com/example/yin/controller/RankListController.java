@@ -1,8 +1,8 @@
 package com.example.yin.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.yin.domain.Rank;
-import com.example.yin.service.impl.RankServiceImpl;
+import com.example.yin.domain.RankList;
+import com.example.yin.service.impl.RankListServiceImpl ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,26 +14,26 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @Controller
-public class RankController {
+public class RankListController {
 
     @Autowired
-    private RankServiceImpl rankService;
+    private RankListServiceImpl  rankListService;
 
 //    提交评分
     @ResponseBody
-    @RequestMapping(value = "/rank/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/rankList/add", method = RequestMethod.POST)
     public Object addRank(HttpServletRequest req){
         JSONObject jsonObject = new JSONObject();
         String songListId = req.getParameter("songListId").trim();
         String consumerId = req.getParameter("consumerId").trim();
         String score = req.getParameter("score").trim();
 
-        Rank rank = new Rank();
-        rank.setSongListId(Long.parseLong(songListId));
-        rank.setConsumerId(Long.parseLong(consumerId));
-        rank.setScore(Integer.parseInt(score));
+        RankList rank_list = new RankList();
+        rank_list.setSongListId(Long.parseLong(songListId));
+        rank_list.setConsumerId(Long.parseLong(consumerId));
+        rank_list.setScore(Integer.parseInt(score));
 
-        boolean res = rankService.addRank(rank);
+        boolean res = rankListService.addRank(rank_list);
         if (res){
             jsonObject.put("code", 1);
             jsonObject.put("msg", "评价成功");
@@ -46,9 +46,9 @@ public class RankController {
     }
 
 //    获取指定歌单的评分
-    @RequestMapping(value = "/rank", method = RequestMethod.GET)
+    @RequestMapping(value = "/rankList", method = RequestMethod.GET)
     public Object rankOfSongListId(HttpServletRequest req){
         String songListId = req.getParameter("songListId");
-        return rankService.rankOfSongListId(Long.parseLong(songListId));
+        return rankListService.rankOfSongListId(Long.parseLong(songListId));
     }
 }

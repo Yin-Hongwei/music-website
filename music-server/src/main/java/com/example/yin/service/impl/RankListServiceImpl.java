@@ -1,16 +1,16 @@
 package com.example.yin.service.impl;
 
-import com.example.yin.dao.RankMapper;
-import com.example.yin.domain.Rank;
-import com.example.yin.service.RankService;
+import com.example.yin.dao.RankListMapper;
+import com.example.yin.domain.RankList;
+import com.example.yin.service.RankListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RankServiceImpl implements RankService {
+public class RankListServiceImpl implements RankListService {
 
     @Autowired
-    private RankMapper rankMapper;
+    private RankListMapper rankMapper;
 
     @Override
     public int rankOfSongListId(Long songListId) {
@@ -18,8 +18,8 @@ public class RankServiceImpl implements RankService {
     }
 
     @Override
-    public boolean addRank(Rank rank) {
+    public boolean addRank(RankList rankList) {
 
-        return rankMapper.insertSelective(rank) > 0 ? true:false;
+        return rankMapper.insertSelective(rankList) > 0 ? true:false;
     }
 }

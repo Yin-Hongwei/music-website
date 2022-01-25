@@ -2,7 +2,7 @@ package com.example.yin.domain;
 
 import java.io.Serializable;
 
-public class Rank implements Serializable {
+public class RankList implements Serializable {
 
     private Long id;
 
