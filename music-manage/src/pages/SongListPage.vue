@@ -176,7 +176,7 @@ export default {
   },
   methods: {
     uploadUrl (id) {
-      return `${this.$store.state.HOST}/songList/img/update?id=${id}`
+      return `${this.$store.state.HOST}/songList/images/update?id=${id}`
     },
     // 获取歌单信息
     getData () {
@@ -228,7 +228,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.editVisible = false
     },
@@ -236,7 +236,7 @@ export default {
     addsongList () {
       let params = new URLSearchParams()
       params.append('title', this.registerForm.title)
-      params.append('pic', '/img/songListPic/123.jpg')
+      params.append('pic', '/images/songListPic/123.jpg')
       params.append('introduction', this.registerForm.introduction)
       params.append('style', this.registerForm.style)
       HttpManager.setSongList(params).then(res => {
@@ -248,7 +248,7 @@ export default {
           this.notify('添加失败', 'error')
         }
       }).catch(err => {
-        console.log(err)
+        console.error(err)
       })
       this.centerDialogVisible = false
     },
@@ -264,7 +264,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.delVisible = false
     }

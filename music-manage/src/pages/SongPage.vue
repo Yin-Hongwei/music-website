@@ -150,17 +150,13 @@
 </template>
 
 <script>
-import SongAudio from '../components/SongAudio'
 import { mixin } from '../mixins'
 import { mapGetters } from 'vuex'
-import { ICON } from '../assets/icon/index'
+import { ICON } from '../enums/index'
 import { HttpManager } from '../api/index'
 
 export default {
   name: 'song-page',
-  components: {
-    SongAudio
-  },
   mixins: [mixin],
   data () {
     return {
@@ -247,7 +243,7 @@ export default {
         this.tempDate = res
         this.currentPage = 1
       }).catch(err => {
-        console.log(err)
+        console.error(err)
       })
     },
     setSongUrl (url, name) {
@@ -261,7 +257,7 @@ export default {
     },
     // 更新歌曲图片
     uploadUrl (id) {
-      return `${this.$store.state.HOST}/song/img/update?id=${id}`
+      return `${this.$store.state.HOST}/song/images/update?id=${id}`
     },
     // 更新歌曲url
     uploadSongUrl (id) {
@@ -292,7 +288,6 @@ export default {
     },
     // 添加音乐
     addSong () {
-      let _this = this
       var form = new FormData(document.getElementById('tf'))
       form.append('singerId', this.singerId)
       form.set('name', this.singerName + '-' + form.get('name'))
@@ -300,21 +295,21 @@ export default {
         form.set('lyric', '[00:00:00]暂无歌词')
       }
       var req = new XMLHttpRequest()
-      req.onreadystatechange = function () {
+      req.onreadystatechange = () => {
         if (req.readyState === 4 && req.status === 200) {
           let res = JSON.parse(req.response)
           if (res.code) {
-            _this.getData()
-            _this.registerForm = {}
-            _this.notify(res.msg, 'success')
+            this.getData()
+            this.registerForm = {}
+            this.notify(res.msg, 'success')
           } else if (!res.code) {
-            _this.notify('上传失败', 'error')
+            this.notify('上传失败', 'error')
           }
         }
       }
-      req.open('post', `${_this.$store.state.HOST}/song/add`, false)
+      req.open('post', `${this.$store.state.HOST}/song/add`, false)
       req.send(form)
-      _this.centerDialogVisible = false
+      this.centerDialogVisible = false
     },
     // 编辑
     handleEdit (row) {
@@ -353,7 +348,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.editVisible = false
     },
@@ -369,7 +364,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.delVisible = false
     },

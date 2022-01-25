@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import _ctrEvent from '../assets/js/ctr-event'
+import _ctrEvent from '../../utils/ctr-event'
 
 export default {
   data () {

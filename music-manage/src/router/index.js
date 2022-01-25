@@ -6,7 +6,7 @@ Vue.use(Router)
 const constantRoutes = [
   {
     path: '/Home',
-    component: resolve => require(['../components/Home.vue'], resolve),
+    component: resolve => require(['../pages/Home.vue'], resolve),
     meta: { title: '自述文件' },
     children: [
       {

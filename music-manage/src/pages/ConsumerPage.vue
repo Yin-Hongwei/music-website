@@ -380,7 +380,7 @@ export default {
       params.append('birth', datetime)
       params.append('introduction', this.registerForm.introduction)
       params.append('location', this.registerForm.location)
-      params.append('avator', '/img/user.jpg')
+      params.append('avator', '/images/user.jpg')
       HttpManager.setUser(params)
         .then(res => {
           if (res.code === 1) {
@@ -392,7 +392,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.centerDialogVisible = false
     },
@@ -435,7 +435,7 @@ export default {
           this.notify('修改失败', 'error')
         }
       }).catch(err => {
-        console.log(err)
+        console.error(err)
       })
       this.editVisible = false
     },

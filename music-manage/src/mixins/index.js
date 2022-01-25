@@ -63,16 +63,15 @@ export const mixin = {
     },
     // 更新图片
     handleAvatarSuccess (res, file) {
-      let _this = this
       if (res.code === 1) {
-        _this.imageUrl = URL.createObjectURL(file.raw)
-        _this.getData()
-        _this.$notify({
+        this.imageUrl = URL.createObjectURL(file.raw)
+        this.getData()
+        this.$notify({
           title: '上传成功',
           type: 'success'
         })
       } else {
-        _this.$notify({
+        this.$notify({
           title: '上传失败',
           type: 'error'
         })

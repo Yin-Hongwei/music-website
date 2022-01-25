@@ -223,7 +223,7 @@ export default {
       let params = new URLSearchParams()
       params.append('name', this.registerForm.name)
       params.append('sex', this.registerForm.sex)
-      params.append('pic', '/img/singerPic/hhh.jpg')
+      params.append('pic', '/images/singerPic/hhh.jpg')
       params.append('birth', datetime)
       params.append('location', this.registerForm.location)
       params.append('introduction', this.registerForm.introduction)
@@ -238,7 +238,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.centerDialogVisible = false
     },
@@ -289,7 +289,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.editVisible = false
     },
@@ -305,7 +305,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.delVisible = false
     },

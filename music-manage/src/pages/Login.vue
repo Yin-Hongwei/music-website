@@ -63,7 +63,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     }
   }
@@ -73,7 +73,7 @@ export default {
 <style scoped>
 .login-wrap {
   position: relative;
-  background: url('../assets/img/background.jpg');
+  background: url('../assets/images/background.jpg');
   background-attachment: fixed;
   background-position: center;
   background-size: cover;

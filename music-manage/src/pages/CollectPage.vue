@@ -89,7 +89,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 通过歌曲ID获取歌曲
@@ -100,7 +100,7 @@ export default {
           this.tempDate.push(res[0])
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 删除一首歌曲
@@ -115,7 +115,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.delVisible = false
     }

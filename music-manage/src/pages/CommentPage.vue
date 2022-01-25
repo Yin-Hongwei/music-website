@@ -126,7 +126,7 @@ export default {
           this.tempDate.push(o)
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 编辑
@@ -163,7 +163,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.editVisible = false
     },
@@ -179,7 +179,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.delVisible = false
     }

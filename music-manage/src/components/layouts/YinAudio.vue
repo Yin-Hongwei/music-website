@@ -1,7 +1,7 @@
 <template>
   <div class="song-audio">
     <audio
-      id="player"
+      ref="player"
       controls="controls"
       preload="true"
       :src="url"
@@ -15,10 +15,9 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'song-audio',
+  name: 'YinAudio',
   computed: {
     ...mapGetters([
-      'id', // 音乐id
       'url', // 音乐链接
       'isPlay' // 播放状态
     ])
@@ -32,16 +31,12 @@ export default {
   methods: {
     // 开始/暂停
     togglePlay () {
-      let player = document.querySelector('#player')
-      if (this.isPlay) {
-        player.play()
-      } else {
-        player.pause()
-      }
+      const player = this.$refs.player.elm
+      this.isPlay ? player.play() : player.pause()
     },
     // 获取歌曲链接后准备播放
     startPlay () {
-      let player = document.querySelector('#player')
+      const player = this.$refs.player.elm
       //  开始播放
       player.play()
     },

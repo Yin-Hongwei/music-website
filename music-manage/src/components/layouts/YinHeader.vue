@@ -9,7 +9,7 @@
       <div class="header-user-con">
         <!-- 用户头像 -->
         <div class="user-avator">
-          <img src="../assets/img/user.jpg" />
+          <img src="../../assets/images/user.jpg" />
         </div>
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import _ctrEvent from '../assets/js/ctr-event'
+import _ctrEvent from '../../utils/ctr-event'
 
 export default {
   data () {

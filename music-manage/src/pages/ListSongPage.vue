@@ -117,7 +117,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 获取歌单里对应的音乐
@@ -128,13 +128,12 @@ export default {
           this.tempDate.push(res[0])
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
     },
     // 获取要添加歌曲的ID
     getSongId () {
-      let _this = this
-      var id = _this.registerForm.singerName + '-' + _this.registerForm.songName
+      var id = this.registerForm.singerName + '-' + this.registerForm.songName
       HttpManager.getSongOfSingerName(id)
         .then(res => {
           this.addSong(res[0].id)
@@ -155,7 +154,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.centerDialogVisible = false
     },
@@ -171,7 +170,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       this.delVisible = false
     }

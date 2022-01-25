@@ -210,14 +210,14 @@ export default {
           this.getCountry(item.location)
         }
       }).catch(err => {
-        console.log(err)
+        console.error(err)
       })
     },
     getSong () {
       HttpManager.getAllSong().then(res => {
         this.songCount = res.length
       }).catch(err => {
-        console.log(err)
+        console.error(err)
       })
     },
     getSongList () {
@@ -227,7 +227,7 @@ export default {
           this.getStyle(item.style)
         }
       }).catch(err => {
-        console.log(err)
+        console.error(err)
       })
     }
   }

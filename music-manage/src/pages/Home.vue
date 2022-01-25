@@ -1,8 +1,8 @@
 <template>
   <div>
-    <song-audio />
-    <the-header></the-header>
-    <the-aside></the-aside>
+    <yin-audio></yin-audio>
+    <yin-header></yin-header>
+    <yin-aside></yin-aside>
     <div class="content-box" :class="{'content-collapse':collapse}">
       <div class="content">
         <router-view></router-view>
@@ -12,16 +12,16 @@
 </template>
 
 <script>
-import SongAudio from './SongAudio'
-import TheHeader from './TheHeader.vue'
-import TheAside from './TheAside.vue'
-import _ctrEvent from '../assets/js/ctr-event'
+import YinAudio from '../components/layouts/YinAudio'
+import YinHeader from '../components/layouts/YinHeader'
+import YinAside from '../components/layouts/YinAside'
+import _ctrEvent from '../utils/ctr-event'
 
 export default {
   components: {
-    SongAudio,
-    TheHeader,
-    TheAside
+    YinAudio,
+    YinHeader,
+    YinAside
   },
   data () {
     return {

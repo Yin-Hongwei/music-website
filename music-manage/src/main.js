@@ -8,7 +8,7 @@ import VCharts from 'v-charts'
 import App from './App'
 import router from './router'
 import store from './store/index'
-import '@/assets/js/iconfont.js'
+import './assets/icons/iconfont.js'
 
 Vue.use(Vuex)
 Vue.use(ElementUI)
