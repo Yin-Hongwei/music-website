@@ -1,4 +1,4 @@
-const ICON = {
+export const ICON = {
   BOFANG: '#icon-bofang', // 播放
   ZANTING: '#icon-zanting', // 暂停
   YINLIANG: '#icon-yinliang', // 音量有背景
@@ -13,8 +13,4 @@ const ICON = {
   LIEBIAO: '#icon-liebiao', // 列表
   XIHUAN: '#icon-xihuan-shi', // 收藏
   ZAN: '#icon-zan' // 赞
-}
-
-export {
-  ICON
 }

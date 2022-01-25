@@ -1,4 +1,4 @@
-const singerStyle = [
+export const singerStyle = [
   {
     name: '全部歌手',
     type: '-1'
@@ -16,7 +16,3 @@ const singerStyle = [
     type: '2'
   }
 ]
-
-export {
-  singerStyle
-}

@@ -1,5 +1,5 @@
 <template>
-  <div class="login-in">
+  <div class="sign-in">
     <yin-login-logo></yin-login-logo>
     <div class="login">
       <div class="login-head">
@@ -10,7 +10,7 @@
           <el-input placeholder="用户名" v-model="loginForm.username"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" placeholder="密码" v-model="loginForm.password" @keyup.enter.native="loginIn"></el-input>
+          <el-input type="password" placeholder="密码" v-model="loginForm.password" @keyup.enter.native="token"></el-input>
         </el-form-item>
         <div class="login-btn">
           <el-button @click="handleSignUp">注册</el-button>
@@ -23,11 +23,12 @@
 
 <script>
 import mixin from '../mixins'
-import YinLoginLogo from '../components/common/YinLoginLogo'
-import { HttpManager } from '../api/index'
+import YinLoginLogo from '../components/layouts/YinLoginLogo'
+import { HttpManager } from '../api'
+import { NAV_NAME, HOME, SIGN_UP } from '../enums'
 
 export default {
-  name: 'LoginIn',
+  name: 'SignIn',
   mixins: [mixin],
   components: {
     YinLoginLogo
@@ -63,30 +64,25 @@ export default {
     }
   },
   mounted () {
-    this.changeIndex('登录')
+    this.changeIndex(NAV_NAME.SIGN_IN)
   },
   methods: {
-    changeIndex (value) {
-      this.$store.commit('setActiveName', value)
-    },
     handleLoginIn () {
+      // 获取登录信息
       let params = new URLSearchParams()
       params.append('username', this.loginForm.username)
       params.append('password', this.loginForm.password)
-      HttpManager.loginIn(params)
+      HttpManager.signIn(params)
         .then(res => {
-          // console.log('-----------获取登录信息---------------')
           if (res.code === 1) {
             this.$message({
               message: '登录成功',
               type: 'success'
             })
-            this.setUserMsg(res.userMsg[0])
-            this.$store.commit('setLoginIn', true)
+            this.setUserInfo(res.userMsg[0])
             setTimeout(() => {
-              this.changeIndex('首页')
-              this.$router.push({path: '/'})
-              this.$router.go(0)
+              this.changeIndex(NAV_NAME.HOME)
+              this.routerManager(HOME, { path: HOME })
             }, 2000)
           } else {
             this.$notify({
@@ -99,18 +95,19 @@ export default {
           console.error(error)
         })
     },
-    setUserMsg (item) {
+    setUserInfo (item) {
       this.$store.commit('setUserId', item.id)
       this.$store.commit('setUsername', item.username)
-      this.$store.commit('setAvator', item.avator)
+      this.$store.commit('setUserPic', item.avator)
+      this.$store.commit('setToken', true)
     },
     handleSignUp () {
-      this.$router.push({path: '/sign-up'})
+      this.routerManager(SIGN_UP, { path: SIGN_UP })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/login-in.scss';
+@import '@/assets/css/sign-in.scss';
 </style>

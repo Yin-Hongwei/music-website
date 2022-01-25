@@ -2,16 +2,14 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Vuex from 'vuex'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+import './assets/css/index.scss'
 import App from './App'
 import router from './router'
 import store from './store'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-import './assets/css/index.scss'
-import '@/assets/js/iconfont.js'
-import '@/assets/js/iconfont1.js'
-import '@/assets/js/iconfont2.js'
-import '@/assets/js/iconfont3.js'
+import './assets/icons/index.js'
 
 Vue.use(Vuex)
 Vue.use(ElementUI)

@@ -15,8 +15,8 @@
 
 <script>
 import PlayList from '../components/PlayList'
-import { swiperList } from '../assets/data/swiper'
-import { HttpManager } from '../api/index'
+import { swiperList } from '../enums'
+import { HttpManager } from '../api'
 
 export default {
   name: 'Home',
@@ -31,7 +31,6 @@ export default {
     }
   },
   created () {
-    console.log('%c welcome to https://github.com/Yin-Hongwei/music-website', 'font-size: 16px; font-weight: bold')
     // 获取歌单列表
     this.getSongList()
     // 获取歌手列表
@@ -61,5 +60,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/home.scss';
+@import '@/assets/css/home.scss';
 </style>

@@ -2,21 +2,21 @@
   <div class="singer-detail">
     <div class="album-slide">
       <div class="singer-img">
-        <img :src="attachImageUrl(singer.pic)" alt="">
+        <img :src="attachImageUrl(songDetails.pic)" alt="">
       </div>
       <ul class="info">
-        <li v-if="singer.sex !== 2">性别：{{attachSex(singer.sex)}}</li>
-        <li>生日：{{attachBirth(singer.birth)}}</li>
-        <li>故乡：{{singer.location}}</li>
+        <li v-if="songDetails.sex !== 2">性别：{{getUserSex(songDetails.sex)}}</li>
+        <li>生日：{{getBirth(songDetails.birth)}}</li>
+        <li>故乡：{{songDetails.location}}</li>
       </ul>
     </div>
     <div class="song-list">
       <div class="intro">
-        <h2>{{singer.name}}</h2>
-        <span>{{singer.introduction}}</span>
+        <h2>{{songDetails.name}}</h2>
+        <span>{{songDetails.introduction}}</span>
       </div>
       <div class="content">
-        <song-list :songList="listOfSongs">
+        <song-list :songList="currentSongList">
           <template slot="title">歌单</template>
         </song-list>
       </div>
@@ -25,10 +25,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import mixin from '../../mixins'
 import SongList from '../../components/SongList'
-import { mapGetters } from 'vuex'
-import { HttpManager } from '../../api/index'
+import { HttpManager } from '../../api'
 
 export default {
   name: 'SingerDetail',
@@ -38,42 +38,31 @@ export default {
   },
   data () {
     return {
-      singerId: '',
-      singer: {}
+      currentSongList: []
     }
   },
   computed: {
     ...mapGetters([
-      'songDetails',
-      'listOfSongs'
+      'songDetails'
     ])
   },
   mounted () {
-    this.singerId = this.$route.params.id // 给歌单ID赋值
-    this.singer = this.songDetails
-    this.getSongList()
+    this.getSongList(this.songDetails.id)
   },
   methods: {
-    getSongList () {
-      HttpManager.getSongOfSingerId(this.singerId)
+    getSongList (id) {
+      HttpManager.getSongOfSingerId(id)
         .then(res => {
-          this.$store.commit('setListOfSongs', res)
+          this.currentSongList = res
         })
         .catch(err => {
           console.error(err)
         })
-    },
-    attachSex (value) {
-      if (value === 0) {
-        return '女'
-      } else if (value === 1) {
-        return '男'
-      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/singer-detail.scss';
+@import '@/assets/css/singer-detail.scss';
 </style>

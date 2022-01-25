@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import PersonalData from '../components/setting/PersonalData'
-import Upload from '../components/setting/Upload'
+import PersonalData from './PersonalData'
+import Upload from './Upload'
 
 export default {
   name: 'Setting',
@@ -49,5 +49,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/setting.scss';
+@import '@/assets/css/setting.scss';
 </style>

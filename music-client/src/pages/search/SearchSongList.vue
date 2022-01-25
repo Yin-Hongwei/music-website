@@ -5,9 +5,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import mixin from '../../mixins'
-import PlayList from '../PlayList'
-import { HttpManager } from '../../api/index'
+import PlayList from '../../components/PlayList'
+import { HttpManager } from '../../api'
 
 export default {
   name: 'SearchSongList',
@@ -20,13 +21,23 @@ export default {
       playList: []
     }
   },
+  computed: {
+    ...mapGetters([
+      'searchWord'
+    ])
+  },
+  watch: {
+    searchWord (value) {
+      this.getSearchList(value)
+    }
+  },
   mounted () {
-    this.getSearchList()
+    this.getSearchList(this.$route.query.keywords)
   },
   methods: {
-    getSearchList () {
-      if (!this.$route.query.keywords) return
-      HttpManager.getSongListOfLikeTitle(this.$route.query.keywords)
+    getSearchList (value) {
+      if (!value) return
+      HttpManager.getSongListOfLikeTitle(value)
         .then(res => {
           if (!res.length) {
             this.$notify({

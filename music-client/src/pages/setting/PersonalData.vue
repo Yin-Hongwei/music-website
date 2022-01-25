@@ -31,7 +31,7 @@
         <el-form-item prop="location" label="地区">
           <el-select v-model="registerForm.location" placeholder="地区" style="width:100%">
             <el-option
-              v-for="item in cities"
+              v-for="item in area"
               :key="item.value"
               :label="item.label"
               :value="item.value">
@@ -41,7 +41,7 @@
       </el-form>
     <div class="btn">
       <el-button type="primary" @click="saveMsg()">保存</el-button>
-      <el-button @click="goback">取消</el-button>
+      <el-button @click="goBack">取消</el-button>
     </div>
     </div>
 </div>
@@ -49,8 +49,9 @@
 
 <script>
 import mixin from '../../mixins'
-import { cities } from '../../assets/data/form'
-import { HttpManager } from '../../api/index'
+import { AREA } from '../../enums'
+import { HttpManager } from '../../api'
+import { getDateTime } from '../../utils'
 
 export default {
   name: 'PersonalData',
@@ -67,14 +68,14 @@ export default {
         introduction: '',
         location: ''
       },
-      cities: cities
+      area: AREA
     }
   },
   mounted () {
-    this.getMsg(this.userId)
+    this.getUserInfo(this.userId)
   },
   methods: {
-    getMsg (id) {
+    getUserInfo (id) {
       HttpManager.getUserOfId(id)
         .then(res => {
           this.registerForm.username = res[0].username
@@ -85,7 +86,7 @@ export default {
           this.registerForm.birth = res[0].birth
           this.registerForm.introduction = res[0].introduction
           this.registerForm.location = res[0].location
-          this.registerForm.avator = res[0].avator
+          this.registerForm.userPic = res[0].avator
         })
         .catch(err => {
           console.error(err)
@@ -99,7 +100,7 @@ export default {
       params.append('sex', this.registerForm.sex)
       params.append('phone_num', this.registerForm.phoneNum)
       params.append('email', this.registerForm.email)
-      params.append('birth', this.getDateTime())
+      params.append('birth', getDateTime(this.registerForm.birth))
       params.append('introduction', this.registerForm.introduction)
       params.append('location', this.registerForm.location)
       HttpManager.updateUserMsg(params)
@@ -113,7 +114,7 @@ export default {
               showClose: true
             })
             setTimeout(() => {
-              this.$router.go(-1)
+              this.goBack(-1)
             }, 2000)
           } else {
             this.showSuccess = false
@@ -133,5 +134,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/personal-data.scss';
+@import '@/assets/css/personal-data.scss';
 </style>

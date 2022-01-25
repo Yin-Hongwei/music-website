@@ -1,4 +1,4 @@
-const songStyle = [
+export const songStyle = [
   {
     name: '全部歌单',
     type: 'One'
@@ -32,7 +32,3 @@ const songStyle = [
     type: 'Eight'
   }
 ]
-
-export {
-  songStyle
-}

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { ICON } from '../../assets/icon/index'
+import { ICON } from '../../enums'
 
 export default {
   name: 'YinLoginLogo',
@@ -20,5 +20,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/yin-login-logo.scss';
+@import '@/assets/css/yin-login-logo.scss';
 </style>

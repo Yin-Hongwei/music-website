@@ -16,24 +16,25 @@
       <li class="list-content" v-for="(item, index) in songList" :key="index">
         <div
           class="song-item"
-          :class="{'is-play': id === item.id}"
-          @click="toplay({
-            id:item.id,
+          :class="{'is-play': songId === item.id}"
+          @click="playMusic({
+            id: item.id,
             url: item.url,
             pic: item.pic,
             index: index,
             name: item.name,
-            lyric: item.lyric
+            lyric: item.lyric,
+            currentSongList: songList
           })"
         >
           <span class="item-index">
-            <span v-if="id !== item.id">{{index + 1}}</span>
-            <svg v-if="id === item.id" class="icon" aria-hidden="true">
+            <span v-if="songId !== item.id">{{index + 1}}</span>
+            <svg v-if="songId === item.id" class="icon" aria-hidden="true">
               <use :xlink:href="YINLIANG"></use>
             </svg>
           </span>
-          <span class="item-title">{{replaceFName(item.name)}}</span>
-          <span class="item-name">{{replaceLName(item.name)}}</span>
+          <span class="item-title">{{getSongTitle(item.name)}}</span>
+          <span class="item-name">{{getSingerName(item.name)}}</span>
           <span class="item-intro">{{item.introduction}}</span>
         </div>
       </li>
@@ -42,9 +43,9 @@
 </template>
 
 <script>
-import mixin from '../mixins'
 import { mapGetters } from 'vuex'
-import { ICON } from '../assets/icon/index'
+import mixin from '../mixins'
+import { ICON } from '../enums'
 
 export default {
   name: 'SongList',
@@ -59,12 +60,12 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'id' // 音乐ID
+      'songId' // 音乐 ID
     ])
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/song-list.scss';
+@import '@/assets/css/song-list.scss';
 </style>

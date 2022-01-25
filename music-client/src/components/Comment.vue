@@ -19,11 +19,11 @@
     <ul class="popular" v-for="(item, index) in commentList" :key="index">
       <li>
         <div class="popular-img">
-          <img :src="attachImageUrl(userPic[index])" alt="">
+          <img :src="attachImageUrl(userPicList[index])" alt="">
         </div>
         <div class="popular-msg">
           <ul>
-            <li class="name">{{userName[index]}}</li>
+            <li class="name">{{userNameList[index]}}</li>
             <li class="content">{{item.content}}</li>
             <li class="time">{{item.createTime}}</li>
           </ul>
@@ -40,10 +40,10 @@
 </template>
 
 <script>
-import mixin from '../mixins'
 import { mapGetters } from 'vuex'
-import { HttpManager } from '../api/index'
-import { ICON } from '../assets/icon/index'
+import mixin from '../mixins'
+import { HttpManager } from '../api'
+import { ICON } from '../enums'
 
 export default {
   name: 'Comment',
@@ -55,22 +55,20 @@ export default {
   data () {
     return {
       commentList: [], // 存放评论内容
-      userPic: [], // 保存评论用户头像
-      userName: [], // 保存评论用户名字
+      userPicList: [], // 保存评论用户头像
+      userNameList: [], // 保存评论用户名字
       textarea: '', // 存放输入内容
       ZAN: ICON.ZAN
     }
   },
   computed: {
     ...mapGetters([
-      'id',
-      'index', // 列表中的序号
-      'loginIn', // 用户是否登录
-      'avator' // 用户头像
+      'songId',
+      'token' // 用户是否登录
     ])
   },
   watch: {
-    id () {
+    songId () {
       this.getComment()
     }
   },
@@ -95,8 +93,8 @@ export default {
     getUsers (id) {
       HttpManager.getUserOfId(id)
         .then(res => {
-          this.userPic.push(res[0].avator)
-          this.userName.push(res[0].username)
+          this.userPicList.push(res[0].avator)
+          this.userNameList.push(res[0].username)
         })
         .catch(err => {
           console.error(err)
@@ -104,7 +102,7 @@ export default {
     },
     // 提交评论
     postComment () {
-      if (!this.loginIn) {
+      if (!this.token) {
         this.$notify({
           title: '请先登录',
           type: 'warning'
@@ -144,7 +142,7 @@ export default {
     },
     // 点赞
     postUp (id, up, index) {
-      if (!this.loginIn) {
+      if (!this.token) {
         this.$notify({
           title: '请先登录',
           type: 'warning'
@@ -171,5 +169,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/comment.scss';
+@import '@/assets/css/comment.scss';
 </style>

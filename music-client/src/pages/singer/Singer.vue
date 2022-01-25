@@ -25,8 +25,8 @@
 
 <script>
 import PlayList from '../../components/PlayList'
-import { singerStyle } from '../../assets/data/singer'
-import { HttpManager } from '../../api/index'
+import { singerStyle } from '../../enums'
+import { HttpManager } from '../../api'
 
 export default {
   name: 'Singer',
@@ -92,5 +92,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/singer.scss';
+@import '@/assets/css/singer.scss';
 </style>

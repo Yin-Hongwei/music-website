@@ -19,7 +19,7 @@
 
 <script>
 import mixin from '../mixins'
-import { ICON } from '../assets/icon/index'
+import { ICON } from '../enums'
 
 export default {
   name: 'PlayList',
@@ -37,12 +37,12 @@ export default {
   methods: {
     goAblum (item) {
       this.$store.commit('setSongDetails', item)
-      this.$router.push({path: `/${this.path}/${item.id}`})
+      this.routerManager(this.path, { path: `/${this.path}/${item.id}` })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/play-list.scss';
+@import '@/assets/css/play-list.scss';
 </style>

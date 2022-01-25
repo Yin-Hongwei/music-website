@@ -15,7 +15,7 @@
       <!--播放-->
       <div class="item" @click="togglePlay">
         <svg class="icon" aria-hidden="true">
-          <use :xlink:href="playButtonUrl"></use>
+          <use :xlink:href="playBtnIcon"></use>
         </svg>
       </div>
       <!--下一首-->
@@ -26,7 +26,7 @@
       </div>
       <!--歌曲图片-->
       <div class="item-img" @click="goPlayerPage">
-         <img :src=picUrl alt="">
+         <img :src="songPic" alt="">
       </div>
       <!--播放进度-->
       <div class="playing-speed">
@@ -34,8 +34,8 @@
         <div class="current-time">{{ nowTime }}</div>
         <div class="progress-box">
           <div class="item-song-title">
-            <div>{{this.title}}</div>
-            <div>{{this.artist}}</div>
+            <div>{{this.songTitle}}</div>
+            <div>{{this.singerName}}</div>
           </div>
           <div ref="progress" class="progress" @mousemove="mousemove">
             <!--进度条-->
@@ -61,9 +61,9 @@
         </svg>
         <el-slider class="volume" v-model="volume" :vertical="true"></el-slider>
       </div>
-      <!--添加-->
+      <!--收藏-->
       <div class="item" @click="collection">
-        <svg :class="{ active: isActive }" class="icon" aria-hidden="true">
+        <svg :class="{ active: isCollection }" class="icon" aria-hidden="true">
           <use :xlink:href="XIHUAN"></use>
         </svg>
       </div>
@@ -84,10 +84,11 @@
 </template>
 
 <script>
-import mixin from '../../mixins'
 import { mapGetters } from 'vuex'
-import { HttpManager } from '../../api/index'
-import { ICON } from '../../assets/icon/index'
+import mixin from '../../mixins'
+import { HttpManager } from '../../api'
+import { formatSeconds } from '../../utils'
+import { ICON, LYRIC } from '../../enums'
 
 export default {
   name: 'yin-play-bar',
@@ -114,30 +115,30 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'loginIn', // 用户登录状态
+      'token', // 用户登录状态
       'isPlay', // 播放状态
-      'playButtonUrl', // 播放状态的图标
-      'id', // 音乐id
-      'url', // 音乐地址
-      'title', // 歌名
-      'artist', // 歌手名
-      'picUrl', // 歌曲图片
+      'playBtnIcon', // 播放状态的图标
+      'songId', // 音乐id
+      'songUrl', // 音乐地址
+      'songTitle', // 歌名
+      'singerName', // 歌手名
+      'songPic', // 歌曲图片
       'curTime', // 当前音乐的播放位置
       'duration', // 音乐时长
-      'listOfSongs', // 当前歌单列表
-      'listIndex', // 当前歌曲在歌曲列表的位置
+      'currentPlayList',
+      'currentPlayIndex', // 当前歌曲在歌曲列表的位置
       'showAside', // 是否显示侧边栏
       'autoNext', // 用于触发自动播放下一首
-      'isActive'
+      'isCollection' // 是否收藏
     ])
   },
   watch: {
     // 切换播放状态的图标
     isPlay (val) {
       if (val) {
-        this.$store.commit('setPlayButtonUrl', ICON.ZANTING)
+        this.$store.commit('setPlayBtnIcon', ICON.ZANTING)
       } else {
-        this.$store.commit('setPlayButtonUrl', ICON.BOFANG)
+        this.$store.commit('setPlayBtnIcon', ICON.BOFANG)
       }
     },
     volume () {
@@ -145,8 +146,8 @@ export default {
     },
     // 播放时间的开始和结束
     curTime () {
-      this.nowTime = this.formatSeconds(this.curTime)
-      this.songTime = this.formatSeconds(this.duration)
+      this.nowTime = formatSeconds(this.curTime)
+      this.songTime = formatSeconds(this.duration)
       // 移动进度条
       this.curLength = (this.curTime / this.duration) * 100
       // 处理歌词位置及颜色
@@ -172,11 +173,11 @@ export default {
   methods: {
     // 下载
     downloadMusic () {
-      HttpManager.downloadMusic(this.url)
+      HttpManager.downloadMusic(this.songUrl)
         .then(res => {
           let content = res.data
           let eleLink = document.createElement('a')
-          eleLink.download = `${this.artist}-${this.title}.mp3`
+          eleLink.download = `${this.singerName}-${this.songTitle}.mp3`
           eleLink.style.display = 'none'
           // 字符内容转变成blob地址
           let blob = new Blob([content])
@@ -201,47 +202,6 @@ export default {
       } else {
         this.$store.commit('setIsPlay', true)
       }
-    },
-    // 解析播放时间
-    formatSeconds (value) {
-      let theTime = parseInt(value)
-      let theTime1 = 0
-      let theTime2 = 0
-      if (theTime > 60) {
-        theTime1 = parseInt(theTime / 60) // 分
-        theTime = parseInt(theTime % 60) // 秒
-        // 是否超过一个小时
-        if (theTime1 > 60) {
-          theTime2 = parseInt(theTime1 / 60) // 小时
-          theTime1 = 60 // 分
-        }
-      }
-      // 多少秒
-      let result = ''
-      if (parseInt(theTime) < 10) {
-        result = '0:0' + parseInt(theTime)
-      } else {
-        result = '0:' + parseInt(theTime)
-      }
-      // 多少分钟时
-      if (theTime1 > 0) {
-        if (parseInt(theTime) < 10) {
-          result = '0' + parseInt(theTime)
-        } else {
-          result = parseInt(theTime)
-        }
-        result = parseInt(theTime1) + ':' + result
-      }
-      // 多少小时时
-      if (theTime2 > 0) {
-        if (parseInt(theTime) < 10) {
-          result = '0' + parseInt(theTime)
-        } else {
-          result = parseInt(theTime)
-        }
-        result = parseInt(theTime2) + ':' + parseInt(theTime1) + ':' + result
-      }
-      return result
     },
     // 拖拽开始
     mousedown (e) {
@@ -293,52 +253,53 @@ export default {
     },
     // 上一首
     prev () {
-      if (this.listIndex !== -1 && this.listOfSongs.length > 1) {
-        if (this.listIndex > 0) {
-          this.$store.commit('setListIndex', this.listIndex - 1)
-          this.toPlay(this.listOfSongs[this.listIndex].url)
+      if (this.currentPlayIndex !== -1 && this.currentPlayList.length > 1) {
+        if (this.currentPlayIndex > 0) {
+          this.$store.commit('setCurrentPlayIndex', this.currentPlayIndex - 1)
+          this.toPlay(this.currentPlayList[this.currentPlayIndex].url)
         } else {
-          this.$store.commit('setListIndex', this.listOfSongs.length - 1)
-          this.toPlay(this.listOfSongs[this.listIndex].url)
+          this.$store.commit('setCurrentPlayIndex', this.currentPlayList.length - 1)
+          this.toPlay(this.currentPlayList[this.currentPlayIndex].url)
         }
       }
     },
     // 下一首
     next () {
-      if (this.listIndex !== -1 && this.listOfSongs.length > 1) {
-        if (this.listIndex < this.listOfSongs.length - 1) {
-          this.$store.commit('setListIndex', this.listIndex + 1)
-          this.toPlay(this.listOfSongs[this.listIndex].url)
+      if (this.currentPlayIndex !== -1 && this.currentPlayList.length > 1) {
+        if (this.currentPlayIndex < this.currentPlayList.length - 1) {
+          this.$store.commit('setCurrentPlayIndex', this.currentPlayIndex + 1)
+          this.toPlay(this.currentPlayList[this.currentPlayIndex].url)
         } else {
-          this.$store.commit('setListIndex', 0)
-          this.toPlay(this.listOfSongs[0].url)
+          this.$store.commit('setCurrentPlayIndex', 0)
+          this.toPlay(this.currentPlayList[0].url)
         }
       }
     },
     // 选中播放
     toPlay (url) {
-      if (url && url !== this.url) {
-        this.$store.commit('setId', this.listOfSongs[this.listIndex].id)
-        this.$store.commit('setUrl', this.$store.state.configure.HOST + url)
-        this.$store.commit('setpicUrl', this.$store.state.configure.HOST + this.listOfSongs[this.listIndex].pic)
-        this.$store.commit('setTitle', this.replaceFName(this.listOfSongs[this.listIndex].name))
-        this.$store.commit('setArtist', this.replaceLName(this.listOfSongs[this.listIndex].name))
-        this.$store.commit('setLyric', this.parseLyric(this.listOfSongs[this.listIndex].lyric))
+      if (url && url !== this.songUrl) {
+        const song = this.currentPlayList[this.currentPlayIndex]
+        const id = song.id
+        const pic = song.pic
+        const name = song.name
+        const index = this.currentPlayIndex
+        const lyric = song.lyric
+        this.playMusic({id, url, pic, index, name, lyric, currentSongList: this.currentPlayList})
       }
     },
     goPlayerPage () {
-      this.$router.push({path: `/lyric/${this.id}`})
+      this.routerManager(LYRIC, { path: `${LYRIC}/${this.songId}` })
     },
     collection () {
-      if (this.loginIn) {
+      if (this.token) {
         var params = new URLSearchParams()
         params.append('userId', this.userId)
         params.append('type', 0) // 0 代表歌曲， 1 代表歌单
-        params.append('songId', this.id)
+        params.append('songId', this.songId)
         HttpManager.setCollection(params)
           .then(res => {
             if (res.code === 1) {
-              this.$store.commit('setIsActive', true)
+              this.$store.commit('setIsCollection', true)
               this.$notify({
                 title: '收藏成功',
                 type: 'success'
@@ -370,5 +331,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/yin-play-bar.scss';
+@import '@/assets/css/yin-play-bar.scss';
 </style>

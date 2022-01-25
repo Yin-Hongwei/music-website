@@ -32,11 +32,11 @@
       </el-form-item>
       <el-form-item prop="location" label="地区">
         <el-select v-model="registerForm.location" placeholder="地区" style="width:100%">
-          <el-option v-for="item in cities" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          <el-option v-for="item in area" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
       </el-form-item>
       <div class="sign-up-btn">
-        <el-button @click="goback">取消</el-button>
+        <el-button @click="goBack">取消</el-button>
         <el-button type="primary" @click="handleSignUp">确定</el-button>
       </div>
     </el-form>
@@ -46,9 +46,10 @@
 
 <script>
 import mixin from '../mixins'
-import YinLoginLogo from '../components/common/YinLoginLogo'
-import { rules, cities } from '../assets/data/form'
-import { HttpManager } from '../api/index'
+import YinLoginLogo from '../components/layouts/YinLoginLogo'
+import { HttpManager } from '../api'
+import { getDateTime } from '../utils'
+import { RULES, AREA, HOME } from '../enums'
 
 export default {
   name: 'SignUp',
@@ -68,8 +69,9 @@ export default {
         introduction: '',
         location: ''
       },
-      rules: rules,
-      cities: cities
+      rules: RULES,
+      area: AREA,
+      defaultUserPic: '/img/user.jpg'
     }
   },
   methods: {
@@ -79,10 +81,10 @@ export default {
       params.append('sex', this.registerForm.sex)
       params.append('phone_num', this.registerForm.phoneNum)
       params.append('email', this.registerForm.email)
-      params.append('birth', this.getDateTime())
+      params.append('birth', getDateTime(this.registerForm.birth))
       params.append('introduction', this.registerForm.introduction)
       params.append('location', this.registerForm.location)
-      params.append('avator', '/img/user.jpg')
+      params.append('avator', this.defaultUserPic)
       HttpManager.handleSignUp(params)
         .then(res => {
           if (res.code === 1) {
@@ -91,8 +93,8 @@ export default {
               type: 'success'
             })
             setTimeout(() => {
-              this.$router.push({path: '/'})
-            }, 2000)
+              this.routerManager(HOME, { path: HOME })
+            }, 1000)
           } else {
             this.$notify({
               title: '注册失败',
@@ -109,5 +111,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/sign-up.scss';
+@import '@/assets/css/sign-up.scss';
 </style>

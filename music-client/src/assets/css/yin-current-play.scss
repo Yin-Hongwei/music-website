@@ -58,15 +58,15 @@
     width: 100%;
     height: 40px;
     line-height: 40px;
-    border-bottom: solid 1px rgba(0, 0, 0, 0.2);
     &:hover {
-      background-color: $color-blue;
+      background-color: $color-blue-active;
       color: $color-white;
     }
   }
 }
 
 .is-play {
-  color: $color-blue-active;
+  background-color: $color-blue;
+  color: $color-white;
   font-weight: bold;
 }

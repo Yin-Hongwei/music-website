@@ -23,9 +23,9 @@ const constantRoutes = [
         component: () => import('@/pages/Home')
       },
       {
-        path: '/login-in',
-        name: 'login-in',
-        component: () => import('@/pages/LoginIn')
+        path: '/sign-in',
+        name: 'sign-in',
+        component: () => import('@/pages/SignIn')
       },
       {
         path: '/sign-up',
@@ -35,6 +35,9 @@ const constantRoutes = [
       {
         path: '/my-music',
         name: 'my-music',
+        meta: {
+          requireAuth: true
+        },
         component: () => import('@/pages/MyMusic')
       },
       {
@@ -65,19 +68,26 @@ const constantRoutes = [
       {
         path: '/search',
         name: 'search',
-        component: () => import('@/pages/Search')
+        component: () => import('@/pages/search/Search')
       },
       {
         path: '/setting',
         name: 'setting',
-        component: () => import('@/pages/Setting')
+        meta: {
+          requireAuth: true
+        },
+        component: () => import('@/pages/setting/Setting')
       }
     ]
   }
 ]
 
-export default new Router({
-  mode: 'history', // 去掉url中的#
-  scrollBehavior: (o, from, savedPosition) => ({ x: 0, y: 0 }),
+const router = new Router({
+  mode: 'history',
+  scrollBehavior: () => ({ x: 0, y: 0 }),
   routes: constantRoutes
 })
+
+// TODO: 路由拦截
+
+export default router

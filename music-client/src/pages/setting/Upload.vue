@@ -30,12 +30,12 @@ export default {
   },
   methods: {
     uploadUrl () {
-      return `${this.$store.state.configure.HOST}/user/avatar/update?id=${this.userId}`
+      return `${this.BASE_URL}/user/avatar/update?id=${this.userId}`
     },
     handleAvatarSuccess (res, file) {
       if (res.code === 1) {
         this.imageUrl = URL.createObjectURL(file.raw)
-        this.$store.commit('setAvator', res.avator)
+        this.$store.commit('setUserPic', res.avator)
         this.$message({
           message: '修改成功',
           type: 'success'
@@ -63,5 +63,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/upload.scss';
+@import '@/assets/css/upload.scss';
 </style>
