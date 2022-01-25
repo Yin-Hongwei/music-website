@@ -32,7 +32,7 @@
         <el-table-column label="邮箱" prop="email" width="120" align="center"></el-table-column>
         <el-table-column label="生日" width="120" align="center">
             <template slot-scope="scope">
-                <div>{{attachBirth(scope.row.birth)}}</div>
+                <div>{{getBirth(scope.row.birth)}}</div>
             </template>
         </el-table-column>
         <el-table-column prop="introduction" label="签名" align="center"></el-table-column>
@@ -138,23 +138,23 @@
     </el-dialog>
 
     <!-- 删除提示框 -->
-    <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-      <div class="del-dialog-cnt" align="center">删除不可恢复，是否确定删除？</div>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="delVisible = false">取 消</el-button>
-        <el-button size="mini" type="primary" @click="deleteRow">确 定</el-button>
-      </span>
-    </el-dialog>
+    <yin-del-dialog :delVisible="delVisible" @deleteRow="deleteRow" @cancelRow="delVisible = $event"></yin-del-dialog>
   </div>
 </template>
 
 <script>
 import { mixin } from '../mixins'
 import { HttpManager } from '../api/index'
+import { RULES, AREA, COLLECT } from '../enums'
+import { getDateTime } from '../utils'
+import YinDelDialog from '@/components/dialog/YinDelDialog'
 
 export default {
-  name: 'consumer-page',
+  name: 'ConsumerPage',
   mixins: [mixin],
+  components: {
+    YinDelDialog
+  },
   data () {
     return {
       registerForm: { // 注册
@@ -167,144 +167,6 @@ export default {
         introduction: '',
         location: ''
       },
-      cities: [{
-        value: '北京',
-        label: '北京'
-      }, {
-        value: '天津',
-        label: '天津'
-      }, {
-        value: '河北',
-        label: '河北'
-      }, {
-        value: '山西',
-        label: '山西'
-      }, {
-        value: '内蒙古',
-        label: '内蒙古'
-      }, {
-        value: '辽宁',
-        label: '辽宁'
-      }, {
-        value: '吉林',
-        label: '吉林'
-      }, {
-        value: '黑龙江',
-        label: '黑龙江'
-      }, {
-        value: '上海',
-        label: '上海'
-      }, {
-        value: '江苏',
-        label: '江苏'
-      }, {
-        value: '浙江',
-        label: '浙江'
-      }, {
-        value: '安徽',
-        label: '安徽'
-      }, {
-        value: '福建',
-        label: '福建'
-      }, {
-        value: '江西',
-        label: '江西'
-      }, {
-        value: '山东',
-        label: '山东'
-      }, {
-        value: '河南',
-        label: '河南'
-      }, {
-        value: '湖北',
-        label: '湖北'
-      }, {
-        value: '湖南',
-        label: '湖南'
-      }, {
-        value: '广东',
-        label: '广东'
-      }, {
-        value: '广西',
-        label: '广西'
-      }, {
-        value: '海南',
-        label: '海南'
-      }, {
-        value: '重庆',
-        label: '重庆'
-      }, {
-        value: '四川',
-        label: '四川'
-      }, {
-        value: '贵州',
-        label: '贵州'
-      }, {
-        value: '云南',
-        label: '云南'
-      }, {
-        value: '西藏',
-        label: '西藏'
-      }, {
-        value: '陕西',
-        label: '陕西'
-      }, {
-        value: '甘肃',
-        label: '甘肃'
-      }, {
-        value: '青海',
-        label: '青海'
-      }, {
-        value: '宁夏',
-        label: '宁夏'
-      }, {
-        value: '新疆',
-        label: '新疆'
-      }, {
-        value: '香港',
-        label: '香港'
-      }, {
-        value: '澳门',
-        label: '澳门'
-      }, {
-        value: '台湾',
-        label: '台湾'
-      }],
-      rules: {
-        username: [
-          { required: true, trigger: 'blur' }
-        ],
-        password: [
-          { required: true, trigger: 'blur' }
-        ],
-        sex: [
-          { required: true, message: '请选择性别', trigger: 'change' }
-        ],
-        phoneNum: [
-          { essage: '请选择日期', trigger: 'blur' }
-        ],
-        email: [
-          { message: '请输入邮箱地址', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-        ],
-        birth: [
-          { required: true, type: 'date', message: '请选择日期', trigger: 'change' }
-        ],
-        introduction: [
-          { message: '请输入介绍', trigger: 'blur' }
-        ],
-        location: [
-          { message: '请输入地区', trigger: 'change' }
-        ]
-      },
-      tableData: [], // 记录用户信息，用于显示
-      tempDate: [], // 记录用户信息，用于搜索时能临时记录一份用户信息
-      is_search: false,
-      multipleSelection: [], // 记录要删除的用户信息
-      centerDialogVisible: false,
-      editVisible: false, // 显示编辑框
-      delVisible: false, // 显示删除框
-      select_word: '', // 记录输入框输入的内容
       form: { // 记录编辑的信息
         id: '',
         username: '',
@@ -318,6 +180,17 @@ export default {
         createTime: '',
         updateTime: ''
       },
+      cities: AREA,
+      rules: RULES,
+      userPic: '/images/user.jpg',
+      tableData: [], // 记录用户信息，用于显示
+      tempDate: [], // 记录用户信息，用于搜索时能临时记录一份用户信息
+      is_search: false,
+      multipleSelection: [], // 记录要删除的用户信息
+      centerDialogVisible: false,
+      editVisible: false, // 显示编辑框
+      delVisible: false, // 显示删除框
+      select_word: '', // 记录输入框输入的内容
       pageSize: 5, // 页数
       currentPage: 1, // 当前页
       idx: -1 // 记录当前点中的行
@@ -365,12 +238,11 @@ export default {
       })
     },
     getCollect (id) {
-      this.$router.push({path: '/collect', query: { id }})
+      this.routerManager(COLLECT, {path: COLLECT, query: { id }})
     },
     // 添加用户
     addPeople () {
-      let d = this.registerForm.birth
-      let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+      let datetime = getDateTime(this.registerForm.birth)
       let params = new URLSearchParams()
       params.append('username', this.registerForm.username)
       params.append('password', this.registerForm.password)
@@ -380,15 +252,21 @@ export default {
       params.append('birth', datetime)
       params.append('introduction', this.registerForm.introduction)
       params.append('location', this.registerForm.location)
-      params.append('avator', '/images/user.jpg')
+      params.append('avator', this.userPic)
       HttpManager.setUser(params)
         .then(res => {
           if (res.code === 1) {
             this.getData()
             this.registerForm = {}
-            this.notify('添加成功', 'success')
+            this.$notify({
+              title: '添加成功',
+              type: 'success'
+            })
           } else {
-            this.notify('添加失败', 'error')
+            this.$notify({
+              title: '添加失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {
@@ -415,8 +293,7 @@ export default {
     },
     // 保存编辑
     saveEdit () {
-      let d = new Date(this.form.birth)
-      let datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+      let datetime = getDateTime(new Date(this.form.birth))
       let params = new URLSearchParams()
       params.append('id', this.form.id)
       params.append('username', this.form.username)
@@ -430,9 +307,15 @@ export default {
       HttpManager.updateUserMsg(params).then(res => {
         if (res.code === 1) {
           this.getData()
-          this.notify('修改成功', 'success')
+          this.$notify({
+            title: '修改成功',
+            type: 'success'
+          })
         } else {
-          this.notify('修改失败', 'error')
+          this.$notify({
+            title: '修改失败',
+            type: 'error'
+          })
         }
       }).catch(err => {
         console.error(err)
@@ -445,12 +328,20 @@ export default {
         .then(res => {
           if (res) {
             this.getData()
-            this.notify('删除成功', 'success')
+            this.$notify({
+              title: '删除成功',
+              type: 'success'
+            })
           } else {
-            this.notify('删除失败', 'error')
+            this.$notify({
+              title: '删除失败',
+              type: 'error'
+            })
           }
         })
-        .catch(failResponse => {})
+        .catch(error => {
+          console.error(error)
+        })
       this.delVisible = false
     }
   }

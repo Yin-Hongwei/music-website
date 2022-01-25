@@ -4,12 +4,12 @@
     <div class="collapse-btn" @click="collapseChage">
       <i class="el-icon-s-unfold"></i>
     </div>
-    <div class="logo">Yin-music 后台管理</div>
+    <div class="logo">{{nusicName}}</div>
     <div class="header-right">
       <div class="header-user-con">
         <!-- 用户头像 -->
         <div class="user-avator">
-          <img src="../../assets/images/user.jpg" />
+          <img :src="userPic" />
         </div>
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
@@ -27,13 +27,18 @@
 </template>
 <script>
 import _ctrEvent from '../../utils/ctr-event'
+import { SIGN_IN, MUSICNAME } from '../../enums'
+import { mixin } from '../../mixins'
 
 export default {
+  mixins: [mixin],
   data () {
     return {
       collapse: true,
       fullscreen: false,
-      username: 'admin'
+      username: 'admin',
+      userPic: require('@/assets/images/user.jpg'),
+      nusicName: MUSICNAME
     }
   },
   mounted () {
@@ -45,7 +50,7 @@ export default {
     // 用户名下拉菜单选择事件
     handleCommand (command) {
       if (command === 'loginout') {
-        this.$router.push('/')
+        this.routerManager(SIGN_IN, { path: SIGN_IN })
       }
     },
     // 侧边栏折叠

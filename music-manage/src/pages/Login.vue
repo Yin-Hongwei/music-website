@@ -1,6 +1,6 @@
 <template>
   <div class="login-wrap">
-    <div class="ms-title">Yin-music 后台管理</div>
+    <div class="ms-title">{{nusicName}}</div>
     <div class="ms-login">
       <el-form
         ref="ruleForm"
@@ -29,13 +29,15 @@
 </template>
 
 <script>
-import {mixin} from '../mixins'
+import { mixin } from '../mixins'
 import { HttpManager } from '../api/index'
+import { INFO, MUSICNAME } from '../enums'
 
 export default {
   mixins: [mixin],
   data: function () {
     return {
+      nusicName: MUSICNAME,
       ruleForm: {
         username: 'admin',
         password: '123'
@@ -56,10 +58,16 @@ export default {
       HttpManager.getLoginStatus(params)
         .then(res => {
           if (res.code === 1) {
-            this.$router.push('/Info')
-            this.notify('欢迎回来', 'success')
+            this.routerManager(INFO, { path: INFO })
+            this.$notify({
+              title: '欢迎回来',
+              type: 'success'
+            })
           } else {
-            this.notify('登录失败', 'error')
+            this.$notify({
+              title: '登录失败',
+              type: 'error'
+            })
           }
         })
         .catch(err => {

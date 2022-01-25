@@ -46,13 +46,13 @@
       <el-col :span="12">
         <h3 style="margin-bottom: 20px">用户性别比例</h3>
         <div class="cav-info" style="background-color: white">
-          <ve-pie :data="userSex" :theme="options"></ve-pie>
+          <ve-pie :data="userSex" :theme="optionsUserSex"></ve-pie>
         </div>
       </el-col>
       <el-col :span="12">
         <h3 style="margin-bottom: 20px">歌曲类型分布</h3>
         <div class="cav-info" style="background-color: white">
-          <ve-histogram :data="songStyle" :theme="options3"></ve-histogram>
+          <ve-histogram :data="songStyle" :theme="optionsSongStyle"></ve-histogram>
         </div>
       </el-col>
     </el-row>
@@ -60,13 +60,13 @@
       <el-col :span="12">
         <h3 style="margin: 20px 0">歌手性别比例</h3>
         <div class="cav-info" style="background-color: white">
-          <ve-pie :data="singerSex" :theme="options1"></ve-pie>
+          <ve-pie :data="singerSex" :theme="optionsSex"></ve-pie>
         </div>
       </el-col>
       <el-col :span="12">
         <h3 style="margin: 20px 0">歌手国籍分布</h3>
         <div class="cav-info" style="background-color: white">
-          <ve-histogram :data="country" :theme="options2"></ve-histogram>
+          <ve-histogram :data="country" :theme="optionsCountry"></ve-histogram>
         </div>
       </el-col>
     </el-row>
@@ -109,13 +109,13 @@ export default {
           { '国家': '日本', '总数': 0 }
         ]
       },
-      options: {
+      optionsUserSex: {
         color: ['#87CEFA', '#FFC0CB']
       },
-      options1: {
+      optionsSex: {
         color: ['#1E90FF', '#7B68EE']
       },
-      options2: {
+      optionsCountry: {
         color: ['#FEED78'],
         tooltip: {
           trigger: 'axis',
@@ -130,7 +130,7 @@ export default {
           containLabel: true
         }
       },
-      options3: {
+      optionsSongStyle: {
         color: ['#FD8A61'],
         tooltip: {
           trigger: 'axis',

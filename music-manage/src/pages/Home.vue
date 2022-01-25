@@ -1,6 +1,5 @@
 <template>
   <div>
-    <yin-audio></yin-audio>
     <yin-header></yin-header>
     <yin-aside></yin-aside>
     <div class="content-box" :class="{'content-collapse':collapse}">
@@ -8,19 +7,20 @@
         <router-view></router-view>
       </div>
     </div>
+    <yin-audio></yin-audio>
   </div>
 </template>
 
 <script>
-import YinAudio from '../components/layouts/YinAudio'
 import YinHeader from '../components/layouts/YinHeader'
+import YinAudio from '../components/layouts/YinAudio'
 import YinAside from '../components/layouts/YinAside'
 import _ctrEvent from '../utils/ctr-event'
 
 export default {
   components: {
-    YinAudio,
     YinHeader,
+    YinAudio,
     YinAside
   },
   data () {

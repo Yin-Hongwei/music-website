@@ -1,14 +1,9 @@
+import { BASE_URL, HOME, INFO, SONG, SINGER, SONG_LIST, LIST_SONG, COMMENT, CONSUMER, COLLECT, SIGN_IN, ERROR, SIGN_OUT } from '../enums'
+
 export const mixin = {
   methods: {
-    // 提示信息
-    notify (title, type) {
-      this.$notify({
-        title: title,
-        type: type
-      })
-    },
     getUrl (url) {
-      return `${this.$store.state.HOST}/${url}`
+      return `${BASE_URL}/${url}`
     },
     // 获取要删除列表的id
     handleDelete (id) {
@@ -27,17 +22,7 @@ export const mixin = {
       }
       this.multipleSelection = []
     },
-    // 得到歌曲名字
-    replaceFName (str) {
-      let arr = str.split('-')
-      return arr[1]
-    },
-    // 得到歌手名字
-    replaceLName (str) {
-      let arr = str.split('-')
-      return arr[0]
-    },
-    attachBirth (val) {
+    getBirth (val) {
       let birth = String(val).match(/[0-9-]+(?=\s)/)
       return Array.isArray(birth) ? birth[0] : birth
     },
@@ -87,6 +72,51 @@ export const mixin = {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
       return isJPG && isLt2M
+    },
+    // 路由管理
+    routerManager (routerName, { path, query }) {
+      switch (routerName) {
+        case HOME:
+        case SIGN_OUT:
+          this.$router.push({ path })
+          break
+        case INFO:
+          this.$router.push({ path })
+          break
+        case SONG:
+          this.$router.push({ path, query })
+          break
+        case SINGER:
+          this.$router.push({ path })
+          break
+        case SONG_LIST:
+          this.$router.push({ path })
+          break
+        case LIST_SONG:
+          this.$router.push({ path, query })
+          break
+        case COMMENT:
+          this.$router.push({ path, query })
+          break
+        case SIGN_IN:
+          this.$router.push({ path })
+          break
+        case CONSUMER:
+          this.$router.push({ path, query })
+          break
+        case COLLECT:
+          this.$router.push({ path, query })
+          break
+        case ERROR:
+          this.$router.push({ path })
+          break
+        default:
+          this.$router.push({ path })
+          break
+      }
+    },
+    goBack (step = -1) {
+      this.$router.go(step)
     }
   }
 }

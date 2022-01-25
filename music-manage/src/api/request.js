@@ -1,9 +1,10 @@
 import axios from 'axios'
 import router from '../router'
+import { BASE_URL } from '../enums'
 
 axios.defaults.timeout = 5000 // 超时时间设置
 axios.defaults.withCredentials = true // true允许跨域
-axios.defaults.baseURL = process.env.NODE_HOST
+axios.defaults.baseURL = BASE_URL
 // Content-Type 响应头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 
@@ -62,7 +63,6 @@ axios.interceptors.response.use(
    */
 export function get (url, params = {}, responseType = 'json') {
   return new Promise((resolve, reject) => {
-    console.log(responseType)
     axios.get(url, {
       params: params,
       responseType
