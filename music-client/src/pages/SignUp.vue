@@ -49,7 +49,7 @@ import mixin from '../mixins'
 import YinLoginLogo from '../components/layouts/YinLoginLogo'
 import { HttpManager } from '../api'
 import { getDateTime } from '../utils'
-import { RULES, AREA, HOME } from '../enums'
+import { RULES, AREA, SIGN_IN, NAV_NAME } from '../enums'
 
 export default {
   name: 'SignUp',
@@ -77,6 +77,7 @@ export default {
   methods: {
     handleSignUp () {
       const params = new URLSearchParams()
+      params.append('username', this.registerForm.username)
       params.append('password', this.registerForm.password)
       params.append('sex', this.registerForm.sex)
       params.append('phone_num', this.registerForm.phoneNum)
@@ -85,7 +86,7 @@ export default {
       params.append('introduction', this.registerForm.introduction)
       params.append('location', this.registerForm.location)
       params.append('avator', this.defaultUserPic)
-      HttpManager.handleSignUp(params)
+      HttpManager.SignUp(params)
         .then(res => {
           if (res.code === 1) {
             this.$notify({
@@ -93,7 +94,8 @@ export default {
               type: 'success'
             })
             setTimeout(() => {
-              this.routerManager(HOME, { path: HOME })
+              this.routerManager(SIGN_IN, { path: SIGN_IN })
+              this.changeIndex(NAV_NAME.SIGN_IN)
             }, 1000)
           } else {
             this.$notify({
