@@ -40,21 +40,13 @@ public class SongController {
     }
 
     @Configuration
-    public class MyPicConfig implements WebMvcConfigurer {
+    public static class MyPicConfig implements WebMvcConfigurer {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            String os = System.getProperty("os.name");
-            if (os.toLowerCase().startsWith("win")) { // windos系统
                 registry.addResourceHandler("/img/songPic/**")
-                        .addResourceLocations("file:" + Constants.RESOURCE_WIN_PATH + "\\img\\songPic\\");
+                        .addResourceLocations(Constants.SONG_PIC_PATH);
                 registry.addResourceHandler("/song/**")
-                        .addResourceLocations("file:" + Constants.RESOURCE_WIN_PATH + "\\song\\");
-            } else { // MAC、Linux系统
-                registry.addResourceHandler("/img/songPic/**")
-                        .addResourceLocations("file:" + Constants.RESOURCE_MAC_PATH + "/img/songPic/");
-                registry.addResourceHandler("/song/**")
-                        .addResourceLocations("file:" + Constants.RESOURCE_MAC_PATH + "/song/");
-            }
+                        .addResourceLocations(Constants.SONG_PATH);
         }
     }
 

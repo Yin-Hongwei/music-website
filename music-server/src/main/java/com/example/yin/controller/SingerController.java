@@ -28,17 +28,11 @@ public class SingerController {
     private SingerServiceImpl singerService;
 
     @Configuration
-    public class MyPicConfig implements WebMvcConfigurer {
+    public static class MyPicConfig implements WebMvcConfigurer {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            String os = System.getProperty("os.name");
-            if (os.toLowerCase().startsWith("win")) { // windos系统
                 registry.addResourceHandler("/img/singerPic/**")
-                        .addResourceLocations("file:" + Constants.RESOURCE_WIN_PATH + "\\img\\singerPic\\");
-            } else { // MAC、Linux系统
-                registry.addResourceHandler("/img/singerPic/**")
-                        .addResourceLocations("file:" + Constants.RESOURCE_MAC_PATH + "/img/singerPic/");
-            }
+                        .addResourceLocations(Constants.SINGER_PIC_PATH);
         }
     }
 

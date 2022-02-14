@@ -1,9 +1,11 @@
 package com.example.yin.constant;
 
 public class Constants {
-    // MAC、Linux系统
-    public static final String RESOURCE_MAC_PATH = "/Users/hongweiyin/Documents/github-workspace/music-website/music-server";
+    public static String PROJECT_PATH = System.getProperty("user.dir");
+    public static String AVATOR_IMAGES_PATH = "file:" + PROJECT_PATH + "/music-server/img/avatorImages/";
+    public static String SONGLIST_PIC_PATH = "file:" + PROJECT_PATH + "/music-server/img/songListPic/";
+    public static String SONG_PIC_PATH = "file:" + PROJECT_PATH + "/music-server/img/songPic/";
+    public static String SONG_PATH = "file:" + PROJECT_PATH + "/music-server/song/";
+    public static String SINGER_PIC_PATH = "file:" + PROJECT_PATH + "/music-server/img/singerPic/";
 
-    // windows系统
-    public static final String RESOURCE_WIN_PATH = System.getProperty("user.dir");
 }
