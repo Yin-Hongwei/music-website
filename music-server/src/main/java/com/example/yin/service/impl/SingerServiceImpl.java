@@ -16,18 +16,18 @@ public class SingerServiceImpl implements SingerService{
 
     @Override
     public boolean updateSingerMsg(Singer singer) {
-        return singerMapper.updateSingerMsg(singer) >0 ?true:false;
+        return singerMapper.updateSingerMsg(singer) > 0;
     }
 
     @Override
     public boolean updateSingerPic(Singer singer) {
 
-        return singerMapper.updateSingerPic(singer) >0 ?true:false;
+        return singerMapper.updateSingerPic(singer) > 0;
     }
 
     @Override
     public boolean deleteSinger(Integer id) {
-        return singerMapper.deleteSinger(id) >0 ?true:false;
+        return singerMapper.deleteSinger(id) > 0;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class SingerServiceImpl implements SingerService{
     @Override
     public boolean addSinger(Singer singer)  {
 
-        return singerMapper.insertSelective(singer) > 0 ? true : false;
+        return singerMapper.insertSelective(singer) > 0;
     }
 
     @Override
