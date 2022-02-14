@@ -1,6 +1,7 @@
 @import "var.scss";
 @import "global.scss";
 
+/*头部*/
 .yin-header {
   position: fixed;
   @include layout;
@@ -15,12 +16,14 @@
   z-index: 100;
 }
 
+/*左侧LOGO*/
 .header-logo {
   margin: $header-logo-margin;
   font-size: $font-size-logo;
   font-weight: bold;
   white-space: nowrap;
   cursor: pointer;
+
   .icon {
     @include icon(($header-height / 3) * 2, $color-black);
     vertical-align: middle;
@@ -31,6 +34,7 @@
 .navbar {
   height: $header-height;
   white-space: nowrap;
+
   li {
     margin: $header-nav-margin;
     padding: $header-nav-padding;
@@ -43,11 +47,12 @@
   }
 }
 
-/*搜索*/
+/*搜索输入框*/
 .header-search {
   @include layout;
   border-radius: $header-search-radius;
   overflow: hidden;
+
   input {
     height: $header-search-height;
     width: $header-search-width;
@@ -55,17 +60,20 @@
     border: 0;
     text-indent: 10px;
     background-color: $color-light-grey;
+
     &:focus {
       outline: none;
     }
   }
 
+  /*搜索按钮*/
   .search-btn {
     @include layout(center, center);
     background-color: $color-blue-active;
     width: $header-search-btn-width;
     height: $header-search-btn-height;
     cursor: pointer;
+
     .icon {
       @include icon(1.2em, $color-white);
     }
@@ -76,6 +84,7 @@
 .header-right {
   position: relative;
   @include layout(center, center);
+
   #user {
     overflow: hidden;
     width: $header-user-width;
@@ -83,6 +92,7 @@
     border-radius: $header-user-radius;
     margin: $header-user-margin;
     cursor: pointer;
+
     img {
       width: 100%;
     }
@@ -128,6 +138,7 @@
     /*一个正方形倾斜四十五度就是三角了但是要把下半部分藏起来*/
     transform: rotate(45deg);
   }
+
   // :nth-child(1):hover:before {
   // background-color: $theme-color;
   // }
