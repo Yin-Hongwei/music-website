@@ -22,18 +22,18 @@ public class ListSongServiceImpl implements ListSongService {
 
     @Override
     public boolean updateListSongMsg(ListSong listSong) {
-        return listSongMapper.updateListSongMsg(listSong) >0 ?true:false;
+        return listSongMapper.updateListSongMsg(listSong) > 0;
     }
 
     @Override
     public boolean deleteListSong(Integer songId) {
-        return listSongMapper.deleteListSong(songId) >0 ?true:false;
+        return listSongMapper.deleteListSong(songId) > 0;
     }
 
     @Override
     public boolean addListSong(ListSong listSong)
     {
-        return listSongMapper.insertSelective(listSong) > 0?true:false;
+        return listSongMapper.insertSelective(listSong) > 0;
     }
 
     @Override

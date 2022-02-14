@@ -35,13 +35,12 @@ public class ListSongController {
     if (res){
         jsonObject.put("code", 1);
         jsonObject.put("msg", "添加成功");
-        return jsonObject;
     }else {
         jsonObject.put("code", 0);
         jsonObject.put("msg", "添加失败");
+    }
         return jsonObject;
     }
-}
 
 //    返回歌单里包含的所有歌曲
     @RequestMapping(value = "/listSong", method = RequestMethod.GET)

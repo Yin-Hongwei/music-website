@@ -16,9 +16,7 @@ public class RankListServiceImpl implements RankListService {
     public int rankOfSongListId(Long songListId) {
         // 评分总人数
         int rankNum = rankMapper.selectRankNum(songListId);
-        if (rankNum == 0) {
-            rankNum = 1;
-        }
+        if (rankNum == 0) rankNum = 1;
         return rankMapper.selectScoreSum(songListId) / rankNum;
     }
 
