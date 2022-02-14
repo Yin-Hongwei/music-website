@@ -14,15 +14,14 @@ public class RankListServiceImpl implements RankListService {
 
     @Override
     public int rankOfSongListId(Long songListId) {
-        // 评分总人数
+        // 评分总人数如果为0，则返回0；否则返回计算出的结果
         int rankNum = rankMapper.selectRankNum(songListId);
-        if (rankNum == 0) rankNum = 1;
-        return rankMapper.selectScoreSum(songListId) / rankNum;
+        return (rankNum <= 0) ? 0 : rankMapper.selectScoreSum(songListId) / rankNum;
     }
 
     @Override
     public boolean addRank(RankList rankList) {
 
-        return rankMapper.insertSelective(rankList) > 0 ? true:false;
+        return rankMapper.insertSelective(rankList) > 0;
     }
 }
