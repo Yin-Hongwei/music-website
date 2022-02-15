@@ -80,6 +80,7 @@
           <el-radio-group v-model="registerForm.sex">
             <el-radio :label="0">女</el-radio>
             <el-radio :label="1">男</el-radio>
+            <el-radio :label="2">保密</el-radio>
             <el-radio :label="2">组合</el-radio>
             <el-radio :label="3">不明</el-radio>
           </el-radio-group>
@@ -115,6 +116,7 @@
           <el-radio-group v-model="form.sex">
             <el-radio :label="0">女</el-radio>
             <el-radio :label="1">男</el-radio>
+            <el-radio :label="2">保密</el-radio>
             <el-radio :label="2">组合</el-radio>
             <el-radio :label="3">不明</el-radio>
           </el-radio-group>

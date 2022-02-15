@@ -6,6 +6,7 @@ import com.example.yin.service.impl.ConsumerServiceImpl;
 import com.example.yin.constant.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.SQLNonTransientException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,7 +39,7 @@ public class ConsumerController {
         }
     }
 
-    // 添加用户
+    /* 用户注册 */
     @ResponseBody
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     public Object addUser(HttpServletRequest req) {
@@ -53,7 +56,7 @@ public class ConsumerController {
 
         if (username.equals("")) {
             jsonObject.put("code", 0);
-            jsonObject.put("msg", "用户名或密码错误");
+            jsonObject.put("msg", "用户名不能为空喔");
             return jsonObject;
         }
         Consumer consumer = new Consumer();
@@ -85,15 +88,28 @@ public class ConsumerController {
         consumer.setCreateTime(new Date());
         consumer.setUpdateTime(new Date());
 
-        boolean res = consumerService.addUser(consumer);
-        if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "注册成功");
-        } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "注册失败");
+
+        try {
+            boolean res = consumerService.addUser(consumer);
+            if (res) {
+                jsonObject.put("code", 1);
+                jsonObject.put("success", true);
+                jsonObject.put("msg", "注册成功");
+                jsonObject.put("type", "success");
+            } else {
+                jsonObject.put("code", 0);
+                jsonObject.put("success", false);
+                jsonObject.put("msg", "注册失败");
+                jsonObject.put("type", "error");
+            }
+            return jsonObject;
+        } catch (DuplicateKeyException e) {
+            jsonObject.put("code", 2);
+            jsonObject.put("success", false);
+            jsonObject.put("msg", "用户名已存在");
+            jsonObject.put("type", "error");
+            return jsonObject;
         }
-        return jsonObject;
     }
 
     //    判断是否登录成功

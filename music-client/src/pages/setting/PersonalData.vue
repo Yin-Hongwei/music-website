@@ -14,6 +14,7 @@
           <el-radio-group v-model="registerForm.sex">
             <el-radio :label="0">女</el-radio>
             <el-radio :label="1">男</el-radio>
+            <el-radio :label="2">保密</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item prop="phoneNum" label="手机">
