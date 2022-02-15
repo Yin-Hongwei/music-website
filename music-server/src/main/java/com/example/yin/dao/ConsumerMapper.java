@@ -1,6 +1,7 @@
 package com.example.yin.dao;
 
 import com.example.yin.domain.Consumer;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,6 +13,11 @@ public interface ConsumerMapper {
 
     int insert(Consumer record);
 
+    /**
+     * 增加新用户
+     * @param record - 用户信息
+     * @return int
+     */
     int insertSelective(Consumer record);
 
     Consumer selectByPrimaryKey(Integer id);
