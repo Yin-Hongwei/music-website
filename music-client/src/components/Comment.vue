@@ -104,7 +104,7 @@ export default {
     postComment () {
       if (!this.token) {
         this.$notify({
-          title: '请先登录',
+          title: '请先登录喔',
           type: 'warning'
         })
         return
@@ -144,7 +144,7 @@ export default {
     postUp (id, up, index) {
       if (!this.token) {
         this.$notify({
-          title: '请先登录',
+          title: '请先登录喔',
           type: 'warning'
         })
         return

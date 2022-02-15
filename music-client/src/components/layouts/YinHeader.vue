@@ -94,7 +94,7 @@ export default {
     goPage (path, name) {
       if (!this.token && path === MY_MUSIC) {
         this.$notify({
-          title: '请先登录',
+          title: '请先登录喔',
           type: 'warning'
         })
       } else if (!path && !name) {
