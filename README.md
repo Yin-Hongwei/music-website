@@ -114,11 +114,6 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 2）修改用户名密码
 修改 `music-website/music-server/src/main/resources/application.properties` 文件里的 `spring.datasource.username` 和 `spring.datasource.password`；
 
-3）修改资源路径
-
-修改 `music-server/src/main/java/com/example/yin/constant/Constants.java` 文件中的 `RESOURCE_PATH`，**否则资源加载不了**。
-
-![](https://tva1.sinaimg.cn/large/008i3skNly1gske6w6kk8j33aq0u0wn2.jpg)
 
 #### 4、启动项目
 
