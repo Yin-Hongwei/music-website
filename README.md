@@ -130,17 +130,17 @@ mvn spring-boot:run // 前提装了 maven
 - **启动客户端**：进入 music-client 目录，运行下面命令
 
 ```js
-npm install // 安装依赖
+yarn // 安装依赖
 
-npm run dev // 启动前台项目
+yarn dev // 启动前台项目
 ```
 
 - **启动管理端**：进入 music-manage 目录，运行下面命令
 
 ```js
-npm install // 安装依赖
+yarn // 安装依赖
 
-npm run dev // 启动后台管理项目
+yarn dev // 启动后台管理项目
 ```
 
 <br/>
