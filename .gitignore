@@ -1,5 +1,2 @@
 .DS_Store
 .idea
-/node_modules/
-/package-lock.json
-/music-manage/package-lock.json
