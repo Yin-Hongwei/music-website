@@ -118,7 +118,6 @@ public class ConsumerController {
         JSONObject jsonObject = new JSONObject();
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-//        System.out.println(username+"  "+password);
         boolean res = consumerService.veritypasswd(username, password);
 
         if (res) {
