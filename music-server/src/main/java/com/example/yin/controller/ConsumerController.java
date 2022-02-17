@@ -37,7 +37,9 @@ public class ConsumerController {
         }
     }
 
-    /* 用户注册 */
+    /**
+     * 用户注册
+     */
     @ResponseBody
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     public Object addUser(HttpServletRequest req) {
@@ -110,7 +112,9 @@ public class ConsumerController {
         }
     }
 
-    //    判断是否登录成功
+    /**
+     * 判断是否登录成功
+     */
     @ResponseBody
     @RequestMapping(value = "/user/login/status", method = RequestMethod.POST)
     public Object loginStatus(HttpServletRequest req, HttpSession session) {
@@ -137,27 +141,35 @@ public class ConsumerController {
 
     }
 
-    //    返回所有用户
+    /**
+     * 返回所有用户
+     */
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public Object allUser() {
         return consumerService.allUser();
     }
 
-    //    返回指定ID的用户
+    /**
+     * 返回指定ID的用户
+     */
     @RequestMapping(value = "/user/detail", method = RequestMethod.GET)
     public Object userOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
         return consumerService.userOfId(Integer.parseInt(id));
     }
 
-    //    删除用户
+    /**
+     * 删除用户
+     */
     @RequestMapping(value = "/user/delete", method = RequestMethod.GET)
     public Object deleteUser(HttpServletRequest req) {
         String id = req.getParameter("id");
         return consumerService.deleteUser(Integer.parseInt(id));
     }
 
-    //    更新用户信息
+    /**
+     * 更新用户信息
+     */
     @ResponseBody
     @RequestMapping(value = "/user/update", method = RequestMethod.POST)
     public Object updateUserMsg(HttpServletRequest req) {
@@ -174,7 +186,7 @@ public class ConsumerController {
         // String avator = req.getParameter("avator").trim();
         // System.out.println(username+"  "+password+"  "+sex+"   "+phone_num+"     "+email+"      "+birth+"       "+introduction+"      "+location);
 
-        if (username.equals("")) {
+        if ("".equals(username)) {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "用户名或密码错误");
             return jsonObject;
@@ -210,7 +222,9 @@ public class ConsumerController {
         return jsonObject;
     }
 
-    //    更新用户头像
+    /**
+     * 更新用户头像
+     */
     @ResponseBody
     @RequestMapping(value = "/user/avatar/update", method = RequestMethod.POST)
     public Object updateUserPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
