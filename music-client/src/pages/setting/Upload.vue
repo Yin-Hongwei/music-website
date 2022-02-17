@@ -23,16 +23,26 @@ import mixin from '../../mixins'
 export default {
   name: 'Upload',
   mixins: [mixin],
-  data () {
+  data() {
     return {
       imageUrl: ''
     }
   },
   methods: {
-    uploadUrl () {
+    uploadUrl() {
       return `${this.BASE_URL}/user/avatar/update?id=${this.userId}`
     },
-    handleAvatarSuccess (res, file) {
+    beforeAvatarUpload(file) {
+      const upTypes = Array("image/jpg", "image/jpeg", "image/png", "image/pjpeg", "image/gif", "image/bmp", "image/x-png");
+      const isLt10M = file.size / 1024 / 1024 < 10
+      if (!isLt10M) {
+        this.$message.error('图片大小不可以超过 10MB 喔!')
+      }
+      if (!upTypes.includes(file.type)) {
+        this.$message.error('图片只能是 JPG或PNG 格式喔!')
+      }
+    },
+    handleAvatarSuccess(res, file) {
       if (res.code === 1) {
         this.imageUrl = URL.createObjectURL(file.raw)
         this.$store.commit('setUserPic', res.avator)
@@ -46,17 +56,6 @@ export default {
           type: 'error'
         })
       }
-    },
-    beforeAvatarUpload (file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 10
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 10MB!')
-      }
-      return isJPG && isLt2M
     }
   }
 }

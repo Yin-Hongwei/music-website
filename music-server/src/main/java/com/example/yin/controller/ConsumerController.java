@@ -236,7 +236,7 @@ public class ConsumerController {
             return jsonObject;
         }
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "avatorImages";
+        String filePath = Constants.PROJECT_PATH + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "avatorImages";
         File file1 = new File(filePath);
         if (!file1.exists()) {
             file1.mkdir();
