@@ -5,7 +5,7 @@
         <use :xlink:href="ZHEDIE"></use>
       </svg>
     </div>
-    <div class="kongjian" >
+    <div class="kongjian">
       <!--上一首-->
       <div class="item" @click="prev">
         <svg class="icon" aria-hidden="true">
@@ -26,7 +26,7 @@
       </div>
       <!--歌曲图片-->
       <div class="item-img" @click="goPlayerPage">
-         <img :src="songPic" alt="">
+        <img :src="songPic" alt="">
       </div>
       <!--播放进度-->
       <div class="playing-speed">
@@ -34,8 +34,8 @@
         <div class="current-time">{{ nowTime }}</div>
         <div class="progress-box">
           <div class="item-song-title">
-            <div>{{this.songTitle}}</div>
-            <div>{{this.singerName}}</div>
+            <div>{{ this.songTitle }}</div>
+            <div>{{ this.singerName }}</div>
           </div>
           <div ref="progress" class="progress" @mousemove="mousemove">
             <!--进度条-->
@@ -52,7 +52,7 @@
         <div class="left-time">{{ songTime }}</div>
       </div>
       <!--音量-->
-      <div class="item icon-volume" >
+      <div class="item icon-volume">
         <svg v-if="volume !== 0" class="icon" aria-hidden="true">
           <use :xlink:href="YINLIANG"></use>
         </svg>
@@ -84,16 +84,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import mixin from '../../mixins'
-import { HttpManager } from '../../api'
-import { formatSeconds } from '../../utils'
-import { ICON, LYRIC } from '../../enums'
+import {HttpManager} from '../../api'
+import {formatSeconds} from '../../utils'
+import {ICON, LYRIC} from '../../enums'
 
 export default {
   name: 'yin-play-bar',
   mixins: [mixin],
-  data () {
+  data() {
     return {
       tag: false,
       nowTime: '00:00',
@@ -134,18 +134,18 @@ export default {
   },
   watch: {
     // 切换播放状态的图标
-    isPlay (val) {
+    isPlay(val) {
       if (val) {
         this.$store.commit('setPlayBtnIcon', ICON.ZANTING)
       } else {
         this.$store.commit('setPlayBtnIcon', ICON.BOFANG)
       }
     },
-    volume () {
+    volume() {
       this.$store.commit('setVolume', this.volume / 100)
     },
     // 播放时间的开始和结束
-    curTime () {
+    curTime() {
       this.nowTime = formatSeconds(this.curTime)
       this.songTime = formatSeconds(this.duration)
       // 移动进度条
@@ -153,11 +153,11 @@ export default {
       // 处理歌词位置及颜色
     },
     // 自动播放下一首
-    autoNext () {
+    autoNext() {
       this.next()
     }
   },
-  mounted () {
+  mounted() {
     this.progressLength = this.$refs.progress.getBoundingClientRect().width
     document.querySelector('.icon-volume').addEventListener('click', (e) => {
       document.querySelector('.volume').classList.add('show-volume')
@@ -172,7 +172,7 @@ export default {
   },
   methods: {
     // 下载
-    downloadMusic () {
+    downloadMusic() {
       HttpManager.downloadMusic(this.songUrl)
         .then(res => {
           let content = res.data
@@ -192,11 +192,11 @@ export default {
           console.error(err)
         })
     },
-    changeAside () {
+    changeAside() {
       this.$store.commit('setShowAside', !this.showAside)
     },
     // 控制音乐播放 / 暂停
-    togglePlay () {
+    togglePlay() {
       if (this.isPlay) {
         this.$store.commit('setIsPlay', false)
       } else {
@@ -204,16 +204,16 @@ export default {
       }
     },
     // 拖拽开始
-    mousedown (e) {
+    mousedown(e) {
       this.mouseStartX = e.clientX
       this.tag = true
     },
     // 拖拽结束
-    mouseup () {
+    mouseup() {
       this.tag = false
     },
     // 拖拽中
-    mousemove (e) {
+    mousemove(e) {
       if (!this.duration) {
         return false
       }
@@ -233,11 +233,11 @@ export default {
       }
     },
     // 更改歌曲进度
-    changeTime (percent) {
+    changeTime(percent) {
       let newCurTime = this.duration * (percent * 0.01)
       this.$store.commit('setChangeTime', newCurTime)
     },
-    updatemove (e) {
+    updatemove(e) {
       if (!this.tag) {
         let curLength = this.$refs.bg.offsetLeft
         this.progressLength = this.$refs.progress.getBoundingClientRect().width
@@ -252,7 +252,7 @@ export default {
       }
     },
     // 上一首
-    prev () {
+    prev() {
       if (this.currentPlayIndex !== -1 && this.currentPlayList.length > 1) {
         if (this.currentPlayIndex > 0) {
           this.$store.commit('setCurrentPlayIndex', this.currentPlayIndex - 1)
@@ -264,7 +264,7 @@ export default {
       }
     },
     // 下一首
-    next () {
+    next() {
       if (this.currentPlayIndex !== -1 && this.currentPlayList.length > 1) {
         if (this.currentPlayIndex < this.currentPlayList.length - 1) {
           this.$store.commit('setCurrentPlayIndex', this.currentPlayIndex + 1)
@@ -276,7 +276,7 @@ export default {
       }
     },
     // 选中播放
-    toPlay (url) {
+    toPlay(url) {
       if (url && url !== this.songUrl) {
         const song = this.currentPlayList[this.currentPlayIndex]
         const id = song.id
@@ -287,10 +287,10 @@ export default {
         this.playMusic({id, url, pic, index, name, lyric, currentSongList: this.currentPlayList})
       }
     },
-    goPlayerPage () {
-      this.routerManager(LYRIC, { path: `${LYRIC}/${this.songId}` })
+    goPlayerPage() {
+      this.routerManager(LYRIC, {path: `${LYRIC}/${this.songId}`})
     },
-    collection () {
+    collection() {
       if (this.token) {
         var params = new URLSearchParams()
         params.append('userId', this.userId)

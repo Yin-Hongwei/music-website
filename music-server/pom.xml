@@ -22,6 +22,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -68,10 +74,17 @@
             <version>1.2.47</version>
         </dependency>
 
+        <!-- Log4j -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j</artifactId>
+            <version>1.3.8.RELEASE</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version> 4.13.1</version>
+            <version>4.13.1</version>
         </dependency>
 
         <!-- 热部署模块 -->
@@ -81,21 +94,37 @@
             <optional>true</optional>
         </dependency>
 
-<!--        页面视图依赖-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-rest</artifactId>-->
-<!--        </dependency>-->
+        <!--        页面视图依赖-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-data-rest</artifactId>-->
+        <!--        </dependency>-->
     </dependencies>
+
+    <!--    阿里云搭建的国内镜像http://maven.aliyun.com，跑起来速度很快，可以进行配置-->
+    <repositories>
+        <repository>
+            <id>nexus-aliyun</id>
+            <name>nexus-aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
@@ -109,33 +138,33 @@
                 </configuration>
             </plugin>
 
-<!--            <plugin>-->
-<!--            &lt;!&ndash;Mybatis-generator插件,用于自动生成Mapper和POJO&ndash;&gt;-->
-<!--            <groupId>org.mybatis.generator</groupId>-->
-<!--            <artifactId>mybatis-generator-maven-plugin</artifactId>-->
-<!--            <version>1.3.2</version>-->
-<!--            <configuration>-->
-<!--            &lt;!&ndash;配置文件的位置&ndash;&gt;-->
-<!--            <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>-->
-<!--            <verbose>true</verbose>-->
-<!--            <overwrite>true</overwrite>-->
-<!--            </configuration>-->
-<!--            <executions>-->
-<!--            <execution>-->
-<!--            <id>Generate MyBatis Artifacts</id>-->
-<!--            <goals>-->
-<!--            <goal>generate</goal>-->
-<!--            </goals>-->
-<!--            </execution>-->
-<!--            </executions>-->
-<!--            <dependencies>-->
-<!--            <dependency>-->
-<!--            <groupId>org.mybatis.generator</groupId>-->
-<!--            <artifactId>mybatis-generator-core</artifactId>-->
-<!--            <version>1.3.2</version>-->
-<!--            </dependency>-->
-<!--            </dependencies>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--            &lt;!&ndash;Mybatis-generator插件,用于自动生成Mapper和POJO&ndash;&gt;-->
+            <!--            <groupId>org.mybatis.generator</groupId>-->
+            <!--            <artifactId>mybatis-generator-maven-plugin</artifactId>-->
+            <!--            <version>1.3.2</version>-->
+            <!--            <configuration>-->
+            <!--            &lt;!&ndash;配置文件的位置&ndash;&gt;-->
+            <!--            <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>-->
+            <!--            <verbose>true</verbose>-->
+            <!--            <overwrite>true</overwrite>-->
+            <!--            </configuration>-->
+            <!--            <executions>-->
+            <!--            <execution>-->
+            <!--            <id>Generate MyBatis Artifacts</id>-->
+            <!--            <goals>-->
+            <!--            <goal>generate</goal>-->
+            <!--            </goals>-->
+            <!--            </execution>-->
+            <!--            </executions>-->
+            <!--            <dependencies>-->
+            <!--            <dependency>-->
+            <!--            <groupId>org.mybatis.generator</groupId>-->
+            <!--            <artifactId>mybatis-generator-core</artifactId>-->
+            <!--            <version>1.3.2</version>-->
+            <!--            </dependency>-->
+            <!--            </dependencies>-->
+            <!--            </plugin>-->
 
         </plugins>
     </build>
