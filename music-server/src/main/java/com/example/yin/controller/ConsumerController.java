@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.sql.SQLNonTransientException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,7 +52,7 @@ public class ConsumerController {
         String location = req.getParameter("location").trim();
         String avator = req.getParameter("avator").trim();
 
-        if (username.equals("")) {
+        if ("".equals(username)) {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "用户名不能为空喔");
             return jsonObject;
@@ -70,13 +68,13 @@ public class ConsumerController {
         consumer.setUsername(username);
         consumer.setPassword(password);
         consumer.setSex(new Byte(sex));
-        if (phone_num.equals("")) {
+        if ("".equals(phone_num)) {
             consumer.setPhoneNum(null);
         } else {
             consumer.setPhoneNum(phone_num);
         }
 
-        if (email.equals("")) {
+        if ("".equals(email)) {
             consumer.setEmail(null);
         } else {
             consumer.setEmail(email);
@@ -125,12 +123,16 @@ public class ConsumerController {
 
         if (res) {
             jsonObject.put("code", 1);
+            jsonObject.put("success", true);
             jsonObject.put("msg", "登录成功");
+            jsonObject.put("type", "success");
             jsonObject.put("userMsg", consumerService.loginStatus(username));
             session.setAttribute("username", username);
         } else {
             jsonObject.put("code", 0);
+            jsonObject.put("success", false);
             jsonObject.put("msg", "用户名或密码错误");
+            jsonObject.put("type", "error");
         }
         return jsonObject;
 
