@@ -74,15 +74,17 @@ export default {
       params.append('password', this.loginForm.password)
       HttpManager.signIn(params)
         .then(res => {
-          if (res.code === 1) {
+          if (res.code != null) {
             this.$message({
-              message: '登录成功',
-              type: 'success'
+              message: res.msg,
+              type: res.type
             })
             this.setUserInfo(res.userMsg[0])
             setTimeout(() => {
-              this.changeIndex(NAV_NAME.HOME)
-              this.routerManager(HOME, { path: HOME })
+              if (res.success) {
+                this.changeIndex(NAV_NAME.HOME)
+                this.routerManager(HOME, {path: HOME})
+              }
             }, 2000)
           } else {
             this.$notify({
