@@ -46,7 +46,7 @@ export default {
           if (!res.length) {
             this.currentSongList = []
             this.$notify({
-              title: '系统暂无该歌曲',
+              title: '暂时没有相关歌曲',
               type: 'warning'
             })
           } else {
