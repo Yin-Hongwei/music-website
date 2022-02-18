@@ -1,23 +1,23 @@
 <template>
-  <div class="singer-detail">
-    <div class="album-slide">
-      <div class="singer-img">
-        <img :src="attachImageUrl(songDetails.pic)" alt="">
+  <div class='singer-detail'>
+    <div class='album-slide'>
+      <div class='singer-img'>
+        <img :src='attachImageUrl(songDetails.pic)' alt=''>
       </div>
-      <ul class="info">
-        <li v-if="songDetails.sex !== 2">性别：{{getUserSex(songDetails.sex)}}</li>
+      <ul class='info'>
+        <li v-if='songDetails.sex !== 2'>性别：{{getUserSex(songDetails.sex)}}</li>
         <li>生日：{{getBirth(songDetails.birth)}}</li>
         <li>故乡：{{songDetails.location}}</li>
       </ul>
     </div>
-    <div class="song-list">
-      <div class="intro">
+    <div class='song-list'>
+      <div class='intro'>
         <h2>{{songDetails.name}}</h2>
         <span>{{songDetails.introduction}}</span>
       </div>
-      <div class="content">
-        <song-list :songList="currentSongList">
-          <template slot="title">歌单</template>
+      <div class='content'>
+        <song-list :songList='currentSongList'>
+          <template slot='title'>歌单</template>
         </song-list>
       </div>
     </div>
@@ -63,6 +63,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/singer-detail.scss';
 </style>

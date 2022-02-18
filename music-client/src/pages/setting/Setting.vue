@@ -1,15 +1,15 @@
 <template>
-  <div class="setting">
-    <div class="leftCol">
-      <div class="settingsMainHeader">设置</div>
-      <ul class="setting-aside">
-        <li v-for="(item, index) in settingList" :key="index" :class="{activeColor: activeName === item.name}" @click="handleClick(item)">
+  <div class='setting'>
+    <div class='leftCol'>
+      <div class='settingsMainHeader'>设置</div>
+      <ul class='setting-aside'>
+        <li v-for='(item, index) in settingList' :key='index' :class='{activeColor: activeName === item.name}' @click='handleClick(item)'>
           {{item.name}}
         </li>
       </ul>
     </div>
-    <div class="contentCol">
-      <component :is="componentSrc"></component>
+    <div class='contentCol'>
+      <component :is='componentSrc'></component>
     </div>
   </div>
 </template>
@@ -48,6 +48,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/setting.scss';
 </style>

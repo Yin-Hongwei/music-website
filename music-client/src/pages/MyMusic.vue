@@ -1,21 +1,21 @@
 <template>
-  <div class="my-music">
-    <div class="album-slide">
-      <div class="album-img">
-        <img :src="attachImageUrl(userPic)" alt="">
+  <div class='my-music'>
+    <div class='album-slide'>
+      <div class='album-img'>
+        <img :src='attachImageUrl(userPic)' alt=''>
       </div>
-      <ul class="album-info">
+      <ul class='album-info'>
         <li>昵称： {{username}}</li>
         <li>性别： {{getUserSex(userSex)}}</li>
         <li>生日： {{getBirth(birth)}}</li>
         <li>故乡： {{location}}</li>
       </ul>
     </div>
-    <div class="song-list">
-      <div class="album-title">个性签名: {{introduction}}</div>
-      <div class="songs-body">
-        <song-list :songList="collectSongList">
-          <template slot="title">我的收藏</template>
+    <div class='song-list'>
+      <div class='album-title'>个性签名: {{introduction}}</div>
+      <div class='songs-body'>
+        <song-list :songList='collectSongList'>
+          <template slot='title'>我的收藏</template>
         </song-list>
       </div>
     </div>
@@ -91,6 +91,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/my-music.scss';
 </style>

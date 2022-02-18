@@ -1,17 +1,17 @@
 <template>
-  <div class="play-list">
-    <div class="section-title" v-if="title">{{title}}</div>
-    <ul class="section-content">
-      <li class="content-item" v-for="(item, index) in playList" :key="index">
-        <div class="kuo" @click="goAblum(item)">
-          <img class="item-img" :src="attachImageUrl(item.pic)" alt="">
-          <div class="mask"  @click="goAblum(item)">
-            <svg class="icon" aria-hidden="true">
-              <use :xlink:href="BOFANG"></use>
+  <div class='play-list'>
+    <div class='section-title' v-if='title'>{{title}}</div>
+    <ul class='section-content'>
+      <li class='content-item' v-for='(item, index) in playList' :key='index'>
+        <div class='kuo' @click='goAblum(item)'>
+          <img class='item-img' :src='attachImageUrl(item.pic)' alt=''>
+          <div class='mask'  @click='goAblum(item)'>
+            <svg class='icon' aria-hidden='true'>
+              <use :xlink:href='BOFANG'></use>
             </svg>
           </div>
         </div>
-        <p class="item-name">{{item.name || item.title}}</p>
+        <p class='item-name'>{{item.name || item.title}}</p>
       </li>
     </ul>
   </div>
@@ -43,6 +43,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/play-list.scss';
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="search-song">
-    <song-list :songList="currentSongList"></song-list>
+  <div class='search-song'>
+    <song-list :songList='currentSongList'></song-list>
   </div>
 </template>
 

@@ -1,23 +1,23 @@
 <template>
-  <div class="singer">
-    <ul class="singer-header">
+  <div class='singer'>
+    <ul class='singer-header'>
       <li
-        v-for="(item, index) in singerStyle"
-        :key="index"
-        :class="{active: item.name === activeName}"
-        @click="handleChangeView(item)">
+        v-for='(item, index) in singerStyle'
+        :key='index'
+        :class='{active: item.name === activeName}'
+        @click='handleChangeView(item)'>
         {{item.name}}
       </li>
     </ul>
-    <play-list :playList="data" path="singer-detail"></play-list>
-    <div class="pagination">
+    <play-list :playList='data' path='singer-detail'></play-list>
+    <div class='pagination'>
       <el-pagination
-        @current-change="handleCurrentChange"
+        @current-change='handleCurrentChange'
         background
-        layout="total, prev, pager, next"
-        :current-page="currentPage"
-        :page-size="pageSize"
-        :total="allPlayList.length">
+        layout='total, prev, pager, next'
+        :current-page='currentPage'
+        :page-size='pageSize'
+        :total='allPlayList.length'>
       </el-pagination>
     </div>
   </div>
@@ -91,6 +91,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/singer.scss';
 </style>
