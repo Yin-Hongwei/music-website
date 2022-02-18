@@ -1,6 +1,6 @@
 <template>
-  <div class="error-page">
-    <div class="error-code">404</div>
+  <div class='error-page'>
+    <div class='error-code'>404</div>
   </div>
 </template>
 
@@ -10,6 +10,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/404.scss';
 </style>

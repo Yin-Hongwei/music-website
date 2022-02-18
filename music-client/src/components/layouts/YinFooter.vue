@@ -1,6 +1,6 @@
 <template>
-  <div class="the-footer">
-    <p v-for="(item, index) in footerList" :key="index">
+  <div class='the-footer'>
+    <p v-for='(item, index) in footerList' :key='index'>
       {{item}}
     </p>
   </div>
@@ -20,6 +20,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/yin-footer.scss';
 </style>

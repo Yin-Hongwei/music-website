@@ -1,20 +1,20 @@
 <template>
-  <div class="sign-in">
+  <div class='sign-in'>
     <yin-login-logo></yin-login-logo>
-    <div class="login">
-      <div class="login-head">
+    <div class='login'>
+      <div class='login-head'>
         <span>帐号登录</span>
       </div>
-      <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" class="demo-ruleForm" >
-        <el-form-item prop="username">
-          <el-input placeholder="用户名" v-model="loginForm.username"></el-input>
+      <el-form :model='loginForm' status-icon :rules='rules' ref='loginForm' class='demo-ruleForm' >
+        <el-form-item prop='username'>
+          <el-input placeholder='用户名' v-model='loginForm.username'></el-input>
         </el-form-item>
-        <el-form-item prop="password">
-          <el-input type="password" placeholder="密码" v-model="loginForm.password" @keyup.enter.native="token"></el-input>
+        <el-form-item prop='password'>
+          <el-input type='password' placeholder='密码' v-model='loginForm.password' @keyup.enter.native='token'></el-input>
         </el-form-item>
-        <div class="login-btn">
-          <el-button @click="handleSignUp">注册</el-button>
-          <el-button type="primary" @click="handleLoginIn">登录</el-button>
+        <div class='login-btn'>
+          <el-button @click='handleSignUp'>注册</el-button>
+          <el-button type='primary' @click='handleLoginIn'>登录</el-button>
         </div>
       </el-form>
     </div>
@@ -110,6 +110,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/sign-in.scss';
 </style>

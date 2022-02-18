@@ -1,36 +1,36 @@
 <template>
   <div>
-    <div class="comment">
+    <div class='comment'>
       <h2>
         <span>评论</span>
-        <span class="part__tit_desc">共 {{commentList.length}} 条评论</span>
+        <span class='part__tit_desc'>共 {{commentList.length}} 条评论</span>
       </h2>
-      <div class="comment-msg">
+      <div class='comment-msg'>
         <el-input
-          class="comment-input"
-          type="textarea"
-          placeholder="期待您的精彩评论..."
-          :rows="2"
-          v-model="textarea">
+          class='comment-input'
+          type='textarea'
+          placeholder='期待您的精彩评论...'
+          :rows='2'
+          v-model='textarea'>
         </el-input>
       </div>
-      <el-button type="primary" class="sub-btn" @click="postComment()">发表评论</el-button>
+      <el-button type='primary' class='sub-btn' @click='postComment()'>发表评论</el-button>
     </div>
-    <ul class="popular" v-for="(item, index) in commentList" :key="index">
+    <ul class='popular' v-for='(item, index) in commentList' :key='index'>
       <li>
-        <div class="popular-img">
-          <img :src="attachImageUrl(userPicList[index])" alt="">
+        <div class='popular-img'>
+          <img :src='attachImageUrl(userPicList[index])' alt=''>
         </div>
-        <div class="popular-msg">
+        <div class='popular-msg'>
           <ul>
-            <li class="name">{{userNameList[index]}}</li>
-            <li class="content">{{item.content}}</li>
-            <li class="time">{{item.createTime}}</li>
+            <li class='name'>{{userNameList[index]}}</li>
+            <li class='content'>{{item.content}}</li>
+            <li class='time'>{{item.createTime}}</li>
           </ul>
         </div>
-        <div class="up" ref="up" @click="postUp(item.id, item.up, index)">
-          <svg class="icon" aria-hidden="true">
-            <use :xlink:href="ZAN"></use>
+        <div class='up' ref='up' @click='postUp(item.id, item.up, index)'>
+          <svg class='icon' aria-hidden='true'>
+            <use :xlink:href='ZAN'></use>
           </svg>
           {{item.up}}
         </div>
@@ -168,6 +168,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/comment.scss';
 </style>

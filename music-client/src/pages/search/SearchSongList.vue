@@ -1,6 +1,6 @@
 <template>
-  <div class="search-song-list">
-    <play-list :playList="playList" path="song-sheet-detail"></play-list>
+  <div class='search-song-list'>
+    <play-list :playList='playList' path='song-sheet-detail'></play-list>
   </div>
 </template>
 
