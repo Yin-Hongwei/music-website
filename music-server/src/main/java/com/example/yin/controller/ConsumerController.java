@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.sql.SQLNonTransientException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,7 +37,9 @@ public class ConsumerController {
         }
     }
 
-    /* 用户注册 */
+    /**
+     * 用户注册
+     */
     @ResponseBody
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     public Object addUser(HttpServletRequest req) {
@@ -54,7 +54,7 @@ public class ConsumerController {
         String location = req.getParameter("location").trim();
         String avator = req.getParameter("avator").trim();
 
-        if (username.equals("")) {
+        if ("".equals(username)) {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "用户名不能为空喔");
             return jsonObject;
@@ -70,13 +70,13 @@ public class ConsumerController {
         consumer.setUsername(username);
         consumer.setPassword(password);
         consumer.setSex(new Byte(sex));
-        if (phone_num.equals("")) {
+        if ("".equals(phone_num)) {
             consumer.setPhoneNum(null);
         } else {
             consumer.setPhoneNum(phone_num);
         }
 
-        if (email.equals("")) {
+        if ("".equals(email)) {
             consumer.setEmail(null);
         } else {
             consumer.setEmail(email);
@@ -112,7 +112,9 @@ public class ConsumerController {
         }
     }
 
-    //    判断是否登录成功
+    /**
+     * 判断是否登录成功
+     */
     @ResponseBody
     @RequestMapping(value = "/user/login/status", method = RequestMethod.POST)
     public Object loginStatus(HttpServletRequest req, HttpSession session) {
@@ -120,43 +122,54 @@ public class ConsumerController {
         JSONObject jsonObject = new JSONObject();
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-//        System.out.println(username+"  "+password);
         boolean res = consumerService.veritypasswd(username, password);
 
         if (res) {
             jsonObject.put("code", 1);
+            jsonObject.put("success", true);
             jsonObject.put("msg", "登录成功");
+            jsonObject.put("type", "success");
             jsonObject.put("userMsg", consumerService.loginStatus(username));
             session.setAttribute("username", username);
         } else {
             jsonObject.put("code", 0);
+            jsonObject.put("success", false);
             jsonObject.put("msg", "用户名或密码错误");
+            jsonObject.put("type", "error");
         }
         return jsonObject;
 
     }
 
-    //    返回所有用户
+    /**
+     * 返回所有用户
+     */
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public Object allUser() {
         return consumerService.allUser();
     }
 
-    //    返回指定ID的用户
+    /**
+     * 返回指定ID的用户
+     */
     @RequestMapping(value = "/user/detail", method = RequestMethod.GET)
     public Object userOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
         return consumerService.userOfId(Integer.parseInt(id));
     }
 
-    //    删除用户
+    /**
+     * 删除用户
+     */
     @RequestMapping(value = "/user/delete", method = RequestMethod.GET)
     public Object deleteUser(HttpServletRequest req) {
         String id = req.getParameter("id");
         return consumerService.deleteUser(Integer.parseInt(id));
     }
 
-    //    更新用户信息
+    /**
+     * 更新用户信息
+     */
     @ResponseBody
     @RequestMapping(value = "/user/update", method = RequestMethod.POST)
     public Object updateUserMsg(HttpServletRequest req) {
@@ -173,7 +186,7 @@ public class ConsumerController {
         // String avator = req.getParameter("avator").trim();
         // System.out.println(username+"  "+password+"  "+sex+"   "+phone_num+"     "+email+"      "+birth+"       "+introduction+"      "+location);
 
-        if (username.equals("")) {
+        if ("".equals(username)) {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "用户名或密码错误");
             return jsonObject;
@@ -209,7 +222,9 @@ public class ConsumerController {
         return jsonObject;
     }
 
-    //    更新用户头像
+    /**
+     * 更新用户头像
+     */
     @ResponseBody
     @RequestMapping(value = "/user/avatar/update", method = RequestMethod.POST)
     public Object updateUserPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
@@ -221,7 +236,7 @@ public class ConsumerController {
             return jsonObject;
         }
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "avatorImages";
+        String filePath = Constants.PROJECT_PATH + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "avatorImages";
         File file1 = new File(filePath);
         if (!file1.exists()) {
             file1.mkdir();

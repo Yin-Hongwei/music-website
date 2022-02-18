@@ -10,7 +10,7 @@
   padding-top: 20px;
   text-align: center;
   background-color: $color-white;
-  border-radius: 20%;
+  border-radius: 50%;
   overflow: hidden;
   @include box-shadow(0 0 4px 3px rgba(0, 0, 0, 0.2));
   &:hover:before {
@@ -23,6 +23,7 @@
     content: "回到顶部";
     position: absolute;
     font-weight: bold;
+    font-size: small;
     width: 30px;
     top: -50%;
     left: 50%;
@@ -37,5 +38,6 @@
   width: 15px;
   border: 1px solid $color-black;
   border-color: $color-black transparent transparent $color-black;
+  // 按钮中间的小三角翻转
   transform: rotate(45deg);
 }
