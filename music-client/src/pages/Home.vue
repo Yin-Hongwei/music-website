@@ -1,15 +1,15 @@
 <template>
-  <div class="home">
+  <div class='home'>
     <!--轮播图-->
-    <el-carousel class="swiper-container" :interval="4000" type="card" height="280px">
-      <el-carousel-item v-for="(item, index) in swiperList" :key="index">
-        <img :src="item.picImg"/>
+    <el-carousel class='swiper-container' :interval='4000' type='card' height='280px'>
+      <el-carousel-item v-for='(item, index) in swiperList' :key='index'>
+        <img :src='item.picImg'/>
       </el-carousel-item>
     </el-carousel>
     <!--热门歌单-->
-    <play-list :playList="songList" title="歌单" path="song-sheet-detail" class="section"></play-list>
+    <play-list :playList='songList' title='歌单' path='song-sheet-detail' class='section'></play-list>
     <!--热门歌手-->
-    <play-list :playList="singerList" title="歌手" path="singer-detail" class="section"></play-list>
+    <play-list :playList='singerList' title='歌手' path='singer-detail' class='section'></play-list>
   </div>
 </template>
 
@@ -59,6 +59,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/home.scss';
 </style>

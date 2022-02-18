@@ -1,6 +1,6 @@
 <template>
   <div>
-    <audio :src='songUrl' controls="controls" ref="player" preload="true" @canplay="canplay" @timeupdate="timeupdate" @ended="ended">
+    <audio :src='songUrl' controls='controls' ref='player' preload='true' @canplay='canplay' @timeupdate='timeupdate' @ended='ended'>
       <!--（1）属性：controls，preload（2）事件：canplay，timeupdate，ended（3）方法：play()，pause() -->
       <!--controls：向用户显示音频控件（播放/暂停/进度条/音量）-->
       <!--preload：属性规定是否在页面加载后载入音频-->
@@ -69,6 +69,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/yin-audio.scss';
 </style>

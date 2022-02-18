@@ -1,6 +1,6 @@
 <template>
-  <div class="scroll-top" @click="returnTop">
-    <div class="box-in"></div>
+  <div class='scroll-top' @click='returnTop'>
+    <div class='box-in'></div>
   </div>
 </template>
 
@@ -28,6 +28,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/yin-scroll-top.scss';
 </style>

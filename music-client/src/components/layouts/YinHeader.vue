@@ -1,39 +1,39 @@
 <template>
-  <div class="yin-header">
+  <div class='yin-header'>
     <!--图标-->
-    <div class="header-logo" @click="goPage()">
-      <svg class="icon" aria-hidden="true">
-        <use :xlink:href="ERJI"></use>
+    <div class='header-logo' @click='goPage()'>
+      <svg class='icon' aria-hidden='true'>
+        <use :xlink:href='ERJI'></use>
       </svg>
       <span>{{ musicName }}</span>
     </div>
-    <ul class="navbar">
-      <li :class="{active: item.name === activeNavName}" v-for="item in headerNavList" :key="item.path"
-          @click="goPage(item.path, item.name)">
+    <ul class='navbar'>
+      <li :class='{active: item.name === activeNavName}' v-for='item in headerNavList' :key='item.path'
+          @click='goPage(item.path, item.name)'>
         {{ item.name }}
       </li>
       <!--搜索框 + 搜索按钮-->
       <li>
-        <div class="header-search">
-          <input type="text" placeholder="搜索音乐" @keyup.enter="goSearch()" v-model="keywords">
-          <div class="search-btn" @click="goSearch()">
-            <svg class="icon" aria-hidden="true">
-              <use :xlink:href="SOUSUO"></use>
+        <div class='header-search'>
+          <input type='text' placeholder='搜索音乐' @keyup.enter='goSearch()' v-model='keywords'>
+          <div class='search-btn' @click='goSearch()'>
+            <svg class='icon' aria-hidden='true'>
+              <use :xlink:href='SOUSUO'></use>
             </svg>
           </div>
         </div>
       </li>
-      <li v-show="!token" :class="{active: item.name === activeNavName}" v-for="item in signList" :key="item.type"
-          @click="goPage(item.path, item.name)">{{ item.name }}
+      <li v-show='!token' :class='{active: item.name === activeNavName}' v-for='item in signList' :key='item.type'
+          @click='goPage(item.path, item.name)'>{{ item.name }}
       </li>
     </ul>
     <!--设置-->
-    <div class="header-right" v-show="token">
-      <div id="user" ref="user">
-        <img :src="attachImageUrl(userPic)" alt="">
+    <div class='header-right' v-show='token'>
+      <div id='user' ref='user'>
+        <img :src='attachImageUrl(userPic)' alt=''>
       </div>
-      <ul class="menu" ref="menu" :class="showMenu ? 'show' : ''">
-        <li v-for="(item, index) in menuList" :key="index" @click="goMenuList(item.path)">{{ item.name }}</li>
+      <ul class='menu' ref='menu' :class='showMenu ? "show" : ""'>
+        <li v-for='(item, index) in menuList' :key='index' @click='goMenuList(item.path)'>{{ item.name }}</li>
       </ul>
     </div>
   </div>
@@ -58,7 +58,7 @@ import {
 export default {
   name: 'YinHeader',
   mixins: [mixin],
-  data() {
+  data () {
     return {
       musicName: MUSICNAME,
       headerNavList: HEADERNAVLIST, // 左侧导航栏
@@ -77,7 +77,7 @@ export default {
       'token'
     ])
   },
-  mounted() {
+  mounted () {
     this.$refs.user.addEventListener('click', e => {
       this.showMenu = true
       e.stopPropagation() // 关键在于阻止冒泡
@@ -91,7 +91,7 @@ export default {
     }, false)
   },
   methods: {
-    goPage(path, name) {
+    goPage (path, name) {
       if (!this.token && path === MY_MUSIC) {
         this.$notify({
           title: '请先登录喔',
@@ -105,7 +105,7 @@ export default {
         this.routerManager(path, {path})
       }
     },
-    goMenuList(path) {
+    goMenuList (path) {
       this.showMenu = false
 
       if (path === 0) this.$store.commit('setIsCollection', false)
@@ -117,22 +117,22 @@ export default {
         this.routerManager(SIGN_OUT, {path: SIGN_OUT})
       }
     },
-    goSearch() {
-      if (this.keywords !== "") {
+    goSearch () {
+      if (this.keywords !== '') {
         this.$store.commit('setSearchWord', this.keywords)
         this.routerManager(SEARCH, {path: SEARCH, query: {keywords: this.keywords}})
       } else {
         this.$notify({
-          title: "搜索内容不能为空喔",
-          type: "error"
+          title: '搜索内容不能为空喔',
+          type: 'error'
         })
       }
-    },
+    }
   }
 }
 
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/yin-header.scss';
 </style>

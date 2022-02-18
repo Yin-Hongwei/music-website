@@ -1,15 +1,15 @@
 <template>
-  <div class="search">
-    <nav class="searchList-nav">
+  <div class='search'>
+    <nav class='searchList-nav'>
       <span
-        v-for="(item, index) in searchNavList"
-        :key="index"
-        :class="{'is-active': currentView === item.value}"
-        @click="handleChangeView(item.value)">
+        v-for='(item, index) in searchNavList'
+        :key='index'
+        :class='{"is-active": currentView === item.value}'
+        @click='handleChangeView(item.value)'>
         {{item.name}}
       </span>
     </nav>
-    <component :is="currentView"></component>
+    <component :is='currentView'></component>
   </div>
 </template>
 
@@ -49,6 +49,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '@/assets/css/search.scss';
 </style>
