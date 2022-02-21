@@ -52,14 +52,14 @@
         <div class='left-time'>{{ songTime }}</div>
       </div>
       <!--音量-->
-      <div class='item icon-volume'>
+      <div class='item icon-volume'  @click.stop='showVolume = true' v-clickoutside='showVolume = false'>
         <svg v-if='volume !== 0' class='icon' aria-hidden='true'>
           <use :xlink:href='YINLIANG'></use>
         </svg>
         <svg v-else class='icon' aria-hidden='true'>
           <use :xlink:href='JINGYIN'></use>
         </svg>
-        <el-slider class='volume' v-model='volume' :vertical='true'></el-slider>
+        <el-slider class='volume' :class='{"show-volume": showVolume}'  v-model='volume' :vertical='true'></el-slider>
       </div>
       <!--收藏-->
       <div class='item' @click='collection'>
@@ -86,6 +86,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import mixin from '../../mixins'
+import clickoutside from '@/utils/clickoutside'
 import {HttpManager} from '../../api'
 import {formatSeconds} from '../../utils'
 import {ICON, LYRIC} from '../../enums'
@@ -93,6 +94,9 @@ import {ICON, LYRIC} from '../../enums'
 export default {
   name: 'yin-play-bar',
   mixins: [mixin],
+  directives: {
+    clickoutside
+  },
   data () {
     return {
       tag: false,
@@ -103,6 +107,7 @@ export default {
       mouseStartX: 0, // 拖拽开始位置
       toggle: true,
       volume: 50,
+      showVolume: false,
       XIAZAI: ICON.XIAZAI,
       ZHEDIE: ICON.ZHEDIE,
       SHANGYISHOU: ICON.SHANGYISHOU,
@@ -156,19 +161,6 @@ export default {
     autoNext () {
       this.next()
     }
-  },
-  mounted () {
-    this.progressLength = this.$refs.progress.getBoundingClientRect().width
-    document.querySelector('.icon-volume').addEventListener('click', (e) => {
-      document.querySelector('.volume').classList.add('show-volume')
-      e.stopPropagation()
-    }, false)
-    document.querySelector('.volume').addEventListener('click', (e) => {
-      e.stopPropagation()
-    }, false)
-    document.addEventListener('click', () => {
-      document.querySelector('.volume').classList.remove('show-volume')
-    }, false)
   },
   methods: {
     // 下载

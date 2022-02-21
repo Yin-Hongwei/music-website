@@ -3,15 +3,16 @@
 
 .scroll-top {
   position: fixed;
-  width: 50px;
-  height: 30px;
+  width: 40px;
+  height: 20px;
   right: 10px;
   bottom: 80px;
   padding-top: 20px;
   text-align: center;
   background-color: $color-white;
-  border-radius: 50%;
+  border-radius: 20%;
   overflow: hidden;
+  cursor: pointer;
   @include box-shadow(0 0 4px 3px rgba(0, 0, 0, 0.2));
   &:hover:before {
     top: 50%;
@@ -34,10 +35,10 @@
 .box-in {
   visibility: visible;
   display: inline-block;
-  height: 15px;
-  width: 15px;
+  height: 10px;
+  width: 10px;
   border: 1px solid $color-black;
   border-color: $color-black transparent transparent $color-black;
   // 按钮中间的小三角翻转
-  transform: rotate(45deg);
+  transform: rotate(45deg) translate(-5px, -5px);
 }

@@ -29,11 +29,11 @@
     </ul>
     <!--设置-->
     <div class='header-right' v-show='token'>
-      <div id='user' ref='user'>
+      <div id='user' ref='user' @click.stop="showMenu = true" v-clickoutside="clickoutside">
         <img :src='attachImageUrl(userPic)' alt=''>
       </div>
       <ul class='menu' ref='menu' :class='showMenu ? "show" : ""'>
-        <li v-for='(item, index) in menuList' :key='index' @click='goMenuList(item.path)'>{{ item.name }}</li>
+        <li v-for='(item, index) in menuList' :key='index' @click.stop='goMenuList(item.path)'>{{ item.name }}</li>
       </ul>
     </div>
   </div>
@@ -42,6 +42,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import mixin from '../../mixins'
+import clickoutside from '@/utils/clickoutside'
 import {
   HEADERNAVLIST,
   SIGNLIST,
@@ -58,6 +59,9 @@ import {
 export default {
   name: 'YinHeader',
   mixins: [mixin],
+  directives: {
+    clickoutside
+  },
   data () {
     return {
       musicName: MUSICNAME,
@@ -77,20 +81,10 @@ export default {
       'token'
     ])
   },
-  mounted () {
-    this.$refs.user.addEventListener('click', e => {
-      this.showMenu = true
-      e.stopPropagation() // 关键在于阻止冒泡
-    }, false)
-    // 点击“菜单”内部时，阻止事件冒泡。(这样点击内部时，菜单不会关闭)
-    this.$refs.menu.addEventListener('click', e => {
-      e.stopPropagation()
-    }, false)
-    document.addEventListener('click', () => {
-      this.showMenu = false
-    }, false)
-  },
   methods: {
+    clickoutside () {
+      this.showMenu = false
+    },
     goPage (path, name) {
       if (!this.token && path === MY_MUSIC) {
         this.$notify({

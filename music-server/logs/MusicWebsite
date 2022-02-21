@@ -1,0 +1,15 @@
+2022-02-21 17:27:18 INFO [org.hibernate.validator.internal.util.Version]: HV000001: Hibernate Validator 6.0.13.Final
+2022-02-21 17:27:18 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication on HongweideMacBook-Pro.local with PID 35025 (/Users/hongweiyin/Documents/github-workspace/music-website/music-server/target/classes started by hongweiyin in /Users/hongweiyin/Documents/github-workspace/music-website/music-server)
+2022-02-21 17:27:18 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-02-21 17:27:18 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-02-21 17:27:18 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-02-21 17:27:22 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-02-21 17:27:22 INFO [org.springframework.web.context.ContextLoader]: Root WebApplicationContext: initialization completed in 4227 ms
+2022-02-21 17:27:23 INFO [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor]: Initializing ExecutorService 'applicationTaskExecutor'
+2022-02-21 17:27:23 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-02-21 17:27:23 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-02-21 17:27:23 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 6.084 seconds (JVM running for 6.944)
+2022-02-21 17:30:52 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-02-21 17:30:52 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 11 ms
+2022-02-21 17:30:52 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-02-21 17:30:52 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
