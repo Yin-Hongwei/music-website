@@ -36,6 +36,9 @@ const mixin = {
     changeIndex (value) {
       this.$store.commit('setActiveNavName', value)
     },
+    clickoutside () {
+      this.$store.commit('setShowAside', false)
+    },
     // 播放
     playMusic ({ id, url, pic, index, name, lyric, currentSongList }) {
       const songTitle = this.getSongTitle(name)
