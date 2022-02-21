@@ -36,10 +36,10 @@ export default {
       const upTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/pjpeg', 'image/gif', 'image/bmp', 'image/x-png']
       const isLt10M = file.size / 1024 / 1024 < 10
       if (!isLt10M) {
-        this.$message.error('图片大小不可以超过 10MB 喔!')
+        this.$message.error('图片大小不可以超过 10MB!')
       }
       if (!upTypes.includes(file.type)) {
-        this.$message.error('图片只能是 JPG或PNG 格式喔!')
+        this.$message.error(`图片只支持 ${upTypes.join('、').replace('image/', '')} 格式!`)
       }
     },
     handleAvatarSuccess (res, file) {

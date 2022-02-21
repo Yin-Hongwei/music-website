@@ -116,7 +116,7 @@ export default {
       if (!this.token) {
         this.score = 0
         this.$notify({
-          title: '请先登录喔',
+          title: '请先登录',
           type: 'warning'
         })
         return
