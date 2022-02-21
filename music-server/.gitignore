@@ -9,11 +9,11 @@
 .settings
 .springBeans
 .sts4-cache
-img/
-song/
-img/avatorImages/
 target/
 .DS_Store
+img/
+song/
+logs/
 
 ### IntelliJ IDEA ###
 .idea
