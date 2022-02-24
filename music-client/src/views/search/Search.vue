@@ -14,56 +14,40 @@
   </div>
 </template>
 
-<script setup>
-// import mixin from '@/mixins'
-import { ref } from "vue";
+<script>
+import mixin from "@/mixins";
 import SearchSong from "./SearchSong.vue";
 import SearchSongList from "./SearchSongList.vue";
 
-const searchNavList = [
-  {
-    name: "歌曲",
-    value: SearchSong,
+export default {
+  name: "Search",
+  mixins: [mixin],
+  components: {
+    SearchSong,
+    SearchSongList,
   },
-  {
-    name: "歌单",
-    value: SearchSongList,
+  data() {
+    return {
+      searchNavList: [
+        {
+          name: "歌曲",
+          value: "SearchSong",
+        },
+        {
+          name: "歌单",
+          value: "SearchSongList",
+        },
+      ],
+      currentView: "SearchSong",
+    };
   },
-];
-let currentView = ref("SearchSong");
-
-function handleChangeView(component) {
-  currentView = component;
-}
-// export default {
-//   name: "Search",
-// mixins: [mixin],
-// components: {
-//   SearchSong,
-//   SearchSongList,
-// },
-// data() {
-//   return {
-//     searchNavList: [
-//       {
-//         name: "歌曲",
-//         value: "SearchSong",
-//       },
-//       {
-//         name: "歌单",
-//         value: "SearchSongList",
-//       },
-//     ],
-//     currentView: "SearchSong",
-//   };
-// },
-//   methods: {
-//     // 切换组件
-//     handleChangeView(component) {
-//       this.currentView = component;
-//     },
-//   },
-// };
+  methods: {
+    // 切换组件
+    handleChangeView(component) {
+      this.currentView = component;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
