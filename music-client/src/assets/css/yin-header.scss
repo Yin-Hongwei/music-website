@@ -27,6 +27,7 @@
   .icon {
     @include icon(($header-height / 3) * 2, $color-black);
     vertical-align: middle;
+    margin-right: 10px;
   }
 }
 

@@ -132,15 +132,22 @@ export default {
 
 <style lang='scss' scoped>
 .personal-data {
-  padding: 5vw;
+  background-color: white;
+  margin: 0 12vw;
+  padding-top: 80px;
+  overflow: hidden;
+  border-radius: 12px;
 
   .title {
-    margin: 12px 0;
+    padding: 10px;
+    margin-left: 50px;
+    display: inline-block;
+    border-block-end: 3px solid black;
   }
 
   .personal {
     background-color: white;
-    padding: 40px 40px 20px 20px;
+    padding: 40px 70px 20px 40px;
   }
 
   .btn {

@@ -35,11 +35,12 @@ export default {
       return `${this.BASE_URL}/user/avatar/update?id=${this.userId}`
     },
     beforeAvatarUpload (file) {
-      const upTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/pjpeg', 'image/gif', 'image/bmp', 'image/x-png']
+      const upTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/pjpeg', 'image/gif', 'image/bmp', 'image/x-png', 'image/icon']
       const isLt10M = file.size / 1024 / 1024 < 10
       if (!isLt10M) {
         this.$message.error('图片大小不可以超过 10MB!')
       }
+      console.log(file.type)
       if (!upTypes.includes(file.type)) {
         this.$message.error(`图片只支持 ${upTypes.join('、').replace('image/', '')} 格式!`)
       }
