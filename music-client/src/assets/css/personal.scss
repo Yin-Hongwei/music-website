@@ -1,0 +1,61 @@
+@import "var.scss";
+
+.personal {
+  padding-top: $header-height + 150px;
+  background-color: $theme-background-color;
+
+  &::before {
+    /*背景*/
+    content: "";
+    background-color: $theme-color;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: $header-height + 150px;
+  }
+}
+
+.personal-info {
+  position: relative;
+  margin-bottom: 150px;
+  // 图片
+  .personal-img {
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    top: -100px;
+    left: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid $color-white;
+    img {
+      width: 100%;
+      cursor: pointer;
+    }
+  }
+  .personal-msg {
+    margin-left: 300px;
+    position: absolute;
+    top: -40px;
+
+    .username {
+      font-size: 50px;
+      font-weight: 600;
+    }
+
+    .introduction {
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+  .edit-info{
+    position: absolute;
+    right: 10vw;
+    margin-top: -50px;
+  }
+}
+
+/*歌单内容*/
+.personal-body {
+  padding: 0px 100px 40px 100px;
+}
