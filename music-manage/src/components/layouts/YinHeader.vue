@@ -2,7 +2,7 @@
   <div class="header">
     <!-- 折叠按钮 -->
     <div class="collapse-btn" @click="collapseChage">
-      <i class="el-icon-s-unfold"></i>
+      <el-icon><expand /></el-icon>
     </div>
     <div class="logo">{{nusicName}}</div>
     <div class="header-right">
@@ -17,25 +17,30 @@
             {{username}}
             <i class="el-icon-caret-bottom"></i>
           </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="loginout">退出登录</el-dropdown-item>
-          </el-dropdown-menu>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="loginout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
         </el-dropdown>
       </div>
     </div>
   </div>
 </template>
 <script>
-import _ctrEvent from '../../utils/ctr-event'
+import { Expand } from '@element-plus/icons-vue'
+import emitter from '../../utils/emitter'
 import { SIGN_IN, MUSICNAME } from '../../enums'
 import { mixin } from '../../mixins'
 
 export default {
   mixins: [mixin],
+  components: {
+    Expand
+  },
   data () {
     return {
       collapse: true,
-      fullscreen: false,
       username: 'admin',
       userPic: require('@/assets/images/user.jpg'),
       nusicName: MUSICNAME
@@ -56,7 +61,7 @@ export default {
     // 侧边栏折叠
     collapseChage () {
       this.collapse = !this.collapse
-      _ctrEvent.$emit('collapse', this.collapse)
+      emitter.emit('collapse', this.collapse)
     }
   }
 }

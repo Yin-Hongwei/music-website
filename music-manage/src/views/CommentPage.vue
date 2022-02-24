@@ -3,54 +3,48 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-tickets"></i> 歌单歌曲信息
+          <i class="el-icon-tickets"></i> 评论信息
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
       <div class="handle-box">
-        <el-button type="primary" size="mini" class="handle-del mr10" @click="delAll">批量删除</el-button>
-        <el-input v-model="select_word" size="mini" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-        <el-button type="primary" size="mini" @click="centerDialogVisible = true">添加歌曲</el-button>
+        <el-button type="primary" size="small" class="handle-del mr10" @click="delAll">批量删除</el-button>
+        <el-input v-model="select_word" size="small" placeholder="筛选关键词" class="handle-input mr10"></el-input>
       </div>
       <el-table
         :data="tableData"
+        size="small"
         border
-        size="mini"
         style="width: 100%"
         ref="multipleTable"
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="50"></el-table-column>
-        <el-table-column prop="name" label="歌手-歌曲"></el-table-column>
-        <el-table-column label="操作" width="80">
-          <template slot-scope="scope">
+        <el-table-column prop="name" label="用户"></el-table-column>
+        <el-table-column prop="content" label="评论内容"></el-table-column>
+        <el-table-column label="操作" width="150">
+          <template v-slot="scope">
+            <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
             <el-button size="small" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
 
-    <!--添加歌曲-->
-    <el-dialog title="添加歌曲" :visible.sync="centerDialogVisible" width="400px" center>
-      <el-form
-        :model="registerForm"
-        status-icon
-        ref="registerForm"
-        label-width="80px"
-        class="demo-ruleForm"
-      >
-        <el-form-item prop="singerName" label="歌手名字" size="mini">
-          <el-input v-model="registerForm.singerName" placeholder="歌手名字"></el-input>
-        </el-form-item>
-        <el-form-item prop="songName" label="歌曲名字" size="mini">
-          <el-input v-model="registerForm.songName" placeholder="歌曲名字"></el-input>
+    <!-- 编辑弹出框 -->
+    <el-dialog title="编辑" v-model="editVisible" width="400px">
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="评论内容" size="small">
+          <el-input v-model="form.content"></el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="getSongId">确 定</el-button>
-      </span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button size="small" @click="editVisible = false">取 消</el-button>
+          <el-button type="primary" size="small" @click="saveEdit">确 定</el-button>
+        </span>
+      </template>
     </el-dialog>
 
     <!-- 删除提示框 -->
@@ -64,24 +58,28 @@ import { HttpManager } from '../api/index'
 import YinDelDialog from '@/components/dialog/YinDelDialog'
 
 export default {
-  name: 'ListSongPage',
+  name: 'CommentPage',
   mixins: [mixin],
   components: {
     YinDelDialog
   },
   data () {
     return {
-      registerForm: {
-        singerName: '',
-        songName: ''
-      },
       tableData: [],
       tempDate: [],
       multipleSelection: [],
-      centerDialogVisible: false,
       editVisible: false,
       delVisible: false,
       select_word: '',
+      form: {
+        id: '',
+        userId: '',
+        songId: '',
+        songListId: '',
+        content: '',
+        type: '',
+        up: ''
+      },
       idx: -1
     }
   },
@@ -103,56 +101,70 @@ export default {
     this.getData()
   },
   methods: {
-    // 获取歌单
+    // 获取评论
     getData () {
       this.tableData = []
       this.tempDate = []
-      HttpManager.getListSongOfSongId(this.$route.query.id)
+      let promise = null
+      if (this.$route.query.type == 0) {
+        promise = HttpManager.getCommentOfSongId(this.$route.query.id)
+      } else if (this.$route.query.type == 1) {
+        promise = HttpManager.getCommentOfSongListId(this.$route.query.id)
+      }
+
+      promise.then(res => {
+        for (let item of res) {
+          this.getUsers(item.userId, item)
+        }
+      })
+    },
+    getUsers (id, item) {
+      HttpManager.getUserOfId(id)
         .then(res => {
-          console.log(res)
-          for (let item of res) {
-            this.getSong(item.songId)
-          }
+          let o = item
+          o.name = res[0].username
+          this.tableData.push(o)
+          this.tempDate.push(o)
         })
         .catch(err => {
           console.error(err)
         })
     },
-    // 获取歌单里对应的音乐
-    getSong (id) {
-      HttpManager.getSongOfId(id)
-        .then(res => {
-          this.tableData.push(res[0])
-          this.tempDate.push(res[0])
-        })
-        .catch(err => {
-          console.error(err)
-        })
+    // 编辑
+    handleEdit (row) {
+      this.idx = row.id
+      this.form = {
+        id: row.id,
+        userId: row.userId,
+        songId: row.songId,
+        songListId: row.songListId,
+        content: row.content,
+        type: row.type,
+        up: row.up
+      }
+      this.editVisible = true
     },
-    // 获取要添加歌曲的ID
-    getSongId () {
-      var id = this.registerForm.singerName + '-' + this.registerForm.songName
-      HttpManager.getSongOfSingerName(id)
-        .then(res => {
-          this.addSong(res[0].id)
-        })
-    },
-    // 添加歌曲
-    addSong (id) {
+    // 保存编辑
+    saveEdit () {
       let params = new URLSearchParams()
-      params.append('songId', id)
-      params.append('songListId', this.$route.query.id)
-      HttpManager.setListSong(params)
+      params.append('id', this.form.id)
+      params.append('userId', this.form.userId)
+      params.append('songId', this.form.songId === null ? '' : this.form.songId)
+      params.append('songListId', this.form.songId === null ? '' : this.form.songListId)
+      params.append('content', this.form.content)
+      params.append('type', this.form.type)
+      params.append('up', this.form.up)
+      HttpManager.updateCommentMsg(params)
         .then(res => {
           if (res.code === 1) {
             this.getData()
             this.$notify({
-              title: '添加成功',
+              title: '编辑成功',
               type: 'success'
             })
           } else {
             this.$notify({
-              title: '添加失败',
+              title: '编辑失败',
               type: 'error'
             })
           }
@@ -160,11 +172,11 @@ export default {
         .catch(err => {
           console.error(err)
         })
-      this.centerDialogVisible = false
+      this.editVisible = false
     },
     // 确定删除
     deleteRow () {
-      HttpManager.deleteListSong(this.idx)
+      HttpManager.deleteComment(this.idx)
         .then(res => {
           if (res) {
             this.getData()

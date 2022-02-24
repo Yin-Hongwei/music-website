@@ -1,6 +1,7 @@
+import { createStore } from 'vuex'
 import { BASE_URL } from '../enums'
 
-const store = {
+export default createStore({
   state: {
     HOST: BASE_URL,
     isPlay: false,
@@ -17,6 +18,4 @@ const store = {
     setUrl: (state, url) => { state.url = url },
     setId: (state, id) => { state.id = id }
   }
-}
-
-export default store
+})

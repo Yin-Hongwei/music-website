@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style>
-#player {
+audio {
   display: none;
 }
 </style>

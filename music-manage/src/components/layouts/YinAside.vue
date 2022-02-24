@@ -2,68 +2,42 @@
   <div class="sidebar">
     <el-menu
       class="sidebar-el-menu"
-      :default-active="onRoutes"
-      :collapse="collapse"
-      background-color="#242526"
+      background-color="#545c64"
       text-color="#B0B3B2"
       active-text-color="#ffffff"
-      unique-opened
+      default-active="2"
       router
+      :collapse="collapse"
     >
-      <template v-for="item in items">
-          <template>
-            <el-menu-item :index="item.index" :key="item.index">
-              <i :class="item.icon"></i>
-              <span slot="title">{{ item.title }}</span>
-            </el-menu-item>
-        </template>
-      </template>
+      <el-menu-item index="info">
+        <el-icon><Document /></el-icon>
+        <span>系统首页</span>
+      </el-menu-item>
+      <el-menu-item index="consumer">
+        <el-icon><Document /></el-icon>
+        <span>用户管理</span>
+      </el-menu-item>
+      <el-menu-item index="singer">
+        <el-icon><Document /></el-icon>
+        <span>歌手管理</span>
+      </el-menu-item>
+      <el-menu-item index="songList">
+        <el-icon><Document /></el-icon>
+        <span>歌单管理</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
 
-<script>
-import _ctrEvent from '../../utils/ctr-event'
+<script setup>
+import { ref } from "vue";
+import { Document } from "@element-plus/icons-vue";
+import emitter from "@/utils/emitter";
 
-export default {
-  data () {
-    return {
-      collapse: false,
-      items: [
-        {
-          icon: 'el-icon-s-data',
-          index: 'info',
-          title: '系统首页'
-        },
-        {
-          icon: 'el-icon-user-solid',
-          index: 'consumer',
-          title: '用户管理'
-        },
-        {
-          icon: 'el-icon-service',
-          index: 'singer',
-          title: '歌手管理'
-        },
-        {
-          icon: 'el-icon-document',
-          index: 'songList',
-          title: '歌单管理'
-        }
-      ]
-    }
-  },
-  computed: {
-    onRoutes () {
-      return this.$route.path.replace('/', '')
-    }
-  },
-  created () {
-    _ctrEvent.$on('collapse', msg => {
-      this.collapse = msg
-    })
-  }
-}
+const collapse = ref(false);
+emitter.on("collapse", (msg) => {
+  collapse.value = msg;
+});
 </script>
 
 <style scoped>

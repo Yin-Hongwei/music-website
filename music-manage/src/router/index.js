@@ -1,64 +1,63 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
-Vue.use(Router)
 
-const constantRoutes = [
+const routes = [
   {
     path: '/Home',
-    component: resolve => require(['../pages/Home.vue'], resolve),
+    component: () => import('@/views/Home.vue'),
     meta: { title: '自述文件' },
     children: [
       {
         path: '/Info',
-        component: resolve => require(['../pages/InfoPage.vue'], resolve),
+        component: () => import('@/views/InfoPage.vue'),
         meta: { title: 'Info' }
       },
       {
         path: '/song',
-        component: resolve => require(['../pages/SongPage.vue'], resolve),
+        component: () => import('@/views/SongPage.vue'),
         meta: { title: 'Song' }
       },
       {
         path: '/Singer',
-        component: resolve => require(['../pages/SingerPage.vue'], resolve),
+        component: () => import('@/views/SingerPage.vue'),
         meta: { title: 'Singer' }
       },
       {
         path: '/SongList',
-        component: resolve => require(['../pages/SongListPage.vue'], resolve),
+        component: () => import('@/views/SongListPage.vue'),
         meta: { title: 'SongList' }
       },
       {
         path: '/ListSong',
-        component: resolve => require(['../pages/ListSongPage.vue'], resolve),
+        component: () => import('@/views/ListSongPage.vue'),
         meta: { title: 'ListSong' }
       },
       {
         path: '/Comment',
-        component: resolve => require(['../pages/CommentPage.vue'], resolve),
+        component: () => import('@/views/CommentPage.vue'),
         meta: { title: 'Comment' }
       },
       {
         path: '/Consumer',
-        component: resolve => require(['../pages/ConsumerPage.vue'], resolve),
+        component: () => import('@/views/ConsumerPage.vue'),
         meta: { title: 'Consumer' }
       },
       {
         path: '/Collect',
-        component: resolve => require(['../pages/CollectPage.vue'], resolve),
+        component: () => import('@/views/CollectPage.vue'),
         meta: { title: 'Collect' }
       }
     ]
   },
   {
     path: '/',
-    component: resolve => require(['../pages/Login.vue'], resolve)
+    component: () => import('@/views/Login.vue')
   }
 ]
 
-export default new Router({
-  mode: 'history',
-  scrollBehavior: () => ({ x: 0, y: 0 }),
-  routes: constantRoutes
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
 })
+
+export default router

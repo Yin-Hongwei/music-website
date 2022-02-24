@@ -1,23 +1,14 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import VCharts from 'v-charts'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-
-import './assets/css/main.css'
-import App from './App'
+import { createApp } from 'vue'
+import ElementPlus from 'element-plus'
+import App from './App.vue'
 import router from './router'
-import store from './store/index'
+import store from './store'
+import 'element-plus/dist/index.css'
+import './assets/css/main.css'
 import './assets/icons/iconfont.js'
 
-Vue.use(Vuex)
-Vue.use(VCharts)
-Vue.use(ElementUI)
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router: router,
-  store: new Vuex.Store(store),
-  render: h => h(App)
-})
+const app = createApp(App)
+app.use(router)
+app.use(store)
+app.use(ElementPlus)
+app.mount('#app')
