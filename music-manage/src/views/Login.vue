@@ -16,7 +16,7 @@
             type="password"
             placeholder="password"
             v-model="ruleForm.password"
-            @keyup.enter.native="submitForm('ruleForm')"
+            @keyup.enter="submitForm('ruleForm')"
           ></el-input>
         </el-form-item>
         <div class="login-btn">

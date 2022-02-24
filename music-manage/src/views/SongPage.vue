@@ -9,14 +9,14 @@
     </div>
     <div class="container">
       <div class="handle-box">
-        <el-button type="primary" size="mini" class="handle-del mr10" @click="delAll">批量删除</el-button>
-        <el-input v-model="select_word" size="mini" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-        <el-button type="primary" size="mini" @click="centerDialogVisible = true">添加歌曲</el-button>
+        <el-button type="primary" size="small" class="handle-del mr10" @click="delAll">批量删除</el-button>
+        <el-input v-model="select_word" size="small" placeholder="筛选关键词" class="handle-input mr10"></el-input>
+        <el-button type="primary" size="small" @click="centerDialogVisible = true">添加歌曲</el-button>
       </div>
-      <el-table :data="data" size="mini" border style="width: 100%" ref="multipleTable" height="550px" @selection-change="handleSelectionChange">
+      <el-table :data="data" size="small" border style="width: 100%" ref="multipleTable" height="550px" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="40"></el-table-column>
         <el-table-column label="歌手图片" width="110" align="center">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <div style="width: 80px; height: 80px; overflow: hidden">
               <img :src="getUrl(scope.row.pic)" alt="" style="width: 100%;"/>
             </div>
@@ -37,9 +37,8 @@
         <el-table-column label="歌名" prop="name" width="150" align="center"></el-table-column>
         <el-table-column label="专辑" prop="introduction" width="150" align="center"></el-table-column>
         <el-table-column label="歌词" align="center">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <ul style="height: 100px; overflow: scroll">
-              <li>
               <li v-for="(item, index) in parseLyric(scope.row.lyric)" :key="index">
                 {{ item}}
               </li>
@@ -47,7 +46,7 @@
           </template>
         </el-table-column>
         <el-table-column label="资源更新" width="100" align="center">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-upload
               class="upload-demo"
               :action="uploadUrl(scope.row.id)"
@@ -55,7 +54,7 @@
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload"
               >
-                <el-button size="mini">更新图片</el-button>
+                <el-button size="small">更新图片</el-button>
             </el-upload>
             <br>
             <el-upload
@@ -64,19 +63,19 @@
               :show-file-list="false"
               :on-success="handleSongSuccess"
               :before-upload="beforeSongUpload">
-              <el-button size="mini">更新歌曲</el-button>
+              <el-button size="small">更新歌曲</el-button>
             </el-upload>
           </template>
         </el-table-column>
         <el-table-column label="评论" width="80" align="center">
-            <template  slot-scope="scope">
-                <el-button size="mini" @click="getComment(data[scope.$index].id)">评论</el-button>
+            <template  v-slot="scope">
+                <el-button size="small" @click="getComment(data[scope.$index].id)">评论</el-button>
             </template>
         </el-table-column>
         <el-table-column label="操作" width="150" align="center">
-            <template slot-scope="scope">
-                <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-                <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+            <template v-slot="scope">
+                <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
+                <el-button size="small" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
             </template>
         </el-table-column>
       </el-table>
@@ -93,7 +92,7 @@
     </div>
 
     <!--添加歌曲-->
-    <el-dialog title="添加歌曲" :visible.sync="centerDialogVisible" width="400px" center>
+    <el-dialog title="添加歌曲" v-model="centerDialogVisible" width="400px" center>
       <el-form action="" :model="registerForm" id="tf">
         <div>
           <label>歌曲名</label>
@@ -113,29 +112,33 @@
           <input type="file" name="file" id="upadte-file-input">
         </div>
       </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addSong">确 定</el-button>
-      </span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="centerDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="addSong">确 定</el-button>
+        </span>
+      </template>
     </el-dialog>
 
     <!-- 编辑弹出框 -->
-    <el-dialog title="编辑" :visible.sync="editVisible" width="400px">
+    <el-dialog title="编辑" v-model="editVisible" width="400px">
       <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="歌手-歌曲" size="mini">
+        <el-form-item label="歌手-歌曲" size="small">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="简介" size="mini">
+        <el-form-item label="简介" size="small">
           <el-input v-model="form.introduction"></el-input>
         </el-form-item>
-        <el-form-item label="歌词" size="mini">
+        <el-form-item label="歌词" size="small">
           <el-input  type="textarea" v-model="form.lyric"></el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="editVisible = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="saveEdit">确 定</el-button>
-      </span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button size="small" @click="editVisible = false">取 消</el-button>
+          <el-button type="primary" size="small" @click="saveEdit">确 定</el-button>
+        </span>
+      </template>
     </el-dialog>
 
     <!-- 删除提示框 -->
@@ -228,7 +231,7 @@ export default {
     this.singerName = this.$route.query.name
     this.getData()
   },
-  destroyed () {
+  unmounted () {
     this.$store.commit('setIsPlay', false)
   },
   methods: {
@@ -276,7 +279,7 @@ export default {
     handleCurrentChange (val) {
       this.currentPage = val
     },
-    handleSongSuccess (res, file) {
+    handleSongSuccess (res) {
       if (res.code === 1) {
         this.getData()
         this.$notify({
