@@ -1,10 +1,10 @@
-import { HOME, SONG_SHEET, SINGER, MY_MUSIC, SETTING, SIGN_IN, SIGN_UP, SIGN_OUT } from './router-name'
+import { HOME, SONG_SHEET, SINGER, PERSONAL, SIGN_IN, SIGN_UP, SIGN_OUT } from './router-name'
 
 export const NAV_NAME = {
   HOME: '首页',
   SONG_SHEET: '歌单',
   SINGER: '歌手',
-  MY_MUSIC: '我的音乐',
+  PERSONAL: '我的音乐',
   SETTING: '设置',
   SIGN_IN: '登录',
   SIGN_UP: '注册',
@@ -21,10 +21,12 @@ export const HEADERNAVLIST = [{
 }, {
   name: NAV_NAME.SINGER,
   path: SINGER
-}, {
-  name: NAV_NAME.MY_MUSIC,
-  path: MY_MUSIC
 }]
+
+export const HOME_LIST = {
+  name: NAV_NAME.PERSONAL,
+  path: PERSONAL
+}
 
 // 右侧导航栏
 export const SIGNLIST = [{
@@ -36,10 +38,12 @@ export const SIGNLIST = [{
 }]
 
 // 用户下拉菜单项
-export const MENULIST = [{
-  name: NAV_NAME.SETTING,
-  path: SETTING
-}, {
+export const MENULIST = [
+//   {
+//   name: NAV_NAME.SETTING,
+//   path: SETTING
+// },
+ {
   name: NAV_NAME.SIGN_OUT,
   path: SIGN_OUT
 }]

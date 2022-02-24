@@ -61,7 +61,7 @@ axios.interceptors.response.use(
    * @param data
    * @returns {Promise}
    */
-export function get (url, params = {}, responseType = 'json') {
+export function get(url, params = {}, responseType = 'json') {
   return new Promise((resolve, reject) => {
     axios.get(url, {
       params: params,
@@ -82,7 +82,7 @@ export function get (url, params = {}, responseType = 'json') {
    * @param data
    * @returns {Promise}
    */
-export function post (url, data = {}) {
+export function post(url, data = {}) {
   return new Promise((resolve, reject) => {
     axios.post(url, data)
       .then(response => {
@@ -99,7 +99,7 @@ export function post (url, data = {}) {
    * @param data
    * @returns {Promise}
    */
-export function deletes (url, data = {}) {
+export function deletes(url, data = {}) {
   return new Promise((resolve, reject) => {
     axios.delete(url, data)
       .then(response => {
@@ -116,7 +116,7 @@ export function deletes (url, data = {}) {
    * @param data
    * @returns {Promise}
    */
-export function put (url, data = {}) {
+export function put(url, data = {}) {
   return new Promise((resolve, reject) => {
     axios.put(url, data)
       .then(response => {
