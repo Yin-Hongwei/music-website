@@ -75,7 +75,7 @@
 
 ### 前端
 
-**Vue + Vue-Router + Vuex + Axios +  ElementUI**
+**Vue3.0 + Vue-Router + Vuex + Axios + ElementPlus + Echarts**
 
 <br/>
 
@@ -85,9 +85,10 @@ JDK： jdk-8u141
 
 mysql：mysql-5.7.21-1-macos10.13-x86_64
 
-node：v12.4.0
+node：v14.17.3
 
 IDE：IntelliJ IDEA 2018、VSCode
+
 
 <br/>
 
@@ -130,17 +131,17 @@ mvn spring-boot:run // 前提装了 maven
 - **启动客户端**：进入 music-client 目录，运行下面命令
 
 ```js
-yarn // 安装依赖
+npm install // 安装依赖
 
-yarn dev // 启动前台项目
+npm run serve // 启动前台项目
 ```
 
 - **启动管理端**：进入 music-manage 目录，运行下面命令
 
 ```js
-yarn // 安装依赖
+npm install // 安装依赖
 
-yarn dev // 启动后台管理项目
+npm run serve // 启动后台管理项目
 ```
 
 <br/>
