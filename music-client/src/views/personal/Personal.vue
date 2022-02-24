@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
 import SongList from '@/components/SongList'
 import Upload from './Upload'
@@ -37,7 +38,6 @@ export default {
   },
   data () {
     return {
-      userPic: '',
       username: '',
       userSex: '',
       birth: '',
@@ -45,6 +45,16 @@ export default {
       introduction: '',
       collectSongList: [], // 收藏的歌曲
       dialogTableVisible: false
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'userPic'
+    ])
+  },
+  watch: {
+    userPic() {
+      this.dialogTableVisible = false
     }
   },
   created () {
@@ -63,7 +73,6 @@ export default {
           this.birth = res[0].birth
           this.introduction = res[0].introduction
           this.location = res[0].location
-          this.userPic = res[0].avator
         })
         .catch(err => {
           console.error(err)
