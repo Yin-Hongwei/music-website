@@ -2,14 +2,14 @@
   <div class="table">
     <div class="container">
       <div class="handle-box">
-        <el-button class="handle-del mr10" type="primary" size="mini" @click="delAll">批量删除</el-button>
-        <el-input v-model="select_word" class="handle-input mr10" size="mini" placeholder="筛选关键词"></el-input>
-        <el-button type="primary" size="mini" @click="centerDialogVisible = true">添加歌手</el-button>
+        <el-button class="handle-del mr10" type="primary" size="small" @click="delAll">批量删除</el-button>
+        <el-input v-model="select_word" class="handle-input mr10" size="small" placeholder="筛选关键词"></el-input>
+        <el-button type="primary" size="small" @click="centerDialogVisible = true">添加歌手</el-button>
       </div>
-      <el-table ref="multipleTable" size="mini" border style="width: 100%" height="550px" :data="data" @selection-change="handleSelectionChange">
+      <el-table ref="multipleTable" size="small" border style="width: 100%" height="550px" :data="data" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="40"></el-table-column>
         <el-table-column label="歌手图片" width="110" align="center">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <div class="singer-img">
               <img :src="getUrl(scope.row.pic)" alt="" style="width: 100%;"/>
             </div>
@@ -20,36 +20,36 @@
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload"
               >
-              <el-button size="mini">更新图片</el-button>
+              <el-button size="small">更新图片</el-button>
             </el-upload>
           </template>
         </el-table-column>
         <el-table-column prop="name" label="歌手" width="120" align="center"></el-table-column>
         <el-table-column label="性别" width="50" align="center">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <div>{{changeSex(scope.row.sex) }}</div>
           </template>
         </el-table-column>
         <el-table-column label="出生" width="120" align="center">
-          <template slot-scope="scope">
+          <template v-slot="scope">
               <div>{{getBirth(scope.row.birth) }}</div>
           </template>
         </el-table-column>
         <el-table-column prop="location" label="地区" width="100" align="center"></el-table-column>
         <el-table-column label="简介">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <p style="height: 100px; overflow: scroll">{{ scope.row.introduction }}</p>
           </template>
         </el-table-column>
         <el-table-column label="歌曲管理" width="110" align="center">
-          <template slot-scope="scope">
-            <el-button size="mini" @click="songEdit(scope.row.id, scope.row.name)">歌曲管理</el-button>
+          <template v-slot="scope">
+            <el-button size="small" @click="songEdit(scope.row.id, scope.row.name)">歌曲管理</el-button>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="150" align="center">
-          <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+          <template v-slot="scope">
+            <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
+            <el-button size="small" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <el-dialog title="添加歌手" :visible.sync="centerDialogVisible" width="400px" center>
+    <el-dialog title="添加歌手" v-model="centerDialogVisible" width="400px" center>
       <el-form
         class="demo-ruleForm"
         :model="registerForm"
@@ -73,10 +73,10 @@
         ref="registerForm"
         label-width="80px"
         >
-        <el-form-item prop="name" label="歌手名" size="mini">
+        <el-form-item prop="name" label="歌手名" size="small">
           <el-input v-model="registerForm.name" placeholder="歌手名"></el-input>
         </el-form-item>
-        <el-form-item label="性别" size="mini">
+        <el-form-item label="性别" size="small">
           <el-radio-group v-model="registerForm.sex">
             <el-radio :label="0">女</el-radio>
             <el-radio :label="1">男</el-radio>
@@ -85,10 +85,10 @@
             <el-radio :label="3">不明</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item prop="location" label="故乡" size="mini">
+        <el-form-item prop="location" label="故乡" size="small">
           <el-input v-model="registerForm.location" placeholder="故乡"></el-input>
         </el-form-item>
-        <el-form-item prop="birth" label="出生" size="mini">
+        <el-form-item prop="birth" label="出生" size="small">
           <el-date-picker
             type="date"
             placeholder="选择日期"
@@ -96,23 +96,25 @@
             style="width: 100%;"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item prop="introduction" label="歌手介绍" size="mini">
+        <el-form-item prop="introduction" label="歌手介绍" size="small">
           <el-input v-model="registerForm.introduction" type="textarea" placeholder="歌手介绍"></el-input>
         </el-form-item>
       </el-form>
-      <span class="dialog-footer" slot="footer">
-        <el-button size="mini" @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="addsinger">确 定</el-button>
-      </span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button size="small" @click="centerDialogVisible = false">取 消</el-button>
+          <el-button type="primary" size="small" @click="addsinger">确 定</el-button>
+        </span>
+      </template>
     </el-dialog>
 
     <!-- 编辑弹出框 -->
-    <el-dialog title="编辑" :visible.sync="editVisible" width="400px">
+    <el-dialog title="编辑" v-model="editVisible" width="400px">
       <el-form ref="form" :model="form" label-width="60px">
-        <el-form-item label="歌手" size="mini">
+        <el-form-item label="歌手" size="small">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="性别" size="mini">
+        <el-form-item label="性别" size="small">
           <el-radio-group v-model="form.sex">
             <el-radio :label="0">女</el-radio>
             <el-radio :label="1">男</el-radio>
@@ -121,20 +123,22 @@
             <el-radio :label="3">不明</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="生日" size="mini">
+        <el-form-item label="生日" size="small">
           <el-date-picker type="date" placeholder="选择日期" v-model="form.birth" style="width: 100%;"></el-date-picker>
         </el-form-item>
-        <el-form-item label="地区" size="mini">
+        <el-form-item label="地区" size="small">
           <el-input v-model="form.location"></el-input>
         </el-form-item>
-        <el-form-item label="简介" size="mini">
+        <el-form-item label="简介" size="small">
           <el-input type="textarea" v-model="form.introduction"></el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="mini"  @click="editVisible = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="saveEdit">确 定</el-button>
-      </span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button size="small"  @click="editVisible = false">取 消</el-button>
+          <el-button type="primary" size="small" @click="saveEdit">确 定</el-button>
+        </span>
+      </template>
     </el-dialog>
 
     <!-- 删除提示框 -->

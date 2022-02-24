@@ -10,12 +10,12 @@
     </div>
     <div class="container">
       <div class="handle-box">
-        <el-button type="primary" size="mini" class="handle-del mr10" @click="delAll">批量删除</el-button>
-        <el-input v-model="select_word" size="mini" placeholder="筛选关键词" class="handle-input mr10"></el-input>
+        <el-button type="primary" size="small" class="handle-del mr10" @click="delAll">批量删除</el-button>
+        <el-input v-model="select_word" size="small" placeholder="筛选关键词" class="handle-input mr10"></el-input>
       </div>
       <el-table
         :data="tableData"
-        size="mini"
+        size="small"
         border
         style="width: 100%"
         ref="multipleTable"
@@ -24,8 +24,8 @@
         <el-table-column type="selection" width="50"></el-table-column>
         <el-table-column prop="name" label="歌手-歌曲"></el-table-column>
         <el-table-column label="操作" width="85">
-          <template slot-scope="scope">
-            <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+          <template v-slot="scope">
+            <el-button size="small" type="danger" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
