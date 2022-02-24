@@ -1,22 +1,13 @@
 <template>
   <div class='login-logo'>
     <svg class='icon' aria-hidden='true'>
-      <use :xlink:href='ERJI'></use>
+      <use :xlink:href='ICON.ERJI'></use>
     </svg>
   </div>
 </template>
 
-<script>
-import { ICON } from '../../enums'
-
-export default {
-  name: 'YinLoginLogo',
-  data () {
-    return {
-      ERJI: ICON.ERJI
-    }
-  }
-}
+<script setup>
+import { ICON } from '@/enums'
 </script>
 
 <style lang='scss' scoped>

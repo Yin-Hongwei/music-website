@@ -81,7 +81,7 @@ export default {
       HttpManager.getAllComment(this.type, this.playId)
         .then(res => {
           this.commentList = res
-          for (let item of res) {
+          for (const item of res) {
             this.getUsers(item.userId)
           }
         })
@@ -104,14 +104,14 @@ export default {
     postComment () {
       if (!this.token) {
         this.$notify({
-          title: '请先登录喔',
+          title: '请先登录',
           type: 'warning'
         })
         return
       }
 
       // 0 代表歌曲， 1 代表歌单
-      let params = new URLSearchParams()
+      const params = new URLSearchParams()
       if (this.type === 1) {
         params.append('songListId', this.playId)
       } else if (this.type === 0) {
@@ -144,13 +144,13 @@ export default {
     postUp (id, up, index) {
       if (!this.token) {
         this.$notify({
-          title: '请先登录喔',
+          title: '请先登录',
           type: 'warning'
         })
         return
       }
 
-      let params = new URLSearchParams()
+      const params = new URLSearchParams()
       params.append('id', id)
       params.append('up', up + 1)
       HttpManager.setLike(params)

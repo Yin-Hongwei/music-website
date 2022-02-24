@@ -12,15 +12,10 @@
           @click='goPage(item.path, item.name)'>
         {{ item.name }}
       </li>
-      <!--搜索框 + 搜索按钮-->
+      <!--搜索框-->
       <li>
         <div class='header-search'>
           <input type='text' placeholder='搜索音乐' @keyup.enter='goSearch()' v-model='keywords'>
-          <div class='search-btn' @click='goSearch()'>
-            <svg class='icon' aria-hidden='true'>
-              <use :xlink:href='SOUSUO'></use>
-            </svg>
-          </div>
         </div>
       </li>
       <li v-show='!token' :class='{active: item.name === activeNavName}' v-for='item in signList' :key='item.type'
@@ -28,9 +23,12 @@
       </li>
     </ul>
     <!--设置-->
-    <div class='header-right' v-show='token'>
-      <div id='user' ref='user' @click.stop="showMenu = true" v-clickoutside="clickoutside">
+    <div class='header-right' v-if='token'>
+      <div class='user' @click='goPage(homeList.path, homeList.name)'>
         <img :src='attachImageUrl(userPic)' alt=''>
+      </div>
+      <div class="setting" @click.stop="showMenu = true">
+        <el-icon><setting /></el-icon>
       </div>
       <ul class='menu' ref='menu' :class='showMenu ? "show" : ""'>
         <li v-for='(item, index) in menuList' :key='index' @click.stop='goMenuList(item.path)'>{{ item.name }}</li>
@@ -40,9 +38,9 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import mixin from '../../mixins'
-import clickoutside from '@/utils/clickoutside'
+import { mapGetters } from 'vuex'
+import { Setting } from '@element-plus/icons-vue'
+import mixin from '@/mixins'
 import {
   HEADERNAVLIST,
   SIGNLIST,
@@ -52,15 +50,15 @@ import {
   HOME,
   SEARCH,
   SIGN_OUT,
-  MY_MUSIC,
-  NAV_NAME
-} from '../../enums'
+  NAV_NAME,
+  HOME_LIST
+} from '@/enums'
 
 export default {
   name: 'YinHeader',
   mixins: [mixin],
-  directives: {
-    clickoutside
+  components: {
+    Setting
   },
   data () {
     return {
@@ -68,6 +66,7 @@ export default {
       headerNavList: HEADERNAVLIST, // 左侧导航栏
       signList: SIGNLIST, // 右侧导航栏
       menuList: MENULIST, // 用户下拉菜单项
+      homeList: HOME_LIST,
       keywords: '',
       showMenu: false,
       ERJI: ICON.ERJI,
@@ -81,22 +80,19 @@ export default {
       'token'
     ])
   },
-  methods: {
-    clickoutside () {
+  mounted () {
+    document.addEventListener('click', () => {
       this.showMenu = false
-    },
+    }, false)
+  },
+  methods: {
     goPage (path, name) {
-      if (!this.token && path === MY_MUSIC) {
-        this.$notify({
-          title: '请先登录喔',
-          type: 'warning'
-        })
-      } else if (!path && !name) {
+      if (!path && !name) {
         this.changeIndex(NAV_NAME.HOME)
-        this.routerManager(HOME, {path: HOME})
+        this.routerManager(HOME, { path: HOME })
       } else {
         this.changeIndex(name)
-        this.routerManager(path, {path})
+        this.routerManager(path, { path })
       }
     },
     goMenuList (path) {
@@ -105,19 +101,19 @@ export default {
       if (path === 0) this.$store.commit('setIsCollection', false)
 
       if (path) {
-        this.routerManager(path, {path})
+        this.routerManager(path, { path })
       } else {
         this.$store.commit('setToken', false)
-        this.routerManager(SIGN_OUT, {path: SIGN_OUT})
+        this.routerManager(SIGN_OUT, { path: SIGN_OUT })
       }
     },
     goSearch () {
       if (this.keywords !== '') {
         this.$store.commit('setSearchWord', this.keywords)
-        this.routerManager(SEARCH, {path: SEARCH, query: {keywords: this.keywords}})
+        this.routerManager(SEARCH, { path: SEARCH, query: { keywords: this.keywords } })
       } else {
         this.$notify({
-          title: '搜索内容不能为空喔',
+          title: '搜索内容不能为空',
           type: 'error'
         })
       }

@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <audio :src='songUrl' controls='controls' ref='player' preload='true' @canplay='canplay' @timeupdate='timeupdate' @ended='ended'>
-      <!--（1）属性：controls，preload（2）事件：canplay，timeupdate，ended（3）方法：play()，pause() -->
-      <!--controls：向用户显示音频控件（播放/暂停/进度条/音量）-->
-      <!--preload：属性规定是否在页面加载后载入音频-->
-      <!--canplay：当音频/视频处于加载过程中时，会发生的事件-->
-      <!--timeupdate：当目前的播放位置已更改时-->
-      <!--ended：当目前的播放列表已结束时-->
-    </audio>
-  </div>
+  <audio :src='songUrl' controls='controls' ref='player' preload='true' @canplay='canplay' @timeupdate='timeupdate' @ended='ended'>
+    <!--（1）属性：controls，preload（2）事件：canplay，timeupdate，ended（3）方法：play()，pause() -->
+    <!--controls：向用户显示音频控件（播放/暂停/进度条/音量）-->
+    <!--preload：属性规定是否在页面加载后载入音频-->
+    <!--canplay：当音频/视频处于加载过程中时，会发生的事件-->
+    <!--timeupdate：当目前的播放位置已更改时-->
+    <!--ended：当目前的播放列表已结束时-->
+  </audio>
 </template>
 
 <script>
@@ -32,7 +30,7 @@ export default {
     },
     // 跳到指定时刻播放
     changeTime () {
-      let player = this.$refs.player
+      const player = this.$refs.player
       player.currentTime = this.changeTime
     },
     volume (val) {
@@ -69,6 +67,8 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-@import '@/assets/css/yin-audio.scss';
+<style scoped>
+audio {
+  display: none;
+}
 </style>

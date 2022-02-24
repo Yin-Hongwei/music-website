@@ -44,20 +44,23 @@
     border-bottom: none;
     box-sizing: border-box;
     cursor: pointer;
+
+    :nth-last-child(-n + 3) {
+      margin-right: 10vw;
+    }
   }
 }
 
 /*搜索输入框*/
 .header-search {
   @include layout;
-  border-radius: $header-search-radius;
   overflow: hidden;
-
   input {
     height: $header-search-height;
     width: $header-search-width;
-    font-size: $font-size-default;
+    border-radius: $header-search-radius;
     border: 0;
+    font-size: $font-size-default;
     text-indent: 10px;
     background-color: $color-light-grey;
 
@@ -65,30 +68,20 @@
       outline: none;
     }
   }
-
-  /*搜索按钮*/
-  .search-btn {
-    @include layout(center, center);
-    background-color: $color-blue-active;
-    width: $header-search-btn-width;
-    height: $header-search-btn-height;
-    cursor: pointer;
-
-    .icon {
-      @include icon(1.2em, $color-white);
-    }
-  }
 }
 
 /*用户*/
 .header-right {
   position: relative;
-  @include layout(center, center);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 
-  #user {
+  .user {
     overflow: hidden;
     width: $header-user-width;
-    height: $header-user-height;
+    height: $header-user-width;
     border-radius: $header-user-radius;
     margin: $header-user-margin;
     cursor: pointer;
@@ -96,6 +89,11 @@
     img {
       width: 100%;
     }
+  }
+  .setting {
+    font-size: 30px;
+    padding-top: 10px;
+    cursor: pointer;
   }
 }
 

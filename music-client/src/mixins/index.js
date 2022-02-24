@@ -1,5 +1,5 @@
 import { mapGetters } from 'vuex'
-import { HOME, SONG_SHEET, SINGER, MY_MUSIC, SETTING, SIGN_IN, SIGN_UP, SIGN_OUT, SEARCH, LYRIC, SONG_SHEET_DETAIL, SINGER_DETAIL, ERROR } from '../enums'
+import { HOME, SONG_SHEET, SINGER, PERSONAL, SETTING, SIGN_IN, SIGN_UP, SIGN_OUT, SEARCH, LYRIC, SONG_SHEET_DETAIL, SINGER_DETAIL, ERROR, PERSONAL_DATA } from '../enums'
 
 const mixin = {
   computed: {
@@ -36,9 +36,6 @@ const mixin = {
     changeIndex (value) {
       this.$store.commit('setActiveNavName', value)
     },
-    clickoutside () {
-      this.$store.commit('setShowAside', false)
-    },
     // 播放
     playMusic ({ id, url, pic, index, name, lyric, currentSongList }) {
       const songTitle = this.getSongTitle(name)
@@ -48,43 +45,22 @@ const mixin = {
     // 路由管理
     routerManager (routerName, { path, query }) {
       switch (routerName) {
-        case HOME:
-        case SIGN_OUT:
-          this.$router.push({ path })
-          break
-        case SONG_SHEET:
-          this.$router.push({ path })
-          break
-        case SONG_SHEET_DETAIL:
-          this.$router.push({ path })
-          break
-        case SINGER:
-          this.$router.push({ path })
-          break
-        case SINGER_DETAIL:
-          this.$router.push({ path })
-          break
-        case MY_MUSIC:
-          this.$router.push({ path })
-          break
-        case SETTING:
-          this.$router.push({ path })
-          break
-        case SIGN_IN:
-          this.$router.push({ path })
-          break
-        case SIGN_UP:
-          this.$router.push({ path })
-          break
         case SEARCH:
           this.$router.push({ path, query })
           break
+        case HOME:
+        case SIGN_OUT:
+        case SONG_SHEET:
+        case SONG_SHEET_DETAIL:
+        case SINGER:
+        case SINGER_DETAIL:
+        case PERSONAL:
+        case SETTING:
+        case PERSONAL_DATA:
+        case SIGN_IN:
+        case SIGN_UP:
         case LYRIC:
-          this.$router.push({ path })
-          break
         case ERROR:
-          this.$router.push({ path })
-          break
         default:
           this.$router.push({ path })
           break

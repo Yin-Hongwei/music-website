@@ -6,7 +6,4 @@
   height: $footer-height;
   background-color: $theme-footer-color;
   @include layout(center, center, column);
-  p {
-    height: 30px;
-  }
 }

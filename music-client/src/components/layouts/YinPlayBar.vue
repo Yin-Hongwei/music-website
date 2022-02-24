@@ -52,7 +52,7 @@
         <div class='left-time'>{{ songTime }}</div>
       </div>
       <!--音量-->
-      <div class='item icon-volume'  @click.stop='showVolume = true' v-clickoutside='showVolume = false'>
+      <div class='item icon-volume'  @click.stop='showVolume = true'>
         <svg v-if='volume !== 0' class='icon' aria-hidden='true'>
           <use :xlink:href='YINLIANG'></use>
         </svg>
@@ -84,19 +84,15 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import mixin from '../../mixins'
-import clickoutside from '@/utils/clickoutside'
-import {HttpManager} from '../../api'
-import {formatSeconds} from '../../utils'
-import {ICON, LYRIC} from '../../enums'
+import { mapGetters } from 'vuex'
+import mixin from '@/mixins'
+import { HttpManager } from '@/api'
+import { formatSeconds } from '@/utils'
+import { ICON, LYRIC } from '@/enums'
 
 export default {
   name: 'yin-play-bar',
   mixins: [mixin],
-  directives: {
-    clickoutside
-  },
   data () {
     return {
       tag: false,
@@ -162,17 +158,22 @@ export default {
       this.next()
     }
   },
+  mounted () {
+    document.addEventListener('click', () => {
+      this.showVolume = false
+    }, false)
+  },
   methods: {
     // 下载
     downloadMusic () {
       HttpManager.downloadMusic(this.songUrl)
         .then(res => {
-          let content = res.data
-          let eleLink = document.createElement('a')
+          const content = res.data
+          const eleLink = document.createElement('a')
           eleLink.download = `${this.singerName}-${this.songTitle}.mp3`
           eleLink.style.display = 'none'
           // 字符内容转变成blob地址
-          let blob = new Blob([content])
+          const blob = new Blob([content])
           eleLink.href = URL.createObjectURL(blob)
           // 触发点击
           document.body.appendChild(eleLink)
@@ -210,8 +211,8 @@ export default {
         return false
       }
       if (this.tag) {
-        let movementX = e.clientX - this.mouseStartX
-        let curLength = this.$refs.curProgress.getBoundingClientRect().width
+        const movementX = e.clientX - this.mouseStartX
+        const curLength = this.$refs.curProgress.getBoundingClientRect().width
         //  计算出百分比
         this.progressLength = this.$refs.progress.getBoundingClientRect().width
         let newPercent = ((curLength + movementX) / this.progressLength) * 100
@@ -226,12 +227,12 @@ export default {
     },
     // 更改歌曲进度
     changeTime (percent) {
-      let newCurTime = this.duration * (percent * 0.01)
+      const newCurTime = this.duration * (percent * 0.01)
       this.$store.commit('setChangeTime', newCurTime)
     },
     updatemove (e) {
       if (!this.tag) {
-        let curLength = this.$refs.bg.offsetLeft
+        const curLength = this.$refs.bg.offsetLeft
         this.progressLength = this.$refs.progress.getBoundingClientRect().width
         let newPercent = ((e.clientX - curLength) / this.progressLength) * 100
         if (newPercent < 0) {
@@ -276,15 +277,15 @@ export default {
         const name = song.name
         const index = this.currentPlayIndex
         const lyric = song.lyric
-        this.playMusic({id, url, pic, index, name, lyric, currentSongList: this.currentPlayList})
+        this.playMusic({ id, url, pic, index, name, lyric, currentSongList: this.currentPlayList })
       }
     },
     goPlayerPage () {
-      this.routerManager(LYRIC, {path: `${LYRIC}/${this.songId}`})
+      this.routerManager(LYRIC, { path: `${LYRIC}/${this.songId}` })
     },
     collection () {
       if (this.token) {
-        var params = new URLSearchParams()
+        const params = new URLSearchParams()
         params.append('userId', this.userId)
         params.append('type', 0) // 0 代表歌曲， 1 代表歌单
         params.append('songId', this.songId)
@@ -313,7 +314,7 @@ export default {
           })
       } else {
         this.$notify({
-          title: '请先登录喔',
+          title: '请先登录',
           type: 'warning'
         })
       }
