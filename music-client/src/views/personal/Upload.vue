@@ -7,9 +7,9 @@
       :on-success='handleAvatarSuccess'
       :before-upload='beforeAvatarUpload'>
       <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-      <div class="el-upload__text">将文件拖到此处，或<em>修改头像</em></div>
+      <div class="el-upload__text">将文件拖到此处或点击上传</div>
       <template #tip>
-        <div class="el-upload__tip">只能上传jpg/png文件，且不超过10M</div>
+        <p class="el-upload__tip">只能上传 {{this.upTypes.join('、')}} 文件，且不超过10M</p>
       </template>
     </el-upload>
   </div>
@@ -27,7 +27,8 @@ export default {
   },
   data () {
     return {
-      imageUrl: ''
+      imageUrl: '',
+      upTypes: ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'x-png', 'icon']
     }
   },
   methods: {
@@ -35,14 +36,11 @@ export default {
       return `${this.BASE_URL}/user/avatar/update?id=${this.userId}`
     },
     beforeAvatarUpload (file) {
-      const upTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/pjpeg', 'image/gif', 'image/bmp', 'image/x-png', 'image/icon']
       const isLt10M = file.size / 1024 / 1024 < 10
       if (!isLt10M) {
         this.$message.error('图片大小不可以超过 10MB!')
-      }
-      console.log(file.type)
-      if (!upTypes.includes(file.type)) {
-        this.$message.error(`图片只支持 ${upTypes.join('、').replace('image/', '')} 格式!`)
+      } else if (!this.upTypes.includes(file.type.replace(/image\//, ""))) {
+        this.$message.error(`图片只支持 ${this.upTypes.join('、')} 格式!`)
       }
     },
     handleAvatarSuccess (res, file) {

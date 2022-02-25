@@ -2,7 +2,7 @@
 @import "global.scss";
 
 .play-list {
-  min-height: 500px;
+  // min-height: 50vh;
   padding: 0 20px;
   .section-content {
     @include layout(flex-start, stretch, row, wrap);

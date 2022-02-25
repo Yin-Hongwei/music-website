@@ -14,7 +14,7 @@
           v-model='textarea'>
         </el-input>
       </div>
-      <el-button type='primary' class='sub-btn' @click='postComment()'>发表评论</el-button>
+      <el-button type='primary' class='sub-btn' @click='submitComment()'>发表评论</el-button>
     </div>
     <ul class='popular' v-for='(item, index) in commentList' :key='index'>
       <li>
@@ -24,14 +24,12 @@
         <div class='popular-msg'>
           <ul>
             <li class='name'>{{userNameList[index]}}</li>
-            <li class='content'>{{item.content}}</li>
             <li class='time'>{{item.createTime}}</li>
+            <li class='content'>{{item.content}}</li>
           </ul>
         </div>
-        <div class='up' ref='up' @click='postUp(item.id, item.up, index)'>
-          <svg class='icon' aria-hidden='true'>
-            <use :xlink:href='ZAN'></use>
-          </svg>
+        <div class='up' ref='up' @click='setSupport(item.id, item.up, index)'>
+          <yin-icon :icon="iconList.ZAN"></yin-icon>
           {{item.up}}
         </div>
       </li>
@@ -40,6 +38,7 @@
 </template>
 
 <script>
+import YinIcon from '@/components/layouts/YinIcon'
 import { mapGetters } from 'vuex'
 import mixin from '../mixins'
 import { HttpManager } from '../api'
@@ -48,6 +47,9 @@ import { ICON } from '../enums'
 export default {
   name: 'Comment',
   mixins: [mixin],
+  components: {
+    YinIcon
+  },
   props: {
     playId: Number, // 歌曲ID或歌单ID
     type: Number // 歌单（1）/歌曲（0）
@@ -58,13 +60,14 @@ export default {
       userPicList: [], // 保存评论用户头像
       userNameList: [], // 保存评论用户名字
       textarea: '', // 存放输入内容
-      ZAN: ICON.ZAN
+      iconList: {
+        ZAN: ICON.ZAN
+      }
     }
   },
   computed: {
     ...mapGetters([
-      'songId',
-      'token' // 用户是否登录
+      'songId'
     ])
   },
   watch: {
@@ -77,38 +80,19 @@ export default {
   },
   methods: {
     // 获取所有评论
-    getComment () {
-      HttpManager.getAllComment(this.type, this.playId)
-        .then(res => {
-          this.commentList = res
-          for (const item of res) {
-            this.getUsers(item.userId)
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-    // 获取评论用户的昵称和头像
-    getUsers (id) {
-      HttpManager.getUserOfId(id)
-        .then(res => {
-          this.userPicList.push(res[0].avator)
-          this.userNameList.push(res[0].username)
-        })
-        .catch(err => {
-          console.error(err)
-        })
+    async getComment () {
+      const result = await HttpManager.getAllComment(this.type, this.playId)
+      this.commentList = result
+      for (const item of result) {
+        // 获取评论用户的昵称和头像
+        const resultUser = await HttpManager.getUserOfId(item.userId)
+        this.userPicList.push(resultUser[0].avator)
+        this.userNameList.push(resultUser[0].username)
+      }
     },
     // 提交评论
-    postComment () {
-      if (!this.token) {
-        this.$notify({
-          title: '请先登录',
-          type: 'warning'
-        })
-        return
-      }
+    async submitComment () {
+      if (!this.checkStatus()) return
 
       // 0 代表歌曲， 1 代表歌单
       const params = new URLSearchParams()
@@ -120,49 +104,35 @@ export default {
       params.append('userId', this.userId)
       params.append('type', this.type)
       params.append('content', this.textarea)
-      HttpManager.setComment(params)
-        .then(res => {
-          if (res.code === 1) {
-            this.textarea = ''
-            this.getComment()
-            this.$notify({
-              title: '评论成功',
-              type: 'success'
-            })
-          } else {
-            this.$notify({
-              title: '评论失败',
-              type: 'error'
-            })
-          }
+
+      const result = await HttpManager.setComment(params)
+      if (result.code === 1) {
+        this.textarea = ''
+        this.$notify({
+          title: '评论成功',
+          type: 'success'
         })
-        .catch(err => {
-          console.error(err)
+        await this.getComment()
+      } else {
+        this.$notify({
+          title: '评论失败',
+          type: 'error'
         })
+      }
     },
     // 点赞
-    postUp (id, up, index) {
-      if (!this.token) {
-        this.$notify({
-          title: '请先登录',
-          type: 'warning'
-        })
-        return
-      }
+    async setSupport (id, up, index) {
+      if (!this.checkStatus()) return
 
       const params = new URLSearchParams()
       params.append('id', id)
       params.append('up', up + 1)
-      HttpManager.setLike(params)
-        .then(res => {
-          if (res.code === 1) {
-            this.$refs.up[index].children[0].style.color = '#2796dd'
-            this.getComment()
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      
+      const result = await HttpManager.setSupport(params)
+      if (result.code === 1) {
+        this.$refs.up[index].children[0].style.color = '#2796dd'
+        await this.getComment()
+      }
     }
   }
 }

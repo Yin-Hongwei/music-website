@@ -16,9 +16,7 @@
         <span>{{songDetails.introduction}}</span>
       </div>
       <div class='content'>
-        <song-list :songList='currentSongList'>
-          <template v-slot:title>歌单</template>
-        </song-list>
+        <song-list :songList='currentSongList'></song-list>
       </div>
     </div>
   </div>
@@ -26,12 +24,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import mixin from '../../mixins'
-import SongList from '../../components/SongList'
-import { HttpManager } from '../../api'
+import mixin from '@/mixins'
+import SongList from '@/components/SongList'
+import { HttpManager } from '@/api'
 
 export default {
-  name: 'SingerDetail',
   mixins: [mixin],
   components: {
     SongList
@@ -46,18 +43,12 @@ export default {
       'songDetails'
     ])
   },
-  mounted () {
-    this.getSongList(this.songDetails.id)
-  },
-  methods: {
-    getSongList (id) {
-      HttpManager.getSongOfSingerId(id)
-        .then(res => {
-          this.currentSongList = res
-        })
-        .catch(err => {
-          console.error(err)
-        })
+  async mounted () {
+    try {
+      const result = await HttpManager.getSongOfSingerId(this.songDetails.id)
+      this.currentSongList = result
+    } catch (error) {
+      console.error(error)
     }
   }
 }
