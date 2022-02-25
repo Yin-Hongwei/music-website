@@ -1,11 +1,11 @@
 <template>
   <div class="search">
-    <nav class="searchList-nav">
+    <nav class="search-nav">
       <span
         v-for="(item, index) in searchNavList"
         :key="index"
         :class="{ 'is-active': currentView === item.value }"
-        @click="handleChangeView(item.value)"
+        @click="currentView = item.value"
       >
         {{ item.name }}
       </span>
@@ -20,7 +20,6 @@ import SearchSong from "./SearchSong.vue";
 import SearchSongList from "./SearchSongList.vue";
 
 export default {
-  name: "Search",
   mixins: [mixin],
   components: {
     SearchSong,
@@ -40,16 +39,37 @@ export default {
       ],
       currentView: "SearchSong",
     };
-  },
-  methods: {
-    // 切换组件
-    handleChangeView(component) {
-      this.currentView = component;
-    },
-  },
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/search.scss";
+@import "@/assets/css/var.scss";
+@import "@/assets/css/global.scss";
+
+.search{
+  margin: auto;
+  margin-top: 0;
+  padding-top: $header-height;
+  background-color: $color-white;
+  border-radius: 12px;
+  width: 900px;
+  position: relative;
+}
+
+.search-nav {
+  @include layout(space-around);
+  margin-top: 20px;
+  font-size: 1.5rem;
+  color: $color-black;
+  span {
+    line-height: 50px;
+    cursor: pointer;
+  }
+}
+
+.is-active {
+  font-weight: 600;
+  border-bottom:5px solid $color-black;
+}
 </style>

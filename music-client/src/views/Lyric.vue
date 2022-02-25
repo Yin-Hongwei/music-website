@@ -1,18 +1,19 @@
 <template>
   <div class='song-lyric'>
-    <h1 class='lyric-title'>歌词</h1>
-    <transition-group name='lyric-fade'>
-      <!--有歌词-->
-      <ul :style='{top:lrcTop}' class='has-lyric' v-if='lyricArr.length' key='has-lyric'>
-        <li v-for='(item, index) in lyricArr' :key='index'>
-          {{ item[1] }}
-        </li>
-      </ul>
-      <!--没歌词-->
-      <div v-else class='no-lyric' key='no-lyric'>
-        <span>暂无歌词</span>
-      </div>
-    </transition-group>
+    <dir class="lyric-container">
+      <transition-group name='lyric-fade'>
+        <!--有歌词-->
+        <ul :style='{ top: lrcTop }' class='has-lyric' v-if='lyricArr.length' key='has-lyric'>
+          <li v-for='(item, index) in lyricArr' :key='index'>
+            {{ item[1] }}
+          </li>
+        </ul>
+        <!--没歌词-->
+        <div v-else class='no-lyric' key='no-lyric'>
+          <span>暂无歌词</span>
+        </div>
+      </transition-group>
+    </dir>
     <comment :playId='songId' :type='0'></comment>
   </div>
 </template>
@@ -32,7 +33,6 @@ export default {
   data () {
     return {
       lrcTop: '200px', // 歌词滑动
-      showLrc: false, // 切换唱片和歌词
       lyricArr: [] // 当前歌曲的歌词
     }
   },
@@ -60,6 +60,7 @@ export default {
               document.querySelectorAll('.has-lyric li')[j].style.fontSize = '15px'
             }
             if (i >= 0) {
+              // this.lrcTop = -i * 30 + 10 + 'px'
               document.querySelectorAll('.has-lyric li')[i].style.color = '#95d2f6'
               document.querySelectorAll('.has-lyric li')[i].style.fontSize = '25px'
             }
@@ -75,5 +76,59 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '@/assets/css/lyric.scss';
+@import "@/assets/css/var.scss";
+.lyric-container {
+  margin: 0;
+  padding: 0;
+  // height: 60vh;
+  // overflow: auto;
+  // position: relative;
+}
+.song-lyric {
+  margin: auto;
+  padding-top: $header-height;
+  width: 700px;
+  background-color: $color-white;
+  border-radius: 12px;
+  padding: 80px 20px 50px 20px;
+  font-family: $font-family;
+
+  .has-lyric {
+    // position: absolute;
+    font-size: 18px;
+    padding: 30px 0;
+    width: 100%;
+    min-height: 170px;
+    text-align: center;
+
+    li {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+    }
+  }
+
+  .no-lyric {
+    margin: 100px 0;
+    width: 100%;
+    text-align: center;
+
+    span {
+      font-size: 18px;
+      text-align: center;
+    }
+  }
+}
+
+.lyric-fade-enter,
+.lyric-fade-leave-to {
+  transform: translateX(30px);
+  opacity: 0;
+}
+
+.lyric-fade-enter-active,
+.lyric-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
 </style>

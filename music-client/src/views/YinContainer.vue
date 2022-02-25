@@ -28,6 +28,11 @@ window.addEventListener('beforeunload', () => {
 })
 </script>
 
-<style lang='scss' scoped>
-@import '@/assets/css/yin-container.scss';
+<style lang="scss" scoped>
+@import "@/assets/css/var.scss";
+@import "@/assets/css/global.scss";
+
+#app {
+  @include layout(flex-start, stretch, column);
+}
 </style>

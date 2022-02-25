@@ -39,9 +39,7 @@ export default {
       const isLt10M = file.size / 1024 / 1024 < 10
       if (!isLt10M) {
         this.$message.error('图片大小不可以超过 10MB!')
-      }
-      console.log(file.type)
-      if (!upTypes.includes(file.type)) {
+      } else if (!upTypes.includes(file.type)) {
         this.$message.error(`图片只支持 ${upTypes.join('、').replace('image/', '')} 格式!`)
       }
     },

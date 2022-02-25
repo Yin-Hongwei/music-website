@@ -33,9 +33,7 @@
       </div>
       <!--歌曲-->
       <div class="songs-body">
-        <song-list :songList="currentSongList">
-          <template v-slot:title>歌单</template>
-        </song-list>
+        <song-list :songList="currentSongList"></song-list>
         <comment :playId="songListId" :type="1"></comment>
       </div>
     </div>
@@ -44,10 +42,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import mixin from '../../mixins'
-import SongList from '../../components/SongList'
-import Comment from '../../components/Comment'
-import { HttpManager } from '../../api'
+import mixin from '@/mixins'
+import SongList from '@/components/SongList'
+import Comment from '@/components/Comment'
+import { HttpManager } from '@/api'
 
 export default {
   name: 'song-sheet-detail',

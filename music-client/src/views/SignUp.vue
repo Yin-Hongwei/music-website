@@ -119,5 +119,31 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '@/assets/css/sign-up.scss';
+@import "@/assets/css/var.scss";
+@import "@/assets/css/global.scss";
+
+.sign-up {
+  position: absolute;
+  top: $header-height + 20px;
+  background-color: $color-white;
+  border-radius: 10px;
+  width: 350px;
+  margin-left: 850px;
+  padding: 30px 30px;
+
+  .sign-up-head {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .sign-up-btn {
+    @include layout(space-between);
+    button {
+      display: block;
+      width: 50%;
+    }
+  }
+}
 </style>

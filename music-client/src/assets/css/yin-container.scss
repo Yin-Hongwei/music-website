@@ -1,6 +1,0 @@
-@import "var.scss";
-@import "global.scss";
-
-#app {
-  @include layout(flex-start, stretch, column);
-}

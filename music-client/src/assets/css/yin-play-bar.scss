@@ -18,39 +18,42 @@
 
   .kongjian {
     @include layout(center, center);
-    bottom: 0;
     height: $play-bar-height;
     width: 100%;
     min-width: 1000px;
     background-color: $theme-play-bar-color;
 
-    .item {
+    .song-edit {
       position: relative;
-      width: 80px;
-      height: 50px;
-      line-height: 60px;
-      text-align: center;
-      cursor: pointer;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      
+      svg {
+        width: 80px;
+        cursor: pointer;
+      }
       .icon.active {
         color: red !important;
       }
+
       .volume {
         position: absolute;
         display: none;
         height: 100px;
-        top: -($play-bar-height + 50px);
-        right: 22px;
+        top: -($play-bar-height + 70px);
+        right: -20px;
       }
       .show-volume {
         display: block;
       }
     }
-
-    .item-img {
+    .song-bar-img {
       width: $play-bar-height;
       height: $play-bar-height;
       img {
-        width: 100%;
+        cursor: pointer;
+        height: 100%;
       }
     }
 
@@ -89,6 +92,7 @@
             }
           }
           .idot {
+            cursor: pointer;
             width: 16px;
             height: 16px;
             position: relative;

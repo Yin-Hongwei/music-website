@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import PlayList from '../../components/PlayList'
-import { songStyle } from '../../enums'
-import { HttpManager } from '../../api'
+import PlayList from '@/components/PlayList'
+import { songStyle } from '@/enums'
+import { HttpManager } from '@/api'
 
 export default {
   name: 'SongSheet',
@@ -93,5 +93,41 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '@/assets/css/song-sheet.scss';
+@import "@/assets/css/var.scss";
+@import "@/assets/css/global.scss";
+
+.song-sheet {
+  margin: 30px 150px;
+  margin-top: 0;
+  padding-top: $header-height;
+  padding-bottom: 50px;
+  min-width: 800px;
+  background-color: $color-white;
+}
+
+.song-sheet-header {
+  width: 100%;
+  padding: 0 40px;
+  li {
+    display: inline-block;
+    line-height: 40px;
+    margin: 40px 20px 15px 20px;
+    font-size: 20px;
+    font-weight: 400;
+    color: $color-grey;
+    border-bottom: none;
+    cursor: pointer;
+  }
+  li.active {
+    color: $color-black;
+    font-weight: 600;
+    border-bottom: 4px solid $color-black;
+  }
+}
+
+.pagination {
+  @include layout(center);
+  transform: translateY(15px);
+}
+
 </style>

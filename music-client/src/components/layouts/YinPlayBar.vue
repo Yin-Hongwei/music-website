@@ -1,31 +1,20 @@
 <template>
   <div class='play-bar' :class='{show:!toggle}'>
-    <div @click='toggle=!toggle' class='item-up' :class='{turn: toggle}'>
-      <svg class='icon' aria-hidden='true'>
-        <use :xlink:href='ZHEDIE'></use>
-      </svg>
+    <div class='item-up' :class='{turn: toggle}'>
+      <yin-icon :icon="ZHEDIE" @click='toggle=!toggle'></yin-icon>
     </div>
     <div class='kongjian'>
-      <!--上一首-->
-      <div class='item' @click='prev'>
-        <svg class='icon' aria-hidden='true'>
-          <use :xlink:href='SHANGYISHOU'></use>
-        </svg>
+      <div class="song-edit">
+        <!--上一首-->
+        <yin-icon :icon="SHANGYISHOU" @click='prev'></yin-icon>
+        <!--播放-->
+        <yin-icon :icon="playBtnIcon" @click='togglePlay'></yin-icon>
+        <!--下一首-->
+        <yin-icon :icon="XIAYISHOU" @click='next'></yin-icon>
       </div>
-      <!--播放-->
-      <div class='item' @click='togglePlay'>
-        <svg class='icon' aria-hidden='true'>
-          <use :xlink:href='playBtnIcon'></use>
-        </svg>
-      </div>
-      <!--下一首-->
-      <div class='item' @click='next'>
-        <svg class='icon' aria-hidden='true'>
-          <use :xlink:href='XIAYISHOU'></use>
-        </svg>
-      </div>
+
       <!--歌曲图片-->
-      <div class='item-img' @click='goPlayerPage'>
+      <div class='song-bar-img' @click='goPlayerPage'>
         <img :src='songPic' alt=''>
       </div>
       <!--播放进度-->
@@ -51,39 +40,25 @@
         <!--播放结束时间-->
         <div class='left-time'>{{ songTime }}</div>
       </div>
-      <!--音量-->
-      <div class='item icon-volume'  @click.stop='showVolume = true'>
-        <svg v-if='volume !== 0' class='icon' aria-hidden='true'>
-          <use :xlink:href='YINLIANG'></use>
-        </svg>
-        <svg v-else class='icon' aria-hidden='true'>
-          <use :xlink:href='JINGYIN'></use>
-        </svg>
+      
+      <div class="song-edit">
+        <!--音量-->
+        <yin-icon v-if='volume !== 0' :icon="YINLIANG" @click.stop='showVolume = true'></yin-icon>
+        <yin-icon v-else :icon="JINGYIN" @click.stop='showVolume = true'></yin-icon>
         <el-slider class='volume' :class='{"show-volume": showVolume}'  v-model='volume' :vertical='true'></el-slider>
-      </div>
-      <!--收藏-->
-      <div class='item' @click='collection'>
-        <svg :class='{ active: isCollection }' class='icon' aria-hidden='true'>
-          <use :xlink:href='XIHUAN'></use>
-        </svg>
-      </div>
-      <!--下载-->
-      <div class='item' @click='downloadMusic'>
-        <svg class='icon' aria-hidden='true'>
-          <use :xlink:href='XIAZAI'></use>
-        </svg>
-      </div>
-      <!--歌曲列表-->
-      <div class='item' @click='changeAside'>
-        <svg class='icon' aria-hidden='true'>
-          <use :xlink:href='LIEBIAO'></use>
-        </svg>
+        <!--收藏-->
+        <yin-icon :class='{ active: isCollection }' :icon="XIHUAN" @click='collection'></yin-icon>
+        <!--下载-->
+        <yin-icon :icon="XIAZAI" @click='downloadMusic'></yin-icon>
+        <!--歌曲列表-->
+        <yin-icon :icon="LIEBIAO" @click='changeAside'></yin-icon>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import YinIcon from './YinIcon'
 import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
 import { HttpManager } from '@/api'
@@ -113,6 +88,9 @@ export default {
       LIEBIAO: ICON.LIEBIAO,
       XIHUAN: ICON.XIHUAN
     }
+  },
+  components: {
+    YinIcon
   },
   computed: {
     ...mapGetters([

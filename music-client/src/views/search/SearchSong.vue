@@ -1,64 +1,61 @@
 <template>
-  <div class='search-song'>
-    <song-list :songList='currentSongList'></song-list>
+  <div class="search-song">
+    <song-list :songList="currentSongList"></song-list>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import mixin from '@/mixins'
-import SongList from '@/components/SongList.vue'
-import { HttpManager } from '@/api'
+import { mapGetters } from "vuex";
+import mixin from "@/mixins";
+import SongList from "@/components/SongList.vue";
+import { HttpManager } from "@/api";
 
 export default {
-  name: 'SearchSong',
   mixins: [mixin],
   components: {
-    SongList
+    SongList,
   },
-  data () {
+  data() {
     return {
-      currentSongList: [] // 存放的音乐
-    }
+      currentSongList: [], // 存放的音乐
+    };
   },
   computed: {
-    ...mapGetters([
-      'searchWord'
-    ])
+    ...mapGetters(["searchWord"]),
   },
   watch: {
-    searchWord (value) {
-      this.searchSong(value)
-    }
+    searchWord(value) {
+      this.searchSong(value);
+    },
   },
-  mounted () {
-    this.searchSong(this.$route.query.keywords)
+  mounted() {
+    this.searchSong(this.$route.query.keywords);
   },
   methods: {
     // 搜索音乐
-    searchSong (value) {
+    searchSong(value) {
       if (!value) {
-        this.currentSongList = []
-        return
+        this.currentSongList = [];
+        return;
       }
       HttpManager.getSongOfSingerName(value)
-        .then(res => {
+        .then((res) => {
           if (!res.length) {
-            this.currentSongList = []
+            this.currentSongList = [];
             this.$notify({
-              title: '暂时没有相关歌曲',
-              type: 'warning'
-            })
+              title: "暂时没有相关歌曲",
+              type: "warning",
+            });
           } else {
-            this.currentSongList = res
+            this.currentSongList = res;
           }
         })
-        .catch(err => {
-          console.error(err)
-        })
-    }
-  }
-}
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>

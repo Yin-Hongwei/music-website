@@ -7,14 +7,14 @@
       </div>
       <el-form :model='loginForm' status-icon :rules='rules' ref='loginForm'>
         <el-form-item prop='username'>
-          <el-input placeholder='用户名' v-model='loginForm.username'></el-input>
+          <el-input placeholder='用户名' v-model='loginForm.username' size="large"></el-input>
         </el-form-item>
         <el-form-item prop='password'>
-          <el-input type='password' placeholder='密码' v-model='loginForm.password' @keyup.enter='token'></el-input>
+          <el-input type='password' placeholder='密码' v-model='loginForm.password' @keyup.enter='token' size="large"></el-input>
         </el-form-item>
         <div class='login-btn'>
-          <el-button @click='handleSignUp'>注册</el-button>
-          <el-button type='primary' @click='handleLoginIn'>登录</el-button>
+          <el-button size="large" @click='handleSignUp'>注册</el-button>
+          <el-button type='primary' size="large" @click='handleLoginIn'>登录</el-button>
         </div>
       </el-form>
     </div>
@@ -111,5 +111,46 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '@/assets/css/sign-in.scss';
+@import "@/assets/css/var.scss";
+@import "@/assets/css/global.scss";
+
+.login-logo {
+  background-color: $color-blue-light;
+  height: 100vh;
+  width: 50vw;
+  min-width: 650px;
+  overflow: hidden;
+  @include layout(center, center);
+  .icon {
+    @include icon(6.5em, $color-blue-dark);
+    transform: rotate(-30deg);
+  }
+}
+
+.login {
+  position: absolute;
+  margin-left: 850px;
+  width: 300px;
+  height: 210px;
+  top: $header-height + 60px;
+  padding: 30px 50px;
+  border-radius: 10px;
+  background-color: $color-white;
+
+  .login-head {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .login-btn {
+    @include layout(space-between);
+    button {
+      display: block;
+      width: 50%;
+    }
+  }
+}
+
 </style>

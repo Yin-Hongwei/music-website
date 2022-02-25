@@ -2,27 +2,24 @@
   <div class='yin-header'>
     <!--图标-->
     <div class='header-logo' @click='goPage()'>
-      <svg class='icon' aria-hidden='true'>
-        <use :xlink:href='ERJI'></use>
-      </svg>
+      <yin-icon :icon="ERJI"></yin-icon>
       <span>{{ musicName }}</span>
     </div>
     <ul class='navbar'>
-      <li :class='{active: item.name === activeNavName}' v-for='item in headerNavList' :key='item.path'
-          @click='goPage(item.path, item.name)'>
+      <li :class='{active: item.name === activeNavName}' v-for='item in headerNavList' :key='item.path' @click='goPage(item.path, item.name)'>
         {{ item.name }}
       </li>
       <!--搜索框-->
       <li>
-        <div class='header-search'>
-          <input type='text' placeholder='搜索音乐' @keyup.enter='goSearch()' v-model='keywords'>
-        </div>
-      </li>
-      <li v-show='!token' :class='{active: item.name === activeNavName}' v-for='item in signList' :key='item.type'
-          @click='goPage(item.path, item.name)'>{{ item.name }}
+        <input class='header-search' type='text' placeholder='搜索音乐' @keyup.enter='goSearch()' v-model='keywords'>
       </li>
     </ul>
     <!--设置-->
+    <ul class='header-right sign' v-if='!token'>
+      <li :class='{active: item.name === activeNavName}' v-for='item in signList' :key='item.type' @click='goPage(item.path, item.name)'>
+        {{ item.name }}
+      </li>
+    </ul>
     <div class='header-right' v-if='token'>
       <div class='user' @click='goPage(homeList.path, homeList.name)'>
         <img :src='attachImageUrl(userPic)' alt=''>
@@ -40,6 +37,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { Setting } from '@element-plus/icons-vue'
+import YinIcon from './YinIcon'
 import mixin from '@/mixins'
 import {
   HEADERNAVLIST,
@@ -58,7 +56,8 @@ export default {
   name: 'YinHeader',
   mixins: [mixin],
   components: {
-    Setting
+    Setting,
+    YinIcon
   },
   data () {
     return {
@@ -124,5 +123,147 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '@/assets/css/yin-header.scss';
+@import "@/assets/css/var.scss";
+@import "@/assets/css/global.scss";
+
+/*头部*/
+.yin-header {
+  position: fixed;
+  @include layout;
+  width: 100%;
+  height: $header-height;
+  line-height: $header-height;
+  padding: $header-padding;
+  margin: $header-margin;
+  background-color: $theme-header-color;
+  @include box-shadow($box-shadow);
+  box-sizing: border-box;
+  z-index: 100;
+  display: flex;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+}
+
+/*左侧LOGO*/
+.header-logo {
+  margin: $header-logo-margin;
+  font-size: $font-size-logo;
+  font-weight: bold;
+  cursor: pointer;
+
+  .icon {
+    @include icon(($header-height / 3) * 2, $color-black);
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+}
+
+/*navbar*/
+.navbar {
+  display: flex;
+  white-space: nowrap;
+
+  /*搜索输入框*/
+  .header-search {
+    height: $header-search-height;
+    min-width: $header-search-width;
+    border-radius: $header-search-radius;
+    border: 0;
+    font-size: $font-size-default;
+    text-indent: 10px;
+    background-color: $color-light-grey;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.navbar,
+.header-right.sign {
+  li {
+    margin: $header-nav-margin;
+    padding: $header-nav-padding;
+    font-size: $font-size-header;
+    color: $color-grey;
+    cursor: pointer;
+  }
+}
+/*用户*/
+.header-right {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .user {
+    overflow: hidden;
+    width: $header-user-width;
+    height: $header-user-width;
+    border-radius: $header-user-radius;
+    margin: $header-user-margin;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+    }
+  }
+  .setting {
+    font-size: 30px;
+    padding-top: 10px;
+    cursor: pointer;
+  }
+}
+
+.menu {
+  display: none;
+  line-height: 0px;
+  position: absolute;
+  background-color: $color-white;
+  @include box-shadow(1px 1px 10px rgba(0, 0, 0, 0.4));
+  width: $header-menu-width;
+  padding: $header-menu-padding;
+  border-radius: $header-menu-radius;
+  top: $header-height + 10px;
+  right: -20px;
+  z-index: 5;
+  text-align: center;
+  cursor: pointer;
+
+  li {
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+
+    &:hover {
+      background-color: $theme-color;
+      color: $color-white;
+    }
+  }
+
+  :nth-child(1):before {
+    content: " ";
+    display: block; /*独占一行*/
+    position: absolute;
+    right: 45px;
+    top: -5px; /*果断的露出上半部分*/
+    width: 10px;
+    height: 10px;
+    background-color: $color-white;
+    /*一个正方形倾斜四十五度就是三角了但是要把下半部分藏起来*/
+    transform: rotate(45deg);
+  }
+}
+
+.show {
+  display: block;
+}
+
+.active {
+  color: $theme-color !important;
+  border-bottom: 5px solid $theme-color !important;
+}
+
 </style>

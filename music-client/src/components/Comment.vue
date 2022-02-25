@@ -29,9 +29,7 @@
           </ul>
         </div>
         <div class='up' ref='up' @click='postUp(item.id, item.up, index)'>
-          <svg class='icon' aria-hidden='true'>
-            <use :xlink:href='ZAN'></use>
-          </svg>
+          <yin-icon :icon="ZAN"></yin-icon>
           {{item.up}}
         </div>
       </li>
@@ -40,6 +38,7 @@
 </template>
 
 <script>
+import YinIcon from '@/components/layouts/YinIcon'
 import { mapGetters } from 'vuex'
 import mixin from '../mixins'
 import { HttpManager } from '../api'
@@ -48,6 +47,9 @@ import { ICON } from '../enums'
 export default {
   name: 'Comment',
   mixins: [mixin],
+  components: {
+    YinIcon
+  },
   props: {
     playId: Number, // 歌曲ID或歌单ID
     type: Number // 歌单（1）/歌曲（0）
