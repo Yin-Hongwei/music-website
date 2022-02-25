@@ -24,12 +24,14 @@
       <div class='user' @click='goPage(homeList.path, homeList.name)'>
         <img :src='attachImageUrl(userPic)' alt=''>
       </div>
-      <div class="setting" @click.stop="showMenu = true">
-        <el-icon><setting /></el-icon>
-      </div>
-      <ul class='menu' ref='menu' :class='showMenu ? "show" : ""'>
-        <li v-for='(item, index) in menuList' :key='index' @click.stop='goMenuList(item.path)'>{{ item.name }}</li>
-      </ul>
+      <el-dropdown>
+        <el-icon class="setting"><setting /></el-icon>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item v-for='(item, index) in menuList' :key='index' @click.stop='goMenuList(item.path)'>{{ item.name }}</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
   </div>
 </template>
@@ -67,7 +69,6 @@ export default {
       menuList: MENULIST, // 用户下拉菜单项
       homeList: HOME_LIST,
       keywords: '',
-      showMenu: false,
       ERJI: ICON.ERJI,
       SOUSUO: ICON.SOUSUO
     }
@@ -78,11 +79,6 @@ export default {
       'userPic',
       'token'
     ])
-  },
-  mounted () {
-    document.addEventListener('click', () => {
-      this.showMenu = false
-    }, false)
   },
   methods: {
     goPage (path, name) {
@@ -95,8 +91,6 @@ export default {
       }
     },
     goMenuList (path) {
-      this.showMenu = false
-
       if (path === 0) this.$store.commit('setIsCollection', false)
 
       if (path) {
@@ -211,49 +205,7 @@ export default {
   }
   .setting {
     font-size: 30px;
-    padding-top: 10px;
     cursor: pointer;
-  }
-}
-
-.menu {
-  display: none;
-  line-height: 0px;
-  position: absolute;
-  background-color: $color-white;
-  @include box-shadow(1px 1px 10px rgba(0, 0, 0, 0.4));
-  width: $header-menu-width;
-  padding: $header-menu-padding;
-  border-radius: $header-menu-radius;
-  top: $header-height + 10px;
-  right: -20px;
-  z-index: 5;
-  text-align: center;
-  cursor: pointer;
-
-  li {
-    display: inline-block;
-    width: 100%;
-    height: 40px;
-    line-height: 40px;
-
-    &:hover {
-      background-color: $theme-color;
-      color: $color-white;
-    }
-  }
-
-  :nth-child(1):before {
-    content: " ";
-    display: block; /*独占一行*/
-    position: absolute;
-    right: 45px;
-    top: -5px; /*果断的露出上半部分*/
-    width: 10px;
-    height: 10px;
-    background-color: $color-white;
-    /*一个正方形倾斜四十五度就是三角了但是要把下半部分藏起来*/
-    transform: rotate(45deg);
   }
 }
 

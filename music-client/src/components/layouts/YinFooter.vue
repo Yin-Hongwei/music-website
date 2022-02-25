@@ -21,7 +21,7 @@ const footerList = ref([
 
 .the-footer {
   width: 100%;
-  height: $footer-height;
+  padding: 20px 0;
   background-color: $theme-footer-color;
   @include layout(center, center, column);
 }

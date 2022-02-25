@@ -24,8 +24,8 @@
         <div class='popular-msg'>
           <ul>
             <li class='name'>{{userNameList[index]}}</li>
-            <li class='content'>{{item.content}}</li>
             <li class='time'>{{item.createTime}}</li>
+            <li class='content'>{{item.content}}</li>
           </ul>
         </div>
         <div class='up' ref='up' @click='postUp(item.id, item.up, index)'>

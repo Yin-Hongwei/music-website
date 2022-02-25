@@ -1,16 +1,18 @@
 <template>
-  <div class="search">
-    <nav class="search-nav">
-      <span
-        v-for="(item, index) in searchNavList"
-        :key="index"
-        :class="{ 'is-active': currentView === item.value }"
-        @click="currentView = item.value"
-      >
-        {{ item.name }}
-      </span>
-    </nav>
-    <component :is="currentView"></component>
+  <div class="container">
+    <div class="search">
+      <nav class="search-nav">
+        <span
+          v-for="(item, index) in searchNavList"
+          :key="index"
+          :class="{ 'is-active': currentView === item.value }"
+          @click="currentView = item.value"
+        >
+          {{ item.name }}
+        </span>
+      </nav>
+      <component :is="currentView"></component>
+    </div>
   </div>
 </template>
 
@@ -39,7 +41,7 @@ export default {
       ],
       currentView: "SearchSong",
     };
-  }
+  },
 };
 </script>
 
@@ -47,10 +49,12 @@ export default {
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
 
-.search{
+.container {
+  padding-top: $header-height + 30px;
+}
+
+.search {
   margin: auto;
-  margin-top: 0;
-  padding-top: $header-height;
   background-color: $color-white;
   border-radius: 12px;
   width: 900px;
@@ -59,7 +63,6 @@ export default {
 
 .search-nav {
   @include layout(space-around);
-  margin-top: 20px;
   font-size: 1.5rem;
   color: $color-black;
   span {
@@ -70,6 +73,5 @@ export default {
 
 .is-active {
   font-weight: 600;
-  border-bottom:5px solid $color-black;
 }
 </style>

@@ -1,4 +1,5 @@
 <template>
+<div class="container">
   <div class='personal-data'>
     <h2 class='title'>编辑个人资料</h2>
     <div class='personal'>
@@ -44,6 +45,7 @@
         <el-button @click='goBack(-1)'>取消</el-button>
       </div>
     </div>
+  </div>
 </div>
 </template>
 
@@ -131,18 +133,22 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "@/assets/css/var.scss";
+
+.container {
+  padding-top: $header-height + 30px;
+}
+
 .personal-data {
   background-color: white;
-  margin: 0 12vw;
-  padding-top: 80px;
+  margin: 0 20%;
   overflow: hidden;
   border-radius: 12px;
 
   .title {
-    padding: 10px;
+    padding-top: 30px;
     margin-left: 50px;
     display: inline-block;
-    border-block-end: 3px solid black;
   }
 
   .personal {
