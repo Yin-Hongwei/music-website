@@ -12,5 +12,7 @@ export const ICON = {
   JINGYIN: '#icon-yinliangjingyinheix', // 静音
   LIEBIAO: '#icon-liebiao', // 列表
   XIHUAN: '#icon-xihuan-shi', // 收藏
-  ZAN: '#icon-zan' // 赞
+  ZAN: '#icon-zan', // 赞
+  XUNHUAN: '#icon-xunhuan', // 循环
+  LUANXU: '#icon-xunhuan1' // 乱序
 }

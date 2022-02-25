@@ -5,10 +5,8 @@
       <li class='content-item' v-for='(item, index) in playList' :key='index'>
         <div class='kuo' @click='goAblum(item)'>
           <img class='item-img' :src='attachImageUrl(item.pic)' alt=''>
-          <div class='mask'  @click='goAblum(item)'>
-            <svg class='icon' aria-hidden='true'>
-              <use :xlink:href='BOFANG'></use>
-            </svg>
+          <div class='mask' @click='goAblum(item)'>
+            <yin-icon :icon="BOFANG"></yin-icon>
           </div>
         </div>
         <p class='item-name'>{{item.name || item.title}}</p>
@@ -18,12 +16,16 @@
 </template>
 
 <script>
-import mixin from '../mixins'
-import { ICON } from '../enums'
+import YinIcon from '@/components/layouts/YinIcon'
+import mixin from '@/mixins'
+import { ICON } from '@/enums'
 
 export default {
   name: 'PlayList',
   mixins: [mixin],
+  components: {
+    YinIcon
+  },
   props: {
     title: String,
     playList: Array,

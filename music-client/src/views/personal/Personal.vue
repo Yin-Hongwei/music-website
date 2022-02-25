@@ -8,7 +8,7 @@
         <div class="username">{{username}}</div>
         <div class='introduction'>{{introduction}}</div>
       </div>
-      <el-button class="edit-info" round @click="goPage()">修改个人信息</el-button>
+      <el-button class="edit-info" round :icon="Edit" @click="goPage()">修改个人信息</el-button>
     </div>
     <div class='personal-body'>
       <song-list :songList='collectSongList'>
@@ -21,21 +21,20 @@
   </div>
 </template>
 
+<script setup>
+import { Edit } from '@element-plus/icons-vue'
+import SongList from '@/components/SongList'
+import Upload from './Upload'
+</script>
+
 <script>
 import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
-import SongList from '@/components/SongList'
-import Upload from './Upload'
 import { HttpManager } from '@/api'
 import { PERSONAL_DATA } from '@/enums'
 
 export default {
-  name: 'Personal',
   mixins: [mixin],
-  components: {
-    SongList,
-    Upload
-  },
   data () {
     return {
       username: '',

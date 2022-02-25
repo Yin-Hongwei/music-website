@@ -5,7 +5,7 @@ const mixin = {
   computed: {
     ...mapGetters([
       'userId', // 用户 ID
-      'token',
+      'token', // 用户登录状态
       'BASE_URL'
     ])
   },
@@ -35,6 +35,16 @@ const mixin = {
     },
     changeIndex (value) {
       this.$store.commit('setActiveNavName', value)
+    },
+    checkStatus () {
+      if (!this.token) {
+        this.$notify({
+          title: '请先登录',
+          type: 'warning'
+        })
+        return false
+      }
+      return true
     },
     // 播放
     playMusic ({ id, url, pic, index, name, lyric, currentSongList }) {

@@ -16,7 +16,16 @@ const footerList = ref([
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/yin-footer.scss';
+@import "@/assets/css/var.scss";
+@import "@/assets/css/global.scss";
+
+.the-footer {
+  width: 100%;
+  padding: 20px 0;
+  background-color: $theme-footer-color;
+  @include layout(center, center, column);
+}
+
 p {
   height: 30px;
 }

@@ -1,56 +1,52 @@
 <template>
-  <div class='search-song-list'>
-    <play-list :playList='playList' path='song-sheet-detail'></play-list>
+  <div class="search-song-list">
+    <play-list :playList="playList" path="song-sheet-detail"></play-list>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import mixin from '@/mixins'
-import PlayList from '@/components/PlayList.vue'
-import { HttpManager } from '@/api'
+import { mapGetters } from "vuex";
+import mixin from "@/mixins";
+import PlayList from "@/components/PlayList.vue";
+import { HttpManager } from "@/api";
 
 export default {
-  name: 'SearchSongList',
   mixins: [mixin],
   components: {
-    PlayList
+    PlayList,
   },
-  data () {
+  data() {
     return {
-      playList: []
-    }
+      playList: [],
+    };
   },
   computed: {
-    ...mapGetters([
-      'searchWord'
-    ])
+    ...mapGetters(["searchWord"]),
   },
   watch: {
-    searchWord (value) {
-      this.getSearchList(value)
-    }
+    searchWord(value) {
+      this.getSearchList(value);
+    },
   },
-  mounted () {
-    this.getSearchList(this.$route.query.keywords)
+  mounted() {
+    this.getSearchList(this.$route.query.keywords);
   },
   methods: {
-    getSearchList (value) {
-      if (!value) return
-      HttpManager.getSongListOfLikeTitle(value)
-        .then(res => {
-          if (!res.length) {
-            this.$notify({
-              title: '暂无该歌曲内容',
-              type: 'warning'
-            })
-          } else {
-            this.playList = res
-          }
-        })
-    }
-  }
-}
+    getSearchList(value) {
+      if (!value) return;
+      HttpManager.getSongListOfLikeTitle(value).then((res) => {
+        if (!res.length) {
+          this.$notify({
+            title: "暂无该歌曲内容",
+            type: "warning",
+          });
+        } else {
+          this.playList = res;
+        }
+      });
+    },
+  },
+};
 </script>
 
 <style scoped>
