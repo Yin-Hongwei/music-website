@@ -1,51 +1,42 @@
 <template>
-  <div class='play-bar' :class='{show:!toggle}'>
-    <div class='item-up' :class='{turn: toggle}'>
+  <div class='play-bar' :class='{ show: !toggle }'>
+    <div class='fold' :class='{ turn: toggle }'>
       <yin-icon :icon="ZHEDIE" @click='toggle=!toggle'></yin-icon>
     </div>
-    <div class='kongjian'>
-      <div class="song-edit">
+    <!--播放进度-->
+    <el-slider class="progress" v-model="nowTime" @change='changeTime' size="small"></el-slider>
+    <div class='control-box'>
+      <div class='info-box'>
+        <!--歌曲图片-->
+        <div class='song-bar-img' @click='goPlayerPage'>
+          <img :src='songPic' alt=''>
+        </div>
+        <!--播放开始结束时间-->
+        <div v-if="songId">
+          <div class='song-info'>{{ this.songTitle }} - {{ this.singerName }}</div>
+          <div class='time-info'>{{ startTime }} / {{ endTime }}</div>
+        </div>
+      </div>
+      <div class="song-ctr">
+        <yin-icon :icon="playStateList[playStateIndex]" @click='changePlayState'></yin-icon>
         <!--上一首-->
         <yin-icon :icon="SHANGYISHOU" @click='prev'></yin-icon>
         <!--播放-->
         <yin-icon :icon="playBtnIcon" @click='togglePlay'></yin-icon>
         <!--下一首-->
         <yin-icon :icon="XIAYISHOU" @click='next'></yin-icon>
-      </div>
-
-      <!--歌曲图片-->
-      <div class='song-bar-img' @click='goPlayerPage'>
-        <img :src='songPic' alt=''>
-      </div>
-      <!--播放进度-->
-      <div class='playing-speed'>
-        <!--播放开始时间-->
-        <div class='current-time'>{{ nowTime }}</div>
-        <div class='progress-box'>
-          <div class='item-song-title'>
-            <div>{{ this.songTitle }}</div>
-            <div>{{ this.singerName }}</div>
-          </div>
-          <div ref='progress' class='progress' @mousemove='mousemove'>
-            <!--进度条-->
-            <div ref='bg' class='bg' @click='updatemove'>
-              <div ref='curProgress' class='cur-progress' :style='{width: curLength+"%"}'></div>
-            </div>
-            <!--进度条 end -->
-            <!--拖动的点点-->
-            <div ref='idot' class='idot' :style='{left: curLength+"%"}' @mousedown='mousedown' @mouseup='mouseup'></div>
-            <!--拖动的点点 end -->
-          </div>
-        </div>
-        <!--播放结束时间-->
-        <div class='left-time'>{{ songTime }}</div>
-      </div>
-      
-      <div class="song-edit">
         <!--音量-->
-        <yin-icon v-if='volume !== 0' :icon="YINLIANG" @click.stop='showVolume = true'></yin-icon>
-        <yin-icon v-else :icon="JINGYIN" @click.stop='showVolume = true'></yin-icon>
-        <el-slider class='volume' :class='{"show-volume": showVolume}'  v-model='volume' :vertical='true'></el-slider>
+        <el-dropdown trigger="click">
+          <yin-icon v-if='volume !== 0' :icon="YINLIANG"></yin-icon>
+          <yin-icon v-else :icon="JINGYIN"></yin-icon>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-slider style="height: 150px; margin: 10px 0;" v-model='volume' :vertical='true'></el-slider>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
+      <div class="song-ctr song-edit">
         <!--收藏-->
         <yin-icon :class='{ active: isCollection }' :icon="XIHUAN" @click='collection'></yin-icon>
         <!--下载-->
@@ -58,9 +49,9 @@
 </template>
 
 <script>
-import YinIcon from './YinIcon'
 import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
+import YinIcon from './YinIcon'
 import { HttpManager } from '@/api'
 import { formatSeconds } from '@/utils'
 import { ICON, LYRIC } from '@/enums'
@@ -70,15 +61,14 @@ export default {
   mixins: [mixin],
   data () {
     return {
-      tag: false,
-      nowTime: '00:00',
-      songTime: '00:00',
-      curLength: 0, // 进度条的位置
-      progressLength: 0, // 进度条长度
-      mouseStartX: 0, // 拖拽开始位置
+      startTime: '00:00',
+      endTime: '00:00',
+      nowTime: 0, // 进度条的位置
       toggle: true,
       volume: 50,
-      showVolume: false,
+      playState: ICON.XUNHUAN,
+      playStateList: [ICON.XUNHUAN, ICON.LUANXU],
+      playStateIndex: 0,
       XIAZAI: ICON.XIAZAI,
       ZHEDIE: ICON.ZHEDIE,
       SHANGYISHOU: ICON.SHANGYISHOU,
@@ -113,33 +103,23 @@ export default {
   },
   watch: {
     // 切换播放状态的图标
-    isPlay (val) {
-      if (val) {
-        this.$store.commit('setPlayBtnIcon', ICON.ZANTING)
-      } else {
-        this.$store.commit('setPlayBtnIcon', ICON.BOFANG)
-      }
+    isPlay (value) {
+      this.$store.commit('setPlayBtnIcon', value ? ICON.ZANTING : ICON.BOFANG)
     },
     volume () {
       this.$store.commit('setVolume', this.volume / 100)
     },
     // 播放时间的开始和结束
     curTime () {
-      this.nowTime = formatSeconds(this.curTime)
-      this.songTime = formatSeconds(this.duration)
+      this.startTime = formatSeconds(this.curTime)
+      this.endTime = formatSeconds(this.duration)
       // 移动进度条
-      this.curLength = (this.curTime / this.duration) * 100
-      // 处理歌词位置及颜色
+      this.nowTime = (this.curTime / this.duration) * 100
     },
     // 自动播放下一首
     autoNext () {
       this.next()
     }
-  },
-  mounted () {
-    document.addEventListener('click', () => {
-      this.showVolume = false
-    }, false)
   },
   methods: {
     // 下载
@@ -168,63 +148,23 @@ export default {
     },
     // 控制音乐播放 / 暂停
     togglePlay () {
-      if (this.isPlay) {
-        this.$store.commit('setIsPlay', false)
-      } else {
-        this.$store.commit('setIsPlay', true)
-      }
+      this.$store.commit('setIsPlay', this.isPlay ? false : true)
     },
-    // 拖拽开始
-    mousedown (e) {
-      this.mouseStartX = e.clientX
-      this.tag = true
+    changeTime () {
+      this.$store.commit('setChangeTime', this.duration * (this.nowTime * 0.01))
     },
-    // 拖拽结束
-    mouseup () {
-      this.tag = false
-    },
-    // 拖拽中
-    mousemove (e) {
-      if (!this.duration) {
-        return false
-      }
-      if (this.tag) {
-        const movementX = e.clientX - this.mouseStartX
-        const curLength = this.$refs.curProgress.getBoundingClientRect().width
-        //  计算出百分比
-        this.progressLength = this.$refs.progress.getBoundingClientRect().width
-        let newPercent = ((curLength + movementX) / this.progressLength) * 100
-        if (newPercent > 100) {
-          newPercent = 100
-        }
-        this.curLength = newPercent
-        this.mouseStartX = e.clientX
-        //  根据百分比推出对应的播放时间
-        this.changeTime(newPercent)
-      }
-    },
-    // 更改歌曲进度
-    changeTime (percent) {
-      const newCurTime = this.duration * (percent * 0.01)
-      this.$store.commit('setChangeTime', newCurTime)
-    },
-    updatemove (e) {
-      if (!this.tag) {
-        const curLength = this.$refs.bg.offsetLeft
-        this.progressLength = this.$refs.progress.getBoundingClientRect().width
-        let newPercent = ((e.clientX - curLength) / this.progressLength) * 100
-        if (newPercent < 0) {
-          newPercent = 0
-        } else if (newPercent > 100) {
-          newPercent = 100
-        }
-        this.curLength = newPercent
-        this.changeTime(newPercent)
-      }
+    changePlayState() {
+      this.playStateIndex = this.playStateIndex >= this.playStateList.length - 1 ? 0 : ++this.playStateIndex
+      this.playState = this.playStateList[this.playStateIndex]
     },
     // 上一首
     prev () {
-      if (this.currentPlayIndex !== -1 && this.currentPlayList.length > 1) {
+      if (this.playState === ICON.LUANXU) {
+          let playIndex = Math.floor(Math.random() * this.currentPlayList.length)
+          playIndex = playIndex === this.currentPlayIndex ? playIndex + 1 : playIndex
+          this.$store.commit('setCurrentPlayIndex', playIndex)
+          this.toPlay(this.currentPlayList[playIndex].url)
+      } else if (this.currentPlayIndex !== -1 && this.currentPlayList.length > 1) {
         if (this.currentPlayIndex > 0) {
           this.$store.commit('setCurrentPlayIndex', this.currentPlayIndex - 1)
           this.toPlay(this.currentPlayList[this.currentPlayIndex].url)
@@ -236,7 +176,13 @@ export default {
     },
     // 下一首
     next () {
-      if (this.currentPlayIndex !== -1 && this.currentPlayList.length > 1) {
+      if (this.playState === ICON.LUANXU) {
+        let playIndex = Math.floor(Math.random() * this.currentPlayList.length)
+        playIndex = playIndex === this.currentPlayIndex ? playIndex + 1 : playIndex
+        this.$store.commit('setCurrentPlayIndex', playIndex)
+        console.log(playIndex)
+        this.toPlay(this.currentPlayList[playIndex].url)
+      } else if (this.currentPlayIndex !== -1 && this.currentPlayList.length > 1) {
         if (this.currentPlayIndex < this.currentPlayList.length - 1) {
           this.$store.commit('setCurrentPlayIndex', this.currentPlayIndex + 1)
           this.toPlay(this.currentPlayList[this.currentPlayIndex].url)
@@ -250,52 +196,55 @@ export default {
     toPlay (url) {
       if (url && url !== this.songUrl) {
         const song = this.currentPlayList[this.currentPlayIndex]
-        const id = song.id
-        const pic = song.pic
-        const name = song.name
-        const index = this.currentPlayIndex
-        const lyric = song.lyric
-        this.playMusic({ id, url, pic, index, name, lyric, currentSongList: this.currentPlayList })
+        this.playMusic({ 
+          id: song.id, 
+          url, 
+          pic: song.pic, 
+          index: this.currentPlayIndex,
+          name: song.name, 
+          lyric: song.lyric, 
+          currentSongList: this.currentPlayList 
+        })
       }
     },
     goPlayerPage () {
       this.routerManager(LYRIC, { path: `${LYRIC}/${this.songId}` })
     },
     collection () {
-      if (this.token) {
-        const params = new URLSearchParams()
-        params.append('userId', this.userId)
-        params.append('type', 0) // 0 代表歌曲， 1 代表歌单
-        params.append('songId', this.songId)
-        HttpManager.setCollection(params)
-          .then(res => {
-            if (res.code === 1) {
-              this.$store.commit('setIsCollection', true)
-              this.$notify({
-                title: '收藏成功',
-                type: 'success'
-              })
-            } else if (res.code === 2) {
-              this.$notify({
-                title: '已收藏',
-                type: 'warning'
-              })
-            } else {
-              this.$notify.error({
-                title: '收藏失败',
-                showClose: false
-              })
-            }
-          })
-          .catch(err => {
-            console.error(err)
-          })
-      } else {
+      if (!this.token) {
         this.$notify({
           title: '请先登录',
           type: 'warning'
         })
+        return
       }
+      const params = new URLSearchParams()
+      params.append('userId', this.userId)
+      params.append('type', 0) // 0 代表歌曲， 1 代表歌单
+      params.append('songId', this.songId)
+      HttpManager.setCollection(params)
+        .then(res => {
+          if (res.code === 1) {
+            this.$store.commit('setIsCollection', true)
+            this.$notify({
+              title: '收藏成功',
+              type: 'success'
+            })
+          } else if (res.code === 2) {
+            this.$notify({
+              title: '已收藏',
+              type: 'warning'
+            })
+          } else {
+            this.$notify.error({
+              title: '收藏失败',
+              showClose: false
+            })
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
     }
   }
 }

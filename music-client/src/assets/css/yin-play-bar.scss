@@ -7,23 +7,29 @@
   bottom: 0;
   width: 100%;
   transition: all 0.5s;
-  @include box-shadow($box-shadow);
 
-  .item-up {
+  .fold {
     position: absolute;
     bottom: $play-bar-height + 10px;
     left: 20px;
     cursor: pointer;
   }
 
-  .kongjian {
-    @include layout(center, center);
+  .progress {
+    position: absolute;
+    margin-top: -10px
+  }
+
+  .control-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     height: $play-bar-height;
     width: 100%;
     min-width: 1000px;
     background-color: $theme-play-bar-color;
 
-    .song-edit {
+    .song-ctr {
       position: relative;
       display: flex;
       flex-wrap: nowrap;
@@ -36,73 +42,37 @@
       .icon.active {
         color: red !important;
       }
-
-      .volume {
-        position: absolute;
-        display: none;
-        height: 100px;
-        top: -($play-bar-height + 70px);
-        right: -20px;
-      }
-      .show-volume {
-        display: block;
-      }
-    }
-    .song-bar-img {
-      width: $play-bar-height;
-      height: $play-bar-height;
-      img {
-        cursor: pointer;
-        height: 100%;
-      }
     }
 
-    .playing-speed {
-      // 进度条
-      height: 50px;
-      width: 600px;
-      @include layout(center, center);
-
-      .current-time,
-      .left-time {
-        width: 70px;
-        text-align: center;
-        font-size: 13px;
-        color: $color-black;
-        font-weight: 500;
-        top: -10px;
-      }
-
-      .progress-box {
-        flex: 1;
-        .item-song-title {
-          @include layout(space-between);
-          height: 20px;
-          line-height: 10px;
-        }
-        .progress {
-          width: 100%;
-          background: $color-blue-shallow;
-          height: 6px;
-          .bg {
-            height: 100%;
-            .cur-progress {
-              height: 100%;
-              background: $color-blue-active;
-            }
-          }
-          .idot {
-            cursor: pointer;
-            width: 16px;
-            height: 16px;
-            position: relative;
-            border-radius: 50%;
-            background-color: $color-black;
-            top: -11px;
-            vertical-align: middle;
-          }
+    .info-box {
+      width: 30%;
+      margin-left: 30px;
+      display: flex;
+      align-items: center;
+      .song-bar-img {
+        width: calc($play-bar-height - 15px);
+        height: calc($play-bar-height - 15px);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-right: 10px;
+        img {
+          cursor: pointer;
+          height: 100%;
         }
       }
+      .song-info {
+        font-size: 14px;
+      }
+      .time-info {
+        font-size: 12px;
+        color: $color-grey;
+      }
+    }
+
+    .song-edit {
+      width: 30%;
+      align-items: center;
+      justify-content: flex-end;
     }
   }
 }
@@ -112,7 +82,7 @@
 }
 
 .show {
-  bottom: -($play-bar-height);
+  bottom: -($play-bar-height) + 5px;
 }
 
 .icon {

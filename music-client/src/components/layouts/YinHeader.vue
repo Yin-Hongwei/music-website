@@ -24,7 +24,7 @@
       <div class='user' @click='goPage(homeList.path, homeList.name)'>
         <img :src='attachImageUrl(userPic)' alt=''>
       </div>
-      <el-dropdown>
+      <el-dropdown trigger="click">
         <el-icon class="setting"><setting /></el-icon>
         <template #dropdown>
           <el-dropdown-menu>
