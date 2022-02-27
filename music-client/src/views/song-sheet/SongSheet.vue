@@ -49,7 +49,11 @@ export default {
     }
   },
   created () {
-    this.getSongList()
+      try {
+        this.getSongList()
+      } catch (error) {
+        console.error(error)
+      }
   },
   methods: {
     // 获取当前页
@@ -57,36 +61,28 @@ export default {
       this.currentPage = val
     },
     // 获取歌单
-    handleChangeView (item) {
+   async handleChangeView (item) {
       this.activeName = item.name
       this.allPlayList = []
-      if (item.name === '全部歌单') {
-        this.getSongList()
-      } else {
-        this.getSongListOfStyle(item.name)
+      try {
+        if (item.name === '全部歌单') {
+          await this.getSongList()
+        } else {
+          await this.getSongListOfStyle(item.name)
+        }
+      } catch (error) {
+        console.error(error)
       }
     },
     // 获取全部歌单
-    getSongList () {
-      HttpManager.getSongList()
-        .then(res => {
-          this.currentPage = 1
-          this.allPlayList = res
-        })
-        .catch(err => {
-          console.error(err)
-        })
+    async getSongList () {
+      this.allPlayList = await HttpManager.getSongList()
+      this.currentPage = 1
     },
     // 通过类别获取歌单
-    getSongListOfStyle (style) {
-      HttpManager.getSongListOfStyle(style)
-        .then(res => {
-          this.currentPage = 1
-          this.allPlayList = res
-        })
-        .catch(err => {
-          console.error(err)
-        })
+    async getSongListOfStyle (style) {
+      this.allPlayList = await HttpManager.getSongListOfStyle(style)
+      this.currentPage = 1
     }
   }
 }
@@ -97,22 +93,20 @@ export default {
 @import "@/assets/css/global.scss";
 
 .song-sheet {
-  margin: 30px 150px;
+  margin: 30px 8%;
   margin-top: 0;
   padding-top: $header-height;
   padding-bottom: 50px;
-  min-width: 800px;
   background-color: $color-white;
 }
 
 .song-sheet-header {
   width: 100%;
-  padding: 0 40px;
   li {
     display: inline-block;
-    line-height: 40px;
-    margin: 40px 20px 15px 20px;
-    font-size: 20px;
+    line-height: 3rem;
+    margin: 1rem 3rem 1rem 3rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: $color-grey;
     border-bottom: none;

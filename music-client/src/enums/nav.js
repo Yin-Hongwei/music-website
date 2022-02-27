@@ -4,7 +4,7 @@ export const NAV_NAME = {
   HOME: '首页',
   SONG_SHEET: '歌单',
   SINGER: '歌手',
-  PERSONAL: '我的音乐',
+  PERSONAL: '个人主页',
   SETTING: '设置',
   SIGN_IN: '登录',
   SIGN_UP: '注册',
@@ -23,11 +23,6 @@ export const HEADERNAVLIST = [{
   path: SINGER
 }]
 
-export const HOME_LIST = {
-  name: NAV_NAME.PERSONAL,
-  path: PERSONAL
-}
-
 // 右侧导航栏
 export const SIGNLIST = [{
   name: NAV_NAME.SIGN_IN,
@@ -39,11 +34,15 @@ export const SIGNLIST = [{
 
 // 用户下拉菜单项
 export const MENULIST = [
-//   {
-//   name: NAV_NAME.SETTING,
-//   path: SETTING
-// },
- {
-  name: NAV_NAME.SIGN_OUT,
-  path: SIGN_OUT
-}]
+  {
+    name: NAV_NAME.PERSONAL,
+    path: PERSONAL
+  },
+  // {
+  //   name: NAV_NAME.SETTING,
+  //   path: SETTING
+  // },
+  {
+    name: NAV_NAME.SIGN_OUT,
+    path: SIGN_OUT
+  }]

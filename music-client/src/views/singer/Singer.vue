@@ -96,19 +96,18 @@ li {
 }
 
 .singer {
-  margin: 30px 150px;
+  margin: 30px 8%;
   margin-top: 0;
   padding-top: $header-height;
   padding-bottom: 50px;
   background-color: $color-white;
   .singer-header {
     width: 100%;
-    padding: 0 40px;
     li {
       display: inline-block;
-      line-height: 40px;
-      margin: 40px 20px 15px 20px;
-      font-size: 20px;
+      line-height: 3rem;
+      margin: 1rem 3rem 1rem 3rem;
+      font-size: 1.2rem;
       font-weight: 400;
       color: $color-grey;
       border-bottom: none;

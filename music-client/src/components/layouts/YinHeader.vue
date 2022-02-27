@@ -10,8 +10,8 @@
         {{ item.name }}
       </li>
       <!--搜索框-->
-      <li>
-        <input class='header-search' type='text' placeholder='搜索音乐' @keyup.enter='goSearch()' v-model='keywords'>
+      <li class='header-search'> 
+        <input type='text' placeholder='搜索音乐' @keyup.enter='goSearch()' v-model='keywords'>
       </li>
     </ul>
     <!--设置-->
@@ -20,25 +20,21 @@
         {{ item.name }}
       </li>
     </ul>
-    <div class='header-right' v-if='token'>
-      <div class='user' @click='goPage(homeList.path, homeList.name)'>
+    <el-dropdown class='header-right' v-if='token' trigger="click">
+      <div class='user'>
         <img :src='attachImageUrl(userPic)' alt=''>
       </div>
-      <el-dropdown trigger="click">
-        <el-icon class="setting"><setting /></el-icon>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item v-for='(item, index) in menuList' :key='index' @click.stop='goMenuList(item.path)'>{{ item.name }}</el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-    </div>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item v-for='(item, index) in menuList' :key='index' @click.stop='goMenuList(item.path)'>{{ item.name }}</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import { Setting } from '@element-plus/icons-vue'
 import YinIcon from './YinIcon'
 import mixin from '@/mixins'
 import {
@@ -51,14 +47,12 @@ import {
   SEARCH,
   SIGN_OUT,
   NAV_NAME,
-  HOME_LIST
 } from '@/enums'
 
 export default {
   name: 'YinHeader',
   mixins: [mixin],
   components: {
-    Setting,
     YinIcon
   },
   data () {
@@ -67,7 +61,6 @@ export default {
       headerNavList: HEADERNAVLIST, // 左侧导航栏
       signList: SIGNLIST, // 右侧导航栏
       menuList: MENULIST, // 用户下拉菜单项
-      homeList: HOME_LIST,
       keywords: '',
       iconList: {
         ERJI: ICON.ERJI
@@ -140,15 +133,14 @@ export default {
 
 /*左侧LOGO*/
 .header-logo {
-  margin: $header-logo-margin;
   font-size: $font-size-logo;
   font-weight: bold;
+  margin: 0 15px;
   cursor: pointer;
-
   .icon {
     @include icon(($header-height / 3) * 2, $color-black);
     vertical-align: middle;
-    margin-right: 10px;
+    margin-right: 1rem;
   }
 }
 
@@ -156,19 +148,21 @@ export default {
 .navbar {
   display: flex;
   white-space: nowrap;
-
+  flex: 1;
   /*搜索输入框*/
   .header-search {
-    height: $header-search-height;
-    min-width: $header-search-width;
-    border-radius: $header-search-radius;
-    border: 0;
-    font-size: $font-size-default;
-    text-indent: 10px;
-    background-color: $color-light-grey;
-
-    &:focus {
-      outline: none;
+    width: 100%;
+    input {
+      height: $header-search-height;
+      min-width: $header-search-width;
+      border-radius: $header-search-radius;
+      border: 0;
+      font-size: $font-size-default;
+      text-indent: 10px;
+      background-color: $color-light-grey;
+      &:focus {
+        outline: none;
+      }
     }
   }
 }
@@ -186,17 +180,17 @@ export default {
 /*用户*/
 .header-right {
   position: relative;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  justify-content: flex-start;
 
   .user {
     overflow: hidden;
     width: $header-user-width;
     height: $header-user-width;
     border-radius: $header-user-radius;
-    margin: $header-user-margin;
+    margin-right: $header-user-margin;
     cursor: pointer;
 
     img {

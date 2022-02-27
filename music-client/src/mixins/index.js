@@ -36,6 +36,16 @@ const mixin = {
     changeIndex (value) {
       this.$store.commit('setActiveNavName', value)
     },
+    checkStatus () {
+      if (!this.token) {
+        this.$notify({
+          title: '请先登录',
+          type: 'warning'
+        })
+        return false
+      }
+      return true
+    },
     // 播放
     playMusic ({ id, url, pic, index, name, lyric, currentSongList }) {
       const songTitle = this.getSongTitle(name)

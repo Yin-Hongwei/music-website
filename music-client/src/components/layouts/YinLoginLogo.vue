@@ -17,11 +17,11 @@ import { ICON } from '@/enums'
   background-color: $color-blue-light;
   height: 100vh;
   width: 50vw;
-  min-width: 650px;
+  min-width: 50vw;
   overflow: hidden;
   @include layout(center, center);
   .icon {
-    @include icon(6.5em, $color-blue-dark);
+    @include icon(40rem, $color-blue-dark);
     transform: rotate(-30deg);
   }
 }

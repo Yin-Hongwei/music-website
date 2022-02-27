@@ -6,9 +6,7 @@
       </div>
       <div class="album-info">
         <h2>简介：</h2>
-        <span>
-          {{songDetails.introduction}}
-        </span>
+        <span> {{songDetails.introduction}} </span>
       </div>
     </div>
     <div class="song-list">
@@ -57,7 +55,6 @@ export default {
   data () {
     return {
       currentSongList: [], // 存放的音乐
-      count: 0, // 点赞数
       songListId: '', // 歌单 ID
       score: 0,
       rank: 0
@@ -70,77 +67,56 @@ export default {
     ])
   },
   created () {
-    this.songListId = this.songDetails.id // 给歌单ID赋值
-    this.getRank(this.songListId) // 获取评分
-    this.getSongId(this.songListId) // 获取歌单里面的歌曲ID
+    try {
+      this.songListId = this.songDetails.id // 给歌单ID赋值
+      this.getRank(this.songListId) // 获取评分
+      this.getSongId(this.songListId) // 获取歌单里面的歌曲ID
+    } catch (error) {
+      console.error(error)
+    }
   },
   methods: {
     // 收集歌单里面的歌曲
-    getSongId (id) {
-      HttpManager.getListSongOfSongId(id)
-        .then(res => {
-          // 获取歌单里的歌曲信息
-          for (const item of res) {
-            this.getSongList(item.songId)
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-    // 获取单里的歌曲
-    getSongList (id) {
-      HttpManager.getSongOfId(id)
-        .then(res => {
-          this.currentSongList.push(res[0])
-        })
-        .catch(err => {
-          console.error(err)
-        })
+    async getSongId (id) {
+      const result = await HttpManager.getListSongOfSongId(id)
+      // 获取歌单里的歌曲信息
+      for (const item of result) {
+        // 获取单里的歌曲
+        const resultSong = await HttpManager.getSongOfId(item.songId)
+        this.currentSongList.push(resultSong[0])
+      }
     },
     // 获取评分
-    getRank (id) {
-      HttpManager.getRankOfSongListId(id)
-        .then(res => {
-          this.rank = res / 2
-        })
-        .catch(err => {
-          console.error(err)
-        })
+    async getRank (id) {
+      const result = await HttpManager.getRankOfSongListId(id)
+      this.rank = result / 2
     },
     // 提交评分
-    pushValue () {
-      if (!this.token) {
-        this.score = 0
-        this.$notify({
-          title: '请先登录',
-          type: 'warning'
-        })
-        return
-      }
+    async pushValue () {
+      if (!this.checkStatus()) return
 
       const params = new URLSearchParams()
       params.append('songListId', this.songListId)
       params.append('consumerId', this.userId)
       params.append('score', this.score * 2)
-      HttpManager.setRank(params)
-        .then(res => {
-          if (res.code === 1) {
-            this.getRank(this.songListId)
-            this.$notify({
-              title: '评分成功',
-              type: 'success'
-            })
-          } else {
-            this.$notify({
-              title: '评分失败',
-              type: 'error'
-            })
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
+
+      try {
+        const result = await HttpManager.setRank(params)
+        if (result.code === 1) {
+          this.getRank(this.songListId)
+          this.$notify({
+            title: '评分成功',
+            type: 'success'
+          })
+        } else {
+          this.$notify({
+            title: '评分失败',
+            type: 'error'
+          })
+        }
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 }

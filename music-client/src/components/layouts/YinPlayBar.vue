@@ -212,13 +212,8 @@ export default {
       this.routerManager(LYRIC, { path: `${LYRIC}/${this.songId}` })
     },
     collection () {
-      if (!this.token) {
-        this.$notify({
-          title: '请先登录',
-          type: 'warning'
-        })
-        return
-      }
+      if (!this.checkStatus()) return
+      
       const params = new URLSearchParams()
       params.append('userId', this.userId)
       params.append('type', 0) // 0 代表歌曲， 1 代表歌单

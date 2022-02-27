@@ -120,11 +120,31 @@ export default {
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
 
+@media screen and (min-width: $sm) {
+  .login-logo {
+    width: 50vw;
+  }
+
+  .sign-up {
+    width: 300px;
+    left: 60vw;
+    top: $header-height + 60px;
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .login-logo {
+    width: 100vw;
+  }
+  .sign-up {
+    width: 70vw;
+    top: $header-height + 20px;
+    transform: translateX(1.5vw);
+  }
+}
+
 .sign-up {
   position: absolute;
-  left: 60vw;
-  width: 300px;
-  top: $header-height + 60px;
   padding: 30px 50px;
   border-radius: 10px;
   background-color: $color-white;

@@ -26,17 +26,15 @@
     justify-content: space-between;
     height: $play-bar-height;
     width: 100%;
-    min-width: 1000px;
     background-color: $theme-play-bar-color;
 
     .song-ctr {
       position: relative;
-      display: flex;
+      margin: auto;
       flex-wrap: nowrap;
-      align-items: center;
       
       svg {
-        width: 80px;
+        width: 5rem;
         cursor: pointer;
       }
       .icon.active {
@@ -47,8 +45,6 @@
     .info-box {
       width: 30%;
       margin-left: 30px;
-      display: flex;
-      align-items: center;
       .song-bar-img {
         width: calc($play-bar-height - 15px);
         height: calc($play-bar-height - 15px);
@@ -71,7 +67,6 @@
 
     .song-edit {
       width: 30%;
-      align-items: center;
       justify-content: flex-end;
     }
   }
@@ -87,4 +82,20 @@
 
 .icon {
   @include icon(1.2em, $color-black);
+}
+
+@media screen and (min-width: $sm) {
+  .song-ctr,
+  .info-box,
+  .song-edit {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .info-box,
+  .song-edit {
+    display: none;
+  }
 }

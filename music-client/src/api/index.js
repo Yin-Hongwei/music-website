@@ -43,7 +43,7 @@ const HttpManager = {
   // 添加评论
   setComment: (params) => post(`comment/add`, params),
   // 点赞
-  setLike: (params) => post(`comment/like`, params),
+  setSupport: (params) => post(`comment/like`, params),
   // 返回所有评论
   getAllComment: (type, id) => {
     let url = ''

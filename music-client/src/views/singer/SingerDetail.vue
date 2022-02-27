@@ -43,18 +43,12 @@ export default {
       'songDetails'
     ])
   },
-  mounted () {
-    this.getSongList(this.songDetails.id)
-  },
-  methods: {
-    getSongList (id) {
-      HttpManager.getSongOfSingerId(id)
-        .then(res => {
-          this.currentSongList = res
-        })
-        .catch(err => {
-          console.error(err)
-        })
+  async mounted () {
+    try {
+      const result = await HttpManager.getSongOfSingerId(this.songDetails.id)
+      this.currentSongList = result
+    } catch (error) {
+      console.error(error)
     }
   }
 }
