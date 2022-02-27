@@ -1,23 +1,21 @@
 <template>
+  <yin-login-logo></yin-login-logo>
   <div class='sign-in'>
-    <yin-login-logo></yin-login-logo>
-    <div class='login'>
-      <div class='login-head'>
-        <span>帐号登录</span>
-      </div>
-      <el-form :model='loginForm' status-icon :rules='rules' ref='loginForm'>
-        <el-form-item prop='username'>
-          <el-input placeholder='用户名' v-model='loginForm.username' size="large"></el-input>
-        </el-form-item>
-        <el-form-item prop='password'>
-          <el-input type='password' placeholder='密码' v-model='loginForm.password' @keyup.enter='token' size="large"></el-input>
-        </el-form-item>
-        <div class='login-btn'>
-          <el-button size="large" @click='handleSignUp'>注册</el-button>
-          <el-button type='primary' size="large" @click='handleLoginIn'>登录</el-button>
-        </div>
-      </el-form>
+    <div class='sign-in-head'>
+      <span>帐号登录</span>
     </div>
+    <el-form status-icon :model='loginForm' :rules='rules'>
+      <el-form-item prop='username'>
+        <el-input placeholder='用户名' size="large" v-model='loginForm.username'></el-input>
+      </el-form-item>
+      <el-form-item prop='password'>
+        <el-input type='password' size="large" placeholder='密码' v-model='loginForm.password' @keyup.enter='handleLoginIn'></el-input>
+      </el-form-item>
+      <el-form-item class='sign-in-btn'>
+        <el-button size="large" @click="handleSignUp">注册</el-button>
+        <el-button type="primary" size="large" @click='handleLoginIn'>登录</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -127,27 +125,25 @@ export default {
   }
 }
 
-.login {
+.sign-in {
   position: absolute;
-  margin-left: 850px;
+  left: 60vw;
   width: 300px;
-  height: 210px;
   top: $header-height + 60px;
   padding: 30px 50px;
   border-radius: 10px;
   background-color: $color-white;
 
-  .login-head {
+  .sign-in-head {
     text-align: center;
     margin-bottom: 10px;
     font-size: 20px;
     font-weight: 600;
   }
 
-  .login-btn {
+  .sign-in-btn:deep(.el-form-item__content){
     @include layout(space-between);
     button {
-      display: block;
       width: 50%;
     }
   }

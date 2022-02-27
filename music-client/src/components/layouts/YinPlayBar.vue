@@ -1,7 +1,7 @@
 <template>
   <div class='play-bar' :class='{ show: !toggle }'>
     <div class='fold' :class='{ turn: toggle }'>
-      <yin-icon :icon="ZHEDIE" @click='toggle=!toggle'></yin-icon>
+      <yin-icon :icon="iconList.ZHEDIE" @click='toggle=!toggle'></yin-icon>
     </div>
     <!--播放进度-->
     <el-slider class="progress" v-model="nowTime" @change='changeTime' size="small"></el-slider>
@@ -20,15 +20,15 @@
       <div class="song-ctr">
         <yin-icon :icon="playStateList[playStateIndex]" @click='changePlayState'></yin-icon>
         <!--上一首-->
-        <yin-icon :icon="SHANGYISHOU" @click='prev'></yin-icon>
+        <yin-icon :icon="iconList.SHANGYISHOU" @click='prev'></yin-icon>
         <!--播放-->
         <yin-icon :icon="playBtnIcon" @click='togglePlay'></yin-icon>
         <!--下一首-->
-        <yin-icon :icon="XIAYISHOU" @click='next'></yin-icon>
+        <yin-icon :icon="iconList.XIAYISHOU" @click='next'></yin-icon>
         <!--音量-->
         <el-dropdown trigger="click">
-          <yin-icon v-if='volume !== 0' :icon="YINLIANG"></yin-icon>
-          <yin-icon v-else :icon="JINGYIN"></yin-icon>
+          <yin-icon v-if='volume !== 0' :icon="iconList.YINLIANG"></yin-icon>
+          <yin-icon v-else :icon="iconList.JINGYIN"></yin-icon>
           <template #dropdown>
             <el-dropdown-menu>
               <el-slider style="height: 150px; margin: 10px 0;" v-model='volume' :vertical='true'></el-slider>
@@ -38,11 +38,11 @@
       </div>
       <div class="song-ctr song-edit">
         <!--收藏-->
-        <yin-icon :class='{ active: isCollection }' :icon="XIHUAN" @click='collection'></yin-icon>
+        <yin-icon :class='{ active: isCollection }' :icon="iconList.XIHUAN" @click='collection'></yin-icon>
         <!--下载-->
-        <yin-icon :icon="XIAZAI" @click='downloadMusic'></yin-icon>
+        <yin-icon :icon="iconList.XIAZAI" @click='downloadMusic'></yin-icon>
         <!--歌曲列表-->
-        <yin-icon :icon="LIEBIAO" @click='changeAside'></yin-icon>
+        <yin-icon :icon="iconList.LIEBIAO" @click='changeAside'></yin-icon>
       </div>
     </div>
   </div>
@@ -69,14 +69,16 @@ export default {
       playState: ICON.XUNHUAN,
       playStateList: [ICON.XUNHUAN, ICON.LUANXU],
       playStateIndex: 0,
-      XIAZAI: ICON.XIAZAI,
-      ZHEDIE: ICON.ZHEDIE,
-      SHANGYISHOU: ICON.SHANGYISHOU,
-      XIAYISHOU: ICON.XIAYISHOU,
-      YINLIANG: ICON.YINLIANG1,
-      JINGYIN: ICON.JINGYIN,
-      LIEBIAO: ICON.LIEBIAO,
-      XIHUAN: ICON.XIHUAN
+      iconList: {
+        XIAZAI: ICON.XIAZAI,
+        ZHEDIE: ICON.ZHEDIE,
+        SHANGYISHOU: ICON.SHANGYISHOU,
+        XIAYISHOU: ICON.XIAYISHOU,
+        YINLIANG: ICON.YINLIANG1,
+        JINGYIN: ICON.JINGYIN,
+        LIEBIAO: ICON.LIEBIAO,
+        XIHUAN: ICON.XIHUAN
+      },
     }
   },
   components: {
@@ -84,7 +86,6 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'token', // 用户登录状态
       'isPlay', // 播放状态
       'playBtnIcon', // 播放状态的图标
       'songId', // 音乐id

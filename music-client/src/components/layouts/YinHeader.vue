@@ -2,7 +2,7 @@
   <div class='yin-header'>
     <!--图标-->
     <div class='header-logo' @click='goPage()'>
-      <yin-icon :icon="ERJI"></yin-icon>
+      <yin-icon :icon="iconList.ERJI"></yin-icon>
       <span>{{ musicName }}</span>
     </div>
     <ul class='navbar'>
@@ -69,15 +69,15 @@ export default {
       menuList: MENULIST, // 用户下拉菜单项
       homeList: HOME_LIST,
       keywords: '',
-      ERJI: ICON.ERJI,
-      SOUSUO: ICON.SOUSUO
+      iconList: {
+        ERJI: ICON.ERJI
+      }
     }
   },
   computed: {
     ...mapGetters([
       'activeNavName',
-      'userPic',
-      'token'
+      'userPic'
     ])
   },
   methods: {

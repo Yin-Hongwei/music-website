@@ -65,7 +65,6 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'token', // 登录标识
       'songDetails', // 单个歌单信息
       'userPic' // 用户头像
     ])

@@ -29,7 +29,7 @@
           </ul>
         </div>
         <div class='up' ref='up' @click='postUp(item.id, item.up, index)'>
-          <yin-icon :icon="ZAN"></yin-icon>
+          <yin-icon :icon="iconList.ZAN"></yin-icon>
           {{item.up}}
         </div>
       </li>
@@ -60,13 +60,14 @@ export default {
       userPicList: [], // 保存评论用户头像
       userNameList: [], // 保存评论用户名字
       textarea: '', // 存放输入内容
-      ZAN: ICON.ZAN
+      iconList: {
+        ZAN: ICON.ZAN
+      }
     }
   },
   computed: {
     ...mapGetters([
-      'songId',
-      'token' // 用户是否登录
+      'songId'
     ])
   },
   watch: {

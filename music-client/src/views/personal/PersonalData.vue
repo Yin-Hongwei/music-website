@@ -1,52 +1,52 @@
 <template>
-<div class="container">
-  <div class='personal-data'>
-    <h2 class='title'>编辑个人资料</h2>
-    <div class='personal'>
-      <el-form :model='registerForm' label-width='80px'>
-        <el-form-item prop='username' label='用户名'>
-          <el-input v-model='registerForm.username' placeholder='用户名'></el-input>
-        </el-form-item>
-        <el-form-item prop='password' label='密码'>
-          <el-input type='password' placeholder='密码' v-model='registerForm.password'></el-input>
-        </el-form-item>
-        <el-form-item label='性别'>
-          <el-radio-group v-model='registerForm.sex'>
-            <el-radio :label='0'>女</el-radio>
-            <el-radio :label='1'>男</el-radio>
-            <el-radio :label='2'>保密</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item prop='phoneNum' label='手机'>
-          <el-input  placeholder='手机' v-model='registerForm.phoneNum' ></el-input>
-        </el-form-item>
-        <el-form-item prop='email' label='邮箱'>
-          <el-input v-model='registerForm.email' placeholder='邮箱'></el-input>
-        </el-form-item>
-        <el-form-item prop='birth' label='生日'>
-          <el-date-picker type='date' placeholder='选择日期' v-model='registerForm.birth' style='width: 100%;'></el-date-picker>
-        </el-form-item>
-        <el-form-item prop='introduction' label='签名'>
-          <el-input  type='textarea' placeholder='签名' v-model='registerForm.introduction' ></el-input>
-        </el-form-item>
-        <el-form-item prop='location' label='地区'>
-          <el-select v-model='registerForm.location' placeholder='地区' style='width:100%'>
-            <el-option
-              v-for='item in area'
-              :key='item.value'
-              :label='item.label'
-              :value='item.value'>
-            </el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <div class='btn'>
-        <el-button type='primary' @click='saveMsg()'>保存</el-button>
-        <el-button @click='goBack(-1)'>取消</el-button>
+  <div class="container">
+    <div class='personal-data'>
+      <h2 class='title'>编辑个人资料</h2>
+      <div class='personal'>
+        <el-form :model='registerForm' label-width='80px'>
+          <el-form-item prop='username' label='用户名'>
+            <el-input v-model='registerForm.username' placeholder='用户名'></el-input>
+          </el-form-item>
+          <el-form-item prop='password' label='密码'>
+            <el-input type='password' placeholder='密码' v-model='registerForm.password'></el-input>
+          </el-form-item>
+          <el-form-item label='性别'>
+            <el-radio-group v-model='registerForm.sex'>
+              <el-radio :label='0'>女</el-radio>
+              <el-radio :label='1'>男</el-radio>
+              <el-radio :label='2'>保密</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item prop='phoneNum' label='手机'>
+            <el-input  placeholder='手机' v-model='registerForm.phoneNum' ></el-input>
+          </el-form-item>
+          <el-form-item prop='email' label='邮箱'>
+            <el-input v-model='registerForm.email' placeholder='邮箱'></el-input>
+          </el-form-item>
+          <el-form-item prop='birth' label='生日'>
+            <el-date-picker type='date' placeholder='选择日期' v-model='registerForm.birth' style='width: 100%;'></el-date-picker>
+          </el-form-item>
+          <el-form-item prop='introduction' label='签名'>
+            <el-input  type='textarea' placeholder='签名' v-model='registerForm.introduction' ></el-input>
+          </el-form-item>
+          <el-form-item prop='location' label='地区'>
+            <el-select v-model='registerForm.location' placeholder='地区' style='width:100%'>
+              <el-option
+                v-for='item in area'
+                :key='item.value'
+                :label='item.label'
+                :value='item.value'>
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div class='btn'>
+          <el-button type='primary' @click='saveMsg()'>保存</el-button>
+          <el-button @click='goBack(-1)'>取消</el-button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
