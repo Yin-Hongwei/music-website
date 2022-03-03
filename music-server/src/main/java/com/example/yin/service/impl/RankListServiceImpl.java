@@ -21,9 +21,8 @@ public class RankListServiceImpl implements RankListService {
 
     @Override
     public int rankOfSongListId(Long songListId) {
-        // 评分总人数如果为0，则返回0；否则返回计算出的结果
+        // 评分总人数如果为 0，则返回0；否则返回计算出的结果
         int rankNum = rankMapper.selectRankNum(songListId);
-        logger.error("测试一下log");
         return (rankNum <= 0) ? 0 : rankMapper.selectScoreSum(songListId) / rankNum;
     }
 

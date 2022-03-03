@@ -51,6 +51,6 @@ export default {
 
 <style scoped>
 .search-song-list {
-  height: 480px !important;
+  min-height: 480px;
 }
 </style>

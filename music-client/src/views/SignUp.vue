@@ -71,8 +71,7 @@ export default {
       },
       // 必填项校验规则
       rules: RULES,
-      area: AREA,
-      defaultUserPic: '/img/user.jpg'
+      area: AREA
     }
   },
   methods: {
@@ -87,7 +86,6 @@ export default {
       params.append('birth', getDateTime(this.registerForm.birth))
       params.append('introduction', this.registerForm.introduction)
       params.append('location', this.registerForm.location)
-      params.append('avator', this.defaultUserPic)
       HttpManager.SignUp(params)
         .then(res => {
           if (res.code != null) {

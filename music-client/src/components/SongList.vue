@@ -60,8 +60,7 @@ export default {
 .content {
   background-color: $color-white;
   border-radius: $border-radius-songlist;
-  padding: 20px 40px;
-  min-width: 700px;
+  padding: 3%;
 }
 
 .content:deep(.el-table__row.current-row) {

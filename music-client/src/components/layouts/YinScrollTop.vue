@@ -30,6 +30,7 @@ function returnTop() {
 
 .scroll-top {
   position: fixed;
+  z-index: 100;
   width: 40px;
   height: 20px;
   right: 10px;

@@ -52,7 +52,7 @@ public class ConsumerController {
         String birth = req.getParameter("birth").trim();
         String introduction = req.getParameter("introduction").trim();
         String location = req.getParameter("location").trim();
-        String avator = req.getParameter("avator").trim();
+        String avator = "/img/avatorImages/user.jpg";
 
         if ("".equals(username)) {
             jsonObject.put("code", 0);
