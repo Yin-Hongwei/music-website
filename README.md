@@ -1,8 +1,6 @@
 <h1 align="center">music-website</h1>
 
-<br/>
-
-<h1 align="center">声明</h1>
+<h1 align="center" color="red">声明</h1>
 
 最近终于有点时间想着升级下项目，但是鉴于发现在闲鱼有很多卖我这个项目的，暂停更新。
 
