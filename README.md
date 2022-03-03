@@ -2,14 +2,13 @@
 
 <br/>
 
-<p align="center">
-  <a href=""><img alt="license" src="https://img.shields.io/github/license/Yin-Hongwei/music-website?style=flat-square"></a>
-</p>
-
 <h1 align="center">声明</h1>
 
 最近终于有点时间想着升级下项目，但是鉴于发现在闲鱼有很多卖我这个项目的，暂停更新。
+
 目前看见便宜的9.9，贵的100，想着项目不在开源，但是目前网上这个项目的已经很多了，也没办法废掉，以后只讨论技术问题，对于运行访问问题自行解决。
+
+<br/>
 
 ## 项目说明
 
