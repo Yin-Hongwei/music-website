@@ -2,8 +2,7 @@
 @import "global.scss";
 
 .play-list {
-  // min-height: 50vh;
-  padding: 0 20px;
+  padding: 0 1rem;
   .section-content {
     @include layout(flex-start, stretch, row, wrap);
   }
@@ -21,8 +20,6 @@
 }
 
 .content-item {
-  width: 18%;
-  margin: 20px 1%;
   overflow: hidden;
   border-radius: 5px;
   position: relative;
@@ -35,7 +32,7 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-    margin: 10px 8px;
+    margin-top: 0.5rem;
   }
 }
 
@@ -71,4 +68,18 @@
 
 .icon {
   @include icon(2em, rgba(240, 240, 240, 1));
+}
+
+@media screen and (min-width: $sm) {
+  .content-item {
+    width: 18%;
+    margin: 0.5rem 1%;
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .content-item {
+    width: 46%;
+    margin: 0.5rem 2%;
+  }
 }
