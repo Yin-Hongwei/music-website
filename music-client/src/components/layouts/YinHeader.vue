@@ -112,11 +112,30 @@ export default {
 <style lang='scss' scoped>
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
+@media screen and (min-width: $sm) {
+  .header-logo {
+    margin: 0 1rem;
+    .icon {
+      // @include icon(($header-height / 3) * 2, $color-black);
+    }
+  }
+}
 
+@media screen and (max-width: $sm) {
+  .header-logo {
+    margin: 0 1rem;
+    span {
+      display: none;
+    }
+  }
+  .header-search {
+    display: none;
+  }
+}
 /*头部*/
 .yin-header {
   position: fixed;
-  @include layout;
+  // @include layout;
   width: 100%;
   height: $header-height;
   line-height: $header-height;
@@ -135,12 +154,13 @@ export default {
 .header-logo {
   font-size: $font-size-logo;
   font-weight: bold;
-  margin: 0 15px;
   cursor: pointer;
   .icon {
-    @include icon(($header-height / 3) * 2, $color-black);
+    @include icon(1.9rem, $color-black);
     vertical-align: middle;
-    margin-right: 1rem;
+  }
+  span {
+    margin-left: 1rem;
   }
 }
 

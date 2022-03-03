@@ -89,6 +89,22 @@ function getSingerSex(sex) {
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
 
+@media screen and (min-width: $sm) {
+  .singer-header {
+    li {
+      margin: 0.5rem 1rem;
+    }
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .singer-header {
+    li {
+      margin: 0.3rem 0.4rem;
+    }
+  }
+}
+
 div,
 ul,
 li {
@@ -105,10 +121,9 @@ li {
     width: 100%;
     li {
       display: inline-block;
-      line-height: 3rem;
-      margin: 1rem 3rem 1rem 3rem;
-      font-size: 1.2rem;
-      font-weight: 400;
+      font-size: 1rem;
+      line-height: 2.5rem;
+      font-size: 1rem;
       color: $color-grey;
       border-bottom: none;
       cursor: pointer;
@@ -116,7 +131,7 @@ li {
     li.active {
       color: $color-black;
       font-weight: 600;
-      border-bottom: 4px solid $color-black;
+      border-bottom: 0.2rem solid $color-black;
     }
   }
 }
