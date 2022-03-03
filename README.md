@@ -2,12 +2,6 @@
 
 <br/>
 
-<p align="center">
-  <a href=""><img alt="license" src="https://img.shields.io/github/license/Yin-Hongwei/music-website?style=flat-square"></a>
-</p>
-
-
-
 ## 项目说明
 
 本音乐网站的客户端和管理端使用 **VUE** 框架来实现，服务端使用 **Spring Boot + MyBatis** 来实现，数据库使用了 **MySQL**。实现思路可以看[这里](https://yin-hongwei.github.io/2019/03/04/music/#more)；项目启动方法看文章末尾。
