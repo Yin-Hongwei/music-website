@@ -2,14 +2,14 @@
 
 <br/>
 
-<h1 align="center">声明</h1>
+<h1 align="center"><font color="red">声明</font></h1>
 
-这项目我一直作为技术分享，不做收费（版权归我个人独有，大家拿来学习交流随时欢迎，拒绝商用）。希望大家可以尊重下我的劳动成果，谢谢。任何平台发现有卖的欢迎随时举报。
+**这项目我一直作为技术分享，不做收费（版权归我个人独有，大家拿来学习交流随时欢迎，拒绝商用）。希望大家可以尊重下我的劳动成果，谢谢。任何平台发现有卖的欢迎随时举报。**
+
+
+> **只写过一个说明文档，没在 B 站讲过视频**
 
 [闲鱼上售卖的](https://github.com/Yin-Hongwei/music-website/discussions/113)
-
-
-> 只写过一个说明文档，没在 B 站讲过视频
 
 <br/>
 
@@ -86,7 +86,7 @@
 
 ### 前端
 
-**Vue3.0 + Vue-Router + Vuex + Axios + ElementPlus + Echarts**
+**Vue3.0 + TypeScript + Vue-Router + Vuex + Axios + ElementPlus + Echarts**
 
 <br/>
 
@@ -105,13 +105,16 @@ IDE：IntelliJ IDEA 2018、VSCode
 
 ## 下载运行
 
-#### 1、下载项目到本地
+### 1、下载项目到本地
 
 ```bash
 git clone https://github.com/Yin-Hongwei/music-website.git
+
+# 上面下载慢可以用下面这个
+git@gitee.com:Yin-hongwei/music-website.git
 ```
 
-#### 2、下载数据库中记录的资源
+### 2、下载数据库中记录的资源
 
 去【链接: https://pan.baidu.com/s/1Qv0ohAIPeTthPK_CDwpfWg 提取码: gwa4 】下载网站依赖的歌曲及图片，将 data 夹里的文件放到 music-server 文件夹下。
 
@@ -119,15 +122,15 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 
 <img src="https://tva1.sinaimg.cn/large/008i3skNly1gsk65seqd8j30y00ocjt4.jpg" height="200px"/>
 
-#### 3、修改配置文件
+### 3、修改配置文件
+
 1）创建数据库
 将 `music-website/music-server/sql` 文件夹中的 `tp_music.sql` 文件导入数据库。
 
 2）修改用户名密码
 修改 `music-website/music-server/src/main/resources/application.properties` 文件里的 `spring.datasource.username` 和 `spring.datasource.password`；
 
-
-#### 4、启动项目
+### 4、启动项目
 
 - **启动管理端**：进入 music-server 文件夹，运行下面命令启动服务器
 
