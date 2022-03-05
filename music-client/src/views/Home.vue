@@ -11,9 +11,9 @@
   <play-list class="section" title="歌手" path="singer-detail" :playList="singerList"></play-list>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref } from "vue";
-import PlayList from "@/components/PlayList";
+import PlayList from "@/components/PlayList.vue";
 import { swiperList } from "@/enums";
 import { HttpManager } from "@/api";
 
@@ -22,11 +22,11 @@ const singerList = ref([]); // 歌手列表
 
 try {
   HttpManager.getSongList().then((res) => {
-    songList.value = res.sort().slice(0, 10);
+    songList.value = (res as any[]).sort().slice(0, 10);
   });
 
   HttpManager.getAllSinger().then((res) => {
-    singerList.value = res.sort().slice(0, 10);
+    singerList.value = (res as any[]).sort().slice(0, 10);
   });
 } catch (error) {
   console.error(error);

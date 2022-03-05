@@ -6,13 +6,19 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script lang="ts">
+import { defineComponent, readonly } from "vue";
 
-const footerList = ref([
-  "关于 | 帮助 | 条款 | 反馈",
-  "Copyright © 2019 Yin-Hongwei",
-]);
+export default defineComponent({
+  setup() {
+    const footerList = readonly([
+      "关于 | 帮助 | 条款 | 反馈",
+      "Copyright © 2019 Yin-Hongwei",
+    ]);
+
+    return { footerList };
+  },
+});
 </script>
 
 <style lang="scss" scoped>

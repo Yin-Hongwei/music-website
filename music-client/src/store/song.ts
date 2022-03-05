@@ -1,4 +1,4 @@
-import { ICON, BASE_URL } from '../enums'
+import { ICON, BASE_URL } from '@/enums'
 
 export default {
   state: {

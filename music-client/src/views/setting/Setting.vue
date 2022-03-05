@@ -1,10 +1,10 @@
 <template>
-  <div class='setting'>
+  <div class="setting">
     <h1>开发中。。。</h1>
   </div>
 </template>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
 

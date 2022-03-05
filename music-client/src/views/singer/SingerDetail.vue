@@ -1,59 +1,67 @@
 <template>
-  <div class='singer-detail'>
-    <div class='album-slide'>
-      <div class='singer-img'>
-        <img :src='attachImageUrl(songDetails.pic)' alt=''>
+  <div class="singer-detail">
+    <div class="album-slide">
+      <div class="singer-img">
+        <img :src="attachImageUrl(songDetails.pic)" alt="" />
       </div>
-      <ul class='info'>
-        <li v-if='songDetails.sex !== 2'>性别：{{getUserSex(songDetails.sex)}}</li>
-        <li>生日：{{getBirth(songDetails.birth)}}</li>
-        <li>故乡：{{songDetails.location}}</li>
+      <ul class="info">
+        <li v-if="songDetails.sex !== 2">性别：{{ getUserSex(songDetails.sex) }}</li>
+        <li>生日：{{ getBirth(songDetails.birth) }}</li>
+        <li>故乡：{{ songDetails.location }}</li>
       </ul>
     </div>
-    <div class='song-list'>
-      <div class='intro'>
-        <h2>{{songDetails.name}}</h2>
-        <span>{{songDetails.introduction}}</span>
+    <div class="song-list">
+      <div class="intro">
+        <h2>{{ songDetails.name }}</h2>
+        <span>{{ songDetails.introduction }}</span>
       </div>
-      <div class='content'>
-        <song-list :songList='currentSongList'></song-list>
+      <div class="content">
+        <song-list :songList="currentSongList"></song-list>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import mixin from '@/mixins'
-import SongList from '@/components/SongList'
-import { HttpManager } from '@/api'
+<script lang="ts">
+import { defineComponent, ref, computed, onMounted } from "vue";
+import { useStore } from "vuex";
+import mixin from "@/mixins/mixin";
+import SongList from "@/components/SongList.vue";
+import { HttpManager } from "@/api";
 
-export default {
-  mixins: [mixin],
+export default defineComponent({
   components: {
-    SongList
+    SongList,
   },
-  data () {
+  setup() {
+    const store = useStore();
+    const { getBirth, getUserSex, attachImageUrl } = mixin();
+
+    const currentSongList = ref([]);
+    const songDetails = computed(() => store.getters.songDetails) as any;
+
+    onMounted(async () => {
+      try {
+        const result = (await HttpManager.getSongOfSingerId(
+          songDetails.value.id
+        )) as any[];
+        currentSongList.value = result;
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
     return {
-      currentSongList: []
-    }
+      songDetails,
+      currentSongList,
+      attachImageUrl,
+      getBirth,
+      getUserSex,
+    };
   },
-  computed: {
-    ...mapGetters([
-      'songDetails'
-    ])
-  },
-  async mounted () {
-    try {
-      const result = await HttpManager.getSongOfSingerId(this.songDetails.id)
-      this.currentSongList = result
-    } catch (error) {
-      console.error(error)
-    }
-  }
-}
+});
 </script>
 
-<style lang='scss' scoped>
-@import '@/assets/css/singer-detail.scss';
+<style lang="scss" scoped>
+@import "@/assets/css/singer-detail.scss";
 </style>

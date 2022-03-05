@@ -4,49 +4,56 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
-import mixin from "@/mixins";
+<script lang="ts">
+import {
+  defineComponent,
+  ref,
+  computed,
+  watch,
+  onMounted,
+  getCurrentInstance,
+} from "vue";
+import { useStore } from "vuex";
 import PlayList from "@/components/PlayList.vue";
 import { HttpManager } from "@/api";
 
-export default {
-  mixins: [mixin],
+export default defineComponent({
   components: {
     PlayList,
   },
-  data() {
+  setup() {
+    const { proxy } = getCurrentInstance();
+    const store = useStore();
+
+    const playList = ref([]);
+    const searchWord = computed(() => store.getters.searchWord);
+    watch(searchWord, (value) => {
+      getSearchList(value);
+    })
+
+
+    async function getSearchList(value) {
+      if (!value) return;
+      const result = await HttpManager.getSongListOfLikeTitle(value) as any[];
+      if (!result.length) {
+        (proxy as any).$notify({
+          title: "暂无该歌曲内容",
+          type: "warning",
+        });
+      } else {
+        playList.value = result;
+      }
+    }
+
+    onMounted(() => {
+      getSearchList(proxy.$route.query.keywords);
+    });
+
     return {
-      playList: [],
+      playList,
     };
   },
-  computed: {
-    ...mapGetters(["searchWord"]),
-  },
-  watch: {
-    searchWord(value) {
-      this.getSearchList(value);
-    },
-  },
-  mounted() {
-    this.getSearchList(this.$route.query.keywords);
-  },
-  methods: {
-    getSearchList(value) {
-      if (!value) return;
-      HttpManager.getSongListOfLikeTitle(value).then((res) => {
-        if (!res.length) {
-          this.$notify({
-            title: "暂无该歌曲内容",
-            type: "warning",
-          });
-        } else {
-          this.playList = res;
-        }
-      });
-    },
-  },
-};
+});
 </script>
 
 <style scoped>

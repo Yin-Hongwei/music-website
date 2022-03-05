@@ -15,42 +15,47 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
-import mixin from "@/mixins";
+<script lang="ts">
+import { defineComponent, toRefs, computed } from "vue";
+import mixin from "@/mixins/mixin";
 
-export default {
-  mixins: [mixin],
+export default defineComponent({
   props: {
     songList: Array,
   },
-  computed: {
-    dataList() {
+  setup(props) {
+    const { getSongTitle, getSingerName, playMusic } = mixin();
+
+    const { songList } = toRefs(props);
+    const dataList = computed(() => {
       const list = [];
-      for (let [index, item] of this.songList.entries()) {
-        item["songName"] = this.getSongTitle(item.name);
-        item["singerName"] = this.getSingerName(item.name);
+      songList.value.forEach((item: any, index) => {
+        item["songName"] = getSongTitle(item.name);
+        item["singerName"] = getSingerName(item.name);
         item["index"] = index;
         list.push(item);
-      }
+      });
       return list;
-    },
-    ...mapGetters(["songId"]), // 音乐 ID
-  },
-  methods: {
-    handleClick(row) {
-      this.playMusic({
+    });
+
+    function handleClick(row) {
+      playMusic({
         id: row.id,
         url: row.url,
         pic: row.pic,
         index: row.index,
         name: row.name,
         lyric: row.lyric,
-        currentSongList: this.songList,
+        currentSongList: songList.value,
       });
-    },
+    }
+
+    return {
+      dataList,
+      handleClick,
+    };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
@@ -66,5 +71,9 @@ export default {
 .content:deep(.el-table__row.current-row) {
   color: $color-blue-active;
   font-weight: bold;
+}
+
+.content:deep(.el-table__row) {
+  cursor: pointer;
 }
 </style>
