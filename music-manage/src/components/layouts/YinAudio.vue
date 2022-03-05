@@ -31,12 +31,13 @@ export default {
   methods: {
     // 开始/暂停
     togglePlay () {
-      const player = this.$refs.player.elm
+      console.log(this.$refs.player)
+      const player = this.$refs.player
       this.isPlay ? player.play() : player.pause()
     },
     // 获取歌曲链接后准备播放
     startPlay () {
-      const player = this.$refs.player.elm
+      const player = this.$refs.player
       //  开始播放
       player.play()
     },
