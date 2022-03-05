@@ -25,9 +25,9 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, computed } from "vue";
-import PlayList from "@/components/PlayList";
+import PlayList from "@/components/PlayList.vue";
 import { singerStyle } from "@/enums";
 import { HttpManager } from "@/api";
 
@@ -45,16 +45,12 @@ const data = computed(() => {
 });
 
 // 获取所有歌手
-function getAllSinger() {
-  HttpManager.getAllSinger()
-    .then((res) => {
-      currentPage.value = 1;
-      allPlayList.value = res;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+async function getAllSinger() {
+  const result = await HttpManager.getAllSinger() as any[];
+  currentPage.value = 1;
+  allPlayList.value = result;
 }
+
 getAllSinger();
 
 // 获取当前页
@@ -73,15 +69,10 @@ function handleChangeView(item) {
 }
 
 // 通过性别对歌手分类
-function getSingerSex(sex) {
-  HttpManager.getSingerOfSex(sex)
-    .then((res) => {
-      currentPage.value = 1;
-      allPlayList.value = res;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+async function getSingerSex(sex) {
+  const result = await HttpManager.getSingerOfSex(sex) as any[];
+  currentPage.value = 1;
+  allPlayList.value = result;
 }
 </script>
 

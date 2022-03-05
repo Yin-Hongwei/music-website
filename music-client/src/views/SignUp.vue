@@ -43,75 +43,86 @@
   </div>
 </template>
 
-<script>
-import mixin from '@/mixins'
-import YinLoginLogo from '@/components/layouts/YinLoginLogo'
+<script lang="ts">
+import { defineComponent, ref, reactive, getCurrentInstance } from "vue";
+import mixin from '@/mixins/mixin'
+import YinLoginLogo from '@/components/layouts/YinLoginLogo.vue'
 import { HttpManager } from '@/api'
 import { getDateTime } from '@/utils'
 import { RULES, AREA, SIGN_IN, NAV_NAME } from '@/enums'
 
-export default {
-  name: 'SignUp',
-  mixins: [mixin],
+interface resSignUp {
+  title: string,
+  type: string,
+  msg: string,
+  code: string,
+  success: boolean,
+}
+
+export default defineComponent({
   components: {
     YinLoginLogo
   },
-  data () {
-    return {
-      // 注册
-      registerForm: {
+  setup() {
+    const { routerManager, changeIndex } = mixin()
+
+    const rules = ref(RULES);
+    const area = ref(AREA);
+    const registerForm = reactive({
         username: '',
         password: '',
         sex: '',
         phoneNum: '',
         email: '',
-        birth: '',
+        birth: new Date(),
         introduction: '',
         location: ''
-      },
-      // 必填项校验规则
-      rules: RULES,
-      area: AREA
+    });
+
+    async function handleSignUp () {
+      // TODO：这里需要在前端做必填项校验
+      const { proxy } = getCurrentInstance();
+      const params = new URLSearchParams()
+      params.append('username', registerForm.username)
+      params.append('password', registerForm.password)
+      params.append('sex', registerForm.sex)
+      params.append('phone_num', registerForm.phoneNum)
+      params.append('email', registerForm.email)
+      params.append('birth', getDateTime(registerForm.birth))
+      params.append('introduction', registerForm.introduction)
+      params.append('location', registerForm.location)
+      try {
+        const result = await HttpManager.SignUp(params) as resSignUp;
+        if (result.code != null) {
+          (proxy as any).$notify({
+            title: result.msg,
+            type: result.type
+          })
+          setTimeout(() => {
+            if (result.success) {
+              routerManager(SIGN_IN, { path: SIGN_IN })
+              changeIndex(NAV_NAME.SIGN_IN)
+            }
+          }, 2000)
+        } else {
+          (proxy as any).$notify({
+            title: '注册失败',
+            type: 'error'
+          })
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    return {
+      rules,
+      area,
+      registerForm,
+      handleSignUp,
     }
   },
-  methods: {
-    handleSignUp () {
-      // TODO：这里需要在前端做必填项校验
-      const params = new URLSearchParams()
-      params.append('username', this.registerForm.username)
-      params.append('password', this.registerForm.password)
-      params.append('sex', this.registerForm.sex)
-      params.append('phone_num', this.registerForm.phoneNum)
-      params.append('email', this.registerForm.email)
-      params.append('birth', getDateTime(this.registerForm.birth))
-      params.append('introduction', this.registerForm.introduction)
-      params.append('location', this.registerForm.location)
-      HttpManager.SignUp(params)
-        .then(res => {
-          if (res.code != null) {
-            this.$notify({
-              title: res.msg,
-              type: res.type
-            })
-            setTimeout(() => {
-              if (res.success) {
-                this.routerManager(SIGN_IN, { path: SIGN_IN })
-                this.changeIndex(NAV_NAME.SIGN_IN)
-              }
-            }, 2000)
-          } else {
-            this.$notify({
-              title: '注册失败',
-              type: 'error'
-            })
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    }
-  }
-}
+})
 </script>
 
 <style lang='scss' scoped>

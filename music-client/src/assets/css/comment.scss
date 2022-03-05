@@ -68,9 +68,17 @@
     }
 
     .up {
-      width: 70px;
-      line-height: 77px;
-      font-size: 18px;
+      display: flex;
+      align-items: center;
+      width: 40px;
+      justify-content: space-around;
+      font-size: 1rem;
+      cursor: pointer;
+
+      &:hover,
+      :deep(.icon):hover {
+        color: $color-grey;
+      }
     }
   }
 }

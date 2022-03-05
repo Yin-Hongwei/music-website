@@ -37,105 +37,128 @@
   </div>
 </template>
 
-<script>
-import YinIcon from '@/components/layouts/YinIcon'
-import { mapGetters } from 'vuex'
-import mixin from '../mixins'
-import { HttpManager } from '../api'
-import { ICON } from '../enums'
+<script lang="ts">
+import {
+  defineComponent,
+  getCurrentInstance,
+  ref,
+  toRefs,
+  computed,
+  watch,
+  reactive,
+  onMounted,
+} from "vue";
+import { useStore } from "vuex";
+import YinIcon from '@/components/layouts/YinIcon.vue'
+import mixin from '@/mixins/mixin'
+import { HttpManager } from '@/api'
+import { ICON } from '@/enums'
 
-export default {
-  name: 'Comment',
-  mixins: [mixin],
+export default defineComponent({
   components: {
     YinIcon
   },
   props: {
-    playId: Number, // 歌曲ID或歌单ID
+    playId: Number || String, // 歌曲ID或歌单ID
     type: Number // 歌单（1）/歌曲（0）
   },
-  data () {
-    return {
-      commentList: [], // 存放评论内容
-      userPicList: [], // 保存评论用户头像
-      userNameList: [], // 保存评论用户名字
-      textarea: '', // 存放输入内容
-      iconList: {
-        ZAN: ICON.ZAN
-      }
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'songId'
-    ])
-  },
-  watch: {
-    songId () {
-      this.getComment()
-    }
-  },
-  mounted () {
-    this.getComment()
-  },
-  methods: {
+  setup(props) {
+    const { proxy } = getCurrentInstance();
+    const store = useStore();
+    const { checkStatus, attachImageUrl } = mixin();
+
+    const { playId, type } = toRefs(props)
+    const commentList = ref([]); // 存放评论内容
+    const userPicList = ref([]); // 保存评论用户头像
+    const userNameList = ref([]); // 保存评论用户名字
+    const textarea = ref(''); // 存放输入内容
+    const iconList = reactive({
+      ZAN: ICON.ZAN
+    });
+    const userId = computed(() => store.getters.userId);
+    const songId = computed(() => store.getters.songId);
+    watch(songId, () => {
+      getComment();
+    });
+
     // 获取所有评论
-    async getComment () {
-      const result = await HttpManager.getAllComment(this.type, this.playId)
-      this.commentList = result
-      for (const item of result) {
-        // 获取评论用户的昵称和头像
-        const resultUser = await HttpManager.getUserOfId(item.userId)
-        this.userPicList.push(resultUser[0].avator)
-        this.userNameList.push(resultUser[0].username)
+    async function getComment () {
+      try {
+        const result = await HttpManager.getAllComment(type.value, playId.value) as any[]
+        commentList.value = result
+        for (const item of result) {
+          // 获取评论用户的昵称和头像
+          const resultUser = await HttpManager.getUserOfId(item.userId)
+          userPicList.value.push(resultUser[0].avator)
+          userNameList.value.push(resultUser[0].username)
+        }
+      } catch (error) {
+        console.error(error)
       }
-    },
+    }
+
     // 提交评论
-    async submitComment () {
-      if (!this.checkStatus()) return
+    async function submitComment () {
+      if (!checkStatus()) return
 
       // 0 代表歌曲， 1 代表歌单
       const params = new URLSearchParams()
-      if (this.type === 1) {
-        params.append('songListId', this.playId)
-      } else if (this.type === 0) {
-        params.append('songId', this.playId)
+      if (type.value === 1) {
+        params.append('songListId', `${playId.value}`)
+      } else if (type.value === 0) {
+        params.append('songId', `${playId.value}`)
       }
-      params.append('userId', this.userId)
-      params.append('type', this.type)
-      params.append('content', this.textarea)
+      params.append('userId', userId.value)
+      params.append('type', `${type.value}`)
+      params.append('content', textarea.value)
 
-      const result = await HttpManager.setComment(params)
+      const result = await HttpManager.setComment(params) as { code : number }
       if (result.code === 1) {
-        this.textarea = ''
-        this.$notify({
+        textarea.value = "";
+        (proxy as any).$notify({
           title: '评论成功',
           type: 'success'
         })
-        await this.getComment()
+        await getComment()
       } else {
-        this.$notify({
+        (proxy as any).$notify({
           title: '评论失败',
           type: 'error'
         })
       }
-    },
+    }
+
     // 点赞
-    async setSupport (id, up, index) {
-      if (!this.checkStatus()) return
+    async function setSupport (id, up, index) {
+      if (!checkStatus()) return
 
       const params = new URLSearchParams()
       params.append('id', id)
       params.append('up', up + 1)
       
-      const result = await HttpManager.setSupport(params)
+      const result = await HttpManager.setSupport(params) as { code : number }
       if (result.code === 1) {
-        this.$refs.up[index].children[0].style.color = '#2796dd'
-        await this.getComment()
+        proxy.$refs.up[index].children[0].style.color = '#2796dd'
+        await getComment()
       }
     }
-  }
-}
+
+    onMounted(() => {
+      getComment()
+    });
+
+    return {
+      commentList,
+      userPicList,
+      userNameList,
+      textarea,
+      iconList,
+      attachImageUrl,
+      submitComment,
+      setSupport,
+    }
+  },
+})
 </script>
 
 <style lang='scss' scoped>

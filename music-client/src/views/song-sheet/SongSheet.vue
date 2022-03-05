@@ -1,94 +1,98 @@
 <template>
-  <div class='song-sheet'>
-    <ul class='song-sheet-header'>
+  <div class="song-sheet">
+    <ul class="song-sheet-header">
       <li
-        v-for='(item, index) in songStyle'
-        :key='index'
-        :class='{active: item.name === activeName}'
-        @click='handleChangeView(item)'>
-        {{item.name}}
+        v-for="(item, index) in songStyle"
+        :key="index"
+        :class="{ active: item.name === activeName }"
+        @click="handleChangeView(item)"
+      >
+        {{ item.name }}
       </li>
     </ul>
-    <play-list :playList='data' path='song-sheet-detail'></play-list>
-    <div class='pagination'>
+    <play-list :playList="data" path="song-sheet-detail"></play-list>
+    <div class="pagination">
       <el-pagination
-        @current-change='handleCurrentChange'
+        @current-change="handleCurrentChange"
         background
-        layout='total, prev, pager, next'
-        :current-page='currentPage'
-        :page-size='pageSize'
-        :total='allPlayList.length'>
+        layout="total, prev, pager, next"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total="allPlayList.length"
+      >
       </el-pagination>
     </div>
   </div>
 </template>
 
-<script>
-import PlayList from '@/components/PlayList'
-import { songStyle } from '@/enums'
-import { HttpManager } from '@/api'
+<script lang="ts">
+import { defineComponent, ref, computed } from "vue";
+import PlayList from "@/components/PlayList.vue";
+import { SONGSTYLE } from "@/enums";
+import { HttpManager } from "@/api";
 
-export default {
-  name: 'SongSheet',
+export default defineComponent({
   components: {
-    PlayList
+    PlayList,
   },
-  data () {
-    return {
-      songStyle: songStyle, // 歌单导航栏类别
-      activeName: '全部歌单',
-      pageSize: 15, // 页数
-      currentPage: 1, // 当前页
-      allPlayList: [] // 歌单
+  setup() {
+    const activeName = ref("全部歌单");
+    const pageSize = ref(15); // 页数
+    const currentPage = ref(1); // 当前页
+    const songStyle = ref(SONGSTYLE); // 歌单导航栏类别
+    const allPlayList = ref([]); // 歌单
+    const data = computed(() => allPlayList.value.slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value));
+
+    // 获取全部歌单
+    async function getSongList() {
+      allPlayList.value = (await HttpManager.getSongList()) as any[];
+      currentPage.value = 1;
     }
-  },
-  computed: {
-    // 计算当前表格中的数据
-    data () {
-      return this.allPlayList.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
+    // 通过类别获取歌单
+    async function getSongListOfStyle(style) {
+      allPlayList.value = (await HttpManager.getSongListOfStyle(style)) as any[];
+      currentPage.value = 1;
     }
-  },
-  created () {
-      try {
-        this.getSongList()
-      } catch (error) {
-        console.error(error)
-      }
-  },
-  methods: {
-    // 获取当前页
-    handleCurrentChange (val) {
-      this.currentPage = val
-    },
+    
+    try {
+      getSongList();
+    } catch (error) {
+      console.error(error);
+    }
+
     // 获取歌单
-   async handleChangeView (item) {
-      this.activeName = item.name
-      this.allPlayList = []
+    async function handleChangeView(item) {
+      activeName.value = item.name;
+      allPlayList.value = [];
       try {
-        if (item.name === '全部歌单') {
-          await this.getSongList()
+        if (item.name === "全部歌单") {
+          await getSongList();
         } else {
-          await this.getSongListOfStyle(item.name)
+          await getSongListOfStyle(item.name);
         }
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-    },
-    // 获取全部歌单
-    async getSongList () {
-      this.allPlayList = await HttpManager.getSongList()
-      this.currentPage = 1
-    },
-    // 通过类别获取歌单
-    async getSongListOfStyle (style) {
-      this.allPlayList = await HttpManager.getSongListOfStyle(style)
-      this.currentPage = 1
     }
-  }
-}
+    // 获取当前页
+    function handleCurrentChange(val) {
+      currentPage.value = val;
+    }
+    return {
+      activeName,
+      songStyle,
+      pageSize,
+      currentPage,
+      allPlayList,
+      data,
+      handleChangeView,
+      handleCurrentChange
+    };
+  },
+});
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
 
@@ -137,5 +141,4 @@ export default {
   @include layout(center);
   transform: translateY(15px);
 }
-
 </style>
