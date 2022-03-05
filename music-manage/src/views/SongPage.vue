@@ -94,23 +94,18 @@
     <!--添加歌曲-->
     <el-dialog title="添加歌曲" v-model="centerDialogVisible" width="400px" center>
       <el-form action="" :model="registerForm" id="tf">
-        <div>
-          <label>歌曲名</label>
-          <el-input type="text" name="name"></el-input>
-        </div>
-        <div>
-          <label>专辑</label>
-          <el-input type="text" value="" name="introduction"></el-input>
-        </div>
-        <div>
-          <label>歌词</label>
-          <el-input type="textarea" value="" name="lyric"></el-input>
-        </div>
-        <div>
-          <label>歌曲上传</label>
-          <br>
-          <input type="file" name="file" id="upadte-file-input">
-        </div>
+        <el-form-item label="歌曲名">
+          <el-input type="text" v-model="registerForm.name"></el-input>
+        </el-form-item>
+        <el-form-item label="专辑">
+          <el-input type="text" v-model="registerForm.introduction"></el-input>
+        </el-form-item>
+        <el-form-item label="歌词">
+          <el-input type="textarea" v-model="registerForm.lyric"></el-input>
+        </el-form-item>
+        <el-form-item label="歌曲上传">
+          <input type="file" id="upadte-file-input">
+        </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
