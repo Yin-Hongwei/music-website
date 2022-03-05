@@ -16,13 +16,12 @@
   </div>
 </template>
 
-<script>
-import mixin from "@/mixins";
+<script lang="ts">
+import { defineComponent } from "vue";
 import SearchSong from "./SearchSong.vue";
 import SearchSongList from "./SearchSongList.vue";
 
-export default {
-  mixins: [mixin],
+export default defineComponent({
   components: {
     SearchSong,
     SearchSongList,
@@ -42,7 +41,7 @@ export default {
       currentView: "SearchSong",
     };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

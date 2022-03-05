@@ -8,24 +8,19 @@
   <yin-audio></yin-audio>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { getCurrentInstance } from "vue";
-import YinHeader from "@/components/layouts/YinHeader";
-import YinCurrentPlay from "@/components/layouts/YinCurrentPlay";
-import YinPlayBar from "@/components/layouts/YinPlayBar";
-import YinScrollTop from "@/components/layouts/YinScrollTop";
-import YinFooter from "@/components/layouts/YinFooter";
-import YinAudio from "@/components/layouts/YinAudio";
+import YinHeader from "@/components/layouts/YinHeader.vue";
+import YinCurrentPlay from "@/components/layouts/YinCurrentPlay.vue";
+import YinPlayBar from "@/components/layouts/YinPlayBar.vue";
+import YinScrollTop from "@/components/layouts/YinScrollTop.vue";
+import YinFooter from "@/components/layouts/YinFooter.vue";
+import YinAudio from "@/components/layouts/YinAudio.vue";
 
 const { proxy } = getCurrentInstance();
+
 if (sessionStorage.getItem("dataStore")) {
-  proxy.$store.replaceState(
-    Object.assign(
-      {},
-      proxy.$store.state,
-      JSON.parse(sessionStorage.getItem("dataStore"))
-    )
-  );
+  proxy.$store.replaceState(Object.assign( {}, proxy.$store.state, JSON.parse(sessionStorage.getItem("dataStore"))));
 }
 
 // 页面刷新时将 vuex 里的信息保存到 sessionStorage

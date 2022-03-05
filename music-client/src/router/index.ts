@@ -1,6 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-
-const routes = [
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+const routes: Array<RouteRecordRaw> = [
   {
     path: '/:pathMatch(.*)*',
     redirect: '/404'
@@ -12,22 +11,22 @@ const routes = [
   {
     path: '/',
     name: 'yin-container',
-    component: () => import('@/views/YinContainer'),
+    component: () => import('@/views/YinContainer.vue'),
     children: [
       {
         path: '/',
         name: 'home',
-        component: () => import('@/views/Home')
+        component: () => import('@/views/Home.vue')
       },
       {
         path: '/sign-in',
         name: 'sign-in',
-        component: () => import('@/views/SignIn')
+        component: () => import('@/views/SignIn.vue')
       },
       {
         path: '/sign-up',
         name: 'sign-up',
-        component: () => import('@/views/SignUp')
+        component: () => import('@/views/SignUp.vue')
       },
       {
         path: '/personal',
@@ -35,42 +34,42 @@ const routes = [
         meta: {
           requireAuth: true
         },
-        component: () => import('@/views/personal/Personal')
+        component: () => import('@/views/personal/Personal.vue')
       },
       {
         path: '/song-sheet',
         name: 'song-sheet',
-        component: () => import('@/views/song-sheet/SongSheet')
+        component: () => import('@/views/song-sheet/SongSheet.vue')
       },
       {
         path: '/song-sheet-detail/:id',
         name: 'song-sheet-detail',
-        component: () => import('@/views/song-sheet/SongSheetDetail')
+        component: () => import('@/views/song-sheet/SongSheetDetail.vue')
       },
       {
         path: '/singer',
         name: 'singer',
-        component: () => import('@/views/singer/Singer')
+        component: () => import('@/views/singer/Singer.vue')
       },
       {
         path: '/singer-detail/:id',
         name: 'singer-detail',
-        component: () => import('@/views/singer/SingerDetail')
+        component: () => import('@/views/singer/SingerDetail.vue')
       },
       {
         path: '/lyric/:id',
         name: 'lyric',
-        component: () => import('@/views/Lyric')
+        component: () => import('@/views/Lyric.vue')
       },
       {
         path: '/search',
         name: 'search',
-        component: () => import('@/views/search/Search')
+        component: () => import('@/views/search/Search.vue')
       },
       {
         path: '/personal-data',
         name: 'personal-data',
-        component: () => import('@/views/personal/PersonalData')
+        component: () => import('@/views/personal/PersonalData.vue')
       },
       {
         path: '/setting',
@@ -78,17 +77,11 @@ const routes = [
         meta: {
           requireAuth: true
         },
-        component: () => import('@/views/setting/Setting')
+        component: () => import('@/views/setting/Setting.vue')
       }
     ]
   }
 ]
-
-// const router = new Router({
-//   mode: 'history',
-//   scrollBehavior: () => ({ x: 0, y: 0 }),
-//   routes: constantRoutes
-// })
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

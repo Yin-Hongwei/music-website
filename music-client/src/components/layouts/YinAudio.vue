@@ -1,5 +1,5 @@
 <template>
-  <audio :src='songUrl' controls='controls' ref='player' preload='true' @canplay='canplay' @timeupdate='timeupdate' @ended='ended'>
+  <audio :src='songUrl' controls='controls' :ref='player' preload='true' @canplay='canplay' @timeupdate='timeupdate' @ended='ended'>
     <!--（1）属性：controls，preload（2）事件：canplay，timeupdate，ended（3）方法：play()，pause() -->
     <!--controls：向用户显示音频控件（播放/暂停/进度条/音量）-->
     <!--preload：属性规定是否在页面加载后载入音频-->
@@ -9,62 +9,68 @@
   </audio>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts">
+import {
+  defineComponent,
+  ref,
+  getCurrentInstance,
+  computed,
+  watch,
+} from "vue";
+import { useStore } from "vuex";
 
-export default {
-  name: 'yin-audio',
-  computed: {
-    ...mapGetters([
-      'songUrl', // 音乐链接
-      'isPlay', // 播放状态
-      'volume', // 音量
-      'changeTime', // 指定播放时刻
-      'autoNext' // 用于触发自动播放下一首
-    ])
-  },
-  watch: {
+export default defineComponent({
+  setup() {
+    const { proxy } = getCurrentInstance();
+    const store = useStore();
+    const divRef = ref<HTMLAudioElement>();
+    const player = (el) => {
+      divRef.value = el;
+    };
+
+    const songUrl = computed(() => store.getters.songUrl); // 音乐链接
+    const isPlay = computed(() => store.getters.isPlay); // 播放状态
+    const volume = computed(() => store.getters.volume); // 音量
+    const changeTime = computed(() => store.getters.changeTime); // 指定播放时刻
+    const autoNext = computed(() => store.getters.autoNext); // 用于触发自动播放下一首
     // 监听播放还是暂停
-    isPlay () {
-      this.togglePlay()
-    },
+    watch(isPlay, () => togglePlay())
     // 跳到指定时刻播放
-    changeTime () {
-      const player = this.$refs.player
-      player.currentTime = this.changeTime
-    },
-    volume (val) {
-      this.$refs.player.volume = val
+    watch(changeTime, () => divRef.value.currentTime = changeTime.value)
+    watch(volume, value => divRef.value.volume = value)
+
+    // 开始 / 暂停
+    function togglePlay () {
+      isPlay.value ? divRef.value.play() : divRef.value.pause()
+    }
+    // 获取歌曲链接后准备播放
+    function canplay () {
+      //  记录音乐时长
+      proxy.$store.commit('setDuration', divRef.value.duration)
+      //  开始播放
+      divRef.value.play()
+      proxy.$store.commit('setIsPlay', true)
+    }
+    // 音乐播放时记录音乐的播放位置
+    function timeupdate () {
+      proxy.$store.commit('setCurTime', divRef.value.currentTime)
+    }
+    // 音乐播放结束时触发
+    function ended () {
+      proxy.$store.commit('setIsPlay', false)
+      proxy.$store.commit('setCurTime', 0)
+      proxy.$store.commit('setAutoNext', !autoNext.value)
+    }
+
+    return {
+      songUrl,
+      player,
+      canplay,
+      timeupdate,
+      ended,
     }
   },
-  methods: {
-    // 开始 / 暂停
-    togglePlay () {
-      const player = this.$refs.player
-      this.isPlay ? player.play() : player.pause()
-    },
-    // 获取歌曲链接后准备播放
-    canplay () {
-      const player = this.$refs.player
-      //  记录音乐时长
-      this.$store.commit('setDuration', player.duration)
-      //  开始播放
-      player.play()
-      this.$store.commit('setIsPlay', true)
-    },
-    // 音乐播放时记录音乐的播放位置
-    timeupdate () {
-      const player = this.$refs.player
-      this.$store.commit('setCurTime', player.currentTime)
-    },
-    // 音乐播放结束时触发
-    ended () {
-      this.$store.commit('setIsPlay', false)
-      this.$store.commit('setCurTime', 0)
-      this.$store.commit('setAutoNext', !this.autoNext)
-    }
-  }
-}
+})
 </script>
 
 <style scoped>

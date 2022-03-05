@@ -1,15 +1,27 @@
 <template>
-  <div class='login-logo'>
-    <yin-icon :icon="ICON.ERJI"></yin-icon>
+  <div class="login-logo">
+    <yin-icon :icon="Iicon"></yin-icon>
   </div>
 </template>
 
-<script setup>
-import YinIcon from './YinIcon'
-import { ICON } from '@/enums'
+<script lang="ts">
+import { defineComponent } from "vue";
+import YinIcon from "./YinIcon.vue";
+import { ICON } from "@/enums";
+
+export default defineComponent({
+  components: {
+    YinIcon,
+  },
+  data() {
+    return {
+      icon: ICON.ERJI,
+    };
+  },
+});
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
 

@@ -24,26 +24,42 @@
   </transition>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import mixin from '@/mixins'
+<script lang="ts">
+import {
+  defineComponent,
+  getCurrentInstance,
+  computed,
+  onMounted,
+} from "vue";
+import { useStore } from "vuex";
+import mixin from "@/mixins/mixin"
 
-export default {
-  name: 'YinCurrentPlay',
-  mixins: [mixin],
-  computed: {
-    ...mapGetters([
-      'songId', // 音乐 ID
-      'currentPlayList', // 当前播放
-      'showAside' // 是否显示侧边栏
-    ])
+export default defineComponent({
+  setup() {
+    const { proxy } = getCurrentInstance()
+    const store = useStore()
+    const { getSongTitle, playMusic } = mixin()
+
+
+    const songId = computed(() => store.getters.songId); // 音乐 ID
+    const currentPlayList = computed(() => store.getters.currentPlayList); // 当前播放
+    const showAside = computed(() => store.getters.showAside); // 是否显示侧边栏
+
+    onMounted(() => {
+      document.addEventListener('click', () => {
+        proxy.$store.commit('setShowAside', false)
+      }, true)
+    })
+
+    return {
+      songId,
+      currentPlayList,
+      showAside,
+      getSongTitle,
+      playMusic,
+    }
   },
-  mounted () {
-    document.addEventListener('click', () => {
-      this.$store.commit('setShowAside', false)
-    }, true)
-  }
-}
+})
 </script>
 
 <style lang='scss' scoped>

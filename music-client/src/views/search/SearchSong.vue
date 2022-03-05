@@ -4,58 +4,60 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
-import mixin from "@/mixins";
+<script lang="ts">
+import {
+  defineComponent,
+  ref,
+  computed,
+  watch,
+  onMounted,
+  getCurrentInstance,
+} from "vue";
+import { useStore } from "vuex";
 import SongList from "@/components/SongList.vue";
 import { HttpManager } from "@/api";
 
-export default {
-  mixins: [mixin],
+export default defineComponent({
   components: {
     SongList,
   },
-  data() {
-    return {
-      currentSongList: [], // 存放的音乐
-    };
-  },
-  computed: {
-    ...mapGetters(["searchWord"]),
-  },
-  watch: {
-    searchWord(value) {
-      this.searchSong(value);
-    },
-  },
-  mounted() {
-    this.searchSong(this.$route.query.keywords);
-  },
-  methods: {
+  setup() {
+    const { proxy } = getCurrentInstance();
+    const store = useStore();
+
+    const currentSongList = ref([]); // 存放的音乐
+    const searchWord = computed(() => store.getters.searchWord);
+    watch(searchWord, (value) => {
+      searchSong(value);
+    });
+
     // 搜索音乐
-    searchSong(value) {
+    async function searchSong(value) {
       if (!value) {
-        this.currentSongList = [];
+        currentSongList.value = [];
         return;
       }
-      HttpManager.getSongOfSingerName(value)
-        .then((res) => {
-          if (!res.length) {
-            this.currentSongList = [];
-            this.$notify({
-              title: "暂时没有相关歌曲",
-              type: "warning",
-            });
-          } else {
-            this.currentSongList = res;
-          }
-        })
-        .catch((err) => {
-          console.error(err);
+      const result = (await HttpManager.getSongOfSingerName(value)) as any[];
+      if (!result.length) {
+        currentSongList.value = [];
+        (proxy as any).$notify({
+          title: "暂时没有相关歌曲",
+          type: "warning",
         });
-    },
+      } else {
+        currentSongList.value = result;
+      }
+    }
+
+    onMounted(() => {
+      searchSong(proxy.$route.query.keywords);
+    });
+
+    return {
+      currentSongList,
+    };
   },
-};
+});
 </script>
 
 <style scoped>

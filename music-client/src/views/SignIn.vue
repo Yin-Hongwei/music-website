@@ -29,19 +29,34 @@
   </div>
 </template>
 
-<script>
-import mixin from "../mixins";
-import YinLoginLogo from "../components/layouts/YinLoginLogo";
-import { HttpManager } from "../api";
-import { NAV_NAME, HOME, SIGN_UP } from "../enums";
+<script lang="ts">
+import {
+  defineComponent,
+  reactive,
+  getCurrentInstance,
+  onMounted,
+} from "vue";
+import mixin from "@/mixins/mixin";
+import YinLoginLogo from "@/components/layouts/YinLoginLogo.vue";
+import { HttpManager } from "@/api";
+import { NAV_NAME, HOME, SIGN_UP } from "@/enums";
 
-export default {
-  name: "SignIn",
-  mixins: [mixin],
+interface resSignIn {
+  code: string;
+  type: string;
+  msg: string;
+  success: boolean;
+  userMsg: any[];
+}
+
+export default defineComponent({
   components: {
     YinLoginLogo,
   },
-  data() {
+  setup() {
+    const { proxy } = getCurrentInstance();
+    const { routerManager, changeIndex } = mixin();
+
     const validateName = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("用户名不能为空"));
@@ -56,71 +71,76 @@ export default {
         callback();
       }
     };
+
+    // 登录用户名密码
+    const loginForm = reactive({
+      username: "",
+      password: "",
+    });
+    const rules = reactive({
+      username: [
+        { validator: validateName, message: "请输入用户名", trigger: "blur" },
+      ],
+      password: [
+        {
+          validator: validatePassword,
+          message: "请输入密码",
+          trigger: "blur",
+        },
+      ],
+    });
+
+    onMounted(() => {
+      changeIndex(NAV_NAME.SIGN_IN);
+    });
+
+    async function handleLoginIn() {
+      try {
+        const params = new URLSearchParams();
+        params.append("username", loginForm.username);
+        params.append("password", loginForm.password);
+        const result = (await HttpManager.signIn(params)) as resSignIn;
+        if (result.code != null) {
+          (proxy as any).$message({
+            message: result.msg,
+            type: result.type,
+          });
+          setUserInfo(result.userMsg[0]);
+          setTimeout(() => {
+            if (result.success) {
+              changeIndex(NAV_NAME.HOME);
+              routerManager(HOME, { path: HOME });
+            }
+          }, 2000);
+        } else {
+          (proxy as any).$notify({
+            title: "用户名或密码错误",
+            type: "error",
+          });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    function setUserInfo(item) {
+      proxy.$store.commit("setUserId", item.id);
+      proxy.$store.commit("setUsername", item.username);
+      proxy.$store.commit("setUserPic", item.avator);
+      proxy.$store.commit("setToken", true);
+    }
+    function handleSignUp() {
+      routerManager(SIGN_UP, { path: SIGN_UP });
+    }
+
     return {
-      loginForm: {
-        // 登录用户名密码
-        username: "",
-        password: "",
-      },
-      rules: {
-        username: [
-          { validator: validateName, message: "请输入用户名", trigger: "blur" },
-        ],
-        password: [
-          {
-            validator: validatePassword,
-            message: "请输入密码",
-            trigger: "blur",
-          },
-        ],
-      },
+      loginForm,
+      rules,
+      handleLoginIn,
+      handleSignUp,
     };
   },
-  mounted() {
-    this.changeIndex(NAV_NAME.SIGN_IN);
-  },
-  methods: {
-    handleLoginIn() {
-      // 获取登录信息
-      const params = new URLSearchParams();
-      params.append("username", this.loginForm.username);
-      params.append("password", this.loginForm.password);
-      HttpManager.signIn(params)
-        .then((res) => {
-          if (res.code != null) {
-            this.$message({
-              message: res.msg,
-              type: res.type,
-            });
-            this.setUserInfo(res.userMsg[0]);
-            setTimeout(() => {
-              if (res.success) {
-                this.changeIndex(NAV_NAME.HOME);
-                this.routerManager(HOME, { path: HOME });
-              }
-            }, 2000);
-          } else {
-            this.$notify({
-              title: "用户名或密码错误",
-              type: "error",
-            });
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-    setUserInfo(item) {
-      this.$store.commit("setUserId", item.id);
-      this.$store.commit("setUsername", item.username);
-      this.$store.commit("setUserPic", item.avator);
-      this.$store.commit("setToken", true);
-    },
-    handleSignUp() {
-      this.routerManager(SIGN_UP, { path: SIGN_UP });
-    },
-  },
-};
+});
 </script>
 
 <style lang="scss" scoped>

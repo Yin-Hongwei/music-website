@@ -34,70 +34,63 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
-import mixin from "../mixins";
-import Comment from "../components/Comment";
-import { parseLyric } from "../utils";
+<script lang="ts">
+import { computed, defineComponent, ref, watch } from 'vue';
+import { useStore} from "vuex";
+import Comment from "@/components/Comment.vue";
+import { parseLyric } from "@/utils";
 
-export default {
-  name: "Lyric",
-  mixins: [mixin],
+export default defineComponent({
   components: {
     Comment,
   },
-  data() {
-    return {
-      lrcTop: "80px", // 歌词滑动
-      lyricArr: [], // 当前歌曲的歌词
-    };
-  },
-  computed: {
-    ...mapGetters([
-      "curTime",
-      "songTitle", // 歌名
-      "singerName", // 歌手名
-      "songPic", // 歌曲图片
-      "songId", // 歌曲ID
-      "lyric", // 歌词
-      "currentPlayList", // 存放的音乐
-      "currentPlayIndex", // 当前歌曲在歌曲列表的位置
-    ]),
-  },
-  watch: {
-    songId() {
-      this.lyricArr = parseLyric(
-        this.currentPlayList[this.currentPlayIndex].lyric
-      );
-    },
-    // 播放时间的开始和结束
-    curTime() {
-      // 处理歌词位置及颜色
-      if (this.lyricArr.length !== 0) {
-        for (let i = 0; i < this.lyricArr.length; i++) {
-          if (this.curTime >= this.lyricArr[i][0]) {
-            for (let j = 0; j < this.lyricArr.length; j++) {
-              document.querySelectorAll(".has-lyric li")[j].style.color =
-                "#000";
-              document.querySelectorAll(".has-lyric li")[j].style.fontSize =
-                "14px";
+  setup() {
+    const store = useStore();
+
+    const lrcTop = ref("80px"); // 歌词滑动
+    const lyricArr = ref([]); // 当前歌曲的歌词
+    const songId = computed(() => store.getters.songId); // 歌曲ID
+    const lyric = computed(() => store.getters.lyric); // 歌词
+    const currentPlayList = computed(() => store.getters.currentPlayList); // 存放的音乐
+    const currentPlayIndex = computed(() => store.getters.currentPlayIndex); // 当前歌曲在歌曲列表的位置
+    const curTime = computed(() => store.getters.curTime);
+    const songTitle = computed(() => store.getters.songTitle); // 歌名
+    const singerName = computed(() => store.getters.singerName); // 歌手名
+    const songPic = computed(() => store.getters.songPic); // 歌曲图片
+    watch(songId, () => {
+      lyricArr.value = parseLyric(currentPlayList.value[currentPlayIndex.value].lyric);
+    })
+    // 处理歌词位置及颜色
+    watch(curTime, () => {
+      if (lyricArr.value.length !== 0) {
+        for (let i = 0; i < lyricArr.value.length; i++) {
+          if (curTime.value >= lyricArr.value[i][0]) {
+            for (let j = 0; j < lyricArr.value.length; j++) {
+              (document.querySelectorAll(".has-lyric li") as NodeListOf<HTMLElement>)[j].style.color = "#000";
+              (document.querySelectorAll(".has-lyric li") as NodeListOf<HTMLElement>)[j].style.fontSize = "14px";
             }
             if (i >= 0) {
-              this.lrcTop = -i * 30 + 50 + "px";
-              document.querySelectorAll(".has-lyric li")[i].style.color =
-                "#95d2f6";
-              document.querySelectorAll(".has-lyric li")[i].style.fontSize =
-                "18px";
+              lrcTop.value = -i * 30 + 50 + "px";
+              (document.querySelectorAll(".has-lyric li") as NodeListOf<HTMLElement>)[i].style.color = "#95d2f6";
+              (document.querySelectorAll(".has-lyric li") as NodeListOf<HTMLElement>)[i].style.fontSize = "18px";
             }
           }
         }
       }
-    },
+    })
+
+    lyricArr.value = lyric.value ? parseLyric(lyric.value) : [];
+
+    return {
+      songPic,
+      singerName,
+      songTitle,
+      lrcTop,
+      lyricArr,
+      songId,
+    }
   },
-  created() {
-    this.lyricArr = this.lyric ? parseLyric(this.lyric) : [];
-  },
-};
+});
 </script>
 
 <style lang="scss" scoped>
@@ -113,6 +106,7 @@ export default {
   left: 50px;
   .song-pic {
     height: 300px;
+    width: 300px;
     overflow: hidden;
     border: 4px solid white;
     border-radius: 12px;
@@ -121,7 +115,7 @@ export default {
     }
   }
   .song-info {
-    width: 100%;
+    width: 300px;
     li {
       width: 100%;
       line-height: 40px;
@@ -142,6 +136,7 @@ export default {
     min-height: 300px;
     padding: 30px 0;
     overflow: auto;
+    // text-align: center;
     .has-lyric {
       position: absolute;
       transition: all 1s;
@@ -154,9 +149,8 @@ export default {
       }
     }
     .no-lyric {
+      position: absolute;
       margin: 100px 0;
-      width: 100%;
-      text-align: center;
 
       span {
         font-size: 18px;

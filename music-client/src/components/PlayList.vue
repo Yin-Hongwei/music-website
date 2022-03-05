@@ -1,50 +1,56 @@
 <template>
-  <div class='play-list'>
-    <div class='section-title' v-if='title'>{{title}}</div>
-    <ul class='section-content'>
-      <li class='content-item' v-for='(item, index) in playList' :key='index'>
-        <div class='kuo' @click='goAblum(item)'>
-          <img class='item-img' :src='attachImageUrl(item.pic)' alt=''>
-          <div class='mask' @click='goAblum(item)'>
+  <div class="play-list">
+    <div class="section-title" v-if="title">{{ title }}</div>
+    <ul class="section-content">
+      <li class="content-item" v-for="(item, index) in playList" :key="index">
+        <div class="kuo" @click="goAblum(item)">
+          <img class="item-img" :src="attachImageUrl(item.pic)" alt="" />
+          <div class="mask" @click="goAblum(item)">
             <yin-icon :icon="BOFANG"></yin-icon>
           </div>
         </div>
-        <p class='item-name'>{{item.name || item.title}}</p>
+        <p class="item-name">{{ item.name || item.title }}</p>
       </li>
     </ul>
   </div>
 </template>
 
-<script>
-import YinIcon from '@/components/layouts/YinIcon'
-import mixin from '@/mixins'
-import { ICON } from '@/enums'
+<script lang="ts">
+import { defineComponent, getCurrentInstance, ref, toRefs } from "vue";
+import YinIcon from "@/components/layouts/YinIcon.vue";
+import mixin from "@/mixins/mixin";
+import { ICON } from "@/enums";
 
-export default {
-  name: 'PlayList',
-  mixins: [mixin],
+export default defineComponent({
   components: {
-    YinIcon
+    YinIcon,
   },
   props: {
     title: String,
     playList: Array,
-    path: String
+    path: String,
   },
-  data () {
+  setup(props) {
+    const { proxy } = getCurrentInstance();
+    const { routerManager, attachImageUrl } = mixin();
+
+    const { path } = toRefs(props);
+    const BOFANG = ref(ICON.BOFANG);
+
+    function goAblum(item) {
+      proxy.$store.commit("setSongDetails", item);
+      routerManager(path.value, { path: `/${path.value}/${item.id}` });
+    }
+
     return {
-      BOFANG: ICON.BOFANG
-    }
+      BOFANG,
+      goAblum,
+      attachImageUrl,
+    };
   },
-  methods: {
-    goAblum (item) {
-      this.$store.commit('setSongDetails', item)
-      this.routerManager(this.path, { path: `/${this.path}/${item.id}` })
-    }
-  }
-}
+});
 </script>
 
-<style lang='scss' scoped>
-@import '@/assets/css/play-list.scss';
+<style lang="scss" scoped>
+@import "@/assets/css/play-list.scss";
 </style>
