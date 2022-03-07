@@ -253,7 +253,7 @@ export default {
     },
     // 更新歌曲图片
     uploadUrl (id) {
-      return `${this.$store.state.HOST}/song/images/update?id=${id}`
+      return `${this.$store.state.HOST}/song/img/update?id=${id}`
     },
     // 更新歌曲url
     uploadSongUrl (id) {
