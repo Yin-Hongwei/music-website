@@ -22,7 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
-@Controller
 public class ConsumerController {
 
     @Autowired

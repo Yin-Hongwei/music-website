@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @RestController
-@Controller
 public class CommentController {
     @Autowired
     private CommentServiceImpl commentService;

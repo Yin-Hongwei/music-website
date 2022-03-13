@@ -16,9 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 
-
+@CrossOrigin
 @RestController
-@Controller
 public class SongListController {
 
     @Autowired

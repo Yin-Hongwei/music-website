@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@Controller
 public class AdminController {
     @Autowired
     private AdminServiceImpl adminService;
