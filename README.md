@@ -4,15 +4,13 @@
 
 <h1 align="center"><font color="red">声明</font></h1>
 
-**这项目我一直作为技术分享，不做收费（版权归我个人独有，大家拿来学习交流随时欢迎，拒绝商用）。希望大家可以尊重下我的劳动成果，谢谢。任何平台发现有卖的欢迎随时举报。**
-
-[闲鱼上售卖的](https://github.com/Yin-Hongwei/music-website/discussions/113)
+**这项目我一直作为技术分享，不做收费（版权归我个人独有，大家拿来学习交流随时欢迎，拒绝商用）。希望大家可以尊重下我的劳动成果，谢谢。**
 
 <br/>
 
 ## 项目说明
 
-本音乐网站的客户端和管理端使用 **VUE** 框架来实现，服务端使用 **Spring Boot + MyBatis** 来实现，数据库使用了 **MySQL**。实现思路可以看 **[这里](https://yin-hongwei.github.io/2019/03/04/music/#more)**（只写过这一个文档，没在其他平台出过视频）；项目启动方法看文章末尾。
+本音乐网站的客户端和管理端使用 **Vue** 框架来实现，服务端使用 **Spring Boot + MyBatis** 来实现，数据库使用了 **MySQL**。实现思路可以看 **[这里](https://yin-hongwei.github.io/2019/03/04/music/#more)**；项目启动方法看文章末尾。
 
 <br/>
 
