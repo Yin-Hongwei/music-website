@@ -64,6 +64,7 @@ export default defineComponent({
     YinLoginLogo
   },
   setup() {
+    const { proxy } = getCurrentInstance();
     const { routerManager, changeIndex } = mixin()
 
     const rules = ref(RULES);
@@ -81,7 +82,6 @@ export default defineComponent({
 
     async function handleSignUp () {
       // TODO：这里需要在前端做必填项校验
-      const { proxy } = getCurrentInstance();
       const params = new URLSearchParams()
       params.append('username', registerForm.username)
       params.append('password', registerForm.password)
