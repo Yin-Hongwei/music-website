@@ -1,6 +1,6 @@
 <template>
   <div class="login-logo">
-    <yin-icon :icon="Iicon"></yin-icon>
+    <yin-icon :icon="icon"></yin-icon>
   </div>
 </template>
 
