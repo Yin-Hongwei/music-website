@@ -93,18 +93,18 @@
 
     <!--添加歌曲-->
     <el-dialog title="添加歌曲" v-model="centerDialogVisible" width="400px" center>
-      <el-form action="" :model="registerForm" id="tf">
+      <el-form action="" :model="registerForm" id="add-song">
         <el-form-item label="歌曲名">
-          <el-input type="text" v-model="registerForm.name"></el-input>
+          <el-input type="text" name="name" v-model="registerForm.name"></el-input>
         </el-form-item>
         <el-form-item label="专辑">
-          <el-input type="text" v-model="registerForm.introduction"></el-input>
+          <el-input type="text" name="introduction" v-model="registerForm.introduction"></el-input>
         </el-form-item>
         <el-form-item label="歌词">
-          <el-input type="textarea" v-model="registerForm.lyric"></el-input>
+          <el-input type="textarea" name="lyric" v-model="registerForm.lyric"></el-input>
         </el-form-item>
         <el-form-item label="歌曲上传">
-          <input type="file" id="upadte-file-input">
+          <input type="file" name="file">
         </el-form-item>
       </el-form>
       <template #footer>
@@ -117,15 +117,15 @@
 
     <!-- 编辑弹出框 -->
     <el-dialog title="编辑" v-model="editVisible" width="400px">
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="songForm" :model="songForm" label-width="80px">
         <el-form-item label="歌手-歌曲" size="small">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="songForm.name"></el-input>
         </el-form-item>
         <el-form-item label="简介" size="small">
-          <el-input v-model="form.introduction"></el-input>
+          <el-input v-model="songForm.introduction"></el-input>
         </el-form-item>
         <el-form-item label="歌词" size="small">
-          <el-input  type="textarea" v-model="form.lyric"></el-input>
+          <el-input  type="textarea" v-model="songForm.lyric"></el-input>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -173,7 +173,7 @@ export default {
       editVisible: false,
       delVisible: false,
       select_word: '',
-      form: {
+      songForm: {
         id: '',
         singerId: '',
         name: '',
@@ -290,13 +290,12 @@ export default {
     },
     // 添加音乐
     addSong () {
-      var form = new FormData(document.getElementById('tf'))
-      form.append('singerId', this.singerId)
-      form.set('name', this.singerName + '-' + form.get('name'))
-      if (!form.get('lyric')) {
-        form.set('lyric', '[00:00:00]暂无歌词')
-      }
-      var req = new XMLHttpRequest()
+      const addSongForm = new FormData(document.getElementById('add-song'))
+      addSongForm.append('singerId', this.singerId)
+      addSongForm.set('name', this.singerName + '-' + addSongForm.get('name'))
+      if (!addSongForm.get('lyric')) addSongForm.set('lyric', '[00:00:00]暂无歌词')
+
+      const req = new XMLHttpRequest()
       req.onreadystatechange = () => {
         if (req.readyState === 4 && req.status === 200) {
           let res = JSON.parse(req.response)
@@ -316,13 +315,13 @@ export default {
         }
       }
       req.open('post', `${this.$store.state.HOST}/song/add`, false)
-      req.send(form)
+      req.send(addSongForm)
       this.centerDialogVisible = false
     },
     // 编辑
     handleEdit (row) {
       this.idx = row.id
-      this.form = {
+      this.songForm = {
         id: row.id,
         singerId: row.singerId,
         name: row.name,
@@ -341,11 +340,11 @@ export default {
     // 保存编辑
     saveEdit () {
       let params = new URLSearchParams()
-      params.append('id', this.form.id)
-      params.append('singerId', this.form.singerId)
-      params.append('name', this.form.name)
-      params.append('introduction', this.form.introduction)
-      params.append('lyric', this.form.lyric)
+      params.append('id', this.songForm.id)
+      params.append('singerId', this.songForm.singerId)
+      params.append('name', this.songForm.name)
+      params.append('introduction', this.songForm.introduction)
+      params.append('lyric', this.songForm.lyric)
       HttpManager.updateSongMsg(params)
         .then(res => {
           if (res) {
