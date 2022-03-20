@@ -30,9 +30,9 @@ public class SongController {
     @Bean
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
-        //文件最大10M,DataUnit提供5中类型B,KB,MB,GB,TB
+        // 文件最大10M,DataUnit提供5中类型B,KB,MB,GB,TB
         factory.setMaxFileSize(DataSize.of(10, DataUnit.MEGABYTES));
-        /// 设置总上传数据总大小10M
+        // 设置总上传数据总大小10M
         factory.setMaxRequestSize(DataSize.of(10, DataUnit.MEGABYTES));
         return factory.createMultipartConfig();
     }
@@ -48,7 +48,7 @@ public class SongController {
         }
     }
 
-    //    添加歌曲
+    // 添加歌曲
     @ResponseBody
     @RequestMapping(value = "/song/add", method = RequestMethod.POST)
     public Object addSong(HttpServletRequest req, @RequestParam("file") MultipartFile mpfile) {
@@ -104,48 +104,48 @@ public class SongController {
         }
     }
 
-    //    返回所有歌曲
+    // 返回所有歌曲
     @RequestMapping(value = "/song", method = RequestMethod.GET)
     public Object allSong() {
         return songService.allSong();
     }
 
-    //    返回指定歌曲ID的歌曲
+    // 返回指定歌曲ID的歌曲
     @RequestMapping(value = "/song/detail", method = RequestMethod.GET)
     public Object songOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
         return songService.songOfId(Integer.parseInt(id));
     }
 
-    //    返回指定歌手ID的歌曲
+    // 返回指定歌手ID的歌曲
     @RequestMapping(value = "/song/singer/detail", method = RequestMethod.GET)
     public Object songOfSingerId(HttpServletRequest req) {
         String singerId = req.getParameter("singerId");
         return songService.songOfSingerId(Integer.parseInt(singerId));
     }
 
-    //    返回指定歌手名的歌曲
+    // 返回指定歌手名的歌曲
     @RequestMapping(value = "/song/singerName/detail", method = RequestMethod.GET)
     public Object songOfSingerName(HttpServletRequest req) {
         String name = req.getParameter("name");
         return songService.songOfSingerName('%' + name + '%');
     }
 
-    //    返回指定歌曲名的歌曲
+    // 返回指定歌曲名的歌曲
     @RequestMapping(value = "/song/name/detail", method = RequestMethod.GET)
     public Object songOfName(HttpServletRequest req) {
         String name = req.getParameter("name").trim();
         return songService.songOfName(name);
     }
 
-    //    删除歌曲
+    // 删除歌曲
     @RequestMapping(value = "/song/delete", method = RequestMethod.GET)
     public Object deleteSong(HttpServletRequest req) {
         String id = req.getParameter("id");
         return songService.deleteSong(Integer.parseInt(id));
     }
 
-    //    更新歌曲信息
+    // 更新歌曲信息
     @ResponseBody
     @RequestMapping(value = "/song/update", method = RequestMethod.POST)
     public Object updateSongMsg(HttpServletRequest req) {
@@ -176,7 +176,7 @@ public class SongController {
         }
     }
 
-    //    更新歌曲图片
+    // 更新歌曲图片
     @ResponseBody
     @RequestMapping(value = "/song/img/update", method = RequestMethod.POST)
     public Object updateSongPic(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {
@@ -188,7 +188,8 @@ public class SongController {
             return jsonObject;
         }
         String fileName = System.currentTimeMillis() + urlFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songPic";
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img"
+                + System.getProperty("file.separator") + "songPic";
         File file1 = new File(filePath);
         if (!file1.exists()) {
             file1.mkdir();
@@ -221,7 +222,7 @@ public class SongController {
         }
     }
 
-    //    更新歌曲URL
+    // 更新歌曲URL
     @ResponseBody
     @RequestMapping(value = "/song/url/update", method = RequestMethod.POST)
     public Object updateSongUrl(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {

@@ -12,14 +12,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import PlayList from "@/components/PlayList.vue";
-import { swiperList } from "@/enums";
+import { swiperList, NAV_NAME } from "@/enums";
 import { HttpManager } from "@/api";
+import mixin from "@/mixins/mixin";
 
 const songList = ref([]); // 歌单列表
 const singerList = ref([]); // 歌手列表
-
+const { changeIndex } = mixin();
 try {
   HttpManager.getSongList().then((res) => {
     songList.value = (res as any[]).sort().slice(0, 10);
@@ -28,6 +29,10 @@ try {
   HttpManager.getAllSinger().then((res) => {
     singerList.value = (res as any[]).sort().slice(0, 10);
   });
+
+  onMounted(() => {
+    changeIndex(NAV_NAME.HOME);
+  })
 } catch (error) {
   console.error(error);
 }
@@ -36,6 +41,7 @@ try {
 <style lang="scss" scoped>
 @import "@/assets/css/var.scss";
 
+/*轮播图*/
 .swiper-container {
   width: 90%;
   margin: auto;
@@ -43,6 +49,15 @@ try {
   img {
     width: 100%;
   }
+}
+
+.swiper-container:deep(.el-carousel__indicators.el-carousel__indicators--outside) {
+  display: inline-block;
+  transform: translateX(30vw);
+}
+
+.el-slider__runway {
+  background-color: $color-blue;
 }
 
 .section {
