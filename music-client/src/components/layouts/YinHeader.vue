@@ -90,11 +90,12 @@ export default defineComponent({
     function goMenuList (path) {
       if (path === 0) proxy.$store.commit("setIsCollection", false)
 
-      if (path) {
-        routerManager(path, { path })
-      } else {
+      if (path == SIGN_OUT) {
         proxy.$store.commit("setToken", false)
-        routerManager(SIGN_OUT, { path: SIGN_OUT })
+        changeIndex(NAV_NAME.HOME)
+        routerManager(HOME, { path: HOME })
+        } else {
+        routerManager(path, { path })
       }
     }
     function goSearch () {
