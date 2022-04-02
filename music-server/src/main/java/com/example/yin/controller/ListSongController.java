@@ -17,7 +17,7 @@ public class ListSongController {
     @Autowired
     private ListSongServiceImpl listSongService;
 
-    //    给歌单添加歌曲
+    // 给歌单添加歌曲
     @ResponseBody
     @RequestMapping(value = "/listSong/add", method = RequestMethod.POST)
     public Object addListSong(HttpServletRequest req) {
@@ -40,27 +40,27 @@ public class ListSongController {
         return jsonObject;
     }
 
-    //    返回歌单里包含的所有歌曲
+    // 返回歌单里包含的所有歌曲
     @RequestMapping(value = "/listSong", method = RequestMethod.GET)
     public Object allListSong() {
         return listSongService.allListSong();
     }
 
-    //    返回歌单里指定歌单ID的歌曲
+    // 返回歌单里指定歌单ID的歌曲
     @RequestMapping(value = "/listSong/detail", method = RequestMethod.GET)
     public Object listSongOfSongId(HttpServletRequest req) {
         String songListId = req.getParameter("songListId");
         return listSongService.listSongOfSongId(Integer.parseInt(songListId));
     }
 
-    //    删除歌单里的歌曲
+    // 删除歌单里的歌曲
     @RequestMapping(value = "/listSong/delete", method = RequestMethod.GET)
     public Object deleteListSong(HttpServletRequest req) {
         String songId = req.getParameter("songId");
         return listSongService.deleteListSong(Integer.parseInt(songId));
     }
 
-    //    更新歌单里面的歌曲信息
+    // 更新歌单里面的歌曲信息
     @ResponseBody
     @RequestMapping(value = "/listSong/update", method = RequestMethod.POST)
     public Object updateListSongMsg(HttpServletRequest req) {

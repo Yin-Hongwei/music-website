@@ -38,6 +38,8 @@ const HttpManager = {
   setRank: (params) => post(`rankList/add`, params),
   // 获取指定歌单的评分
   getRankOfSongListId: (songListId) => get(`rankList?songListId=${songListId}`),
+  // 获取指定用户的歌单评分
+  getUserRank: (consumerId, songListId) => get(`/rankList/user?consumerId=${consumerId}&songListId=${songListId}`),
 
   // =======================> 评论 API
   // 添加评论

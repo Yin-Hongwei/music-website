@@ -1,6 +1,6 @@
 <template>
-  <div class="song-sheet-detail">
-    <div class="album-slide">
+  <el-container class="song-sheet-detail">
+    <el-aside class="album-slide">
       <div class="album-img">
         <img :src="attachImageUrl(songDetails.pic)" alt="" />
       </div>
@@ -8,43 +8,39 @@
         <h2>简介：</h2>
         <span> {{ songDetails.introduction }} </span>
       </div>
-    </div>
-    <div class="song-list">
+    </el-aside>
+    <el-main class="album-main">
       <div class="album-title">
         <p>{{ songDetails.title }}</p>
       </div>
       <!--评分-->
       <div class="album-score">
         <div>
-          <h3>歌单评分：</h3>
-          <div>
-            <el-rate v-model="rank" disabled></el-rate>
-          </div>
+          <h3>歌单评分</h3>
+          <el-rate v-model="rank" allow-half disabled></el-rate>
         </div>
         <span>{{ rank * 2 }}</span>
         <div>
-          <h3>评价：</h3>
-          <div @click="pushValue()">
-            <el-rate v-model="score" show-text allow-half></el-rate>
-          </div>
+          <h3>{{ assistText }}</h3>
+          <el-rate
+            allow-half
+            v-model="score"
+            :disabled="disabledRank"
+            @click="pushValue()"
+          ></el-rate>
         </div>
       </div>
       <!--歌曲-->
-      <div class="songs-body">
+      <div class="album-body">
         <song-list :songList="currentSongList"></song-list>
         <comment :playId="songListId" :type="1"></comment>
       </div>
-    </div>
-  </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  computed,
-  getCurrentInstance,
-} from "vue";
+import { defineComponent, ref, computed, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import mixin from "@/mixins/mixin";
 import SongList from "@/components/SongList.vue";
@@ -63,7 +59,7 @@ export default defineComponent({
     Comment,
   },
   setup() {
-    const { proxy } = getCurrentInstance()
+    const { proxy } = getCurrentInstance();
     const store = useStore();
     const { checkStatus, attachImageUrl } = mixin();
 
@@ -71,6 +67,9 @@ export default defineComponent({
     const songListId = ref(""); // 歌单 ID
     const score = ref(0);
     const rank = ref(0);
+    const disabledRank = ref(false);
+    const assistText = ref("评价");
+    // const evaluateList = ref(["很差", "较差", "还行", "推荐", "力推"]);
     const songDetails = computed(() => store.getters.songDetails); // 单个歌单信息
     const userId = computed(() => store.getters.userId);
 
@@ -91,9 +90,15 @@ export default defineComponent({
       const result = (await HttpManager.getRankOfSongListId(id)) as number;
       rank.value = result / 2;
     }
+    async function getUserRank(userId, songListId) {
+      const result = (await HttpManager.getUserRank(userId, songListId)) as string;
+      score.value = parseInt(result);
+      disabledRank.value = true;
+      assistText.value = "已评价";
+    }
     // 提交评分
     async function pushValue() {
-      if (!checkStatus()) return;
+      if (disabledRank.value || !checkStatus()) return;
 
       const params = new URLSearchParams();
       params.append("songListId", songListId.value);
@@ -103,7 +108,8 @@ export default defineComponent({
       try {
         const result = (await HttpManager.setRank(params)) as resContent;
         if (result.code === 1) {
-          getRank(songListId);
+          getRank(songListId.value);
+          disabledRank.value = true;
           (proxy as any).$notify({
             title: "评分成功",
             type: "success",
@@ -119,6 +125,7 @@ export default defineComponent({
       }
     }
 
+    getUserRank(userId.value, songListId.value);
     getRank(songListId.value); // 获取评分
     getSongId(songListId.value); // 获取歌单里面的歌曲ID
 
@@ -126,6 +133,8 @@ export default defineComponent({
       songDetails,
       rank,
       score,
+      disabledRank,
+      assistText,
       currentSongList,
       songListId,
       attachImageUrl,

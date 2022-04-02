@@ -4,7 +4,6 @@ import com.example.yin.dao.ConsumerMapper;
 import com.example.yin.domain.Consumer;
 import com.example.yin.service.ConsumerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

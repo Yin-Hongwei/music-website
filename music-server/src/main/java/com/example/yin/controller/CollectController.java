@@ -18,16 +18,16 @@ public class CollectController {
     @Autowired
     private CollectServiceImpl collectService;
 
-    //    添加收藏的歌曲
+    // 添加收藏的歌曲
     @ResponseBody
     @RequestMapping(value = "/collection/add", method = RequestMethod.POST)
     public Object addCollection(HttpServletRequest req) {
-
         JSONObject jsonObject = new JSONObject();
         String user_id = req.getParameter("userId");
         String type = req.getParameter("type");
         String song_id = req.getParameter("songId");
         String song_list_id = req.getParameter("songListId");
+
         if (song_id == "") {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "收藏歌曲为空");
@@ -37,6 +37,7 @@ public class CollectController {
             jsonObject.put("msg", "已收藏");
             return jsonObject;
         }
+
         Collect collect = new Collect();
         collect.setUserId(Integer.parseInt(user_id));
         collect.setType(new Byte(type));
@@ -46,6 +47,7 @@ public class CollectController {
             collect.setSongListId(Integer.parseInt(song_list_id));
         }
         collect.setCreateTime(new Date());
+
         boolean res = collectService.addCollection(collect);
         if (res) {
             jsonObject.put("code", 1);
@@ -58,20 +60,20 @@ public class CollectController {
         }
     }
 
-    //    返回所有用户收藏列表
+    // 返回所有用户收藏列表
     @RequestMapping(value = "/collection", method = RequestMethod.GET)
     public Object allCollection() {
         return collectService.allCollect();
     }
 
-    //    返回的指定用户ID收藏列表
+    // 返回的指定用户ID收藏列表
     @RequestMapping(value = "/collection/detail", method = RequestMethod.GET)
     public Object collectionOfUser(HttpServletRequest req) {
         String userId = req.getParameter("userId");
         return collectService.collectionOfUser(Integer.parseInt(userId));
     }
 
-    //    删除收藏的歌曲
+    // 删除收藏的歌曲
     @RequestMapping(value = "/collection/delete", method = RequestMethod.GET)
     public Object deleteCollection(HttpServletRequest req) {
         String user_id = req.getParameter("userId").trim();
@@ -79,7 +81,7 @@ public class CollectController {
         return collectService.deleteCollect(Integer.parseInt(user_id), Integer.parseInt(song_id));
     }
 
-    //    更新收藏
+    // 更新收藏
     @ResponseBody
     @RequestMapping(value = "/collection/update", method = RequestMethod.POST)
     public Object updateCollectMsg(HttpServletRequest req) {
@@ -88,7 +90,7 @@ public class CollectController {
         String user_id = req.getParameter("userId").trim();
         String type = req.getParameter("type").trim();
         String song_id = req.getParameter("songId").trim();
-//        String song_list_id = req.getParameter("songListId").trim();
+        // String song_list_id = req.getParameter("songListId").trim();
 
         Collect collect = new Collect();
         collect.setId(Integer.parseInt(id));
@@ -108,4 +110,3 @@ public class CollectController {
         }
     }
 }
-

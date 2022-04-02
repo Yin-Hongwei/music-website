@@ -17,7 +17,7 @@ public class RankListController {
     @Autowired
     private RankListServiceImpl rankListService;
 
-    //    提交评分
+    // 提交评分
     @ResponseBody
     @RequestMapping(value = "/rankList/add", method = RequestMethod.POST)
     public Object addRank(HttpServletRequest req) {
@@ -43,10 +43,18 @@ public class RankListController {
         }
     }
 
-    //    获取指定歌单的评分
+    // 获取指定歌单的评分
     @RequestMapping(value = "/rankList", method = RequestMethod.GET)
     public Object rankOfSongListId(HttpServletRequest req) {
         String songListId = req.getParameter("songListId");
         return rankListService.rankOfSongListId(Long.parseLong(songListId));
+    }
+
+    // 获取指定用户的歌单评分
+    @RequestMapping(value = "/rankList/user", method = RequestMethod.GET)
+    public Object getUserRank(HttpServletRequest req) {
+        String consumerId = req.getParameter("consumerId");
+        String songListId = req.getParameter("songListId");
+        return rankListService.getUserRank(Long.parseLong(consumerId), Long.parseLong(songListId));
     }
 }

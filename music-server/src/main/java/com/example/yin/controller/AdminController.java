@@ -16,12 +16,11 @@ public class AdminController {
     @Autowired
     private AdminServiceImpl adminService;
 
-    //    判断是否登录成功
+    // 判断是否登录成功
     @ResponseBody
     @RequestMapping(value = "/admin/login/status", method = RequestMethod.POST)
     public Object loginStatus(HttpServletRequest req, HttpSession session) {
         JSONObject jsonObject = new JSONObject();
-
         String name = req.getParameter("name");
         String password = req.getParameter("password");
 
