@@ -99,8 +99,6 @@ public class SongController {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "上传失败" + e.getMessage());
             return jsonObject;
-        } finally {
-            return jsonObject;
         }
     }
 
@@ -188,8 +186,7 @@ public class SongController {
             return jsonObject;
         }
         String fileName = System.currentTimeMillis() + urlFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img"
-                + System.getProperty("file.separator") + "songPic";
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songPic";
         File file1 = new File(filePath);
         if (!file1.exists()) {
             file1.mkdir();
@@ -217,8 +214,6 @@ public class SongController {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "上传失败" + e.getMessage());
             return jsonObject;
-        } finally {
-            return jsonObject;
         }
     }
 
@@ -227,7 +222,6 @@ public class SongController {
     @RequestMapping(value = "/song/url/update", method = RequestMethod.POST)
     public Object updateSongUrl(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {
         JSONObject jsonObject = new JSONObject();
-
         if (urlFile.isEmpty()) {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "音乐上传失败！");
@@ -261,8 +255,6 @@ public class SongController {
         } catch (IOException e) {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "上传失败" + e.getMessage());
-            return jsonObject;
-        } finally {
             return jsonObject;
         }
     }

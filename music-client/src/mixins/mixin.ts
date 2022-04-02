@@ -35,9 +35,13 @@ export default function () {
     return BASE_URL.value + srcUrl || "../assets/images/user.jpg";
   }
 
-  function getBirth (val) {
-    const birth = String(val).match(/[0-9-]+(?=\s)/)
-    return Array.isArray(birth) ? birth[0] : birth
+  function getBirth (cellValue) {
+    if (cellValue == null || cellValue == "") return "";
+    const date = new Date(cellValue) 
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
+    const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate() 
+    return year + '-' + month + '-' + day
   }
 
   function getUserSex (sex) {

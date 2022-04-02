@@ -17,11 +17,10 @@ public class CommentController {
     @Autowired
     private CommentServiceImpl commentService;
 
-    //  提交评论
+    // 提交评论
     @ResponseBody
     @RequestMapping(value = "/comment/add", method = RequestMethod.POST)
     public Object addComment(HttpServletRequest req) {
-
         JSONObject jsonObject = new JSONObject();
         String user_id = req.getParameter("userId");
         String type = req.getParameter("type");
@@ -51,31 +50,30 @@ public class CommentController {
         }
     }
 
-    //    获取所有评论列表
+    // 获取所有评论列表
     @RequestMapping(value = "/comment", method = RequestMethod.GET)
     public Object allComment() {
         return commentService.allComment();
     }
 
-    //    获得指定歌曲ID的评论列表
+    // 获得指定歌曲ID的评论列表
     @RequestMapping(value = "/comment/song/detail", method = RequestMethod.GET)
     public Object commentOfSongId(HttpServletRequest req) {
         String songId = req.getParameter("songId");
         return commentService.commentOfSongId(Integer.parseInt(songId));
     }
 
-    //    获得指定歌单ID的评论列表
+    // 获得指定歌单ID的评论列表
     @RequestMapping(value = "/comment/songList/detail", method = RequestMethod.GET)
     public Object commentOfSongListId(HttpServletRequest req) {
         String songListId = req.getParameter("songListId");
         return commentService.commentOfSongListId(Integer.parseInt(songListId));
     }
 
-    //    点赞
+    // 点赞
     @ResponseBody
     @RequestMapping(value = "/comment/like", method = RequestMethod.POST)
     public Object commentOfLike(HttpServletRequest req) {
-
         JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String up = req.getParameter("up").trim();
@@ -95,14 +93,14 @@ public class CommentController {
         }
     }
 
-    //    删除评论
+    // 删除评论
     @RequestMapping(value = "/comment/delete", method = RequestMethod.GET)
     public Object deleteComment(HttpServletRequest req) {
         String id = req.getParameter("id");
         return commentService.deleteComment(Integer.parseInt(id));
     }
 
-    //    更新评论
+    // 更新评论
     @ResponseBody
     @RequestMapping(value = "/comment/update", method = RequestMethod.POST)
     public Object updateCommentMsg(HttpServletRequest req) {
