@@ -86,7 +86,6 @@ public class ConsumerController {
         consumer.setCreateTime(new Date());
         consumer.setUpdateTime(new Date());
 
-
         try {
             boolean res = consumerService.addUser(consumer);
             if (res) {
@@ -182,7 +181,7 @@ public class ConsumerController {
         String introduction = req.getParameter("introduction").trim();
         String location = req.getParameter("location").trim();
         // String avator = req.getParameter("avator").trim();
-        // System.out.println(username+"  "+password+"  "+sex+"   "+phone_num+"     "+email+"      "+birth+"       "+introduction+"      "+location);
+        // System.out.println(username+" "+password+" "+sex+" "+phone_num+" "+email+" "+birth+" "+introduction+" "+location);
 
         if ("".equals(username)) {
             jsonObject.put("code", 0);
@@ -227,7 +226,6 @@ public class ConsumerController {
     @RequestMapping(value = "/user/avatar/update", method = RequestMethod.POST)
     public Object updateUserPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
         JSONObject jsonObject = new JSONObject();
-
         if (avatorFile.isEmpty()) {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "文件上传失败！");
@@ -261,8 +259,6 @@ public class ConsumerController {
         } catch (IOException e) {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "上传失败" + e.getMessage());
-            return jsonObject;
-        } finally {
             return jsonObject;
         }
     }

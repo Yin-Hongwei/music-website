@@ -1,25 +1,27 @@
 <template>
-  <div class="singer-detail">
-    <div class="album-slide">
+  <el-container class="singer-detail">
+    <el-aside class="album-slide">
       <div class="singer-img">
         <img :src="attachImageUrl(songDetails.pic)" alt="" />
       </div>
-      <ul class="info">
-        <li v-if="songDetails.sex !== 2">性别：{{ getUserSex(songDetails.sex) }}</li>
+      <ul class="album-info">
+        <li v-if="songDetails.sex !== 2">
+          性别：{{ getUserSex(songDetails.sex) }}
+        </li>
         <li>生日：{{ getBirth(songDetails.birth) }}</li>
         <li>故乡：{{ songDetails.location }}</li>
       </ul>
-    </div>
-    <div class="song-list">
+    </el-aside>
+    <el-main class="album-main">
       <div class="intro">
         <h2>{{ songDetails.name }}</h2>
         <span>{{ songDetails.introduction }}</span>
       </div>
-      <div class="content">
+      <div class="album-body">
         <song-list :songList="currentSongList"></song-list>
       </div>
-    </div>
-  </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script lang="ts">
@@ -42,9 +44,7 @@ export default defineComponent({
 
     onMounted(async () => {
       try {
-        const result = (await HttpManager.getSongOfSingerId(
-          songDetails.value.id
-        )) as any[];
+        const result = (await HttpManager.getSongOfSingerId(songDetails.value.id)) as any[];
         currentSongList.value = result;
       } catch (error) {
         console.error(error);

@@ -30,8 +30,7 @@ public class SongListController {
         }
     }
 
-
-    //    添加歌单
+    // 添加歌单
     @ResponseBody
     @RequestMapping(value = "/songList/add", method = RequestMethod.POST)
     public Object addSongList(HttpServletRequest req) {
@@ -59,41 +58,41 @@ public class SongListController {
         }
     }
 
-    //    返回所有歌单
+    // 返回所有歌单
     @RequestMapping(value = "/songList", method = RequestMethod.GET)
     public Object allSongList() {
         return songListService.allSongList();
     }
 
-    //    返回指定标题对应的歌单
+    // 返回指定标题对应的歌单
     @RequestMapping(value = "/songList/title/detail", method = RequestMethod.GET)
     public Object songListOfTitle(HttpServletRequest req) {
         String title = req.getParameter("title").trim();
         return songListService.songListOfTitle(title);
     }
 
-    //    返回标题包含文字的歌单
+    // 返回标题包含文字的歌单
     @RequestMapping(value = "/songList/likeTitle/detail", method = RequestMethod.GET)
     public Object songListOfLikeTitle(HttpServletRequest req) {
         String title = req.getParameter("title").trim();
         return songListService.likeTitle('%' + title + '%');
     }
 
-    //    返回指定类型的歌单
+    // 返回指定类型的歌单
     @RequestMapping(value = "/songList/style/detail", method = RequestMethod.GET)
     public Object songListOfStyle(HttpServletRequest req) {
         String style = req.getParameter("style").trim();
         return songListService.likeStyle('%' + style + '%');
     }
 
-    //    删除歌单
+    // 删除歌单
     @RequestMapping(value = "/songList/delete", method = RequestMethod.GET)
     public Object deleteSongList(HttpServletRequest req) {
         String id = req.getParameter("id");
         return songListService.deleteSongList(Integer.parseInt(id));
     }
 
-    //    更新歌单信息
+    // 更新歌单信息
     @ResponseBody
     @RequestMapping(value = "/songList/update", method = RequestMethod.POST)
     public Object updateSongListMsg(HttpServletRequest req) {
@@ -123,7 +122,7 @@ public class SongListController {
         }
     }
 
-    //    更新歌单图片
+    // 更新歌单图片
     @ResponseBody
     @RequestMapping(value = "/songList/img/update", method = RequestMethod.POST)
     public Object updateSongListPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
@@ -163,23 +162,6 @@ public class SongListController {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "上传失败" + e.getMessage());
             return jsonObject;
-        } finally {
-            return jsonObject;
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -33,7 +33,7 @@ public class SingerController {
         }
     }
 
-    //    添加歌手
+    // 添加歌手
     @ResponseBody
     @RequestMapping(value = "/singer/add", method = RequestMethod.POST)
     public Object addSinger(HttpServletRequest req) {
@@ -72,34 +72,34 @@ public class SingerController {
         }
     }
 
-    //    返回所有歌手
+    // 返回所有歌手
     @RequestMapping(value = "/singer", method = RequestMethod.GET)
     public Object allSinger() {
         return singerService.allSinger();
     }
 
-    //    根据歌手名查找歌手
+    // 根据歌手名查找歌手
     @RequestMapping(value = "/singer/name/detail", method = RequestMethod.GET)
     public Object singerOfName(HttpServletRequest req) {
         String name = req.getParameter("name").trim();
         return singerService.singerOfName(name);
     }
 
-    //    根据歌手性别查找歌手
+    // 根据歌手性别查找歌手
     @RequestMapping(value = "/singer/sex/detail", method = RequestMethod.GET)
     public Object singerOfSex(HttpServletRequest req) {
         String sex = req.getParameter("sex").trim();
         return singerService.singerOfSex(Integer.parseInt(sex));
     }
 
-    //    删除歌手
+    // 删除歌手
     @RequestMapping(value = "/singer/delete", method = RequestMethod.GET)
     public Object deleteSinger(HttpServletRequest req) {
         String id = req.getParameter("id");
         return singerService.deleteSinger(Integer.parseInt(id));
     }
 
-    //    更新歌手信息
+    // 更新歌手信息
     @ResponseBody
     @RequestMapping(value = "/singer/update", method = RequestMethod.POST)
     public Object updateSingerMsg(HttpServletRequest req) {
@@ -140,7 +140,7 @@ public class SingerController {
         }
     }
 
-    //    更新歌手头像
+    // 更新歌手头像
     @ResponseBody
     @RequestMapping(value = "/singer/avatar/update", method = RequestMethod.POST)
     public Object updateSingerPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
@@ -180,9 +180,6 @@ public class SingerController {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "上传失败" + e.getMessage());
             return jsonObject;
-        } finally {
-            return jsonObject;
         }
     }
 }
-
