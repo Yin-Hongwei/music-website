@@ -37,7 +37,7 @@ export default defineComponent({
     const store = useStore();
 
     const imageUrl = ref("")
-    const uploadTypes = ref(["jpg", "jpeg", "png", "gif", "bmp", "x-png", "icon"]);
+    const uploadTypes = ref(["jpg", "jpeg", "png", "gif"]);
     const BASE_URL = computed(() => store.getters.BASE_URL)
     const userId = computed(() => store.getters.userId)
 
