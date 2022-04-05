@@ -2,23 +2,23 @@
   <div class="sidebar">
     <el-menu
       class="sidebar-el-menu"
-      background-color="#545c64"
-      text-color="#B0B3B2"
-      active-text-color="#ffffff"
+      background-color="#ffffff"
+      text-color="#67757f"
+      active-text-color="#30a4fc"
       default-active="2"
       router
       :collapse="collapse"
     >
       <el-menu-item index="info">
-        <el-icon><Document /></el-icon>
+        <el-icon><pie-chart /></el-icon>
         <span>系统首页</span>
       </el-menu-item>
       <el-menu-item index="consumer">
-        <el-icon><Document /></el-icon>
+        <el-icon><User /></el-icon>
         <span>用户管理</span>
       </el-menu-item>
       <el-menu-item index="singer">
-        <el-icon><Document /></el-icon>
+        <el-icon><mic /></el-icon>
         <span>歌手管理</span>
       </el-menu-item>
       <el-menu-item index="songList">
@@ -31,7 +31,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { Document } from "@element-plus/icons-vue";
+import { PieChart, Mic, Document, User } from "@element-plus/icons-vue";
 import emitter from "@/utils/emitter";
 
 const collapse = ref(false);
@@ -46,7 +46,7 @@ emitter.on("collapse", (msg) => {
   position: absolute;
   background-color: #334256;
   left: 0;
-  top: 70px;
+  top: 60px;
   bottom: 0;
   overflow-y: scroll;
 }
