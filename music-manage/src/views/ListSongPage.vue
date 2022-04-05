@@ -132,10 +132,18 @@ export default {
     },
     // 获取要添加歌曲的ID
     getSongId () {
-      var id = this.registerForm.singerName + '-' + this.registerForm.songName
+      const id = `${this.registerForm.singerName} - ${ this.registerForm.songName}`
       HttpManager.getSongOfSingerName(id)
         .then(res => {
-          this.addSong(res[0].id)
+          if (res && res[0]) {
+            this.addSong(res[0].id)
+          } else {
+            this.$message({
+              showClose: true,
+              message: '未找到要添加的歌曲',
+              type: 'warning',
+            })
+          }
         })
     },
     // 添加歌曲
