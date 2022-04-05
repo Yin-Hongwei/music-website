@@ -1,4 +1,4 @@
-import { ICON, BASE_URL } from '@/enums'
+import { Icon } from '@/enums'
 
 export default {
   state: {
@@ -6,14 +6,14 @@ export default {
     songId: '', // 音乐 ID
     songTitle: '', // 歌名
     songUrl: '', // 音乐 URL
-    songPic: `${BASE_URL}/img/songPic/tubiao.jpg`, // 歌曲图片
+    songPic: `/img/songPic/tubiao.jpg`, // 歌曲图片
     singerName: '', //  歌手名
     isCollection: false, // 是否收藏
     lyric: [], // 处理后的歌词数据
 
     /** 音乐播放信息 */
     isPlay: false, // 播放状态
-    playBtnIcon: ICON.BOFANG, // 播放状态的图标
+    playBtnIcon: Icon.BOFANG, // 播放状态的图标
     volume: 0, // 音量
     duration: 0, // 音乐时长
     curTime: 0, // 当前音乐的播放位置
@@ -70,8 +70,8 @@ export default {
   actions: {
     playMusic: ({ commit }, { id, url, pic, index, songTitle, singerName, lyric, currentSongList }) => {
       commit('setSongId', id)
-      commit('setSongUrl', BASE_URL + url)
-      commit('setSongPic', BASE_URL + pic)
+      commit('setSongUrl', url)
+      commit('setSongPic', pic)
       commit('setCurrentPlayIndex', index)
       commit('setSongTitle', songTitle)
       commit('setSingerName', singerName)

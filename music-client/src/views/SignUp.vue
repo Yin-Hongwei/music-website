@@ -48,8 +48,8 @@ import { defineComponent, ref, reactive, getCurrentInstance } from "vue";
 import mixin from '@/mixins/mixin'
 import YinLoginLogo from '@/components/layouts/YinLoginLogo.vue'
 import { HttpManager } from '@/api'
-import { getDateTime } from '@/utils'
-import { RULES, AREA, SIGN_IN, NAV_NAME } from '@/enums'
+import { getDateTime, RULES } from '@/utils'
+import { AREA, RouterName, NavName } from '@/enums'
 
 interface resSignUp {
   title: string,
@@ -100,8 +100,8 @@ export default defineComponent({
           })
           setTimeout(() => {
             if (result.success) {
-              routerManager(SIGN_IN, { path: SIGN_IN })
-              changeIndex(NAV_NAME.SIGN_IN)
+              routerManager(RouterName.SignIn, { path: RouterName.SignIn })
+              changeIndex(NavName.SignIn)
             }
           }, 2000)
         } else {

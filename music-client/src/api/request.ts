@@ -1,6 +1,7 @@
 import axios from "axios";
 import router from "@/router";
-import { BASE_URL } from "@/enums";
+
+const BASE_URL = process.env.NODE_HOST
 
 axios.defaults.timeout = 5000; // 超时时间设置
 axios.defaults.withCredentials = true; // true允许跨域
@@ -54,6 +55,10 @@ axios.interceptors.response.use(
     }
   }
 );
+
+export function getBaseURL() {
+  return BASE_URL;
+}
 
 /**
  * 封装get方法

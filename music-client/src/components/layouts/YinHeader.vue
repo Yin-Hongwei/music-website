@@ -48,13 +48,12 @@ import {
   HEADERNAVLIST,
   SIGNLIST,
   MENULIST,
-  ICON,
+  Icon,
   MUSICNAME,
-  HOME,
-  SEARCH,
-  SIGN_OUT,
-  NAV_NAME,
+  RouterName,
+  NavName,
 } from "@/enums";
+import { HttpManager } from "@/api"
 
 export default defineComponent({
   components: {
@@ -63,14 +62,14 @@ export default defineComponent({
   setup() {
     const { proxy } = getCurrentInstance();
     const store = useStore();
-    const { changeIndex, routerManager, attachImageUrl } = mixin();
+    const { changeIndex, routerManager } = mixin();
 
     const musicName = ref(MUSICNAME)
     const headerNavList = ref(HEADERNAVLIST); // 左侧导航栏
     const signList = ref(SIGNLIST); // 右侧导航栏
     const menuList = ref(MENULIST); // 用户下拉菜单项
     const iconList = reactive({
-      ERJI: ICON.ERJI
+      ERJI: Icon.ERJI
     });
     const keywords = ref("");
     const activeNavName = computed(() => store.getters.activeNavName);
@@ -79,8 +78,8 @@ export default defineComponent({
 
     function goPage (path, name) {
       if (!path && !name) {
-        changeIndex(NAV_NAME.HOME)
-        routerManager(HOME, { path: HOME })
+        changeIndex(NavName.Home)
+        routerManager(RouterName.Home, { path: RouterName.Home })
       } else {
         changeIndex(name)
         routerManager(path, { path })
@@ -90,10 +89,10 @@ export default defineComponent({
     function goMenuList (path) {
       if (path === 0) proxy.$store.commit("setIsCollection", false)
 
-      if (path == SIGN_OUT) {
+      if (path == RouterName.SignOut) {
         proxy.$store.commit("setToken", false)
-        changeIndex(NAV_NAME.HOME)
-        routerManager(HOME, { path: HOME })
+        changeIndex(NavName.Home)
+        routerManager(RouterName.Home, { path: RouterName.Home })
         } else {
         routerManager(path, { path })
       }
@@ -101,7 +100,7 @@ export default defineComponent({
     function goSearch () {
       if (keywords.value !== "") {
         proxy.$store.commit("setSearchWord", keywords.value)
-        routerManager(SEARCH, { path: SEARCH, query: { keywords: keywords.value } })
+        routerManager(RouterName.Search, { path: RouterName.Search, query: { keywords: keywords.value } })
       } else {
         (proxy as any).$notify({
           title: "搜索内容不能为空",
@@ -123,7 +122,7 @@ export default defineComponent({
       goPage,
       goMenuList,
       goSearch,
-      attachImageUrl,
+      attachImageUrl: HttpManager.attachImageUrl,
     }
   },
 })

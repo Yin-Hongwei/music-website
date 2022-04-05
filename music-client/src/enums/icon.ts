@@ -1,4 +1,4 @@
-export const enum ICON {
+export const enum Icon {
   BOFANG = "#icon-bofang", // 播放
   ZANTING = "#icon-zanting", // 暂停
   YINLIANG = "#icon-yinliang", // 音量有背景

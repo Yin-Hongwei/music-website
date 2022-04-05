@@ -1,22 +1,7 @@
 import { getCurrentInstance, computed } from "vue";
 import { useStore } from "vuex";
 import { LocationQueryRaw } from "vue-router";
-import {
-  HOME,
-  SONG_SHEET,
-  SINGER,
-  PERSONAL,
-  SETTING,
-  SIGN_IN,
-  SIGN_UP,
-  SIGN_OUT,
-  SEARCH,
-  LYRIC,
-  SONG_SHEET_DETAIL,
-  SINGER_DETAIL,
-  ERROR,
-  PERSONAL_DATA,
-} from "@/enums";
+import { RouterName } from "@/enums";
 
 interface routerOptions {
   path?: string;
@@ -27,28 +12,25 @@ export default function () {
   const { proxy } = getCurrentInstance();
 
   const store = useStore();
-  const BASE_URL = computed(() => store.getters.BASE_URL);
   const token = computed(() => store.getters.token);
 
-  // 获取图片信息
-  function attachImageUrl(srcUrl) {
-    return BASE_URL.value + srcUrl || "../assets/images/user.jpg";
-  }
-
-  function getBirth (cellValue) {
+  function getBirth(cellValue) {
     if (cellValue == null || cellValue == "") return "";
-    const date = new Date(cellValue) 
-    const year = date.getFullYear()
-    const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
-    const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate() 
-    return year + '-' + month + '-' + day
+    const date = new Date(cellValue);
+    const year = date.getFullYear();
+    const month =
+      date.getMonth() + 1 < 10
+        ? "0" + (date.getMonth() + 1)
+        : date.getMonth() + 1;
+    const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+    return year + "-" + month + "-" + day;
   }
 
-  function getUserSex (sex) {
+  function getUserSex(sex) {
     if (sex === 0) {
-      return '女'
+      return "女";
     } else if (sex === 1) {
-      return '男'
+      return "男";
     }
   }
 
@@ -95,22 +77,22 @@ export default function () {
   // 路由管理
   function routerManager(routerName: string | number, options: routerOptions) {
     switch (routerName) {
-      case SEARCH:
+      case RouterName.Search:
         proxy.$router.push({ path: options.path, query: options.query });
         break;
-      case HOME:
-      case SIGN_OUT:
-      case SONG_SHEET:
-      case SONG_SHEET_DETAIL:
-      case SINGER:
-      case SINGER_DETAIL:
-      case PERSONAL:
-      case SETTING:
-      case PERSONAL_DATA:
-      case SIGN_IN:
-      case SIGN_UP:
-      case LYRIC:
-      case ERROR:
+      case RouterName.Home:
+      case RouterName.SongSheet:
+      case RouterName.SongSheetDetail:
+      case RouterName.Singer:
+      case RouterName.SingerDetail:
+      case RouterName.Personal:
+      case RouterName.PersonalData:
+      case RouterName.Setting:
+      case RouterName.SignIn:
+      case RouterName.SignUp:
+      case RouterName.SignOut:
+      case RouterName.Lyric:
+      case RouterName.Error:
       default:
         proxy.$router.push({ path: options.path });
         break;
@@ -122,7 +104,6 @@ export default function () {
   }
 
   return {
-    attachImageUrl,
     getBirth,
     getUserSex,
     getSongTitle,

@@ -1,6 +1,8 @@
-import { get, post } from './request'
+import { getBaseURL, get, post } from './request'
 
 const HttpManager = {
+  // 获取图片信息
+  attachImageUrl: (url) => `${getBaseURL()}/${url}`,
   // =======================> 用户 API
   // 登录
   signIn: (params) => post(`user/login/status`, params),
@@ -10,6 +12,8 @@ const HttpManager = {
   updateUserMsg: (params) => post(`user/update`, params),
   // 返回指定ID的用户
   getUserOfId: (id) => get(`user/detail?id=${id}`),
+  // 更新用户头像
+  uploadUrl: (userId) => `${getBaseURL()}/user/avatar/update?id=${userId}`,
 
   // =======================> 歌单 API
   // 获取全部歌单

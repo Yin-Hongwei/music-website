@@ -61,7 +61,7 @@ export default defineComponent({
   setup() {
     const { proxy } = getCurrentInstance();
     const store = useStore();
-    const { checkStatus, attachImageUrl } = mixin();
+    const { checkStatus } = mixin();
 
     const currentSongList = ref([]); // 存放的音乐
     const songListId = ref(""); // 歌单 ID
@@ -137,7 +137,7 @@ export default defineComponent({
       assistText,
       currentSongList,
       songListId,
-      attachImageUrl,
+      attachImageUrl: HttpManager.attachImageUrl,
       pushValue,
     };
   },
