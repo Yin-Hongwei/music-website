@@ -39,7 +39,7 @@ import {
 import mixin from "@/mixins/mixin";
 import YinLoginLogo from "@/components/layouts/YinLoginLogo.vue";
 import { HttpManager } from "@/api";
-import { NAV_NAME, HOME, SIGN_UP } from "@/enums";
+import { NavName, RouterName } from "@/enums";
 
 interface resSignIn {
   code: string;
@@ -91,7 +91,7 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      changeIndex(NAV_NAME.SIGN_IN);
+      changeIndex(NavName.SignIn);
     });
 
     async function handleLoginIn() {
@@ -108,8 +108,8 @@ export default defineComponent({
           setUserInfo(result.userMsg[0]);
           setTimeout(() => {
             if (result.success) {
-              changeIndex(NAV_NAME.HOME);
-              routerManager(HOME, { path: HOME });
+              changeIndex(NavName.Home);
+              routerManager(RouterName.Home, { path: RouterName.Home });
             }
           }, 2000);
         } else {
@@ -130,7 +130,7 @@ export default defineComponent({
       proxy.$store.commit("setToken", true);
     }
     function handleSignUp() {
-      routerManager(SIGN_UP, { path: SIGN_UP });
+      routerManager(RouterName.SignUp, { path: RouterName.SignUp });
     }
 
     return {

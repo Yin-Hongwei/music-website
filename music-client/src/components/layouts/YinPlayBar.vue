@@ -9,7 +9,7 @@
       <div class="info-box">
         <!--歌曲图片-->
         <div class="song-bar-img" @click="goPlayerPage">
-          <img :src="songPic" alt="">
+          <img :src="attachImageUrl(songPic)" alt="">
         </div>
         <!--播放开始结束时间-->
         <div v-if="songId">
@@ -55,14 +55,13 @@ import mixin from "@/mixins/mixin"
 import YinIcon from "./YinIcon.vue"
 import { HttpManager } from "@/api"
 import { formatSeconds } from "@/utils"
-import { ICON, LYRIC } from "@/enums"
+import { Icon, RouterName } from "@/enums"
 
 export default defineComponent({
   setup() {
     const { routerManager, playMusic, checkStatus } = mixin()
-    return { playMusic, routerManager, checkStatus }
+    return { playMusic, routerManager, checkStatus, attachImageUrl: HttpManager.attachImageUrl, }
   },
-  // mixins: [mixin],
   data () {
     return {
       startTime: "00:00",
@@ -70,18 +69,18 @@ export default defineComponent({
       nowTime: 0, // 进度条的位置
       toggle: true,
       volume: 50,
-      playState: ICON.XUNHUAN,
-      playStateList: [ICON.XUNHUAN, ICON.LUANXU],
+      playState: Icon.XUNHUAN,
+      playStateList: [Icon.XUNHUAN, Icon.LUANXU],
       playStateIndex: 0,
       iconList: {
-        XIAZAI: ICON.XIAZAI,
-        ZHEDIE: ICON.ZHEDIE,
-        SHANGYISHOU: ICON.SHANGYISHOU,
-        XIAYISHOU: ICON.XIAYISHOU,
-        YINLIANG: ICON.YINLIANG1,
-        JINGYIN: ICON.JINGYIN,
-        LIEBIAO: ICON.LIEBIAO,
-        XIHUAN: ICON.XIHUAN
+        XIAZAI: Icon.XIAZAI,
+        ZHEDIE: Icon.ZHEDIE,
+        SHANGYISHOU: Icon.SHANGYISHOU,
+        XIAYISHOU: Icon.XIAYISHOU,
+        YINLIANG: Icon.YINLIANG1,
+        JINGYIN: Icon.JINGYIN,
+        LIEBIAO: Icon.LIEBIAO,
+        XIHUAN: Icon.XIHUAN
       },
     }
   },
@@ -110,7 +109,7 @@ export default defineComponent({
   watch: {
     // 切换播放状态的图标
     isPlay (value) {
-      this.$store.commit("setPlayBtnIcon", value ? ICON.ZANTING : ICON.BOFANG)
+      this.$store.commit("setPlayBtnIcon", value ? Icon.ZANTING : Icon.BOFANG)
     },
     volume () {
       this.$store.commit("setVolume", this.volume / 100)
@@ -157,7 +156,7 @@ export default defineComponent({
     },
     // 上一首
     prev () {
-      if (this.playState === ICON.LUANXU) {
+      if (this.playState === Icon.LUANXU) {
           let playIndex = Math.floor(Math.random() * this.currentPlayList.length)
           playIndex = playIndex === this.currentPlayIndex ? playIndex + 1 : playIndex
           this.$store.commit("setCurrentPlayIndex", playIndex)
@@ -174,7 +173,7 @@ export default defineComponent({
     },
     // 下一首
     next () {
-      if (this.playState === ICON.LUANXU) {
+      if (this.playState === Icon.LUANXU) {
         let playIndex = Math.floor(Math.random() * this.currentPlayList.length)
         playIndex = playIndex === this.currentPlayIndex ? playIndex + 1 : playIndex
         this.$store.commit("setCurrentPlayIndex", playIndex)
@@ -205,7 +204,7 @@ export default defineComponent({
       }
     },
     goPlayerPage () {
-      this.routerManager(LYRIC, { path: `${LYRIC}/${this.songId}` })
+      this.routerManager(RouterName.Lyric, { path: `${RouterName.Lyric}/${this.songId}` })
     },
     async collection () {
       if (!this.checkStatus()) return
