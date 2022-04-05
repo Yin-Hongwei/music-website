@@ -19,7 +19,8 @@
 import { defineComponent, getCurrentInstance, ref, toRefs } from "vue";
 import YinIcon from "@/components/layouts/YinIcon.vue";
 import mixin from "@/mixins/mixin";
-import { ICON } from "@/enums";
+import { Icon } from "@/enums";
+import { HttpManager } from '@/api'
 
 export default defineComponent({
   components: {
@@ -32,10 +33,10 @@ export default defineComponent({
   },
   setup(props) {
     const { proxy } = getCurrentInstance();
-    const { routerManager, attachImageUrl } = mixin();
+    const { routerManager } = mixin();
 
     const { path } = toRefs(props);
-    const BOFANG = ref(ICON.BOFANG);
+    const BOFANG = ref(Icon.BOFANG);
 
     function goAblum(item) {
       proxy.$store.commit("setSongDetails", item);
@@ -45,7 +46,7 @@ export default defineComponent({
     return {
       BOFANG,
       goAblum,
-      attachImageUrl,
+      attachImageUrl: HttpManager.attachImageUrl,
     };
   },
 });

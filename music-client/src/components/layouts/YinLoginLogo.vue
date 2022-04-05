@@ -7,7 +7,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import YinIcon from "./YinIcon.vue";
-import { ICON } from "@/enums";
+import { Icon } from "@/enums";
 
 export default defineComponent({
   components: {
@@ -15,7 +15,7 @@ export default defineComponent({
   },
   data() {
     return {
-      icon: ICON.ERJI,
+      icon: Icon.ERJI,
     };
   },
 });

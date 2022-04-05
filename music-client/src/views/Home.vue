@@ -14,7 +14,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import PlayList from "@/components/PlayList.vue";
-import { swiperList, NAV_NAME } from "@/enums";
+import { swiperList, NavName } from "@/enums";
 import { HttpManager } from "@/api";
 import mixin from "@/mixins/mixin";
 
@@ -31,7 +31,7 @@ try {
   });
 
   onMounted(() => {
-    changeIndex(NAV_NAME.HOME);
+    changeIndex(NavName.Home);
   })
 } catch (error) {
   console.error(error);

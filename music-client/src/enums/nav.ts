@@ -1,64 +1,56 @@
-import {
-  HOME,
-  SONG_SHEET,
-  SINGER,
-  PERSONAL,
-  SIGN_IN,
-  SIGN_UP,
-  SIGN_OUT,
-} from "./router-name";
+import { RouterName } from "./router-name";
 
-export const enum NAV_NAME {
-  HOME = "首页",
-  SONG_SHEET = "歌单",
-  SINGER = "歌手",
-  PERSONAL = "个人主页",
-  SETTING = "设置",
-  SIGN_IN = "登录",
-  SIGN_UP = "注册",
-  SIGN_OUT = "退出",
+export const enum NavName {
+  Home = "首页",
+  SongSheet = "歌单",
+  Singer = "歌手",
+  Personal = "个人主页",
+  Setting = "设置",
+  SignIn = "登录",
+  SignUp = "注册",
+  SignOut = "退出",
 }
 
 // 左侧导航栏
 export const HEADERNAVLIST = [
   {
-    name: NAV_NAME.HOME,
-    path: HOME,
+    name: NavName.Home,
+    path: RouterName.Home,
   },
   {
-    name: NAV_NAME.SONG_SHEET,
-    path: SONG_SHEET,
+    name: NavName.SongSheet,
+    path: RouterName.SongSheet,
   },
   {
-    name: NAV_NAME.SINGER,
-    path: SINGER,
+    name: NavName.Singer,
+    path: RouterName.Singer,
   },
 ];
 
 // 右侧导航栏
 export const SIGNLIST = [
   {
-    name: NAV_NAME.SIGN_IN,
-    path: SIGN_IN,
+    name: NavName.SignIn,
+    path: RouterName.SignIn,
   },
   {
-    name: NAV_NAME.SIGN_UP,
-    path: SIGN_UP,
+    name: NavName.SignUp,
+    path: RouterName.SignUp,
   },
 ];
 
 // 用户下拉菜单项
 export const MENULIST = [
   {
-    name: NAV_NAME.PERSONAL,
-    path: PERSONAL,
+    name: NavName.Personal,
+    path: RouterName.Personal,
   },
   // {
-  //   name: NAV_NAME.SETTING,
-  //   path: SETTING
+  //   name: NavName.Setting,
+  //   path: RouterName.Setting
   // },
   {
-    name: NAV_NAME.SIGN_OUT,
-    path: SIGN_OUT,
+    name: NavName.SignOut,
+    path: RouterName.SignOut,
   },
 ];

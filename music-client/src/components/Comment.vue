@@ -52,7 +52,7 @@ import { useStore } from "vuex";
 import YinIcon from '@/components/layouts/YinIcon.vue'
 import mixin from '@/mixins/mixin'
 import { HttpManager } from '@/api'
-import { ICON } from '@/enums'
+import { Icon } from '@/enums'
 
 export default defineComponent({
   components: {
@@ -65,7 +65,7 @@ export default defineComponent({
   setup(props) {
     const { proxy } = getCurrentInstance();
     const store = useStore();
-    const { checkStatus, attachImageUrl } = mixin();
+    const { checkStatus } = mixin();
 
     const { playId, type } = toRefs(props)
     const commentList = ref([]); // 存放评论内容
@@ -73,7 +73,7 @@ export default defineComponent({
     const userNameList = ref([]); // 保存评论用户名字
     const textarea = ref(''); // 存放输入内容
     const iconList = reactive({
-      ZAN: ICON.ZAN
+      ZAN: Icon.ZAN
     });
     const userId = computed(() => store.getters.userId);
     const songId = computed(() => store.getters.songId);
@@ -153,7 +153,7 @@ export default defineComponent({
       userNameList,
       textarea,
       iconList,
-      attachImageUrl,
+      attachImageUrl: HttpManager.attachImageUrl,
       submitComment,
       setSupport,
     }

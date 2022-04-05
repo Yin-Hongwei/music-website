@@ -37,7 +37,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    const { getBirth, getUserSex, attachImageUrl } = mixin();
+    const { getBirth, getUserSex } = mixin();
 
     const currentSongList = ref([]);
     const songDetails = computed(() => store.getters.songDetails) as any;
@@ -54,7 +54,7 @@ export default defineComponent({
     return {
       songDetails,
       currentSongList,
-      attachImageUrl,
+      attachImageUrl: HttpManager.attachImageUrl,
       getBirth,
       getUserSex,
     };

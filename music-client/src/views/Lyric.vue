@@ -1,7 +1,7 @@
 <template>
   <div class="song-container">
     <div class="song-pic">
-      <img :src="songPic" />
+      <img :src="attachImageUrl(songPic)" />
     </div>
     <ul class="song-info">
       <li>歌手：{{ singerName }}</li>
@@ -39,6 +39,7 @@ import { computed, defineComponent, ref, watch } from 'vue';
 import { useStore} from "vuex";
 import Comment from "@/components/Comment.vue";
 import { parseLyric } from "@/utils";
+import { HttpManager } from "@/api";
 
 export default defineComponent({
   components: {
@@ -88,6 +89,7 @@ export default defineComponent({
       lrcTop,
       lyricArr,
       songId,
+      attachImageUrl: HttpManager.attachImageUrl,
     }
   },
 });

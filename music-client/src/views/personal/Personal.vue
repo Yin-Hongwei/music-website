@@ -2,7 +2,7 @@
   <div class="personal">
     <div class="personal-info">
       <div class="personal-img">
-        <img :src="userPic ? attachImageUrl(userPic) : userPic" alt="" @click="dialogTableVisible = true"/>
+        <img :src="attachImageUrl(userPic)" alt="" @click="dialogTableVisible = true"/>
       </div>
       <div class="personal-msg">
         <div class="username">{{ personalInfo.username }}</div>
@@ -37,7 +37,7 @@ import SongList from "@/components/SongList.vue";
 import Upload from "./Upload.vue";
 import mixin from "@/mixins/mixin";
 import { HttpManager } from "@/api";
-import { PERSONAL_DATA } from "@/enums";
+import { RouterName } from "@/enums";
 
 export default defineComponent({
   components: {
@@ -47,7 +47,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
 
-    const { routerManager, attachImageUrl } = mixin();
+    const { routerManager } = mixin();
 
     const edit = markRaw(Edit);
     const dialogTableVisible = ref(false);
@@ -66,7 +66,7 @@ export default defineComponent({
     });
 
     function goPage() {
-      routerManager(PERSONAL_DATA, { path: PERSONAL_DATA });
+      routerManager(RouterName.PersonalData, { path: RouterName.PersonalData });
     }
     function getUserInfo(id) {
       HttpManager.getUserOfId(id)
@@ -112,7 +112,7 @@ export default defineComponent({
       dialogTableVisible,
       collectSongList,
       personalInfo,
-      attachImageUrl,
+      attachImageUrl: HttpManager.attachImageUrl,
       goPage,
     };
   },

@@ -27,6 +27,7 @@ import {
 } from "vue";
 import { useStore } from "vuex";
 import { UploadFilled } from "@element-plus/icons-vue";
+import { HttpManager } from "@/api";
 
 export default defineComponent({
   components: {
@@ -38,11 +39,10 @@ export default defineComponent({
 
     const imageUrl = ref("")
     const uploadTypes = ref(["jpg", "jpeg", "png", "gif"]);
-    const BASE_URL = computed(() => store.getters.BASE_URL)
     const userId = computed(() => store.getters.userId)
 
     function uploadUrl() {
-      return `${BASE_URL.value}/user/avatar/update?id=${userId.value}`;
+      return HttpManager.uploadUrl(userId.value)
     }
 
     function beforeAvatarUpload(file) {
