@@ -46,13 +46,13 @@
       <el-col :span="12">
         <h3 style="margin-bottom: 20px">用户性别比例</h3>
         <div class="cav-info" style="background-color: white">
-          <div class="container" ref="userSex"></div>
+          <div class="container" id="userSex"></div>
         </div>
       </el-col>
       <el-col :span="12">
         <h3 style="margin-bottom: 20px">歌曲类型分布</h3>
         <div class="cav-info" style="background-color: white">
-          <div class="container" ref="songStyle"></div>
+          <div class="container" id="songStyle"></div>
         </div>
       </el-col>
     </el-row>
@@ -60,24 +60,25 @@
       <el-col :span="12">
         <h3 style="margin: 20px 0">歌手性别比例</h3>
         <div class="cav-info" style="background-color: white">
-          <div class="container" ref="singerSex"></div>
+          <div class="container" id="singerSex"></div>
         </div>
       </el-col>
       <el-col :span="12">
         <h3 style="margin: 20px 0">歌手国籍分布</h3>
         <div class="cav-info" style="background-color: white">
-          <div class="container" ref="country"></div>
+          <div class="container" id="country"></div>
         </div>
       </el-col>
     </el-row>
   </div>
 </template>
 <script setup>
-import { ref, reactive, getCurrentInstance } from "vue";
+// import { ref, reactive, getCurrentInstance } from "vue";
+import { ref, reactive } from "vue";
 import * as echarts from "echarts";
 import { HttpManager } from "@/api/index";
 
-const ctx = getCurrentInstance().ctx;
+// const { proxy } = getCurrentInstance();
 const userCount = ref(0);
 const songCount = ref(0);
 const singerCount = ref(0);
@@ -173,7 +174,8 @@ HttpManager.getAllUser().then((res) => {
   userSex.series[0].data.push(setSex(0, res));
   userSex.series[0].data.push(setSex(1, res));
 
-  const userSexChart = echarts.init(ctx.$refs.userSex);
+  // const userSexChart = echarts.init(proxy.$refs.userSex);
+  const userSexChart = echarts.init(document.getElementById("userSex"));
   userSexChart.setOption(userSex);
 });
 
@@ -189,7 +191,8 @@ HttpManager.getSongList().then((res) => {
       }
     }
   }
-  const songStyleChart = echarts.init(ctx.$refs.songStyle);
+  // const songStyleChart = echarts.init(proxy.$refs.songStyle);
+  const songStyleChart = echarts.init(document.getElementById("songStyle"));
   songStyleChart.setOption(songStyle);
 });
 
@@ -197,7 +200,7 @@ HttpManager.getAllSinger().then((res) => {
   singerCount.value = res.length;
   singerSex.series[0].data.push(setSex(0, res));
   singerSex.series[0].data.push(setSex(1, res));
-  const singerSexChart = echarts.init(ctx.$refs.singerSex);
+  const singerSexChart = echarts.init(document.getElementById("singerSex"));
   singerSexChart.setOption(singerSex);
 
   for (let item of res) {
@@ -207,7 +210,7 @@ HttpManager.getAllSinger().then((res) => {
       }
     }
   }
-  const countryChart = echarts.init(ctx.$refs.country);
+  const countryChart = echarts.init(document.getElementById("country"));
   countryChart.setOption(country);
 });
 </script>
