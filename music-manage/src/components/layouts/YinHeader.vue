@@ -70,12 +70,13 @@ export default {
 .header {
   position: absolute;
   z-index: 100;
-  box-sizing: border-box;
   width: 100%;
-  height: 70px;
-  font-size: 22px;
-  color: #B0B3B2;
-  background: #1A1B1C;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  color: #2c3e50;
+  background: #ffff;
   box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.3);
 }
 
@@ -83,33 +84,26 @@ export default {
   float: left;
   padding: 0 21px;
   cursor: pointer;
-  line-height: 70px;
 }
 
 .header .logo {
-  float: left;
   width: 250px;
-  font-family: 26px;
-  line-height: 70px;
+  font-weight: bold;
 }
 
 .header-right {
-  float: right;
-  padding-right: 50px;
+  position: absolute;
+  right: 0;
+  padding-right: 30px;
 }
 
 .header-user-con {
   display: flex;
-  height: 70px;
   align-items: center;
 }
 
 .user-name {
   margin-left: 10px;
-}
-
-.user-avator {
-  margin-left: 20px;
 }
 
 .user-avator img {
