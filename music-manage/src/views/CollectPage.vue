@@ -1,139 +1,129 @@
 <template>
   <div class="table">
-    {{id}}
-    <div class="crumbs">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item>
-          <i class="el-icon-tickets"></i> 收藏信息
-        </el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
+    <el-breadcrumb separator="/" class="crumbs">
+      <el-breadcrumb-item v-for="item in breadcrumbList" :key="item.name" :to="{ path: item.path, query: item.query }">
+        {{ item.name }}
+      </el-breadcrumb-item>
+    </el-breadcrumb>
+
     <div class="container">
       <div class="handle-box">
-        <el-button type="primary" size="small" class="handle-del mr10" @click="delAll">批量删除</el-button>
-        <el-input v-model="select_word" size="small" placeholder="筛选关键词" class="handle-input mr10"></el-input>
+        <el-button @click="deleteAll" disabled>批量删除</el-button>
+        <el-input placeholder="筛选歌曲" v-model="searchWord"></el-input>
       </div>
-      <el-table
-        :data="tableData"
-        size="small"
-        border
-        style="width: 100%"
-        ref="multipleTable"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" width="50"></el-table-column>
+      <el-table height="550px" border size="small" :data="tableData" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="40" align="center"></el-table-column>
         <el-table-column prop="name" label="歌手-歌曲"></el-table-column>
-        <el-table-column label="操作" width="85">
+        <el-table-column label="操作" width="90" align="center">
           <template v-slot="scope">
-            <el-button size="small" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+            <el-button type="danger" @click="deleteRow(scope.row.id)" disabled>删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
 
     <!-- 删除提示框 -->
-    <yin-del-dialog :delVisible="delVisible" @deleteRow="deleteRow" @cancelRow="delVisible = $event"></yin-del-dialog>
+    <yin-del-dialog :delVisible="delVisible" @confirm="confirm" @cancelRow="delVisible = $event"></yin-del-dialog>
   </div>
 </template>
 
-<script>
-import { mixin } from '../mixins'
-import { HttpManager } from '../api/index'
-import YinDelDialog from '@/components/dialog/YinDelDialog'
+<script lang="ts">
+import { defineComponent, getCurrentInstance, watch, ref, computed } from "vue";
+import { useStore } from "vuex";
+import { HttpManager } from "@/api";
+import YinDelDialog from "@/components/dialog/YinDelDialog.vue";
 
-export default {
-  name: 'CollectPage',
-  mixins: [mixin],
+export default defineComponent({
   components: {
-    YinDelDialog
+    YinDelDialog,
   },
-  props: ['id'],
-  data () {
-    return {
-      tableData: [], // 记录歌曲，用于显示
-      tempDate: [], // 记录歌曲，用于搜索时能临时记录一份歌曲列表
-      tempId: [], // 记录列表中歌曲的id
-      multipleSelection: [], // 记录要删除的歌曲
-      delVisible: false, // 显示删除框
-      select_word: '', // 记录输入框输入的内容
-      idx: -1 // 记录当前要删除的歌曲
-    }
-  },
-  watch: {
-    select_word: function () {
-      if (this.select_word === '') {
-        this.tableData = this.tempDate
+  setup() {
+    const { proxy } = getCurrentInstance();
+    const store = useStore();
+
+    const tableData = ref([]); // 记录歌曲，用于显示
+    const tempDate = ref([]); // 记录歌曲，用于搜索时能临时记录一份歌曲列表
+    const breadcrumbList = computed(() => store.getters.breadcrumbList);
+
+    const searchWord = ref(""); // 记录输入框输入的内容
+    watch(searchWord, () => {
+      if (searchWord.value === "") {
+        tableData.value = tempDate.value;
       } else {
-        this.tableData = []
-        for (let item of this.tempDate) {
-          if (item.name.includes(this.select_word)) {
-            this.tableData.push(item)
+        tableData.value = [];
+        for (let item of tempDate.value) {
+          if (item.name.includes(searchWord.value)) {
+            tableData.value.push(item);
           }
         }
       }
-    }
-  },
-  mounted () {
-    this.getData()
-  },
-  methods: {
+    });
+
+    getData();
+
     // 通过用户id获取用户收藏的歌曲id
-    getData () {
-      HttpManager.getCollectionOfUser(this.$route.query.id)
-        .then(res => {
-          this.tableData = []
-          for (let item of res) {
-            this.getSongList(item.songId)
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-    // 通过歌曲ID获取歌曲
-    getSongList (id) {
-      HttpManager.getSongOfId(id)
-        .then(res => {
-          this.tableData.push(res[0])
-          this.tempDate.push(res[0])
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-    // 删除一首歌曲
-    deleteRow () {
-      HttpManager.deleteCollection(this.$route.query.id, this.idx.id)
-        .then(res => {
-          if (res) {
-            this.getData()
-            this.$notify({
-              title: '删除成功',
-              type: 'success'
-            })
-          } else {
-            this.$notify({
-              title: '删除失败',
-              type: 'error'
-            })
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-      this.delVisible = false
+    async function getData() {
+      tableData.value = [];
+      tempDate.value = [];
+      const result = (await HttpManager.getCollectionOfUser(proxy.$route.query.id)) as any;
+      for (let item of result) {
+        const result = await HttpManager.getSongOfId(item.songId);
+        tableData.value.push(result[0]);
+        tempDate.value.push(result[0]);
+      }
     }
-  }
-}
+
+    /**
+     * 删除
+     */
+    const idx = ref(-1); // 记录当前要删除的行
+    const multipleSelection = ref([]); // 记录当前要删除的列表
+    const delVisible = ref(false); // 显示删除框
+
+    async function confirm() {
+      const result = await HttpManager.deleteCollection(proxy.$route.query.id, idx.value);
+
+      if (result) {
+        getData();
+        (proxy as any).$message({
+          message: "删除成功",
+          type: "success",
+        });
+      } else {
+        (proxy as any).$message({
+          message: "删除失败",
+          type: "error",
+        });
+      }
+      delVisible.value = false;
+    }
+    function deleteRow(id) {
+      idx.value = id;
+      delVisible.value = true;
+    }
+    function handleSelectionChange(val) {
+      multipleSelection.value = val;
+    }
+    function deleteAll() {
+      for (let item of multipleSelection.value) {
+        deleteRow(item.id);
+        confirm();
+      }
+      multipleSelection.value = [];
+    }
+
+    return {
+      searchWord,
+      tableData,
+      delVisible,
+      breadcrumbList,
+      deleteAll,
+      handleSelectionChange,
+      deleteRow,
+      confirm,
+    };
+  },
+});
 </script>
 
-<style scoped>
-.handle-box {
-  margin-bottom: 20px;
-}
-
-.handle-input {
-  width: 300px;
-  display: inline-block;
-}
-</style>
+<style scoped></style>

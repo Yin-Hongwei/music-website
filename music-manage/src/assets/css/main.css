@@ -1,6 +1,11 @@
-* {
-  margin: 0;
+html, body, div, span,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+dl, dt, dd, ol, ul, li,hr,img,a,
+form, label, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header {
   padding: 0;
+  margin: 0;
 }
 
 html,
@@ -12,12 +17,14 @@ body,
   overflow: hidden;
 }
 
-body {
-  font-family: 'PingFang SC', "Helvetica Neue", Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif;
+ul,
+li {
+  list-style: none;
+  display: inline-block;
 }
 
 a {
-  text-decoration: none
+  text-decoration: none;
 }
 
 .content-box {
@@ -27,9 +34,8 @@ a {
   top: 60px;
   bottom: 0;
   overflow-y: scroll;
-  -webkit-transition: left .3s ease-in-out;
-  transition: left .3s ease-in-out;
-  background: #D2D8DC;
+  transition: left 0.3s ease-in-out;
+  background: #d2d8dc;
 }
 
 .content {
@@ -53,44 +59,18 @@ a {
 }
 
 .pagination {
+  display: flex;
+  justify-content: center;
   margin: 20px 0;
-  text-align: right;
 }
 
-.plugins-tips {
-  padding: 20px 10px;
+.handle-box {
   margin-bottom: 20px;
+  font-size: 12px;
+  display: flex;
+  width: 30%;
 }
 
-.el-button+.el-tooltip {
-  margin-left: 10px;
-}
-
-.el-table tr:hover {
-  background: #f6faff;
-}
-
-.mgb20 {
-  margin-bottom: 20px;
-}
-
-.move-enter-active,
-.move-leave-active {
-  transition: opacity .5s;
-}
-
-.move-enter,
-.move-leave {
-  opacity: 0;
-}
-
-/*表单*/
-.el-select {
-  width: 100%;
-}
-.table{
-  min-width: 800px;
-}
-.el-dialog__body {
-  padding: 10px  20px 0px 10px;
+.handle-box input {
+  margin: 0 10px;
 }

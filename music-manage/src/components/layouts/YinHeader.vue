@@ -1,20 +1,18 @@
 <template>
   <div class="header">
-    <!-- 折叠按钮 -->
     <div class="collapse-btn" @click="collapseChage">
-      <el-icon><expand /></el-icon>
+      <el-icon v-if="!collapse"><expand /></el-icon>
+      <el-icon v-else><fold /></el-icon>
     </div>
-    <div class="logo">{{nusicName}}</div>
+    <div class="logo">{{ nusicName }}</div>
     <div class="header-right">
       <div class="header-user-con">
-        <!-- 用户头像 -->
         <div class="user-avator">
-          <img :src="userPic" />
+          <img :src="attachImageUrl(userPic)" />
         </div>
-        <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
-            {{username}}
+            {{ username }}
             <i class="el-icon-caret-bottom"></i>
           </span>
           <template #dropdown>
@@ -27,44 +25,57 @@
     </div>
   </div>
 </template>
-<script>
-import { Expand } from '@element-plus/icons-vue'
-import emitter from '../../utils/emitter'
-import { SIGN_IN, MUSICNAME } from '../../enums'
-import { mixin } from '../../mixins'
+<script lang="ts">
+import { defineComponent, computed, ref, onMounted } from "vue";
+import { useStore } from "vuex";
+import mixin from "@/mixins/mixin";
+import { Expand, Fold } from "@element-plus/icons-vue";
+import emitter from "@/utils/emitter";
+import { HttpManager } from "@/api";
+import { RouterName, MUSICNAME } from "@/enums";
 
-export default {
-  mixins: [mixin],
+export default defineComponent({
   components: {
-    Expand
+    Expand,
+    Fold,
   },
-  data () {
-    return {
-      collapse: true,
-      username: 'admin',
-      userPic: require('@/assets/images/user.jpg'),
-      nusicName: MUSICNAME
-    }
-  },
-  mounted () {
-    if (document.body.clientWidth < 1500) {
-      this.collapseChage()
-    }
-  },
-  methods: {
-    // 用户名下拉菜单选择事件
-    handleCommand (command) {
-      if (command === 'loginout') {
-        this.routerManager(SIGN_IN, { path: SIGN_IN })
+  setup() {
+    const { routerManager } = mixin();
+    const store = useStore();
+
+    const collapse = ref(true);
+    const username = ref("admin");
+    const userPic = computed(() => store.getters.userPic);
+    const nusicName = ref(MUSICNAME);
+
+    onMounted(() => {
+      if (document.body.clientWidth < 1500) {
+        collapseChage();
       }
-    },
+    });
+
     // 侧边栏折叠
-    collapseChage () {
-      this.collapse = !this.collapse
-      emitter.emit('collapse', this.collapse)
+    function collapseChage() {
+      collapse.value = !collapse.value;
+      emitter.emit("collapse", collapse.value);
     }
-  }
-}
+    // 用户名下拉菜单选择事件
+    function handleCommand(command) {
+      if (command === "loginout") {
+        routerManager(RouterName.SignIn, { path: RouterName.SignIn });
+      }
+    }
+    return {
+      nusicName,
+      username,
+      userPic,
+      collapse,
+      collapseChage,
+      handleCommand,
+      attachImageUrl: HttpManager.attachImageUrl,
+    };
+  },
+});
 </script>
 <style scoped>
 .header {
@@ -81,7 +92,7 @@ export default {
 }
 
 .collapse-btn {
-  float: left;
+  display: flex;
   padding: 0 21px;
   cursor: pointer;
 }
@@ -114,7 +125,6 @@ export default {
 }
 
 .el-dropdown-link {
-  color: #B0B3B2;
   cursor: pointer;
 }
 

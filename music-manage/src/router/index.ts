@@ -1,7 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
-
-const routes = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: '/Home',
     component: () => import('@/views/Home.vue'),
@@ -18,7 +17,7 @@ const routes = [
         meta: { title: 'Song' }
       },
       {
-        path: '/Singer',
+        path: '/singer',
         component: () => import('@/views/SingerPage.vue'),
         meta: { title: 'Singer' }
       },

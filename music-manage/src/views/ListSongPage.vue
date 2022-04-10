@@ -1,209 +1,193 @@
 <template>
   <div class="table">
-    <div class="crumbs">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item>
-          <i class="el-icon-tickets"></i> 歌单歌曲信息
-        </el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
+    <el-breadcrumb separator="/" class="crumbs">
+      <el-breadcrumb-item v-for="item in breadcrumbList" :key="item.name" :to="{ path: item.path, query: item.query }">
+        {{ item.name }}
+      </el-breadcrumb-item>
+    </el-breadcrumb>
+
     <div class="container">
       <div class="handle-box">
-        <el-button type="primary" size="small" class="handle-del mr10" @click="delAll">批量删除</el-button>
-        <el-input v-model="select_word" size="small" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-        <el-button type="primary" size="small" @click="centerDialogVisible = true">添加歌曲</el-button>
+        <el-button @click="deleteAll">批量删除</el-button>
+        <el-input v-model="searchWord" placeholder="筛选关键词"></el-input>
+        <el-button type="primary" @click="centerDialogVisible = true">添加歌曲</el-button>
       </div>
-      <el-table
-        :data="tableData"
-        border
-        size="small"
-        style="width: 100%"
-        ref="multipleTable"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" width="50"></el-table-column>
-        <el-table-column prop="name" label="歌手-歌曲"></el-table-column>
-        <el-table-column label="操作" width="80">
+      <el-table height="550px" border size="small" :data="tableData" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="40" align="center"></el-table-column>
+        <el-table-column label="ID" prop="id" width="50" align="center"></el-table-column>
+        <el-table-column label="歌手-歌曲" prop="name"></el-table-column>
+        <el-table-column label="操作" width="90" align="center">
           <template v-slot="scope">
-            <el-button size="small" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+            <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
 
     <!--添加歌曲-->
-    <el-dialog title="添加歌曲" v-model="centerDialogVisible" width="400px" center>
-      <el-form
-        :model="registerForm"
-        status-icon
-        ref="registerForm"
-        label-width="80px"
-        class="demo-ruleForm"
-      >
-        <el-form-item prop="singerName" label="歌手名字" size="small">
-          <el-input v-model="registerForm.singerName" placeholder="歌手名字"></el-input>
+    <el-dialog title="添加歌曲" v-model="centerDialogVisible">
+      <el-form label-width="80px" :model="registerForm">
+        <el-form-item prop="singerName" label="歌手名字">
+          <el-input v-model="registerForm.singerName"></el-input>
         </el-form-item>
-        <el-form-item prop="songName" label="歌曲名字" size="small">
-          <el-input v-model="registerForm.songName" placeholder="歌曲名字"></el-input>
+        <el-form-item prop="songName" label="歌曲名字">
+          <el-input v-model="registerForm.songName"></el-input>
         </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button size="small" @click="centerDialogVisible = false">取 消</el-button>
-          <el-button type="primary" size="small" @click="getSongId">确 定</el-button>
+          <el-button @click="centerDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="saveSong">确 定</el-button>
         </span>
       </template>
     </el-dialog>
 
     <!-- 删除提示框 -->
-    <yin-del-dialog :delVisible="delVisible" @deleteRow="deleteRow" @cancelRow="delVisible = $event"></yin-del-dialog>
+    <yin-del-dialog :delVisible="delVisible" @confirm="confirm" @cancelRow="delVisible = $event"></yin-del-dialog>
   </div>
 </template>
 
-<script>
-import { mixin } from '../mixins'
-import { HttpManager } from '../api/index'
-import YinDelDialog from '@/components/dialog/YinDelDialog'
+<script lang="ts">
+import { defineComponent, getCurrentInstance, watch, ref, reactive, computed } from "vue";
+import { useStore } from "vuex";
+import { HttpManager } from "@/api";
+import YinDelDialog from "@/components/dialog/YinDelDialog.vue";
 
-export default {
-  name: 'ListSongPage',
-  mixins: [mixin],
+export default defineComponent({
   components: {
-    YinDelDialog
+    YinDelDialog,
   },
-  data () {
-    return {
-      registerForm: {
-        singerName: '',
-        songName: ''
-      },
-      tableData: [],
-      tempDate: [],
-      multipleSelection: [],
-      centerDialogVisible: false,
-      editVisible: false,
-      delVisible: false,
-      select_word: '',
-      idx: -1
-    }
-  },
-  watch: {
-    select_word: function () {
-      if (this.select_word === '') {
-        this.tableData = this.tempDate
+  setup() {
+    const { proxy } = getCurrentInstance();
+    const store = useStore();
+
+    const tableData = ref([]); // 记录歌曲，用于显示
+    const tempDate = ref([]); // 记录歌曲，用于搜索时能临时记录一份歌曲列表
+    const breadcrumbList = computed(() => store.getters.breadcrumbList);
+
+    const searchWord = ref(""); // 记录输入框输入的内容
+    watch(searchWord, () => {
+      if (searchWord.value === "") {
+        tableData.value = tempDate.value;
       } else {
-        this.tableData = []
-        for (let item of this.tempDate) {
-          if (item.name.includes(this.select_word)) {
-            this.tableData.push(item)
+        tableData.value = [];
+        for (let item of tempDate.value) {
+          if (item.name.includes(searchWord.value)) {
+            tableData.value.push(item);
           }
         }
       }
-    }
-  },
-  created () {
-    this.getData()
-  },
-  methods: {
+    });
+
+    getData();
+
     // 获取歌单
-    getData () {
-      this.tableData = []
-      this.tempDate = []
-      HttpManager.getListSongOfSongId(this.$route.query.id)
-        .then(res => {
-          for (let item of res) {
-            this.getSong(item.songId)
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-    // 获取歌单里对应的音乐
-    getSong (id) {
-      HttpManager.getSongOfId(id)
-        .then(res => {
-          this.tableData.push(res[0])
-          this.tempDate.push(res[0])
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-    // 获取要添加歌曲的ID
-    getSongId () {
-      const id = `${this.registerForm.singerName} - ${ this.registerForm.songName}`
-      HttpManager.getSongOfSingerName(id)
-        .then(res => {
-          if (res && res[0]) {
-            this.addSong(res[0].id)
-          } else {
-            this.$message({
-              showClose: true,
-              message: '未找到要添加的歌曲',
-              type: 'warning',
-            })
-          }
-        })
-    },
-    // 添加歌曲
-    addSong (id) {
-      let params = new URLSearchParams()
-      params.append('songId', id)
-      params.append('songListId', this.$route.query.id)
-      HttpManager.setListSong(params)
-        .then(res => {
-          if (res.code === 1) {
-            this.getData()
-            this.$notify({
-              title: '添加成功',
-              type: 'success'
-            })
-          } else {
-            this.$notify({
-              title: '添加失败',
-              type: 'error'
-            })
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-      this.centerDialogVisible = false
-    },
-    // 确定删除
-    deleteRow () {
-      HttpManager.deleteListSong(this.idx)
-        .then(res => {
-          if (res) {
-            this.getData()
-            this.$notify({
-              title: '删除成功',
-              type: 'success'
-            })
-          } else {
-            this.$notify({
-              title: '删除失败',
-              type: 'error'
-            })
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-      this.delVisible = false
+    async function getData() {
+      tableData.value = [];
+      tempDate.value = [];
+      const result = (await HttpManager.getListSongOfSongId(proxy.$route.query.id)) as any;
+      for (let item of result) {
+        const result = await HttpManager.getSongOfId(item.songId);
+        tableData.value.push(result[0]);
+        tempDate.value.push(result[0]);
+      }
     }
-  }
-}
+
+    /**
+     * 添加
+     */
+    const centerDialogVisible = ref(false);
+    const registerForm = reactive({
+      singerName: "",
+      songName: "",
+    });
+
+    // 获取要添加歌曲的ID
+    async function saveSong() {
+      const id = `${registerForm.singerName}-${registerForm.songName}`;
+      const result = await HttpManager.getSongOfSingerName(id);
+      if (result && result[0]) {
+        addSong(result[0].id);
+      } else {
+        (proxy as any).$message({
+          message: "未找到要添加的歌曲",
+          type: "warning",
+        });
+      }
+    }
+    async function addSong(id) {
+      let params = new URLSearchParams();
+      params.append("songId", id);
+      params.append("songListId", proxy.$route.query.id as string);
+      const result = (await HttpManager.setListSong(params)) as any;
+      if (result.code === 1) {
+        getData();
+        (proxy as any).$message({
+          message: "添加成功",
+          type: "success",
+        });
+      } else {
+        (proxy as any).$message({
+          message: "添加失败",
+          type: "error",
+        });
+      }
+      centerDialogVisible.value = false;
+    }
+
+    /**
+     * 删除
+     */
+    const idx = ref(-1); // 记录当前要删除的行
+    const multipleSelection = ref([]); // 记录当前要删除的列表
+    const delVisible = ref(false); // 显示删除框
+
+    async function confirm() {
+      const result = await HttpManager.deleteListSong(idx.value);
+      if (result) {
+        getData();
+        (proxy as any).$message({
+          message: "删除成功",
+          type: "success",
+        });
+      } else {
+        (proxy as any).$message({
+          message: "删除失败",
+          type: "error",
+        });
+      }
+      delVisible.value = false;
+    }
+    function deleteRow(id) {
+      idx.value = id;
+      delVisible.value = true;
+    }
+    function handleSelectionChange(val) {
+      multipleSelection.value = val;
+    }
+    function deleteAll() {
+      for (let item of multipleSelection.value) {
+        deleteRow(item.id);
+        confirm();
+      }
+      multipleSelection.value = [];
+    }
+
+    return {
+      searchWord,
+      tableData,
+      delVisible,
+      centerDialogVisible,
+      registerForm,
+      breadcrumbList,
+      deleteAll,
+      handleSelectionChange,
+      deleteRow,
+      confirm,
+      saveSong,
+    };
+  },
+});
 </script>
 
-<style scoped>
-.handle-box {
-  margin-bottom: 20px;
-}
-
-.handle-input {
-  width: 300px;
-  display: inline-block;
-}
-</style>
+<style scoped></style>

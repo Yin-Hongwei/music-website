@@ -1,87 +1,73 @@
 <template>
-  <div class="login-wrap">
-    <div class="ms-title">{{nusicName}}</div>
-    <div class="ms-login">
-      <el-form
-        ref="ruleForm"
-        class="demo-ruleForm"
-        :model="ruleForm"
-        :rules="rules"
-      >
+  <div class="container">
+    <div class="title">{{ nusicName }}</div>
+    <div class="login">
+      <el-form :model="ruleForm" :rules="rules">
         <el-form-item prop="username">
           <el-input v-model="ruleForm.username" placeholder="username"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input
-            type="password"
-            placeholder="password"
-            v-model="ruleForm.password"
-            @keyup.enter="submitForm('ruleForm')"
-          ></el-input>
+          <el-input type="password" placeholder="password" v-model="ruleForm.password" @keyup.enter="submitForm"></el-input>
         </el-form-item>
-        <div class="login-btn">
-          <el-button type="primary" @click="submitForm">登录</el-button>
-        </div>
-        <p style="font-size:12px;line-height:30px;color:#999;">Tips : 用户名和密码要写数据库里的。</p>
+        <el-form-item>
+          <el-button class="login-btn" type="primary" @click="submitForm">登录</el-button>
+        </el-form-item>
       </el-form>
     </div>
   </div>
 </template>
 
-<script>
-import { mixin } from '../mixins'
-import { HttpManager } from '../api/index'
-import { INFO, MUSICNAME } from '../enums'
+<script lang="ts">
+import { defineComponent, getCurrentInstance, ref, reactive } from "vue";
+import mixin from "@/mixins/mixin";
+import { HttpManager } from "@/api/index";
+import { RouterName, MUSICNAME } from "@/enums";
 
-export default {
-  mixins: [mixin],
-  data: function () {
-    return {
-      nusicName: MUSICNAME,
-      ruleForm: {
-        username: 'admin',
-        password: '123'
-      },
-      rules: {
-        username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
-        ],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+export default defineComponent({
+  setup() {
+    const { proxy } = getCurrentInstance();
+    const { routerManager } = mixin();
+
+    const nusicName = ref(MUSICNAME);
+    const ruleForm = reactive({
+      username: "admin",
+      password: "123",
+    });
+    const rules = reactive({
+      username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+      password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+    });
+    async function submitForm() {
+      let params = new URLSearchParams();
+      params.append("name", ruleForm.username);
+      params.append("password", ruleForm.password);
+      const result = (await HttpManager.getLoginStatus(params)) as {
+        code: number | string;
+      };
+
+      if (result.code == 1) {
+        routerManager(RouterName.Info, { path: RouterName.Info });
+      } else {
+        (proxy as any).$message({
+          message: "登录失败",
+          type: "error",
+        });
       }
     }
+    return {
+      nusicName,
+      ruleForm,
+      rules,
+      submitForm,
+    };
   },
-  methods: {
-    submitForm () {
-      let params = new URLSearchParams()
-      params.append('name', this.ruleForm.username)
-      params.append('password', this.ruleForm.password)
-      HttpManager.getLoginStatus(params)
-        .then(res => {
-          if (res.code === 1) {
-            this.routerManager(INFO, { path: INFO })
-            this.$notify({
-              title: '欢迎回来',
-              type: 'success'
-            })
-          } else {
-            this.$notify({
-              title: '登录失败',
-              type: 'error'
-            })
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    }
-  }
-}
+});
 </script>
 
 <style scoped>
-.login-wrap {
+.container {
   position: relative;
-  background: url('../assets/images/background.jpg');
+  background: url("../assets/images/background.jpg");
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
@@ -89,7 +75,7 @@ export default {
   height: 100%;
 }
 
-.ms-title {
+.title {
   position: absolute;
   top: 50%;
   width: 100%;
@@ -100,12 +86,11 @@ export default {
   color: #fff;
 }
 
-.ms-login {
+.login {
   position: absolute;
   left: 50%;
   top: 50%;
   width: 300px;
-  height: 160px;
   margin: -150px 0 0 -190px;
   padding: 40px;
   border-radius: 5px;
@@ -113,11 +98,6 @@ export default {
 }
 
 .login-btn {
-  text-align: center;
-}
-
-.login-btn button {
   width: 100%;
-  height: 36px;
 }
 </style>

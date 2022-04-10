@@ -3,7 +3,6 @@
     <el-menu
       class="sidebar-el-menu"
       background-color="#ffffff"
-      text-color="#67757f"
       active-text-color="#30a4fc"
       default-active="2"
       router
@@ -29,14 +28,14 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref } from "vue";
 import { PieChart, Mic, Document, User } from "@element-plus/icons-vue";
 import emitter from "@/utils/emitter";
 
 const collapse = ref(false);
 emitter.on("collapse", (msg) => {
-  collapse.value = msg;
+  collapse.value = msg as boolean;
 });
 </script>
 
