@@ -40,10 +40,10 @@ public class SingerController {
         JSONObject jsonObject = new JSONObject();
         String name = req.getParameter("name").trim();
         String sex = req.getParameter("sex").trim();
-        String pic = req.getParameter("pic").trim();
         String birth = req.getParameter("birth").trim();
         String location = req.getParameter("location").trim();
         String introduction = req.getParameter("introduction").trim();
+        String pic = "/img/avatorImages/user.jpg";
 
         Singer singer = new Singer();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -55,10 +55,10 @@ public class SingerController {
         }
         singer.setName(name);
         singer.setSex(new Byte(sex));
-        singer.setPic(pic);
         singer.setBirth(myBirth);
         singer.setLocation(location);
         singer.setIntroduction(introduction);
+        singer.setPic(pic);
 
         boolean res = singerService.addSinger(singer);
         if (res) {
@@ -107,7 +107,6 @@ public class SingerController {
         String id = req.getParameter("id").trim();
         String name = req.getParameter("name").trim();
         String sex = req.getParameter("sex").trim();
-        String pic = req.getParameter("pic").trim();
         String birth = req.getParameter("birth").trim();
         String location = req.getParameter("location").trim();
         String introduction = req.getParameter("introduction").trim();
@@ -123,7 +122,6 @@ public class SingerController {
         singer.setId(Integer.parseInt(id));
         singer.setName(name);
         singer.setSex(new Byte(sex));
-        singer.setPic(pic);
         singer.setBirth(myBirth);
         singer.setLocation(location);
         singer.setIntroduction(introduction);

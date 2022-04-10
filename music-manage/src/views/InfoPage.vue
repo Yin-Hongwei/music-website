@@ -1,81 +1,84 @@
 <template>
-  <div>
-    <el-row :gutter="20" class="mgb20">
-      <el-col :span="6">
-        <el-card shadow="hover" :body-style="{ padding: '0px' }">
-          <div class="grid-content grid-con-1">
-            <div class="grid-cont-right">
-              <div class="grid-num">{{ userCount }}</div>
-              <div>用户总数</div>
-            </div>
+  <el-row :gutter="20">
+    <el-col :span="6">
+      <el-card shadow="hover" :body-style="{ padding: '0px' }">
+        <div class="card-content">
+          <div class="card-left">
+            <el-icon><user /></el-icon>
           </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card shadow="hover" :body-style="{ padding: '0px' }">
-          <div class="grid-content grid-con-2">
-            <div class="grid-cont-right">
-              <div class="grid-num">{{ songCount }}</div>
-              <div>歌曲总数</div>
-            </div>
+          <div class="card-right">
+            <div class="card-num">{{ userCount }}</div>
+            <div>用户总数</div>
           </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card shadow="hover" :body-style="{ padding: '0px' }">
-          <div class="grid-content grid-con-3">
-            <div class="grid-cont-right">
-              <div class="grid-num">{{ singerCount }}</div>
-              <div>歌手数量</div>
-            </div>
+        </div>
+      </el-card>
+    </el-col>
+    <el-col :span="6">
+      <el-card shadow="hover" :body-style="{ padding: '0px' }">
+        <div class="card-content">
+          <div class="card-left">
+            <el-icon><headset /></el-icon>
           </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card shadow="hover" :body-style="{ padding: '0px' }">
-          <div class="grid-content grid-con-4">
-            <div class="grid-cont-right">
-              <div class="grid-num">{{ songListCount }}</div>
-              <div>歌单数量</div>
-            </div>
+          <div class="card-right">
+            <div class="card-num">{{ songCount }}</div>
+            <div>歌曲总数</div>
           </div>
-        </el-card>
-      </el-col>
-    </el-row>
-    <el-row :gutter="20">
-      <el-col :span="12">
-        <h3 style="margin-bottom: 20px">用户性别比例</h3>
-        <div class="cav-info" style="background-color: white">
-          <div class="container" id="userSex"></div>
         </div>
-      </el-col>
-      <el-col :span="12">
-        <h3 style="margin-bottom: 20px">歌曲类型分布</h3>
-        <div class="cav-info" style="background-color: white">
-          <div class="container" id="songStyle"></div>
+      </el-card>
+    </el-col>
+    <el-col :span="6">
+      <el-card shadow="hover" :body-style="{ padding: '0px' }">
+        <div class="card-content">
+          <div class="card-left">
+            <el-icon><mic /></el-icon>
+          </div>
+          <div class="card-right">
+            <div class="card-num">{{ singerCount }}</div>
+            <div>歌手数量</div>
+          </div>
         </div>
-      </el-col>
-    </el-row>
-    <el-row :gutter="20">
-      <el-col :span="12">
-        <h3 style="margin: 20px 0">歌手性别比例</h3>
-        <div class="cav-info" style="background-color: white">
-          <div class="container" id="singerSex"></div>
+      </el-card>
+    </el-col>
+    <el-col :span="6">
+      <el-card shadow="hover" :body-style="{ padding: '0px' }">
+        <div class="card-content">
+          <div class="card-left">
+            <el-icon><document /></el-icon>
+          </div>
+          <div class="card-right">
+            <div class="card-num">{{ songListCount }}</div>
+            <div>歌单数量</div>
+          </div>
         </div>
-      </el-col>
-      <el-col :span="12">
-        <h3 style="margin: 20px 0">歌手国籍分布</h3>
-        <div class="cav-info" style="background-color: white">
-          <div class="container" id="country"></div>
-        </div>
-      </el-col>
-    </el-row>
-  </div>
+      </el-card>
+    </el-col>
+  </el-row>
+  <el-row :gutter="20">
+    <el-col :span="12">
+      <h3>用户性别比例</h3>
+      <div class="cav-info" id="userSex"></div>
+    </el-col>
+    <el-col :span="12">
+      <h3>歌曲类型</h3>
+      <div class="cav-info" id="songStyle"></div>
+    </el-col>
+  </el-row>
+  <el-row :gutter="20">
+    <el-col :span="12">
+      <h3>歌手性别比例</h3>
+      <div class="cav-info" id="singerSex"></div>
+    </el-col>
+    <el-col :span="12">
+      <h3>歌手国籍</h3>
+      <div class="cav-info" id="country"></div>
+    </el-col>
+  </el-row>
 </template>
-<script setup>
+<script lang="ts" setup>
 // import { ref, reactive, getCurrentInstance } from "vue";
 import { ref, reactive } from "vue";
 import * as echarts from "echarts";
+import { Mic, Document, User, Headset } from "@element-plus/icons-vue";
 import { HttpManager } from "@/api/index";
 
 // const { proxy } = getCurrentInstance();
@@ -112,7 +115,7 @@ const songStyle = reactive({
     {
       data: [0, 0, 0, 0, 0, 0, 0],
       type: "bar",
-      barWidth: '20%'
+      barWidth: "20%",
     },
   ],
 });
@@ -154,7 +157,7 @@ const country = reactive({
     {
       data: [0, 0, 0, 0, 0, 0, 0, 0],
       type: "bar",
-      barWidth: '20%'
+      barWidth: "20%",
     },
   ],
 });
@@ -170,7 +173,7 @@ function setSex(sex, arr) {
   return { value, name };
 }
 HttpManager.getAllUser().then((res) => {
-  userCount.value = res.length;
+  userCount.value = (res as any).length;
   userSex.series[0].data.push(setSex(0, res));
   userSex.series[0].data.push(setSex(1, res));
 
@@ -180,11 +183,11 @@ HttpManager.getAllUser().then((res) => {
 });
 
 HttpManager.getAllSong().then((res) => {
-  songCount.value = res.length;
+  songCount.value = (res as any).length;
 });
 HttpManager.getSongList().then((res) => {
-  songListCount.value = res.length;
-  for (let item of res) {
+  songListCount.value = (res as any).length;
+  for (let item of (res as any)) {
     for (let i = 0; i < songStyle.xAxis.data.length; i++) {
       if (item.style.includes(songStyle.xAxis.data[i])) {
         songStyle.series[0].data[i]++;
@@ -197,13 +200,13 @@ HttpManager.getSongList().then((res) => {
 });
 
 HttpManager.getAllSinger().then((res) => {
-  singerCount.value = res.length;
+  singerCount.value = (res as any).length;
   singerSex.series[0].data.push(setSex(0, res));
   singerSex.series[0].data.push(setSex(1, res));
   const singerSexChart = echarts.init(document.getElementById("singerSex"));
   singerSexChart.setOption(singerSex);
 
-  for (let item of res) {
+  for (let item of (res as any)) {
     for (let i = 0; i < country.xAxis.data.length; i++) {
       if (item.location.includes(country.xAxis.data[i])) {
         country.series[0].data[i]++;
@@ -214,37 +217,40 @@ HttpManager.getAllSinger().then((res) => {
   countryChart.setOption(country);
 });
 </script>
-<script>
-import { mixin } from "@/mixins";
-export default {
-  mixins: [mixin],
-};
-</script>
 
 <style scoped>
-.grid-content {
+.card-content {
   display: flex;
   align-items: center;
+  justify-content: space-around;
   height: 100px;
-}
-
-.grid-cont-right {
-  flex: 1;
+  padding-left: 20%;
   text-align: center;
-  font-size: 14px;
-  color: #999;
 }
 
-.grid-num {
+.card-left {
+  display: flex;
+  font-size: 3rem;
+}
+
+.card-right {
+  flex: 1;
+  font-size: 14px;
+}
+
+.card-num {
   font-size: 30px;
   font-weight: bold;
 }
 
+h3 {
+  margin: 10px 0;
+  text-align: center;
+}
 .cav-info {
   border-radius: 6px;
   overflow: hidden;
-}
-.container {
-  height: 300px;
+  height: 250px;
+  background-color: white;
 }
 </style>

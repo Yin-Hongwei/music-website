@@ -1,7 +1,6 @@
 package com.example.yin.dao;
 
 import com.example.yin.domain.Consumer;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
