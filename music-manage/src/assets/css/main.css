@@ -27,33 +27,6 @@ a {
   text-decoration: none;
 }
 
-.content-box {
-  position: absolute;
-  left: 150px;
-  right: 0;
-  top: 60px;
-  bottom: 0;
-  overflow-y: scroll;
-  transition: left 0.3s ease-in-out;
-  background: #d2d8dc;
-}
-
-.content {
-  width: auto;
-  padding: 20px;
-}
-
-.content-collapse {
-  left: 65px;
-}
-
-.container {
-  padding: 20px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
 .crumbs {
   margin-bottom: 20px;
 }

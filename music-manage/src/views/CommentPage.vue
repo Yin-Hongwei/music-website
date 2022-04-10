@@ -1,32 +1,30 @@
 <template>
-  <div class="table">
-    <el-breadcrumb separator="/" class="crumbs">
-      <el-breadcrumb-item v-for="item in breadcrumbList" :key="item.name" :to="{ path: item.path, query: item.query }">
-        {{ item.name }}
-      </el-breadcrumb-item>
-    </el-breadcrumb>
+  <el-breadcrumb class="crumbs" separator="/">
+    <el-breadcrumb-item v-for="item in breadcrumbList" :key="item.name" :to="{ path: item.path, query: item.query }">
+      {{ item.name }}
+    </el-breadcrumb-item>
+  </el-breadcrumb>
 
-    <div class="container">
-      <div class="handle-box">
-        <el-button @click="deleteAll">批量删除</el-button>
-        <el-input v-model="searchWord" placeholder="筛选关键词"></el-input>
-      </div>
-      <el-table height="550px" border size="small" :data="tableData" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="40" align="center"></el-table-column>
-        <el-table-column prop="id" label="ID" width="50"></el-table-column>
-        <el-table-column prop="username" label="用户" width="80"></el-table-column>
-        <el-table-column prop="content" label="评论内容"></el-table-column>
-        <el-table-column label="操作" width="100" align="center">
-          <template v-slot="scope">
-            <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+  <div class="container">
+    <div class="handle-box">
+      <el-button @click="deleteAll">批量删除</el-button>
+      <el-input v-model="searchWord" placeholder="筛选关键词"></el-input>
     </div>
-
-    <!-- 删除提示框 -->
-    <yin-del-dialog :delVisible="delVisible" @confirm="confirm" @cancelRow="delVisible = $event"></yin-del-dialog>
+    <el-table height="550px" border size="small" :data="tableData" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="40" align="center"></el-table-column>
+      <el-table-column prop="id" label="ID" width="50"></el-table-column>
+      <el-table-column prop="username" label="用户" width="80"></el-table-column>
+      <el-table-column prop="content" label="评论内容"></el-table-column>
+      <el-table-column label="操作" width="100" align="center">
+        <template v-slot="scope">
+          <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
+
+  <!-- 删除提示框 -->
+  <yin-del-dialog :delVisible="delVisible" @confirm="confirm" @cancelRow="delVisible = $event"></yin-del-dialog>
 </template>
 
 <script lang="ts">

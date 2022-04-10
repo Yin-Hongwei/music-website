@@ -56,21 +56,21 @@
   <el-row :gutter="20">
     <el-col :span="12">
       <h3>用户性别比例</h3>
-      <div class="cav-info" id="userSex"></div>
+      <el-card class="cav-info" shadow="hover" :body-style="{ padding: '0px' }" id="userSex"></el-card>
     </el-col>
     <el-col :span="12">
       <h3>歌曲类型</h3>
-      <div class="cav-info" id="songStyle"></div>
+      <el-card class="cav-info" shadow="hover" :body-style="{ padding: '0px' }" id="songStyle"></el-card >
     </el-col>
   </el-row>
   <el-row :gutter="20">
     <el-col :span="12">
       <h3>歌手性别比例</h3>
-      <div class="cav-info" id="singerSex"></div>
+      <el-card class="cav-info" shadow="hover" :body-style="{ padding: '0px' }" id="singerSex"></el-card >
     </el-col>
     <el-col :span="12">
       <h3>歌手国籍</h3>
-      <div class="cav-info" id="country"></div>
+      <el-card class="cav-info" shadow="hover" :body-style="{ padding: '0px' }" id="country"></el-card >
     </el-col>
   </el-row>
 </template>
@@ -187,7 +187,7 @@ HttpManager.getAllSong().then((res) => {
 });
 HttpManager.getSongList().then((res) => {
   songListCount.value = (res as any).length;
-  for (let item of (res as any)) {
+  for (let item of res as any) {
     for (let i = 0; i < songStyle.xAxis.data.length; i++) {
       if (item.style.includes(songStyle.xAxis.data[i])) {
         songStyle.series[0].data[i]++;
@@ -206,7 +206,7 @@ HttpManager.getAllSinger().then((res) => {
   const singerSexChart = echarts.init(document.getElementById("singerSex"));
   singerSexChart.setOption(singerSex);
 
-  for (let item of (res as any)) {
+  for (let item of res as any) {
     for (let i = 0; i < country.xAxis.data.length; i++) {
       if (item.location.includes(country.xAxis.data[i])) {
         country.series[0].data[i]++;

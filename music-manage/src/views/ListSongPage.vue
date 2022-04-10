@@ -1,50 +1,48 @@
 <template>
-  <div class="table">
-    <el-breadcrumb separator="/" class="crumbs">
-      <el-breadcrumb-item v-for="item in breadcrumbList" :key="item.name" :to="{ path: item.path, query: item.query }">
-        {{ item.name }}
-      </el-breadcrumb-item>
-    </el-breadcrumb>
+  <el-breadcrumb class="crumbs" separator="/">
+    <el-breadcrumb-item v-for="item in breadcrumbList" :key="item.name" :to="{ path: item.path, query: item.query }">
+      {{ item.name }}
+    </el-breadcrumb-item>
+  </el-breadcrumb>
 
-    <div class="container">
-      <div class="handle-box">
-        <el-button @click="deleteAll">批量删除</el-button>
-        <el-input v-model="searchWord" placeholder="筛选关键词"></el-input>
-        <el-button type="primary" @click="centerDialogVisible = true">添加歌曲</el-button>
-      </div>
-      <el-table height="550px" border size="small" :data="tableData" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="40" align="center"></el-table-column>
-        <el-table-column label="ID" prop="id" width="50" align="center"></el-table-column>
-        <el-table-column label="歌手-歌曲" prop="name"></el-table-column>
-        <el-table-column label="操作" width="90" align="center">
-          <template v-slot="scope">
-            <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+  <div class="container">
+    <div class="handle-box">
+      <el-button @click="deleteAll">批量删除</el-button>
+      <el-input v-model="searchWord" placeholder="筛选关键词"></el-input>
+      <el-button type="primary" @click="centerDialogVisible = true">添加歌曲</el-button>
     </div>
-
-    <!--添加歌曲-->
-    <el-dialog title="添加歌曲" v-model="centerDialogVisible">
-      <el-form label-width="80px" :model="registerForm">
-        <el-form-item prop="singerName" label="歌手名字">
-          <el-input v-model="registerForm.singerName"></el-input>
-        </el-form-item>
-        <el-form-item prop="songName" label="歌曲名字">
-          <el-input v-model="registerForm.songName"></el-input>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="centerDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="saveSong">确 定</el-button>
-        </span>
-      </template>
-    </el-dialog>
-
-    <!-- 删除提示框 -->
-    <yin-del-dialog :delVisible="delVisible" @confirm="confirm" @cancelRow="delVisible = $event"></yin-del-dialog>
+    <el-table height="550px" border size="small" :data="tableData" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="40" align="center"></el-table-column>
+      <el-table-column label="ID" prop="id" width="50" align="center"></el-table-column>
+      <el-table-column label="歌手-歌曲" prop="name"></el-table-column>
+      <el-table-column label="操作" width="90" align="center">
+        <template v-slot="scope">
+          <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
+
+  <!--添加歌曲-->
+  <el-dialog title="添加歌曲" v-model="centerDialogVisible">
+    <el-form label-width="80px" :model="registerForm">
+      <el-form-item prop="singerName" label="歌手名字">
+        <el-input v-model="registerForm.singerName"></el-input>
+      </el-form-item>
+      <el-form-item prop="songName" label="歌曲名字">
+        <el-input v-model="registerForm.songName"></el-input>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveSong">确 定</el-button>
+      </span>
+    </template>
+  </el-dialog>
+
+  <!-- 删除提示框 -->
+  <yin-del-dialog :delVisible="delVisible" @confirm="confirm" @cancelRow="delVisible = $event"></yin-del-dialog>
 </template>
 
 <script lang="ts">
