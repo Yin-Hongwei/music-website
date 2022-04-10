@@ -1,110 +1,103 @@
 <template>
-  <div class="table">
-    <div class="container">
-      <div class="handle-box">
-        <el-button @click="deleteAll">批量删除</el-button>
-        <el-input v-model="searchWord" placeholder="筛选关键词"></el-input>
-        <el-button type="primary" @click="centerDialogVisible = true">添加歌单</el-button>
-      </div>
-      <el-table height="550px" border size="small" :data="data" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="40" align="center"></el-table-column>
-        <el-table-column label="ID" prop="id" width="50" align="center"></el-table-column>
-        <el-table-column label="歌单图片" width="110" align="center">
-          <template v-slot="scope">
-            <img :src="attachImageUrl(scope.row.pic)" style="width: 80px" />
-            <el-upload
-              :action="uploadUrl(scope.row.id)"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
-            >
-              <el-button>更新图片</el-button>
-            </el-upload>
-          </template>
-        </el-table-column>
-        <el-table-column prop="title" label="标题" width="200"></el-table-column>
-        <el-table-column label="简介">
-          <template v-slot="scope">
-            <p style="height: 100px; overflow: scroll">
-              {{ scope.row.introduction }}
-            </p>
-          </template>
-        </el-table-column>
-        <el-table-column label="风格" prop="style" width="100"></el-table-column>
-        <el-table-column label="内容" width="90" align="center">
-          <template v-slot="scope">
-            <el-button @click="goContentPage(scope.row.id)">内容</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="评论" width="90" align="center">
-          <template v-slot="scope">
-            <el-button @click="goCommentPage(scope.row.id)">评论</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="160" align="center">
-          <template v-slot="scope">
-            <el-button @click="editRow(scope.row)">编辑</el-button>
-            <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-pagination
-        class="pagination"
-        background
-        layout="total, prev, pager, next"
-        :current-page="currentPage"
-        :page-size="pageSize"
-        :total="tableData.length"
-        @current-change="handleCurrentChange"
-      >
-      </el-pagination>
+  <div class="container">
+    <div class="handle-box">
+      <el-button @click="deleteAll">批量删除</el-button>
+      <el-input v-model="searchWord" placeholder="筛选关键词"></el-input>
+      <el-button type="primary" @click="centerDialogVisible = true">添加歌单</el-button>
     </div>
-
-    <!--添加歌单-->
-    <el-dialog title="添加歌单" v-model="centerDialogVisible">
-      <el-form label-width="70px" :model="registerForm">
-        <el-form-item label="歌单名" prop="title">
-          <el-input v-model="registerForm.title"></el-input>
-        </el-form-item>
-        <el-form-item label="歌单介绍" prop="introduction">
-          <el-input v-model="registerForm.introduction"></el-input>
-        </el-form-item>
-        <el-form-item label="风格" prop="style">
-          <el-input v-model="registerForm.style"></el-input>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="centerDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addsongList">确 定</el-button>
-        </span>
-      </template>
-    </el-dialog>
-
-    <!-- 编辑弹出框 -->
-    <el-dialog title="编辑" v-model="editVisible">
-      <el-form :model="editForm">
-        <el-form-item label="标题">
-          <el-input v-model="editForm.title"></el-input>
-        </el-form-item>
-        <el-form-item label="简介">
-          <el-input type="textarea" v-model="editForm.introduction"></el-input>
-        </el-form-item>
-        <el-form-item label="风格">
-          <el-input v-model="editForm.style"></el-input>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="editVisible = false">取 消</el-button>
-          <el-button type="primary" @click="saveEdit">确 定</el-button>
-        </span>
-      </template>
-    </el-dialog>
-
-    <!-- 删除提示框 -->
-    <yin-del-dialog :delVisible="delVisible" @confirm="confirm" @cancelRow="delVisible = $event"></yin-del-dialog>
+    <el-table height="550px" border size="small" :data="data" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="40" align="center"></el-table-column>
+      <el-table-column label="ID" prop="id" width="50" align="center"></el-table-column>
+      <el-table-column label="歌单图片" width="110" align="center">
+        <template v-slot="scope">
+          <img :src="attachImageUrl(scope.row.pic)" style="width: 80px" />
+          <el-upload :action="uploadUrl(scope.row.id)" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+            <el-button>更新图片</el-button>
+          </el-upload>
+        </template>
+      </el-table-column>
+      <el-table-column prop="title" label="标题" width="200"></el-table-column>
+      <el-table-column label="简介">
+        <template v-slot="scope">
+          <p style="height: 100px; overflow: scroll">
+            {{ scope.row.introduction }}
+          </p>
+        </template>
+      </el-table-column>
+      <el-table-column label="风格" prop="style" width="100"></el-table-column>
+      <el-table-column label="内容" width="90" align="center">
+        <template v-slot="scope">
+          <el-button @click="goContentPage(scope.row.id)">内容</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="评论" width="90" align="center">
+        <template v-slot="scope">
+          <el-button @click="goCommentPage(scope.row.id)">评论</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="160" align="center">
+        <template v-slot="scope">
+          <el-button @click="editRow(scope.row)">编辑</el-button>
+          <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination
+      class="pagination"
+      background
+      layout="total, prev, pager, next"
+      :current-page="currentPage"
+      :page-size="pageSize"
+      :total="tableData.length"
+      @current-change="handleCurrentChange"
+    >
+    </el-pagination>
   </div>
+
+  <!--添加歌单-->
+  <el-dialog title="添加歌单" v-model="centerDialogVisible">
+    <el-form label-width="70px" :model="registerForm">
+      <el-form-item label="歌单名" prop="title">
+        <el-input v-model="registerForm.title"></el-input>
+      </el-form-item>
+      <el-form-item label="歌单介绍" prop="introduction">
+        <el-input v-model="registerForm.introduction"></el-input>
+      </el-form-item>
+      <el-form-item label="风格" prop="style">
+        <el-input v-model="registerForm.style"></el-input>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addsongList">确 定</el-button>
+      </span>
+    </template>
+  </el-dialog>
+
+  <!-- 编辑弹出框 -->
+  <el-dialog title="编辑" v-model="editVisible">
+    <el-form :model="editForm">
+      <el-form-item label="标题">
+        <el-input v-model="editForm.title"></el-input>
+      </el-form-item>
+      <el-form-item label="简介">
+        <el-input type="textarea" v-model="editForm.introduction"></el-input>
+      </el-form-item>
+      <el-form-item label="风格">
+        <el-input v-model="editForm.style"></el-input>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="editVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveEdit">确 定</el-button>
+      </span>
+    </template>
+  </el-dialog>
+
+  <!-- 删除提示框 -->
+  <yin-del-dialog :delVisible="delVisible" @confirm="confirm" @cancelRow="delVisible = $event"></yin-del-dialog>
 </template>
 
 <script lang="ts">

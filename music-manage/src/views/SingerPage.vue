@@ -1,141 +1,134 @@
 <template>
-  <div class="table">
-    <div class="container">
-      <div class="handle-box">
-        <el-button @click="deleteAll">批量删除</el-button>
-        <el-input placeholder="筛选歌手" v-model="searchWord"></el-input>
-        <el-button type="primary" @click="centerDialogVisible = true">添加歌手</el-button>
-      </div>
-      <el-table height="550px" border size="small" :data="data" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="40" align="center"></el-table-column>
-        <el-table-column label="ID" prop="id" width="50" align="center"></el-table-column>
-        <el-table-column label="歌手图片" prop="pic" width="110" align="center">
-          <template v-slot="scope">
-            <div class="singer-img">
-              <img :src="attachImageUrl(scope.row.pic)" style="width: 100%" />
-            </div>
-            <el-upload
-              :action="uploadUrl(scope.row.id)"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
-            >
-              <el-button>更新图片</el-button>
-            </el-upload>
-          </template>
-        </el-table-column>
-        <el-table-column label="歌手" prop="name" width="120" align="center"></el-table-column>
-        <el-table-column label="性别" prop="sex" width="60" align="center">
-          <template v-slot="scope">
-            <div>{{ changeSex(scope.row.sex) }}</div>
-          </template>
-        </el-table-column>
-        <el-table-column label="出生" prop="birth" width="120" align="center">
-          <template v-slot="scope">
-            <div>{{ getBirth(scope.row.birth) }}</div>
-          </template>
-        </el-table-column>
-        <el-table-column label="地区" prop="location" width="100" align="center"></el-table-column>
-        <el-table-column label="简介" prop="introduction">
-          <template v-slot="scope">
-            <p style="height: 100px; overflow: scroll">
-              {{ scope.row.introduction }}
-            </p>
-          </template>
-        </el-table-column>
-        <el-table-column label="歌曲管理" width="120" align="center">
-          <template v-slot="scope">
-            <el-button @click="goSongPage(scope.row)">歌曲管理</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="160" align="center">
-          <template v-slot="scope">
-            <el-button @click="editRow(scope.row)">编辑</el-button>
-            <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-pagination
-        class="pagination"
-        background
-        layout="total, prev, pager, next"
-        :current-page="currentPage"
-        :page-size="pageSize"
-        :total="tableData.length"
-        @current-change="handleCurrentChange"
-      >
-      </el-pagination>
+  <div class="container">
+    <div class="handle-box">
+      <el-button @click="deleteAll">批量删除</el-button>
+      <el-input placeholder="筛选歌手" v-model="searchWord"></el-input>
+      <el-button type="primary" @click="centerDialogVisible = true">添加歌手</el-button>
     </div>
-
-    <!-- 添加 -->
-    <el-dialog title="添加歌手" v-model="centerDialogVisible">
-      <el-form label-width="80px" :model="registerForm" :rules="singerRule">
-        <el-form-item label="歌手名" prop="name">
-          <el-input v-model="registerForm.name"></el-input>
-        </el-form-item>
-        <el-form-item label="性别" prop="sex">
-          <el-radio-group v-model="registerForm.sex">
-            <el-radio :label="0">女</el-radio>
-            <el-radio :label="1">男</el-radio>
-            <el-radio :label="2">保密</el-radio>
-            <el-radio :label="2">组合</el-radio>
-            <el-radio :label="3">不明</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="故乡" prop="location">
-          <el-input v-model="registerForm.location"></el-input>
-        </el-form-item>
-        <el-form-item label="出生日期" prop="birth">
-          <el-date-picker type="date" v-model="registerForm.birth"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="歌手介绍" prop="introduction">
-          <el-input type="textarea" v-model="registerForm.introduction"></el-input>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="centerDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addsinger">确 定</el-button>
-        </span>
-      </template>
-    </el-dialog>
-
-    <!-- 编辑弹出框 -->
-    <el-dialog title="编辑" v-model="editVisible">
-      <el-form label-width="60px" :model="editForm" :rules="singerRule">
-        <el-form-item label="歌手" prop="name">
-          <el-input v-model="editForm.name"></el-input>
-        </el-form-item>
-        <el-form-item label="性别" prop="sex">
-          <el-radio-group v-model="editForm.sex">
-            <el-radio :label="0">女</el-radio>
-            <el-radio :label="1">男</el-radio>
-            <el-radio :label="2">保密</el-radio>
-            <el-radio :label="2">组合</el-radio>
-            <el-radio :label="3">不明</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="出生" prop="birth">
-          <el-date-picker type="date" v-model="editForm.birth"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="地区" prop="location">
-          <el-input v-model="editForm.location"></el-input>
-        </el-form-item>
-        <el-form-item label="简介" prop="introduction">
-          <el-input type="textarea" v-model="editForm.introduction"></el-input>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="editVisible = false">取 消</el-button>
-          <el-button type="primary" @click="saveEdit">确 定</el-button>
-        </span>
-      </template>
-    </el-dialog>
-
-    <!-- 删除提示框 -->
-    <yin-del-dialog :delVisible="delVisible" @confirm="confirm" @cancelRow="delVisible = $event"></yin-del-dialog>
+    <el-table height="550px" border size="small" :data="data" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="40" align="center"></el-table-column>
+      <el-table-column label="ID" prop="id" width="50" align="center"></el-table-column>
+      <el-table-column label="歌手图片" prop="pic" width="110" align="center">
+        <template v-slot="scope">
+          <div class="singer-img">
+            <img :src="attachImageUrl(scope.row.pic)" style="width: 100%" />
+          </div>
+          <el-upload :action="uploadUrl(scope.row.id)" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+            <el-button>更新图片</el-button>
+          </el-upload>
+        </template>
+      </el-table-column>
+      <el-table-column label="歌手" prop="name" width="120" align="center"></el-table-column>
+      <el-table-column label="性别" prop="sex" width="60" align="center">
+        <template v-slot="scope">
+          <div>{{ changeSex(scope.row.sex) }}</div>
+        </template>
+      </el-table-column>
+      <el-table-column label="出生" prop="birth" width="120" align="center">
+        <template v-slot="scope">
+          <div>{{ getBirth(scope.row.birth) }}</div>
+        </template>
+      </el-table-column>
+      <el-table-column label="地区" prop="location" width="100" align="center"></el-table-column>
+      <el-table-column label="简介" prop="introduction">
+        <template v-slot="scope">
+          <p style="height: 100px; overflow: scroll">
+            {{ scope.row.introduction }}
+          </p>
+        </template>
+      </el-table-column>
+      <el-table-column label="歌曲管理" width="120" align="center">
+        <template v-slot="scope">
+          <el-button @click="goSongPage(scope.row)">歌曲管理</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="160" align="center">
+        <template v-slot="scope">
+          <el-button @click="editRow(scope.row)">编辑</el-button>
+          <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination
+      class="pagination"
+      background
+      layout="total, prev, pager, next"
+      :current-page="currentPage"
+      :page-size="pageSize"
+      :total="tableData.length"
+      @current-change="handleCurrentChange"
+    >
+    </el-pagination>
   </div>
+
+  <!-- 添加 -->
+  <el-dialog title="添加歌手" v-model="centerDialogVisible">
+    <el-form label-width="80px" :model="registerForm" :rules="singerRule">
+      <el-form-item label="歌手名" prop="name">
+        <el-input v-model="registerForm.name"></el-input>
+      </el-form-item>
+      <el-form-item label="性别" prop="sex">
+        <el-radio-group v-model="registerForm.sex">
+          <el-radio :label="0">女</el-radio>
+          <el-radio :label="1">男</el-radio>
+          <el-radio :label="2">保密</el-radio>
+          <el-radio :label="2">组合</el-radio>
+          <el-radio :label="3">不明</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="故乡" prop="location">
+        <el-input v-model="registerForm.location"></el-input>
+      </el-form-item>
+      <el-form-item label="出生日期" prop="birth">
+        <el-date-picker type="date" v-model="registerForm.birth"></el-date-picker>
+      </el-form-item>
+      <el-form-item label="歌手介绍" prop="introduction">
+        <el-input type="textarea" v-model="registerForm.introduction"></el-input>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addsinger">确 定</el-button>
+      </span>
+    </template>
+  </el-dialog>
+
+  <!-- 编辑弹出框 -->
+  <el-dialog title="编辑" v-model="editVisible">
+    <el-form label-width="60px" :model="editForm" :rules="singerRule">
+      <el-form-item label="歌手" prop="name">
+        <el-input v-model="editForm.name"></el-input>
+      </el-form-item>
+      <el-form-item label="性别" prop="sex">
+        <el-radio-group v-model="editForm.sex">
+          <el-radio :label="0">女</el-radio>
+          <el-radio :label="1">男</el-radio>
+          <el-radio :label="2">保密</el-radio>
+          <el-radio :label="2">组合</el-radio>
+          <el-radio :label="3">不明</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="出生" prop="birth">
+        <el-date-picker type="date" v-model="editForm.birth"></el-date-picker>
+      </el-form-item>
+      <el-form-item label="地区" prop="location">
+        <el-input v-model="editForm.location"></el-input>
+      </el-form-item>
+      <el-form-item label="简介" prop="introduction">
+        <el-input type="textarea" v-model="editForm.introduction"></el-input>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="editVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveEdit">确 定</el-button>
+      </span>
+    </template>
+  </el-dialog>
+
+  <!-- 删除提示框 -->
+  <yin-del-dialog :delVisible="delVisible" @confirm="confirm" @cancelRow="delVisible = $event"></yin-del-dialog>
 </template>
 
 <script lang="ts">

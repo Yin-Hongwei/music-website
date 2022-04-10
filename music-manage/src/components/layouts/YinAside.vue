@@ -43,19 +43,21 @@ emitter.on("collapse", (msg) => {
 .sidebar {
   display: block;
   position: absolute;
-  background-color: #334256;
   left: 0;
   top: 60px;
   bottom: 0;
   overflow-y: scroll;
 }
+
 .sidebar::-webkit-scrollbar {
   width: 0;
 }
-.sidebar-el-menu:not(.el-menu--collapse) {
-  width: 150px;
-}
+
 .sidebar > ul {
   height: 100%;
+}
+
+.sidebar-el-menu:not(.el-menu--collapse) {
+  width: 150px;
 }
 </style>
