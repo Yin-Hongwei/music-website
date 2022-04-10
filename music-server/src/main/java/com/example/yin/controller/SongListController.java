@@ -36,15 +36,15 @@ public class SongListController {
     public Object addSongList(HttpServletRequest req) {
         JSONObject jsonObject = new JSONObject();
         String title = req.getParameter("title").trim();
-        String pic = req.getParameter("pic").trim();
         String introduction = req.getParameter("introduction").trim();
         String style = req.getParameter("style").trim();
+        String pic = "/img/songListPic/123.jpg";
 
         SongList songList = new SongList();
         songList.setTitle(title);
-        songList.setPic(pic);
         songList.setIntroduction(introduction);
         songList.setStyle(style);
+        songList.setPic(pic);
 
         boolean res = songListService.addSongList(songList);
         if (res) {
@@ -99,14 +99,12 @@ public class SongListController {
         JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String title = req.getParameter("title").trim();
-        String pic = req.getParameter("pic").trim();
         String introduction = req.getParameter("introduction").trim();
         String style = req.getParameter("style").trim();
 
         SongList songList = new SongList();
         songList.setId(Integer.parseInt(id));
         songList.setTitle(title);
-        songList.setPic(pic);
         songList.setIntroduction(introduction);
         songList.setStyle(style);
 

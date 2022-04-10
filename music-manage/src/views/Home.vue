@@ -11,15 +11,15 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref } from "vue";
-import YinHeader from "../components/layouts/YinHeader";
-import YinAudio from "../components/layouts/YinAudio";
-import YinAside from "../components/layouts/YinAside";
-import emitter from "../utils/emitter";
+import YinHeader from "@/components/layouts/YinHeader.vue";
+import YinAudio from "@/components/layouts/YinAudio.vue";
+import YinAside from "@/components/layouts/YinAside.vue";
+import emitter from "@/utils/emitter";
 
 const collapse = ref(false);
 emitter.on("collapse", (msg) => {
-  collapse.value = msg;
+  collapse.value = msg as boolean;
 });
 </script>
