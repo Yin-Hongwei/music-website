@@ -1,131 +1,124 @@
 <template>
-  <div class="table">
-    <el-breadcrumb separator="/" class="crumbs">
-      <el-breadcrumb-item v-for="item in breadcrumbList" :key="item.name" :to="{ path: item.path, query: item.query }">
-        {{ item.name }}
-      </el-breadcrumb-item>
-    </el-breadcrumb>
+  <el-breadcrumb class="crumbs" separator="/">
+    <el-breadcrumb-item v-for="item in breadcrumbList" :key="item.name" :to="{ path: item.path, query: item.query }">
+      {{ item.name }}
+    </el-breadcrumb-item>
+  </el-breadcrumb>
 
-    <div class="container">
-      <div class="handle-box">
-        <el-button @click="deleteAll">批量删除</el-button>
-        <el-input v-model="searchWord" placeholder="筛选关键词"></el-input>
-        <el-button type="primary" @click="centerDialogVisible = true">添加歌曲</el-button>
-      </div>
-      <el-table height="550px" border size="small" :data="data" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="40"></el-table-column>
-        <el-table-column label="ID" prop="id" width="50" align="center"></el-table-column>
-        <el-table-column label="歌手图片" width="110" align="center">
-          <template v-slot="scope">
-            <div style="width: 80px; height: 80px; overflow: hidden">
-              <img :src="attachImageUrl(scope.row.pic)" style="width: 100%" />
-            </div>
-            <div class="play" @click="setSongUrl(scope.row)">
-              <svg class="icon" aria-hidden="true">
-                <use :xlink:href="toggle === scope.row.name ? playIcon : BOFANG"></use>
-              </svg>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="歌名" prop="name" width="150"></el-table-column>
-        <el-table-column label="专辑" prop="introduction" width="150"></el-table-column>
-        <el-table-column label="歌词" align="center">
-          <template v-slot="scope">
-            <ul style="height: 100px; overflow: scroll">
-              <li v-for="(item, index) in parseLyric(scope.row.lyric)" :key="index">
-                {{ item }}
-              </li>
-            </ul>
-          </template>
-        </el-table-column>
-        <el-table-column label="资源更新" width="120" align="center">
-          <template v-slot="scope">
-            <el-upload
-              :action="uploadUrl(scope.row.id)"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
-            >
-              <el-button>更新图片</el-button>
-            </el-upload>
-            <br />
-            <el-upload :action="uploadUrl(scope.row.id)" :show-file-list="false" :on-success="handleSongSuccess" :before-upload="beforeSongUpload">
-              <el-button>更新歌曲</el-button>
-            </el-upload>
-          </template>
-        </el-table-column>
-        <el-table-column label="评论" width="90" align="center">
-          <template v-slot="scope">
-            <el-button @click="goCommentPage(scope.row.id)">评论</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="160" align="center">
-          <template v-slot="scope">
-            <el-button @click="editRow(scope.row)">编辑</el-button>
-            <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-pagination
-        class="pagination"
-        background
-        layout="total, prev, pager, next"
-        :current-page="currentPage"
-        :page-size="pageSize"
-        :total="tableData.length"
-        @current-change="handleCurrentChange"
-      >
-      </el-pagination>
+  <div class="container">
+    <div class="handle-box">
+      <el-button @click="deleteAll">批量删除</el-button>
+      <el-input v-model="searchWord" placeholder="筛选关键词"></el-input>
+      <el-button type="primary" @click="centerDialogVisible = true">添加歌曲</el-button>
     </div>
-
-    <!--添加歌曲-->
-    <el-dialog title="添加歌曲" v-model="centerDialogVisible">
-      <el-form :model="registerForm" id="add-song">
-        <el-form-item label="歌曲名">
-          <el-input type="text" name="name" v-model="registerForm.name"></el-input>
-        </el-form-item>
-        <el-form-item label="专辑">
-          <el-input type="text" name="introduction" v-model="registerForm.introduction"></el-input>
-        </el-form-item>
-        <el-form-item label="歌词">
-          <el-input type="textarea" name="lyric" v-model="registerForm.lyric"></el-input>
-        </el-form-item>
-        <el-form-item label="歌曲上传">
-          <input type="file" name="file" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="centerDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addSong">确 定</el-button>
-        </span>
-      </template>
-    </el-dialog>
-
-    <!-- 编辑弹出框 -->
-    <el-dialog title="编辑" v-model="editVisible">
-      <el-form :model="editForm">
-        <el-form-item label="歌曲">
-          <el-input v-model="editForm.name"></el-input>
-        </el-form-item>
-        <el-form-item label="简介">
-          <el-input v-model="editForm.introduction"></el-input>
-        </el-form-item>
-        <el-form-item label="歌词">
-          <el-input type="textarea" v-model="editForm.lyric"></el-input>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="editVisible = false">取 消</el-button>
-          <el-button type="primary" @click="saveEdit">确 定</el-button>
-        </span>
-      </template>
-    </el-dialog>
-
-    <!-- 删除提示框 -->
-    <yin-del-dialog :delVisible="delVisible" @confirm="confirm" @cancelRow="delVisible = $event"></yin-del-dialog>
+    <el-table height="550px" border size="small" :data="data" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="40"></el-table-column>
+      <el-table-column label="ID" prop="id" width="50" align="center"></el-table-column>
+      <el-table-column label="歌手图片" width="110" align="center">
+        <template v-slot="scope">
+          <div style="width: 80px; height: 80px; overflow: hidden">
+            <img :src="attachImageUrl(scope.row.pic)" style="width: 100%" />
+          </div>
+          <div class="play" @click="setSongUrl(scope.row)">
+            <svg class="icon" aria-hidden="true">
+              <use :xlink:href="toggle === scope.row.name ? playIcon : BOFANG"></use>
+            </svg>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="歌名" prop="name" width="150"></el-table-column>
+      <el-table-column label="专辑" prop="introduction" width="150"></el-table-column>
+      <el-table-column label="歌词" align="center">
+        <template v-slot="scope">
+          <ul style="height: 100px; overflow: scroll">
+            <li v-for="(item, index) in parseLyric(scope.row.lyric)" :key="index">
+              {{ item }}
+            </li>
+          </ul>
+        </template>
+      </el-table-column>
+      <el-table-column label="资源更新" width="120" align="center">
+        <template v-slot="scope">
+          <el-upload :action="uploadUrl(scope.row.id)" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+            <el-button>更新图片</el-button>
+          </el-upload>
+          <br />
+          <el-upload :action="uploadUrl(scope.row.id)" :show-file-list="false" :on-success="handleSongSuccess" :before-upload="beforeSongUpload">
+            <el-button>更新歌曲</el-button>
+          </el-upload>
+        </template>
+      </el-table-column>
+      <el-table-column label="评论" width="90" align="center">
+        <template v-slot="scope">
+          <el-button @click="goCommentPage(scope.row.id)">评论</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="160" align="center">
+        <template v-slot="scope">
+          <el-button @click="editRow(scope.row)">编辑</el-button>
+          <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination
+      class="pagination"
+      background
+      layout="total, prev, pager, next"
+      :current-page="currentPage"
+      :page-size="pageSize"
+      :total="tableData.length"
+      @current-change="handleCurrentChange"
+    >
+    </el-pagination>
   </div>
+
+  <!--添加歌曲-->
+  <el-dialog title="添加歌曲" v-model="centerDialogVisible">
+    <el-form :model="registerForm" id="add-song">
+      <el-form-item label="歌曲名">
+        <el-input type="text" name="name" v-model="registerForm.name"></el-input>
+      </el-form-item>
+      <el-form-item label="专辑">
+        <el-input type="text" name="introduction" v-model="registerForm.introduction"></el-input>
+      </el-form-item>
+      <el-form-item label="歌词">
+        <el-input type="textarea" name="lyric" v-model="registerForm.lyric"></el-input>
+      </el-form-item>
+      <el-form-item label="歌曲上传">
+        <input type="file" name="file" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addSong">确 定</el-button>
+      </span>
+    </template>
+  </el-dialog>
+
+  <!-- 编辑弹出框 -->
+  <el-dialog title="编辑" v-model="editVisible">
+    <el-form :model="editForm">
+      <el-form-item label="歌曲">
+        <el-input v-model="editForm.name"></el-input>
+      </el-form-item>
+      <el-form-item label="简介">
+        <el-input v-model="editForm.introduction"></el-input>
+      </el-form-item>
+      <el-form-item label="歌词">
+        <el-input type="textarea" v-model="editForm.lyric"></el-input>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="editVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveEdit">确 定</el-button>
+      </span>
+    </template>
+  </el-dialog>
+
+  <!-- 删除提示框 -->
+  <yin-del-dialog :delVisible="delVisible" @confirm="confirm" @cancelRow="delVisible = $event"></yin-del-dialog>
 </template>
 
 <script lang="ts">
@@ -439,9 +432,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.el-input__inner {
-  background-color: aqua;
-}
 .play {
   position: absolute;
   z-index: 100;

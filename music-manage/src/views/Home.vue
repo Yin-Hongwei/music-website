@@ -1,14 +1,10 @@
 <template>
-  <div>
-    <yin-header></yin-header>
-    <yin-aside></yin-aside>
-    <div class="content-box" :class="{ 'content-collapse': collapse }">
-      <div class="content">
-        <router-view></router-view>
-      </div>
-    </div>
-    <yin-audio></yin-audio>
+  <yin-header></yin-header>
+  <yin-aside></yin-aside>
+  <div class="content-box" :class="{ 'content-collapse': collapse }">
+    <router-view></router-view>
   </div>
+  <yin-audio></yin-audio>
 </template>
 
 <script lang="ts" setup>
@@ -23,3 +19,20 @@ emitter.on("collapse", (msg) => {
   collapse.value = msg as boolean;
 });
 </script>
+
+<style scoped>
+.content-box {
+  position: absolute;
+  left: 150px;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  overflow-y: scroll;
+  transition: left 0.3s ease-in-out;
+  padding: 20px;
+}
+
+.content-collapse {
+  left: 65px;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="login-container">
     <div class="title">{{ nusicName }}</div>
     <div class="login">
       <el-form :model="ruleForm" :rules="rules">
@@ -65,7 +65,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.container {
+.login-container {
   position: relative;
   background: url("../assets/images/background.jpg");
   background-attachment: fixed;
