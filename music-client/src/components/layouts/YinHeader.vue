@@ -102,8 +102,8 @@ export default defineComponent({
         proxy.$store.commit("setSearchWord", keywords.value)
         routerManager(RouterName.Search, { path: RouterName.Search, query: { keywords: keywords.value } })
       } else {
-        (proxy as any).$notify({
-          title: "搜索内容不能为空",
+        (proxy as any).$message({
+          message: "搜索内容不能为空",
           type: "error"
         })
       }

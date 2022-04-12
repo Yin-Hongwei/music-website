@@ -41,18 +41,13 @@ export default defineComponent({
       let params = new URLSearchParams();
       params.append("name", ruleForm.username);
       params.append("password", ruleForm.password);
-      const result = (await HttpManager.getLoginStatus(params)) as {
-        code: number | string;
-      };
+      const result = (await HttpManager.getLoginStatus(params)) as ResponseBody;
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
 
-      if (result.code == 1) {
-        routerManager(RouterName.Info, { path: RouterName.Info });
-      } else {
-        (proxy as any).$message({
-          message: "登录失败",
-          type: "error",
-        });
-      }
+      if (result.success) routerManager(RouterName.Info, { path: RouterName.Info });
     }
     return {
       nusicName,

@@ -11,12 +11,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 // 设置允许跨域请求的域名
                 .allowedOriginPatterns("*")
-                //放行全部请求类型
+                // 放行全部请求类型
                 .allowedMethods("*")
-//                .allowedMethods("GET", "POST", "DELETE", "PUT")
-                //是否发送Cookie
+                // .allowedMethods("GET", "POST", "DELETE", "PUT")
+                // 是否发送Cookie
                 .allowCredentials(true)
-                // //暴露哪些头部信息
+                //暴露哪些头部信息
                 .exposedHeaders("*");
     }
 }
