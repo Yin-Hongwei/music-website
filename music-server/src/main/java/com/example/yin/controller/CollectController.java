@@ -1,6 +1,7 @@
 package com.example.yin.controller;
 
-import com.alibaba.fastjson.JSONObject;
+import com.example.yin.common.FailMessage;
+import com.example.yin.common.SuccessMessage;
 import com.example.yin.domain.Collect;
 import com.example.yin.service.impl.CollectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +23,15 @@ public class CollectController {
     @ResponseBody
     @RequestMapping(value = "/collection/add", method = RequestMethod.POST)
     public Object addCollection(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
         String user_id = req.getParameter("userId");
         String type = req.getParameter("type");
         String song_id = req.getParameter("songId");
         String song_list_id = req.getParameter("songListId");
 
         if (song_id == "") {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "收藏歌曲为空");
-            return jsonObject;
+            return new SuccessMessage("收藏歌曲为空").getMessage();
         } else if (collectService.existSongId(Integer.parseInt(user_id), Integer.parseInt(song_id))) {
-            jsonObject.put("code", 2);
-            jsonObject.put("msg", "已收藏");
-            return jsonObject;
+            return new FailMessage("已收藏").getMessage();
         }
 
         Collect collect = new Collect();
@@ -50,13 +46,9 @@ public class CollectController {
 
         boolean res = collectService.addCollection(collect);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "收藏成功");
-            return jsonObject;
+            return new SuccessMessage("收藏成功").getMessage();
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "收藏失败");
-            return jsonObject;
+            return new FailMessage("收藏失败").getMessage();
         }
     }
 
@@ -85,7 +77,6 @@ public class CollectController {
     @ResponseBody
     @RequestMapping(value = "/collection/update", method = RequestMethod.POST)
     public Object updateCollectMsg(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String user_id = req.getParameter("userId").trim();
         String type = req.getParameter("type").trim();
@@ -100,13 +91,9 @@ public class CollectController {
 
         boolean res = collectService.updateCollectMsg(collect);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "修改成功");
-            return jsonObject;
+            return new SuccessMessage("修改成功").getMessage();
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "修改失败");
-            return jsonObject;
+            return new FailMessage("修改失败").getMessage();
         }
     }
 }

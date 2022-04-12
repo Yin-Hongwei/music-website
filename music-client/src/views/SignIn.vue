@@ -4,50 +4,27 @@
     <div class="sign-in-head">
       <span>帐号登录</span>
     </div>
-    <el-form status-icon :model="loginForm" :rules="rules">
+    <el-form ref="signInForm" status-icon :model="registerForm" :rules="SignInRules">
       <el-form-item prop="username">
-        <el-input
-          placeholder="用户名"
-          size="large"
-          v-model="loginForm.username"
-        ></el-input>
+        <el-input placeholder="用户名" v-model="registerForm.username"></el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input
-          type="password"
-          size="large"
-          placeholder="密码"
-          v-model="loginForm.password"
-          @keyup.enter="handleLoginIn"
-        ></el-input>
+        <el-input type="password" placeholder="密码" v-model="registerForm.password" @keyup.enter="handleLoginIn"></el-input>
       </el-form-item>
       <el-form-item class="sign-in-btn">
-        <el-button size="large" @click="handleSignUp">注册</el-button>
-        <el-button type="primary" size="large" @click="handleLoginIn">登录</el-button>
+        <el-button @click="handleSignUp">注册</el-button>
+        <el-button type="primary" @click="handleLoginIn">登录</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  reactive,
-  getCurrentInstance,
-  onMounted,
-} from "vue";
+import { defineComponent, reactive, getCurrentInstance } from "vue";
 import mixin from "@/mixins/mixin";
 import YinLoginLogo from "@/components/layouts/YinLoginLogo.vue";
 import { HttpManager } from "@/api";
-import { NavName, RouterName } from "@/enums";
-
-interface resSignIn {
-  code: string;
-  type: string;
-  msg: string;
-  success: boolean;
-  userMsg: any[];
-}
+import { NavName, RouterName, SignInRules } from "@/enums";
 
 export default defineComponent({
   components: {
@@ -57,85 +34,50 @@ export default defineComponent({
     const { proxy } = getCurrentInstance();
     const { routerManager, changeIndex } = mixin();
 
-    const validateName = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("用户名不能为空"));
-      } else {
-        callback();
-      }
-    };
-    const validatePassword = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        callback();
-      }
-    };
-
     // 登录用户名密码
-    const loginForm = reactive({
+    const registerForm = reactive({
       username: "",
       password: "",
     });
-    const rules = reactive({
-      username: [
-        { validator: validateName, message: "请输入用户名", trigger: "blur" },
-      ],
-      password: [
-        {
-          validator: validatePassword,
-          message: "请输入密码",
-          trigger: "blur",
-        },
-      ],
-    });
-
-    onMounted(() => {
-      changeIndex(NavName.SignIn);
-    });
 
     async function handleLoginIn() {
+      let canRun = true;
+      (proxy.$refs["signInForm"] as any).validate((valid) => {
+        if (!valid) return (canRun = false);
+      });
+      if (!canRun) return;
+
+      const params = new URLSearchParams();
+      params.append("username", registerForm.username);
+      params.append("password", registerForm.password);
+
       try {
-        const params = new URLSearchParams();
-        params.append("username", loginForm.username);
-        params.append("password", loginForm.password);
-        const result = (await HttpManager.signIn(params)) as resSignIn;
-        if (result.code != null) {
-          (proxy as any).$message({
-            message: result.msg,
-            type: result.type,
-          });
-          setUserInfo(result.userMsg[0]);
-          setTimeout(() => {
-            if (result.success) {
-              changeIndex(NavName.Home);
-              routerManager(RouterName.Home, { path: RouterName.Home });
-            }
-          }, 2000);
-        } else {
-          (proxy as any).$notify({
-            title: "用户名或密码错误",
-            type: "error",
-          });
+        const result = (await HttpManager.signIn(params)) as ResponseBody;
+        (proxy as any).$message({
+          message: result.message,
+          type: result.type,
+        });
+
+        if (result.success) {
+          proxy.$store.commit("setUserId", result.data[0].id);
+          proxy.$store.commit("setUsername", result.data[0].username);
+          proxy.$store.commit("setUserPic", result.data[0].avator);
+          proxy.$store.commit("setToken", true);
+          changeIndex(NavName.Home);
+          routerManager(RouterName.Home, { path: RouterName.Home });
         }
       } catch (error) {
         console.error(error);
       }
     }
 
-    function setUserInfo(item) {
-      proxy.$store.commit("setUserId", item.id);
-      proxy.$store.commit("setUsername", item.username);
-      proxy.$store.commit("setUserPic", item.avator);
-      proxy.$store.commit("setToken", true);
-    }
     function handleSignUp() {
       routerManager(RouterName.SignUp, { path: RouterName.SignUp });
     }
 
     return {
-      loginForm,
-      rules,
+      registerForm,
+      SignInRules,
       handleLoginIn,
       handleSignUp,
     };

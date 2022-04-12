@@ -6,6 +6,7 @@ import { singerStyle } from "./singer";
 import { SONGSTYLE } from "./songList";
 import { swiperList } from "./swiper";
 import { RouterName } from "./router-name";
+import { SignInRules, SignUpRules } from "./validate";
 
 export {
   AREA,
@@ -19,4 +20,6 @@ export {
   singerStyle,
   SONGSTYLE,
   swiperList,
+  SignInRules,
+  SignUpRules,
 };

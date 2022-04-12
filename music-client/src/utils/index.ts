@@ -1,6 +1,11 @@
 // 解析日期
-export function getDateTime(date = new Date()) {
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+export function getBirth(value) {
+  if (value == null || value == "") return "";
+  const date = new Date(value);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+  const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+  return year + "-" + month + "-" + day;
 }
 
 // 解析歌词
@@ -49,49 +54,28 @@ export function formatSeconds(value) {
   }
   // 多少秒
   let result = "";
-  if (parseInt((theTime).toString()) < 10) {
-    result = "0:0" + parseInt((theTime).toString());
+  if (parseInt(theTime.toString()) < 10) {
+    result = "0:0" + parseInt(theTime.toString());
   } else {
-    result = "0:" + parseInt((theTime).toString());
+    result = "0:" + parseInt(theTime.toString());
   }
   // 多少分钟时
   if (theTime1 > 0) {
-    if (parseInt((theTime).toString()) < 10) {
-      result = "0" + parseInt((theTime).toString());
+    if (parseInt(theTime.toString()) < 10) {
+      result = "0" + parseInt(theTime.toString());
     } else {
-      result = parseInt((theTime).toString()).toString();
+      result = parseInt(theTime.toString()).toString();
     }
-    result = parseInt((theTime1).toString()) + ":" + result;
+    result = parseInt(theTime1.toString()) + ":" + result;
   }
   // 多少小时时
   if (theTime2 > 0) {
-    if (parseInt((theTime).toString()) < 10) {
-      result = "0" + parseInt((theTime).toString());
+    if (parseInt(theTime.toString()) < 10) {
+      result = "0" + parseInt(theTime.toString());
     } else {
-      result = parseInt((theTime).toString()).toString();
+      result = parseInt(theTime.toString()).toString();
     }
-    result = parseInt((theTime2).toString()) + ":" + parseInt((theTime1).toString()) + ":" + result;
+    result = parseInt(theTime2.toString()) + ":" + parseInt(theTime1.toString()) + ":" + result;
   }
   return result;
 }
-
-// 匹配规则
-export const RULES = {
-  username: [{ required: true, trigger: "blur" }],
-  password: [{ required: true, trigger: "blur" }],
-  sex: [{ required: true, message: "请选择性别", trigger: "change" }],
-  phoneNum: [{ essage: "请选择日期", trigger: "blur" }],
-  email: [
-    { message: "请输入邮箱地址", trigger: "blur" },
-    {
-      type: "email",
-      message: "请输入正确的邮箱地址",
-      trigger: ["blur", "change"],
-    },
-  ],
-  birth: [
-    { required: true, type: "date", message: "请选择日期", trigger: "change" },
-  ],
-  introduction: [{ message: "请输入介绍", trigger: "blur" }],
-  location: [{ message: "请输入地区", trigger: "change" }],
-};

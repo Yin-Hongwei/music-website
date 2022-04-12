@@ -1,6 +1,9 @@
 package com.example.yin.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.yin.common.ErrorMessage;
+import com.example.yin.common.FailMessage;
+import com.example.yin.common.SuccessMessage;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.Song;
 import com.example.yin.service.impl.SongServiceImpl;
@@ -37,18 +40,12 @@ public class SongController {
     @ResponseBody
     @RequestMapping(value = "/song/add", method = RequestMethod.POST)
     public Object addSong(HttpServletRequest req, @RequestParam("file") MultipartFile mpfile) {
-        JSONObject jsonObject = new JSONObject();
         String singer_id = req.getParameter("singerId").trim();
         String name = req.getParameter("name").trim();
         String introduction = req.getParameter("introduction").trim();
         String pic = "/img/songPic/tubiao.jpg";
         String lyric = req.getParameter("lyric").trim();
 
-        if (mpfile.isEmpty()) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "音乐上传失败！");
-            return jsonObject;
-        }
         String fileName = mpfile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "song";
         File file1 = new File(filePath);
@@ -71,19 +68,14 @@ public class SongController {
             song.setUrl(storeUrlPath);
             boolean res = songService.addSong(song);
             if (res) {
-                jsonObject.put("code", 1);
-                jsonObject.put("avator", storeUrlPath);
-                jsonObject.put("msg", "上传成功");
+                JSONObject jsonObject = new SuccessMessage("上传成功").getMessage();
+                jsonObject.put("data", storeUrlPath);
                 return jsonObject;
             } else {
-                jsonObject.put("code", 0);
-                jsonObject.put("msg", "上传失败");
-                return jsonObject;
+                return new FailMessage("上传失败").getMessage();
             }
         } catch (IOException e) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "上传失败" + e.getMessage());
-            return jsonObject;
+            return new ErrorMessage("上传失败" + e.getMessage()).getMessage();
         }
     }
 
@@ -97,6 +89,7 @@ public class SongController {
     @RequestMapping(value = "/song/detail", method = RequestMethod.GET)
     public Object songOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
+        
         return songService.songOfId(Integer.parseInt(id));
     }
 
@@ -104,6 +97,7 @@ public class SongController {
     @RequestMapping(value = "/song/singer/detail", method = RequestMethod.GET)
     public Object songOfSingerId(HttpServletRequest req) {
         String singerId = req.getParameter("singerId");
+
         return songService.songOfSingerId(Integer.parseInt(singerId));
     }
 
@@ -111,6 +105,7 @@ public class SongController {
     @RequestMapping(value = "/song/singerName/detail", method = RequestMethod.GET)
     public Object songOfSingerName(HttpServletRequest req) {
         String name = req.getParameter("name");
+
         return songService.songOfSingerName('%' + name + '%');
     }
 
@@ -118,6 +113,7 @@ public class SongController {
     @RequestMapping(value = "/song/name/detail", method = RequestMethod.GET)
     public Object songOfName(HttpServletRequest req) {
         String name = req.getParameter("name").trim();
+
         return songService.songOfName(name);
     }
 
@@ -125,14 +121,19 @@ public class SongController {
     @RequestMapping(value = "/song/delete", method = RequestMethod.GET)
     public Object deleteSong(HttpServletRequest req) {
         String id = req.getParameter("id");
-        return songService.deleteSong(Integer.parseInt(id));
+
+        boolean res = songService.deleteSong(Integer.parseInt(id));
+        if (res) {
+            return new SuccessMessage("删除成功").getMessage();
+        } else {
+            return new FailMessage("删除失败").getMessage();
+        }
     }
 
     // 更新歌曲信息
     @ResponseBody
     @RequestMapping(value = "/song/update", method = RequestMethod.POST)
     public Object updateSongMsg(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String singer_id = req.getParameter("singerId").trim();
         String name = req.getParameter("name").trim();
@@ -149,13 +150,9 @@ public class SongController {
 
         boolean res = songService.updateSongMsg(song);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "修改成功");
-            return jsonObject;
+            return new SuccessMessage("修改成功").getMessage();
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "修改失败");
-            return jsonObject;
+            return new FailMessage("修改失败").getMessage();
         }
     }
 
@@ -163,13 +160,6 @@ public class SongController {
     @ResponseBody
     @RequestMapping(value = "/song/img/update", method = RequestMethod.POST)
     public Object updateSongPic(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {
-        JSONObject jsonObject = new JSONObject();
-
-        if (urlFile.isEmpty()) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "音乐上传失败！");
-            return jsonObject;
-        }
         String fileName = System.currentTimeMillis() + urlFile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songPic";
         File file1 = new File(filePath);
@@ -186,32 +176,21 @@ public class SongController {
             song.setPic(storeUrlPath);
             boolean res = songService.updateSongPic(song);
             if (res) {
-                jsonObject.put("code", 1);
-                jsonObject.put("avator", storeUrlPath);
-                jsonObject.put("msg", "上传成功");
+                JSONObject jsonObject = new SuccessMessage("上传成功").getMessage();
+                jsonObject.put("data", storeUrlPath);
                 return jsonObject;
             } else {
-                jsonObject.put("code", 0);
-                jsonObject.put("msg", "上传失败");
-                return jsonObject;
+                return new FailMessage("上传失败").getMessage();
             }
         } catch (IOException e) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "上传失败" + e.getMessage());
-            return jsonObject;
+            return new ErrorMessage("上传失败" + e.getMessage()).getMessage();
         }
     }
 
-    // 更新歌曲URL
+    // 更新歌曲 URL
     @ResponseBody
     @RequestMapping(value = "/song/url/update", method = RequestMethod.POST)
     public Object updateSongUrl(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {
-        JSONObject jsonObject = new JSONObject();
-        if (urlFile.isEmpty()) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "音乐上传失败！");
-            return jsonObject;
-        }
         String fileName = urlFile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "song";
         File file1 = new File(filePath);
@@ -228,19 +207,14 @@ public class SongController {
             song.setUrl(storeUrlPath);
             boolean res = songService.updateSongUrl(song);
             if (res) {
-                jsonObject.put("code", 1);
-                jsonObject.put("avator", storeUrlPath);
-                jsonObject.put("msg", "上传成功");
+                JSONObject jsonObject = new SuccessMessage("上传成功").getMessage();
+                jsonObject.put("data", storeUrlPath);
                 return jsonObject;
             } else {
-                jsonObject.put("code", 0);
-                jsonObject.put("msg", "上传失败");
-                return jsonObject;
+                return new FailMessage("上传失败").getMessage();
             }
         } catch (IOException e) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "上传失败" + e.getMessage());
-            return jsonObject;
+            return new ErrorMessage("上传失败" + e.getMessage()).getMessage();
         }
     }
 }

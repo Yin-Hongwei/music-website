@@ -13,12 +13,7 @@
       <div class="song-lyric">
         <transition-group name="lyric-fade">
           <!--有歌词-->
-          <ul
-            :style="{ top: lrcTop }"
-            class="has-lyric"
-            v-if="lyricArr.length"
-            key="has-lyric"
-          >
+          <ul :style="{ top: lrcTop }" class="has-lyric" v-if="lyricArr.length" key="has-lyric">
             <li v-for="(item, index) in lyricArr" :key="index">
               {{ item[1] }}
             </li>
@@ -35,8 +30,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue';
-import { useStore} from "vuex";
+import { computed, defineComponent, ref, watch } from "vue";
+import { useStore } from "vuex";
 import Comment from "@/components/Comment.vue";
 import { parseLyric } from "@/utils";
 import { HttpManager } from "@/api";
@@ -60,7 +55,7 @@ export default defineComponent({
     const songPic = computed(() => store.getters.songPic); // 歌曲图片
     watch(songId, () => {
       lyricArr.value = parseLyric(currentPlayList.value[currentPlayIndex.value].lyric);
-    })
+    });
     // 处理歌词位置及颜色
     watch(curTime, () => {
       if (lyricArr.value.length !== 0) {
@@ -78,7 +73,7 @@ export default defineComponent({
           }
         }
       }
-    })
+    });
 
     lyricArr.value = lyric.value ? parseLyric(lyric.value) : [];
 
@@ -90,7 +85,7 @@ export default defineComponent({
       lyricArr,
       songId,
       attachImageUrl: HttpManager.attachImageUrl,
-    }
+    };
   },
 });
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="handle-box">
-      <el-button disabled @click="deleteAll">批量删除</el-button>
+      <el-button @click="deleteAll">批量删除</el-button>
       <el-input v-model="searchWord" placeholder="筛选用户"></el-input>
     </div>
 
@@ -35,7 +35,7 @@
       </el-table-column>
       <el-table-column label="操作" width="90" align="center">
         <template v-slot="scope">
-          <el-button type="danger" disabled @click="deleteRow(scope.row.id)">删除</el-button>
+          <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -61,6 +61,7 @@ import mixin from "@/mixins/mixin";
 import { HttpManager } from "@/api";
 import { RouterName } from "@/enums";
 import YinDelDialog from "@/components/dialog/YinDelDialog.vue";
+import { getBirth } from "@/utils";
 
 export default defineComponent({
   components: {
@@ -68,7 +69,7 @@ export default defineComponent({
   },
   setup() {
     const { proxy } = getCurrentInstance();
-    const { getBirth, changeSex, routerManager } = mixin();
+    const { changeSex, routerManager } = mixin();
 
     const tableData = ref([]); // 记录歌曲，用于显示
     const tempDate = ref([]); // 记录歌曲，用于搜索时能临时记录一份歌曲列表
@@ -136,19 +137,12 @@ export default defineComponent({
     const delVisible = ref(false); // 显示删除框
 
     async function confirm() {
-      const result = await HttpManager.deleteUser(idx.value);
-      if (result) {
-        getData();
-        (proxy as any).$message({
-          message: "删除成功",
-          type: "success",
-        });
-      } else {
-        (proxy as any).$message({
-          message: "删除失败",
-          type: "error",
-        });
-      }
+      const result = (await HttpManager.deleteUser(idx.value)) as ResponseBody;
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
+      if (result) getData();
       delVisible.value = false;
     }
     function deleteRow(id) {

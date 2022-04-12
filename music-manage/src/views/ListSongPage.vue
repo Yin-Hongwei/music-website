@@ -103,33 +103,27 @@ export default defineComponent({
     // 获取要添加歌曲的ID
     async function saveSong() {
       const id = `${registerForm.singerName}-${registerForm.songName}`;
-      const result = await HttpManager.getSongOfSingerName(id);
-      if (result && result[0]) {
+      const result = (await HttpManager.getSongOfSingerName(id)) as ResponseBody;
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
+      if (result.success) {
         addSong(result[0].id);
-      } else {
-        (proxy as any).$message({
-          message: "未找到要添加的歌曲",
-          type: "warning",
-        });
       }
     }
     async function addSong(id) {
       let params = new URLSearchParams();
       params.append("songId", id);
       params.append("songListId", proxy.$route.query.id as string);
-      const result = (await HttpManager.setListSong(params)) as any;
-      if (result.code === 1) {
-        getData();
-        (proxy as any).$message({
-          message: "添加成功",
-          type: "success",
-        });
-      } else {
-        (proxy as any).$message({
-          message: "添加失败",
-          type: "error",
-        });
-      }
+
+      const result = (await HttpManager.setListSong(params)) as ResponseBody;
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
+
+      if (result.success) getData();
       centerDialogVisible.value = false;
     }
 
@@ -141,19 +135,13 @@ export default defineComponent({
     const delVisible = ref(false); // 显示删除框
 
     async function confirm() {
-      const result = await HttpManager.deleteListSong(idx.value);
-      if (result) {
-        getData();
-        (proxy as any).$message({
-          message: "删除成功",
-          type: "success",
-        });
-      } else {
-        (proxy as any).$message({
-          message: "删除失败",
-          type: "error",
-        });
-      }
+      const result = await HttpManager.deleteListSong(idx.value) as ResponseBody;
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
+
+      if (result.success) getData();
       delVisible.value = false;
     }
     function deleteRow(id) {

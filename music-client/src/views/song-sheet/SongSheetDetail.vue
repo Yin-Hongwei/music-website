@@ -22,12 +22,7 @@
         <span>{{ rank * 2 }}</span>
         <div>
           <h3>{{ assistText }}</h3>
-          <el-rate
-            allow-half
-            v-model="score"
-            :disabled="disabledRank"
-            @click="pushValue()"
-          ></el-rate>
+          <el-rate allow-half v-model="score" :disabled="disabledRank" @click="pushValue()"></el-rate>
         </div>
       </div>
       <!--歌曲-->
@@ -46,12 +41,6 @@ import mixin from "@/mixins/mixin";
 import SongList from "@/components/SongList.vue";
 import Comment from "@/components/Comment.vue";
 import { HttpManager } from "@/api";
-
-interface resContent {
-  code: number;
-  msg: string;
-  data: object;
-}
 
 export default defineComponent({
   components: {
@@ -106,19 +95,15 @@ export default defineComponent({
       params.append("score", (score.value * 2).toString());
 
       try {
-        const result = (await HttpManager.setRank(params)) as resContent;
-        if (result.code === 1) {
+        const result = (await HttpManager.setRank(params)) as ResponseBody;
+        (proxy as any).$message({
+          message: result.message,
+          type: result.type,
+        });
+
+        if (result.success) {
           getRank(songListId.value);
           disabledRank.value = true;
-          (proxy as any).$notify({
-            title: "评分成功",
-            type: "success",
-          });
-        } else {
-          (proxy as any).$notify({
-            title: "评分失败",
-            type: "error",
-          });
         }
       } catch (error) {
         console.error(error);

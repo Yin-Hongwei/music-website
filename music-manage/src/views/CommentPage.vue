@@ -98,19 +98,13 @@ export default defineComponent({
     const delVisible = ref(false); // 显示删除框
 
     async function confirm() {
-      const result = await HttpManager.deleteComment(idx.value);
-      if (result) {
-        getData();
-        (proxy as any).$message({
-          message: "删除成功",
-          type: "success",
-        });
-      } else {
-        (proxy as any).$message({
-          message: "删除失败",
-          type: "error",
-        });
-      }
+      const result = (await HttpManager.deleteComment(idx.value)) as ResponseBody;
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
+      
+      if (result.success) getData();
       delVisible.value = false;
     }
     function deleteRow(id) {

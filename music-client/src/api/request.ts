@@ -1,7 +1,7 @@
 import axios from "axios";
 import router from "@/router";
 
-const BASE_URL = process.env.NODE_HOST
+const BASE_URL = process.env.NODE_HOST;
 
 axios.defaults.timeout = 5000; // 超时时间设置
 axios.defaults.withCredentials = true; // true允许跨域
@@ -11,7 +11,7 @@ axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded
 
 // 响应拦截器
 axios.interceptors.response.use(
-  response => {
+  (response) => {
     // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
     // 否则的话抛出错误
     if (response.status === 200) {
@@ -21,7 +21,7 @@ axios.interceptors.response.use(
     }
   },
   // 服务器状态码不是2开头的的情况
-  error => {
+  (error) => {
     if (error.response.status) {
       switch (error.response.status) {
         // 401: 未登录
@@ -69,9 +69,9 @@ export function getBaseURL() {
 export function get(url, params?: object) {
   return new Promise((resolve, reject) => {
     axios.get(url, params).then(
-      response => resolve(response.data),
-      error => reject(error)
-    )
+      (response) => resolve(response.data),
+      (error) => reject(error)
+    );
   });
 }
 
@@ -84,8 +84,8 @@ export function get(url, params?: object) {
 export function post(url, data = {}) {
   return new Promise((resolve, reject) => {
     axios.post(url, data).then(
-      response => resolve(response.data),
-      error => reject(error)
+      (response) => resolve(response.data),
+      (error) => reject(error)
     );
   });
 }
@@ -99,8 +99,8 @@ export function post(url, data = {}) {
 export function deletes(url, data = {}) {
   return new Promise((resolve, reject) => {
     axios.delete(url, data).then(
-      response => resolve(response.data),
-      error => reject(error)
+      (response) => resolve(response.data),
+      (error) => reject(error)
     );
   });
 }
@@ -114,8 +114,8 @@ export function deletes(url, data = {}) {
 export function put(url, data = {}) {
   return new Promise((resolve, reject) => {
     axios.put(url, data).then(
-      response => resolve(response.data),
-      error => reject(error)
+      (response) => resolve(response.data),
+      (error) => reject(error)
     );
   });
 }

@@ -14,18 +14,6 @@ export default function () {
   const store = useStore();
   const token = computed(() => store.getters.token);
 
-  function getBirth(cellValue) {
-    if (cellValue == null || cellValue == "") return "";
-    const date = new Date(cellValue);
-    const year = date.getFullYear();
-    const month =
-      date.getMonth() + 1 < 10
-        ? "0" + (date.getMonth() + 1)
-        : date.getMonth() + 1;
-    const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-    return year + "-" + month + "-" + day;
-  }
-
   function getUserSex(sex) {
     if (sex === 0) {
       return "女";
@@ -46,8 +34,8 @@ export default function () {
 
   function checkStatus() {
     if (!token.value) {
-      (proxy as any).$notify({
-        title: "请先登录",
+      (proxy as any).$message({
+        message: "请先登录",
         type: "warning",
       });
       return false;
@@ -104,7 +92,6 @@ export default function () {
   }
 
   return {
-    getBirth,
     getUserSex,
     getSongTitle,
     getSingerName,

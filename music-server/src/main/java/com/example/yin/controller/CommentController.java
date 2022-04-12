@@ -1,6 +1,8 @@
 package com.example.yin.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.yin.common.FailMessage;
+import com.example.yin.common.SuccessMessage;
 import com.example.yin.domain.Comment;
 import com.example.yin.service.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,6 @@ public class CommentController {
     @ResponseBody
     @RequestMapping(value = "/comment/add", method = RequestMethod.POST)
     public Object addComment(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
         String user_id = req.getParameter("userId");
         String type = req.getParameter("type");
         String song_list_id = req.getParameter("songListId");
@@ -40,13 +41,9 @@ public class CommentController {
         comment.setCreateTime(new Date());
         boolean res = commentService.addComment(comment);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "评论成功");
-            return jsonObject;
+            return new SuccessMessage("评论成功").getMessage();
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "评论失败");
-            return jsonObject;
+            return new FailMessage("评论失败").getMessage();
         }
     }
 
@@ -74,22 +71,18 @@ public class CommentController {
     @ResponseBody
     @RequestMapping(value = "/comment/like", method = RequestMethod.POST)
     public Object commentOfLike(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String up = req.getParameter("up").trim();
 
         Comment comment = new Comment();
         comment.setId(Integer.parseInt(id));
         comment.setUp(Integer.parseInt(up));
+
         boolean res = commentService.updateCommentMsg(comment);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "点赞成功");
-            return jsonObject;
+            return new SuccessMessage("点赞成功").getMessage();
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "点赞失败");
-            return jsonObject;
+            return new FailMessage("点赞失败").getMessage();
         }
     }
 
@@ -97,14 +90,19 @@ public class CommentController {
     @RequestMapping(value = "/comment/delete", method = RequestMethod.GET)
     public Object deleteComment(HttpServletRequest req) {
         String id = req.getParameter("id");
-        return commentService.deleteComment(Integer.parseInt(id));
+        
+        boolean res = commentService.deleteComment(Integer.parseInt(id));
+        if (res) {
+            return new SuccessMessage("删除成功").getMessage();
+        } else {
+            return new FailMessage("删除失败").getMessage();
+        }
     }
 
     // 更新评论
     @ResponseBody
     @RequestMapping(value = "/comment/update", method = RequestMethod.POST)
     public Object updateCommentMsg(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String user_id = req.getParameter("userId").trim();
         String song_id = req.getParameter("songId").trim();
@@ -133,13 +131,9 @@ public class CommentController {
 
         boolean res = commentService.updateCommentMsg(comment);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "修改成功");
-            return jsonObject;
+            return new SuccessMessage("修改成功").getMessage();
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "修改失败");
-            return jsonObject;
+            return new FailMessage("修改失败").getMessage();
         }
     }
 }

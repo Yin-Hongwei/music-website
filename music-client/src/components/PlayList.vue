@@ -20,7 +20,7 @@ import { defineComponent, getCurrentInstance, ref, toRefs } from "vue";
 import YinIcon from "@/components/layouts/YinIcon.vue";
 import mixin from "@/mixins/mixin";
 import { Icon } from "@/enums";
-import { HttpManager } from '@/api'
+import { HttpManager } from "@/api";
 
 export default defineComponent({
   components: {

@@ -36,8 +36,8 @@ export default defineComponent({
       if (!value) return;
       const result = await HttpManager.getSongListOfLikeTitle(value) as any[];
       if (!result.length) {
-        (proxy as any).$notify({
-          title: "暂无该歌曲内容",
+        (proxy as any).$message({
+          message: "暂无该歌曲内容",
           type: "warning",
         });
       } else {

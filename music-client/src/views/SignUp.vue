@@ -1,131 +1,119 @@
 <template>
   <yin-login-logo></yin-login-logo>
-  <div class='sign-up'>
-    <div class='sign-up-head'>
+  <div class="sign-up">
+    <div class="sign-up-head">
       <span>用户注册</span>
     </div>
-    <el-form :model='registerForm' status-icon :rules='rules' label-width='70px' >
-      <el-form-item prop='username' label='用户名'>
-        <el-input v-model='registerForm.username' placeholder='用户名'></el-input>
+    <el-form ref="signUpForm" label-width="70px" status-icon :model="registerForm" :rules="SignUpRules">
+      <el-form-item prop="username" label="用户名">
+        <el-input v-model="registerForm.username" placeholder="用户名"></el-input>
       </el-form-item>
-      <el-form-item prop='password' label='密码'>
-        <el-input type='password' placeholder='密码' v-model='registerForm.password'></el-input>
+      <el-form-item prop="password" label="密码">
+        <el-input type="password" placeholder="密码" v-model="registerForm.password"></el-input>
       </el-form-item>
-      <el-form-item prop='sex' label='性别'>
-        <el-radio-group v-model='registerForm.sex'>
-          <el-radio :label='0'>女</el-radio>
-          <el-radio :label='1'>男</el-radio>
-          <el-radio :label='2'>保密</el-radio>
+      <el-form-item prop="sex" label="性别">
+        <el-radio-group v-model="registerForm.sex">
+          <el-radio :label="0">女</el-radio>
+          <el-radio :label="1">男</el-radio>
+          <el-radio :label="2">保密</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item prop='phoneNum' label='手机'>
-        <el-input placeholder='手机' v-model='registerForm.phoneNum'></el-input>
+      <el-form-item prop="phoneNum" label="手机">
+        <el-input placeholder="手机" v-model="registerForm.phoneNum"></el-input>
       </el-form-item>
-      <el-form-item prop='email' label='邮箱'>
-        <el-input v-model='registerForm.email' placeholder='邮箱'></el-input>
+      <el-form-item prop="email" label="邮箱">
+        <el-input v-model="registerForm.email" placeholder="邮箱"></el-input>
       </el-form-item>
-      <el-form-item prop='birth' label='生日'>
-        <el-date-picker type='date' placeholder='选择日期' v-model='registerForm.birth' style='width: 100%;'></el-date-picker>
+      <el-form-item prop="birth" label="生日">
+        <el-date-picker type="date" placeholder="选择日期" v-model="registerForm.birth" style="width: 100%"></el-date-picker>
       </el-form-item>
-      <el-form-item prop='introduction' label='签名'>
-        <el-input type='textarea' placeholder='签名' v-model='registerForm.introduction'></el-input>
+      <el-form-item prop="introduction" label="签名">
+        <el-input type="textarea" placeholder="签名" v-model="registerForm.introduction"></el-input>
       </el-form-item>
-      <el-form-item prop='location' label='地区'>
-        <el-select v-model='registerForm.location' placeholder='地区' style='width:100%'>
-          <el-option v-for='item in area' :key='item.value' :label='item.label' :value='item.value'></el-option>
+      <el-form-item prop="location" label="地区">
+        <el-select v-model="registerForm.location" placeholder="地区" style="width: 100%">
+          <el-option v-for="item in AREA" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
       </el-form-item>
-      <div class='sign-up-btn'>
-        <el-button @click='goBack()'>登录</el-button>
-        <el-button type='primary' @click='handleSignUp'>确定</el-button>
-      </div>
+      <el-form-item class="sign-up-btn">
+        <el-button @click="goBack()">登录</el-button>
+        <el-button type="primary" @click="handleSignUp(formRef)">确定</el-button>
+      </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, getCurrentInstance } from "vue";
-import mixin from '@/mixins/mixin'
-import YinLoginLogo from '@/components/layouts/YinLoginLogo.vue'
-import { HttpManager } from '@/api'
-import { getDateTime, RULES } from '@/utils'
-import { AREA, RouterName, NavName } from '@/enums'
-
-interface resSignUp {
-  title: string,
-  type: string,
-  msg: string,
-  code: string,
-  success: boolean,
-}
+import { defineComponent, reactive, getCurrentInstance } from "vue";
+import mixin from "@/mixins/mixin";
+import YinLoginLogo from "@/components/layouts/YinLoginLogo.vue";
+import { HttpManager } from "@/api";
+import { getBirth } from "@/utils";
+import { AREA, RouterName, NavName, SignUpRules } from "@/enums";
 
 export default defineComponent({
   components: {
-    YinLoginLogo
+    YinLoginLogo,
   },
   setup() {
     const { proxy } = getCurrentInstance();
-    const { routerManager, changeIndex } = mixin()
+    const { routerManager, changeIndex } = mixin();
 
-    const rules = ref(RULES);
-    const area = ref(AREA);
     const registerForm = reactive({
-        username: '',
-        password: '',
-        sex: '',
-        phoneNum: '',
-        email: '',
-        birth: new Date(),
-        introduction: '',
-        location: ''
+      username: "",
+      password: "",
+      sex: "",
+      phoneNum: "",
+      email: "",
+      birth: new Date(),
+      introduction: "",
+      location: "",
     });
 
-    async function handleSignUp () {
-      // TODO：这里需要在前端做必填项校验
-      const params = new URLSearchParams()
-      params.append('username', registerForm.username)
-      params.append('password', registerForm.password)
-      params.append('sex', registerForm.sex)
-      params.append('phone_num', registerForm.phoneNum)
-      params.append('email', registerForm.email)
-      params.append('birth', getDateTime(registerForm.birth))
-      params.append('introduction', registerForm.introduction)
-      params.append('location', registerForm.location)
+    async function handleSignUp() {
+      let canRun = true;
+      (proxy.$refs["signUpForm"] as any).validate((valid) => {
+        if (!valid) return (canRun = false);
+      });
+      if (!canRun) return;
+
+      const params = new URLSearchParams();
+      params.append("username", registerForm.username);
+      params.append("password", registerForm.password);
+      params.append("sex", registerForm.sex);
+      params.append("phone_num", registerForm.phoneNum);
+      params.append("email", registerForm.email);
+      params.append("birth", getBirth(registerForm.birth));
+      params.append("introduction", registerForm.introduction);
+      params.append("location", registerForm.location);
+
       try {
-        const result = await HttpManager.SignUp(params) as resSignUp;
-        if (result.code != null) {
-          (proxy as any).$notify({
-            title: result.msg,
-            type: result.type
-          })
-          setTimeout(() => {
-            if (result.success) {
-              routerManager(RouterName.SignIn, { path: RouterName.SignIn })
-              changeIndex(NavName.SignIn)
-            }
-          }, 2000)
-        } else {
-          (proxy as any).$notify({
-            title: '注册失败',
-            type: 'error'
-          })
+        const result = (await HttpManager.SignUp(params)) as ResponseBody;
+        (proxy as any).$message({
+          message: result.message,
+          type: result.type,
+        });
+
+        if (result.success) {
+          changeIndex(NavName.SignIn);
+          routerManager(RouterName.SignIn, { path: RouterName.SignIn });
         }
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     }
 
     return {
-      rules,
-      area,
+      SignUpRules,
+      AREA,
       registerForm,
       handleSignUp,
-    }
+    };
   },
-})
+});
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
 
@@ -168,8 +156,7 @@ export default defineComponent({
   .sign-up-btn {
     @include layout(space-between);
     button {
-      display: block;
-      width: 50%;
+      width: 47%;
     }
   }
 }

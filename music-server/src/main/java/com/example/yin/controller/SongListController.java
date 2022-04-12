@@ -1,6 +1,9 @@
 package com.example.yin.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.yin.common.ErrorMessage;
+import com.example.yin.common.FailMessage;
+import com.example.yin.common.SuccessMessage;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.SongList;
 import com.example.yin.service.impl.SongListServiceImpl;
@@ -34,7 +37,6 @@ public class SongListController {
     @ResponseBody
     @RequestMapping(value = "/songList/add", method = RequestMethod.POST)
     public Object addSongList(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
         String title = req.getParameter("title").trim();
         String introduction = req.getParameter("introduction").trim();
         String style = req.getParameter("style").trim();
@@ -48,13 +50,9 @@ public class SongListController {
 
         boolean res = songListService.addSongList(songList);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "添加成功");
-            return jsonObject;
+            return new SuccessMessage("添加成功").getMessage();
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "添加失败");
-            return jsonObject;
+            return new FailMessage("添加失败").getMessage();
         }
     }
 
@@ -68,6 +66,7 @@ public class SongListController {
     @RequestMapping(value = "/songList/title/detail", method = RequestMethod.GET)
     public Object songListOfTitle(HttpServletRequest req) {
         String title = req.getParameter("title").trim();
+        
         return songListService.songListOfTitle(title);
     }
 
@@ -75,6 +74,7 @@ public class SongListController {
     @RequestMapping(value = "/songList/likeTitle/detail", method = RequestMethod.GET)
     public Object songListOfLikeTitle(HttpServletRequest req) {
         String title = req.getParameter("title").trim();
+
         return songListService.likeTitle('%' + title + '%');
     }
 
@@ -82,6 +82,7 @@ public class SongListController {
     @RequestMapping(value = "/songList/style/detail", method = RequestMethod.GET)
     public Object songListOfStyle(HttpServletRequest req) {
         String style = req.getParameter("style").trim();
+
         return songListService.likeStyle('%' + style + '%');
     }
 
@@ -89,14 +90,19 @@ public class SongListController {
     @RequestMapping(value = "/songList/delete", method = RequestMethod.GET)
     public Object deleteSongList(HttpServletRequest req) {
         String id = req.getParameter("id");
-        return songListService.deleteSongList(Integer.parseInt(id));
+
+        boolean res = songListService.deleteSongList(Integer.parseInt(id));
+        if (res) {
+            return new SuccessMessage("删除成功").getMessage();
+        } else {
+            return new FailMessage("删除失败").getMessage();
+        }
     }
 
     // 更新歌单信息
     @ResponseBody
     @RequestMapping(value = "/songList/update", method = RequestMethod.POST)
     public Object updateSongListMsg(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String title = req.getParameter("title").trim();
         String introduction = req.getParameter("introduction").trim();
@@ -110,13 +116,9 @@ public class SongListController {
 
         boolean res = songListService.updateSongListMsg(songList);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "修改成功");
-            return jsonObject;
+            return new SuccessMessage("修改成功").getMessage();
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "修改失败");
-            return jsonObject;
+            return new FailMessage("修改失败").getMessage();
         }
     }
 
@@ -124,13 +126,6 @@ public class SongListController {
     @ResponseBody
     @RequestMapping(value = "/songList/img/update", method = RequestMethod.POST)
     public Object updateSongListPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
-        JSONObject jsonObject = new JSONObject();
-
-        if (avatorFile.isEmpty()) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "文件上传失败！");
-            return jsonObject;
-        }
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songListPic";
         File file1 = new File(filePath);
@@ -147,19 +142,14 @@ public class SongListController {
             songList.setPic(storeAvatorPath);
             boolean res = songListService.updateSongListImg(songList);
             if (res) {
-                jsonObject.put("code", 1);
-                jsonObject.put("avator", storeAvatorPath);
-                jsonObject.put("msg", "上传成功");
+                JSONObject jsonObject = new SuccessMessage("上传成功").getMessage();
+                jsonObject.put("data", storeAvatorPath);
                 return jsonObject;
             } else {
-                jsonObject.put("code", 0);
-                jsonObject.put("msg", "上传失败");
-                return jsonObject;
+                return new FailMessage("上传失败").getMessage();
             }
         } catch (IOException e) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "上传失败" + e.getMessage());
-            return jsonObject;
+            return new ErrorMessage("上传失败" + e.getMessage()).getMessage();
         }
     }
 }

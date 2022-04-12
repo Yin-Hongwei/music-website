@@ -8,7 +8,7 @@
         <div class="username">{{ personalInfo.username }}</div>
         <div class="introduction">{{ personalInfo.introduction }}</div>
       </div>
-      <el-button class="edit-info" round :icon="edit" @click="goPage()">修改个人信息</el-button>
+      <el-button class="edit-info" round :icon="Edit" @click="goPage()">修改个人信息</el-button>
     </div>
     <div class="personal-body">
       <song-list :songList="collectSongList">
@@ -49,7 +49,6 @@ export default defineComponent({
 
     const { routerManager } = mixin();
 
-    const edit = markRaw(Edit);
     const dialogTableVisible = ref(false);
     const collectSongList = ref([]); // 收藏的歌曲
     const personalInfo = reactive({
@@ -107,7 +106,7 @@ export default defineComponent({
     });
 
     return {
-      edit,
+      Edit,
       userPic,
       dialogTableVisible,
       collectSongList,

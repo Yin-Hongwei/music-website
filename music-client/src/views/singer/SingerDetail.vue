@@ -30,6 +30,7 @@ import { useStore } from "vuex";
 import mixin from "@/mixins/mixin";
 import SongList from "@/components/SongList.vue";
 import { HttpManager } from "@/api";
+import { getBirth } from "@/utils";
 
 export default defineComponent({
   components: {
@@ -37,7 +38,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    const { getBirth, getUserSex } = mixin();
+    const { getUserSex } = mixin();
 
     const currentSongList = ref([]);
     const songDetails = computed(() => store.getters.songDetails) as any;

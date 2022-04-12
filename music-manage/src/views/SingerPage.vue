@@ -13,7 +13,7 @@
           <div class="singer-img">
             <img :src="attachImageUrl(scope.row.pic)" style="width: 100%" />
           </div>
-          <el-upload :action="uploadUrl(scope.row.id)" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+          <el-upload :action="uploadUrl(scope.row.id)" :show-file-list="false" :on-success="handleImgSuccess" :before-upload="beforeImgUpload">
             <el-button>更新图片</el-button>
           </el-upload>
         </template>
@@ -137,7 +137,7 @@ import mixin from "@/mixins/mixin";
 import YinDelDialog from "@/components/dialog/YinDelDialog.vue";
 import { HttpManager } from "@/api/index";
 import { RouterName } from "@/enums";
-import { getDateTime } from "@/utils";
+import { getBirth } from "@/utils";
 
 export default defineComponent({
   components: {
@@ -145,7 +145,7 @@ export default defineComponent({
   },
   setup() {
     const { proxy } = getCurrentInstance();
-    const { getBirth, changeSex, routerManager, beforeAvatarUpload } = mixin();
+    const { changeSex, routerManager, beforeImgUpload } = mixin();
 
     const tableData = ref([]); // 记录歌曲，用于显示
     const tempDate = ref([]); // 记录歌曲，用于搜索时能临时记录一份歌曲列表
@@ -227,30 +227,27 @@ export default defineComponent({
     });
 
     async function addsinger() {
-      let datetime = getDateTime(registerForm.birth);
+      let datetime = getBirth(registerForm.birth);
       let params = new URLSearchParams();
       params.append("name", registerForm.name);
       params.append("sex", registerForm.sex);
       params.append("birth", datetime);
       params.append("location", registerForm.location);
       params.append("introduction", registerForm.introduction);
-      const result = (await HttpManager.setSinger(params)) as any;
-      if (result.code === 1) {
+
+      const result = (await HttpManager.setSinger(params)) as ResponseBody;
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
+
+      if (result.success) {
         getData();
         registerForm.birth = new Date();
         registerForm.name = "";
         registerForm.sex = "";
         registerForm.location = "";
         registerForm.introduction = "";
-        (proxy as any).$message({
-          message: "添加成功",
-          type: "success",
-        });
-      } else {
-        (proxy as any).$message({
-          message: "添加失败",
-          type: "error",
-        });
       }
       centerDialogVisible.value = false;
     }
@@ -281,7 +278,7 @@ export default defineComponent({
     }
     async function saveEdit() {
       try {
-        let datetime = getDateTime(new Date(editForm.birth));
+        let datetime = getBirth(new Date(editForm.birth));
         let params = new URLSearchParams();
         params.append("id", editForm.id);
         params.append("name", editForm.name);
@@ -289,37 +286,25 @@ export default defineComponent({
         params.append("birth", datetime);
         params.append("location", editForm.location);
         params.append("introduction", editForm.introduction);
-        const result = (await HttpManager.updateSingerMsg(params)) as any;
-        if (result.code === 1) {
-          getData();
-          (proxy as any).$message({
-            message: "编辑成功",
-            type: "success",
-          });
-        } else {
-          (proxy as any).$message({
-            message: "编辑失败",
-            type: "error",
-          });
-        }
+
+        const result = (await HttpManager.updateSingerMsg(params)) as ResponseBody;
+        (proxy as any).$message({
+          message: result.message,
+          type: result.type,
+        });
+
+        if (result.success) getData();
         editVisible.value = false;
       } catch (error) {
         console.error(error);
       }
     }
-    function handleAvatarSuccess(res, file) {
-      if (res.code === 1) {
-        getData();
-        (proxy as any).$message({
-          message: "上传成功",
-          type: "success",
-        });
-      } else {
-        (proxy as any).$message({
-          message: "上传失败",
-          type: "error",
-        });
-      }
+    function handleImgSuccess(response, file) {
+      (proxy as any).$message({
+        message: response.message,
+        type: response.type,
+      });
+      if (response.success) getData();
     }
 
     /**
@@ -330,19 +315,12 @@ export default defineComponent({
     const delVisible = ref(false); // 显示删除框
 
     async function confirm() {
-      const result = await HttpManager.deleteSinger(idx.value);
-      if (result) {
-        getData();
-        (proxy as any).$message({
-          message: "删除成功",
-          type: "success",
-        });
-      } else {
-        (proxy as any).$message({
-          message: "删除失败",
-          type: "error",
-        });
-      }
+      const result = (await HttpManager.deleteSinger(idx.value)) as ResponseBody;
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
+      if (result.success) getData();
       delVisible.value = false;
     }
     function deleteRow(id) {
@@ -374,8 +352,8 @@ export default defineComponent({
       singerRule,
       deleteAll,
       handleSelectionChange,
-      handleAvatarSuccess,
-      beforeAvatarUpload,
+      handleImgSuccess,
+      beforeImgUpload,
       saveEdit,
       attachImageUrl: HttpManager.attachImageUrl,
       changeSex,
