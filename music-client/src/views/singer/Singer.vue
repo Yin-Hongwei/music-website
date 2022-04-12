@@ -47,7 +47,6 @@ const data = computed(() => {
 // 获取所有歌手
 async function getAllSinger() {
   const result = await HttpManager.getAllSinger() as any[];
-  console.log("@@@@", result)
   currentPage.value = 1;
   allPlayList.value = result;
 }

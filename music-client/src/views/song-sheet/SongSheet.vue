@@ -1,12 +1,7 @@
 <template>
   <div class="song-sheet">
     <ul class="song-sheet-header">
-      <li
-        v-for="(item, index) in songStyle"
-        :key="index"
-        :class="{ active: item.name === activeName }"
-        @click="handleChangeView(item)"
-      >
+      <li v-for="(item, index) in songStyle" :key="index" :class="{ active: item.name === activeName }" @click="handleChangeView(item)">
         {{ item.name }}
       </li>
     </ul>
@@ -53,7 +48,7 @@ export default defineComponent({
       allPlayList.value = (await HttpManager.getSongListOfStyle(style)) as any[];
       currentPage.value = 1;
     }
-    
+
     try {
       getSongList();
     } catch (error) {
@@ -86,7 +81,7 @@ export default defineComponent({
       allPlayList,
       data,
       handleChangeView,
-      handleCurrentChange
+      handleCurrentChange,
     };
   },
 });

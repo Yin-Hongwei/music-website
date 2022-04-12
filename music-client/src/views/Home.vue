@@ -32,7 +32,7 @@ try {
 
   onMounted(() => {
     changeIndex(NavName.Home);
-  })
+  });
 } catch (error) {
   console.error(error);
 }

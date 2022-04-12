@@ -1,6 +1,7 @@
 package com.example.yin.controller;
 
-import com.alibaba.fastjson.JSONObject;
+import com.example.yin.common.FailMessage;
+import com.example.yin.common.SuccessMessage;
 import com.example.yin.domain.RankList;
 import com.example.yin.service.impl.RankListServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ public class RankListController {
     @ResponseBody
     @RequestMapping(value = "/rankList/add", method = RequestMethod.POST)
     public Object addRank(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
         String songListId = req.getParameter("songListId").trim();
         String consumerId = req.getParameter("consumerId").trim();
         String score = req.getParameter("score").trim();
@@ -33,13 +33,9 @@ public class RankListController {
 
         boolean res = rankListService.addRank(rank_list);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "评价成功");
-            return jsonObject;
+            return new SuccessMessage("评价成功").getMessage();
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "评价失败");
-            return jsonObject;
+            return new FailMessage("评价失败").getMessage();
         }
     }
 

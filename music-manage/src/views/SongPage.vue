@@ -39,7 +39,7 @@
       </el-table-column>
       <el-table-column label="资源更新" width="120" align="center">
         <template v-slot="scope">
-          <el-upload :action="uploadUrl(scope.row.id)" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+          <el-upload :action="uploadUrl(scope.row.id)" :show-file-list="false" :on-success="handleImgSuccess" :before-upload="beforeImgUpload">
             <el-button>更新图片</el-button>
           </el-upload>
           <br />
@@ -122,7 +122,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, getCurrentInstance, watch, ref, reactive, computed, onUnmounted } from "vue";
+import { defineComponent, getCurrentInstance, watch, ref, reactive, computed } from "vue";
 import { useStore } from "vuex";
 import mixin from "@/mixins/mixin";
 import { Icon, RouterName } from "@/enums";
@@ -136,7 +136,7 @@ export default defineComponent({
   },
   setup() {
     const { proxy } = getCurrentInstance();
-    const { routerManager, beforeAvatarUpload, beforeSongUpload } = mixin();
+    const { routerManager, beforeImgUpload, beforeSongUpload } = mixin();
     const store = useStore();
 
     const tableData = ref([]); // 记录歌曲，用于显示
@@ -203,33 +203,19 @@ export default defineComponent({
       currentPage.value = val;
     }
     function handleSongSuccess(res) {
-      if (res.code === 1) {
-        getData();
-        (proxy as any).$message({
-          message: "上传成功",
-          type: "success",
-        });
-      } else {
-        (proxy as any).$message({
-          message: "上传失败",
-          type: "error",
-        });
-      }
+      (proxy as any).$message({
+        message: res.message,
+        type: res.type,
+      });
+      if (res.success) getData();
     }
     // 更新图片
-    function handleAvatarSuccess(res, file) {
-      if (res.code === 1) {
-        getData();
-        (proxy as any).$message({
-          message: "上传成功",
-          type: "success",
-        });
-      } else {
-        (proxy as any).$message({
-          message: "上传失败",
-          type: "error",
-        });
-      }
+    function handleImgSuccess(res, file) {
+      (proxy as any).$message({
+        message: res.message,
+        type: res.type,
+      });
+      if (res.success) getData();
     }
 
     /**
@@ -279,21 +265,16 @@ export default defineComponent({
       req.onreadystatechange = () => {
         if (req.readyState === 4 && req.status === 200) {
           let res = JSON.parse(req.response);
-          if (res.code) {
+          (proxy as any).$message({
+            message: res.message,
+            type: res.type,
+          });
+          if (res.success) {
             getData();
             registerForm.name = "";
             registerForm.singerName = "";
             registerForm.introduction = "";
             registerForm.lyric = "";
-            (proxy as any).$message({
-              message: "添加成功",
-              type: "success",
-            });
-          } else if (!res.code) {
-            (proxy as any).$message({
-              message: "添加失败",
-              type: "error",
-            });
           }
         }
       };
@@ -339,19 +320,12 @@ export default defineComponent({
       params.append("name", songName);
       params.append("introduction", editForm.introduction);
       params.append("lyric", editForm.lyric);
-      const result = await HttpManager.updateSongMsg(params);
-      if (result) {
-        getData();
-        (proxy as any).$message({
-          message: "编辑成功",
-          type: "success",
-        });
-      } else {
-        (proxy as any).$message({
-          message: "删除失败",
-          type: "error",
-        });
-      }
+      const result = (await HttpManager.updateSongMsg(params)) as ResponseBody;
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
+      if (result.success) getData();
       editVisible.value = false;
     }
 
@@ -363,19 +337,12 @@ export default defineComponent({
     const delVisible = ref(false); // 显示删除框
 
     async function confirm() {
-      const result = await HttpManager.deleteSong(idx.value);
-      if (result) {
-        getData();
-        (proxy as any).$message({
-          message: "删除成功",
-          type: "success",
-        });
-      } else {
-        (proxy as any).$message({
-          message: "删除失败",
-          type: "error",
-        });
-      }
+      const result = (await HttpManager.deleteSong(idx.value)) as ResponseBody;
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
+      if (result.success) getData();
       delVisible.value = false;
     }
     function deleteRow(id) {
@@ -412,8 +379,8 @@ export default defineComponent({
       deleteAll,
       handleSelectionChange,
       handleCurrentChange,
-      handleAvatarSuccess,
-      beforeAvatarUpload,
+      handleImgSuccess,
+      beforeImgUpload,
       parseLyric,
       saveEdit,
       uploadUrl,

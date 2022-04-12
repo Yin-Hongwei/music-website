@@ -1,6 +1,9 @@
 package com.example.yin.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.yin.common.ErrorMessage;
+import com.example.yin.common.FailMessage;
+import com.example.yin.common.SuccessMessage;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.Consumer;
 import com.example.yin.service.impl.ConsumerServiceImpl;
@@ -41,7 +44,6 @@ public class ConsumerController {
     @ResponseBody
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     public Object addUser(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
         String username = req.getParameter("username").trim();
         String password = req.getParameter("password").trim();
         String sex = req.getParameter("sex").trim();
@@ -52,11 +54,6 @@ public class ConsumerController {
         String location = req.getParameter("location").trim();
         String avator = "/img/avatorImages/user.jpg";
 
-        if ("".equals(username)) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "用户名不能为空喔");
-            return jsonObject;
-        }
         Consumer consumer = new Consumer();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date myBirth = new Date();
@@ -89,53 +86,34 @@ public class ConsumerController {
         try {
             boolean res = consumerService.addUser(consumer);
             if (res) {
-                jsonObject.put("code", 1);
-                jsonObject.put("success", true);
-                jsonObject.put("msg", "注册成功");
-                jsonObject.put("type", "success");
+                return new SuccessMessage("注册成功").getMessage();
             } else {
-                jsonObject.put("code", 0);
-                jsonObject.put("success", false);
-                jsonObject.put("msg", "注册失败");
-                jsonObject.put("type", "error");
+                return new FailMessage("注册失败").getMessage();
             }
-            return jsonObject;
         } catch (DuplicateKeyException e) {
-            jsonObject.put("code", 2);
-            jsonObject.put("success", false);
-            jsonObject.put("msg", "用户名已存在");
-            jsonObject.put("type", "error");
-            return jsonObject;
+            return new ErrorMessage("用户名已注册").getMessage();
         }
     }
 
     /**
-     * 判断是否登录成功
+     * 登录判断
      */
     @ResponseBody
     @RequestMapping(value = "/user/login/status", method = RequestMethod.POST)
     public Object loginStatus(HttpServletRequest req, HttpSession session) {
-
-        JSONObject jsonObject = new JSONObject();
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+
         boolean res = consumerService.veritypasswd(username, password);
 
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("success", true);
-            jsonObject.put("msg", "登录成功");
-            jsonObject.put("type", "success");
-            jsonObject.put("userMsg", consumerService.loginStatus(username));
+            JSONObject jsonObject = new SuccessMessage("登录成功").getMessage();
+            jsonObject.put("data", consumerService.loginStatus(username));
             session.setAttribute("username", username);
+            return jsonObject;
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("success", false);
-            jsonObject.put("msg", "用户名或密码错误");
-            jsonObject.put("type", "error");
+            return new FailMessage("用户名或密码错误").getMessage();
         }
-        return jsonObject;
-
     }
 
     /**
@@ -161,7 +139,12 @@ public class ConsumerController {
     @RequestMapping(value = "/user/delete", method = RequestMethod.GET)
     public Object deleteUser(HttpServletRequest req) {
         String id = req.getParameter("id");
-        return consumerService.deleteUser(Integer.parseInt(id));
+        boolean res = consumerService.deleteUser(Integer.parseInt(id));
+        if (res) {
+            return new SuccessMessage("删除成功").getMessage();
+        } else {
+            return new FailMessage("删除失败").getMessage();
+        }
     }
 
     /**
@@ -170,7 +153,6 @@ public class ConsumerController {
     @ResponseBody
     @RequestMapping(value = "/user/update", method = RequestMethod.POST)
     public Object updateUserMsg(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String username = req.getParameter("username").trim();
         String password = req.getParameter("password").trim();
@@ -182,11 +164,6 @@ public class ConsumerController {
         String location = req.getParameter("location").trim();
         // System.out.println(username+" "+password);
 
-        if ("".equals(username)) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "用户名或密码错误");
-            return jsonObject;
-        }
         Consumer consumer = new Consumer();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date myBirth = new Date();
@@ -201,20 +178,17 @@ public class ConsumerController {
         consumer.setSex(new Byte(sex));
         consumer.setPhoneNum(phone_num);
         consumer.setEmail(email);
-        consumer.setBirth(myBirth);
         consumer.setIntroduction(introduction);
         consumer.setLocation(location);
         consumer.setUpdateTime(new Date());
+        consumer.setBirth(myBirth);
 
         boolean res = consumerService.updateUserMsg(consumer);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "修改成功");
+            return new SuccessMessage("修改成功").getMessage();
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "修改失败");
+            return new FailMessage("修改失败").getMessage();
         }
-        return jsonObject;
     }
 
     /**
@@ -223,12 +197,6 @@ public class ConsumerController {
     @ResponseBody
     @RequestMapping(value = "/user/avatar/update", method = RequestMethod.POST)
     public Object updateUserPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
-        JSONObject jsonObject = new JSONObject();
-        if (avatorFile.isEmpty()) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "文件上传失败！");
-            return jsonObject;
-        }
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
         String filePath = Constants.PROJECT_PATH + System.getProperty("file.separator") + "img"
                 + System.getProperty("file.separator") + "avatorImages";
@@ -246,19 +214,14 @@ public class ConsumerController {
             consumer.setAvator(storeAvatorPath);
             boolean res = consumerService.updateUserAvator(consumer);
             if (res) {
-                jsonObject.put("code", 1);
-                jsonObject.put("avator", storeAvatorPath);
-                jsonObject.put("msg", "上传成功");
+                JSONObject jsonObject = new SuccessMessage("上传成功").getMessage();
+                jsonObject.put("data", storeAvatorPath);
                 return jsonObject;
             } else {
-                jsonObject.put("code", 0);
-                jsonObject.put("msg", "上传失败");
-                return jsonObject;
+                return new FailMessage("上传失败").getMessage();
             }
         } catch (IOException e) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "上传失败" + e.getMessage());
-            return jsonObject;
+            return new ErrorMessage("上传失败" + e.getMessage()).getMessage();
         }
     }
 }

@@ -25,7 +25,7 @@ export default function () {
     }
   }
 
-  function beforeAvatarUpload(file) {
+  function beforeImgUpload(file) {
     const ltCode = 2;
     const isLt2M = file.size / 1024 / 1024 < ltCode;
     const isExistFileType = uploadTypes.value.includes(file.type.replace(/image\//, ""));
@@ -59,14 +59,6 @@ export default function () {
     return extension && isLt10M;
   }
 
-  function getBirth(cellValue) {
-    if (cellValue == null || cellValue == "") return "";
-    const date = new Date(cellValue);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-    const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-    return year + "-" + month + "-" + day;
-  }
   // 路由管理
   function routerManager(routerName: string | number, options: routerOptions) {
     switch (routerName) {
@@ -94,5 +86,5 @@ export default function () {
     proxy.$router.go(step);
   }
 
-  return { getBirth, changeSex, routerManager, goBack, beforeAvatarUpload, beforeSongUpload };
+  return { changeSex, routerManager, goBack, beforeImgUpload, beforeSongUpload };
 }

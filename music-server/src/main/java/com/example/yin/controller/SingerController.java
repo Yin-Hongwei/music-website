@@ -1,6 +1,9 @@
 package com.example.yin.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.yin.common.ErrorMessage;
+import com.example.yin.common.FailMessage;
+import com.example.yin.common.SuccessMessage;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.Singer;
 import com.example.yin.service.impl.SingerServiceImpl;
@@ -37,7 +40,6 @@ public class SingerController {
     @ResponseBody
     @RequestMapping(value = "/singer/add", method = RequestMethod.POST)
     public Object addSinger(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
         String name = req.getParameter("name").trim();
         String sex = req.getParameter("sex").trim();
         String birth = req.getParameter("birth").trim();
@@ -62,13 +64,9 @@ public class SingerController {
 
         boolean res = singerService.addSinger(singer);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "添加成功");
-            return jsonObject;
+            return new SuccessMessage("添加成功").getMessage();
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "添加失败");
-            return jsonObject;
+            return new FailMessage("添加失败").getMessage();
         }
     }
 
@@ -82,6 +80,7 @@ public class SingerController {
     @RequestMapping(value = "/singer/name/detail", method = RequestMethod.GET)
     public Object singerOfName(HttpServletRequest req) {
         String name = req.getParameter("name").trim();
+        
         return singerService.singerOfName(name);
     }
 
@@ -89,6 +88,7 @@ public class SingerController {
     @RequestMapping(value = "/singer/sex/detail", method = RequestMethod.GET)
     public Object singerOfSex(HttpServletRequest req) {
         String sex = req.getParameter("sex").trim();
+
         return singerService.singerOfSex(Integer.parseInt(sex));
     }
 
@@ -96,14 +96,19 @@ public class SingerController {
     @RequestMapping(value = "/singer/delete", method = RequestMethod.GET)
     public Object deleteSinger(HttpServletRequest req) {
         String id = req.getParameter("id");
-        return singerService.deleteSinger(Integer.parseInt(id));
+
+        boolean res = singerService.deleteSinger(Integer.parseInt(id));
+        if (res) {
+            return new SuccessMessage("删除成功").getMessage();
+        } else {
+            return new FailMessage("删除失败").getMessage();
+        }
     }
 
     // 更新歌手信息
     @ResponseBody
     @RequestMapping(value = "/singer/update", method = RequestMethod.POST)
     public Object updateSingerMsg(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String name = req.getParameter("name").trim();
         String sex = req.getParameter("sex").trim();
@@ -128,13 +133,9 @@ public class SingerController {
 
         boolean res = singerService.updateSingerMsg(singer);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "修改成功");
-            return jsonObject;
+            return new SuccessMessage("修改成功").getMessage();
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "修改失败");
-            return jsonObject;
+            return new FailMessage("修改失败").getMessage();
         }
     }
 
@@ -142,13 +143,6 @@ public class SingerController {
     @ResponseBody
     @RequestMapping(value = "/singer/avatar/update", method = RequestMethod.POST)
     public Object updateSingerPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
-        JSONObject jsonObject = new JSONObject();
-
-        if (avatorFile.isEmpty()) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "文件上传失败！");
-            return jsonObject;
-        }
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "singerPic";
         File file1 = new File(filePath);
@@ -165,19 +159,14 @@ public class SingerController {
             singer.setPic(storeAvatorPath);
             boolean res = singerService.updateSingerPic(singer);
             if (res) {
-                jsonObject.put("code", 1);
-                jsonObject.put("pic", storeAvatorPath);
-                jsonObject.put("msg", "上传成功");
+                JSONObject jsonObject =  new SuccessMessage("上传成功").getMessage();
+                jsonObject.put("data", storeAvatorPath);
                 return jsonObject;
             } else {
-                jsonObject.put("code", 0);
-                jsonObject.put("msg", "上传失败");
-                return jsonObject;
+                return new FailMessage("上传失败").getMessage();
             }
         } catch (IOException e) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "上传失败" + e.getMessage());
-            return jsonObject;
+            return new ErrorMessage("上传失败" + e.getMessage()).getMessage();
         }
     }
 }

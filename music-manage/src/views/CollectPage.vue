@@ -31,6 +31,13 @@ import { useStore } from "vuex";
 import { HttpManager } from "@/api";
 import YinDelDialog from "@/components/dialog/YinDelDialog.vue";
 
+interface ResponseBody {
+  code: string;
+  success: boolean;
+  message: string;
+  type: string;
+}
+
 export default defineComponent({
   components: {
     YinDelDialog,
@@ -79,20 +86,13 @@ export default defineComponent({
     const delVisible = ref(false); // 显示删除框
 
     async function confirm() {
-      const result = await HttpManager.deleteCollection(proxy.$route.query.id, idx.value);
+      const result = (await HttpManager.deleteCollection(proxy.$route.query.id, idx.value)) as ResponseBody;
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
 
-      if (result) {
-        getData();
-        (proxy as any).$message({
-          message: "删除成功",
-          type: "success",
-        });
-      } else {
-        (proxy as any).$message({
-          message: "删除失败",
-          type: "error",
-        });
-      }
+      if (result.success) getData();
       delVisible.value = false;
     }
     function deleteRow(id) {

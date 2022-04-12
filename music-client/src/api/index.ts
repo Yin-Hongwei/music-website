@@ -1,4 +1,4 @@
-import { getBaseURL, get, post } from './request'
+import { getBaseURL, get, post } from "./request";
 
 const HttpManager = {
   // 获取图片信息
@@ -17,7 +17,7 @@ const HttpManager = {
 
   // =======================> 歌单 API
   // 获取全部歌单
-  getSongList: () => get('songList'),
+  getSongList: () => get("songList"),
   // 获取歌单类型
   getSongListOfStyle: (style) => get(`songList/style/detail?style=${style}`),
   // 返回标题包含文字的歌单
@@ -27,7 +27,7 @@ const HttpManager = {
 
   // =======================> 歌手 API
   // 返回所有歌手
-  getAllSinger: () => get('singer'),
+  getAllSinger: () => get("singer"),
   // 通过性别对歌手分类
   getSingerOfSex: (sex) => get(`singer/sex/detail?sex=${sex}`),
 
@@ -52,13 +52,13 @@ const HttpManager = {
   setSupport: (params) => post(`comment/like`, params),
   // 返回所有评论
   getAllComment: (type, id) => {
-    let url = ''
+    let url = "";
     if (type === 1) {
-      url = `comment/songList/detail?songListId=${id}`
+      url = `comment/songList/detail?songListId=${id}`;
     } else if (type === 0) {
-      url = `comment/song/detail?songId=${id}`
+      url = `comment/song/detail?songId=${id}`;
     }
-    return get(url)
+    return get(url);
   },
 
   // =======================> 歌曲 API
@@ -69,7 +69,7 @@ const HttpManager = {
   // 返回指定歌手名的歌曲
   getSongOfSingerName: (keywords) => get(`song/singerName/detail?name=${keywords}`),
   // 下载音乐
-  downloadMusic: (url) => get(url, { responseType: 'blob' })
-}
+  downloadMusic: (url) => get(url, { responseType: "blob" }),
+};
 
-export { HttpManager }
+export { HttpManager };

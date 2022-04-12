@@ -20,7 +20,7 @@ import YinAudio from "@/components/layouts/YinAudio.vue";
 const { proxy } = getCurrentInstance();
 
 if (sessionStorage.getItem("dataStore")) {
-  proxy.$store.replaceState(Object.assign( {}, proxy.$store.state, JSON.parse(sessionStorage.getItem("dataStore"))));
+  proxy.$store.replaceState(Object.assign({}, proxy.$store.state, JSON.parse(sessionStorage.getItem("dataStore"))));
 }
 
 window.addEventListener("beforeunload", () => {
