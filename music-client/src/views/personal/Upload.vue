@@ -46,12 +46,18 @@ export default defineComponent({
     }
 
     function beforeAvatarUpload(file) {
-      const isLt10M = file.size / 1024 / 1024 < 10;
+      const ltCode = 2;
+      const isLt10M = file.size / 1024 / 1024 < ltCode;
+      const isExistFileType = uploadTypes.value.includes(file.type.replace(/image\//, ""));
+
       if (!isLt10M) {
-        (proxy as any).$message.error("图片大小不可以超过 10MB!");
-      } else if (!uploadTypes.value.includes(file.type.replace(/image\//, ""))) {
+        (proxy as any).$message.error(`图片大小不可以超过 ${ltCode}MB!`);
+      }
+      if (!isExistFileType) {
         (proxy as any).$message.error(`图片只支持 ${uploadTypes.value.join("、")} 格式!`);
       }
+
+      return isLt10M && isExistFileType
     }
 
     function handleAvatarSuccess(res, file) {

@@ -180,8 +180,7 @@ public class ConsumerController {
         String birth = req.getParameter("birth").trim();
         String introduction = req.getParameter("introduction").trim();
         String location = req.getParameter("location").trim();
-        // String avator = req.getParameter("avator").trim();
-        // System.out.println(username+" "+password+" "+sex+" "+phone_num+" "+email+" "+birth+" "+introduction+" "+location);
+        // System.out.println(username+" "+password);
 
         if ("".equals(username)) {
             jsonObject.put("code", 0);
@@ -205,7 +204,6 @@ public class ConsumerController {
         consumer.setBirth(myBirth);
         consumer.setIntroduction(introduction);
         consumer.setLocation(location);
-        // consumer.setAvator(avator);
         consumer.setUpdateTime(new Date());
 
         boolean res = consumerService.updateUserMsg(consumer);
@@ -232,7 +230,8 @@ public class ConsumerController {
             return jsonObject;
         }
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
-        String filePath = Constants.PROJECT_PATH + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "avatorImages";
+        String filePath = Constants.PROJECT_PATH + System.getProperty("file.separator") + "img"
+                + System.getProperty("file.separator") + "avatorImages";
         File file1 = new File(filePath);
         if (!file1.exists()) {
             file1.mkdir();

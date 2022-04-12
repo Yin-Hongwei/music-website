@@ -5,17 +5,12 @@ import com.example.yin.constant.Constants;
 import com.example.yin.domain.Song;
 import com.example.yin.service.impl.SongServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.MultipartConfigFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.unit.DataSize;
-import org.springframework.util.unit.DataUnit;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
@@ -26,16 +21,6 @@ public class SongController {
 
     @Autowired
     private SongServiceImpl songService;
-
-    @Bean
-    public MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        // 文件最大10M,DataUnit提供5中类型B,KB,MB,GB,TB
-        factory.setMaxFileSize(DataSize.of(10, DataUnit.MEGABYTES));
-        // 设置总上传数据总大小10M
-        factory.setMaxRequestSize(DataSize.of(10, DataUnit.MEGABYTES));
-        return factory.createMultipartConfig();
-    }
 
     @Configuration
     public static class MyPicConfig implements WebMvcConfigurer {
