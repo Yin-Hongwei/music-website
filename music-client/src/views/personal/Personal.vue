@@ -1,9 +1,7 @@
 <template>
   <div class="personal">
     <div class="personal-info">
-      <div class="personal-img">
-        <img :src="attachImageUrl(userPic)" alt="" @click="dialogTableVisible = true" />
-      </div>
+      <el-image class="personal-img" :src="attachImageUrl(userPic)" @click="dialogTableVisible = true" />
       <div class="personal-msg">
         <div class="username">{{ personalInfo.username }}</div>
         <div class="introduction">{{ personalInfo.introduction }}</div>
@@ -26,7 +24,7 @@ import { defineComponent, nextTick, ref, computed, watch, reactive } from "vue";
 import { useStore } from "vuex";
 import { Edit } from "@element-plus/icons-vue";
 import SongList from "@/components/SongList.vue";
-import Upload from "./Upload.vue";
+import Upload from "../setting/Upload.vue";
 import mixin from "@/mixins/mixin";
 import { HttpManager } from "@/api";
 import { RouterName } from "@/enums";
@@ -57,7 +55,7 @@ export default defineComponent({
     });
 
     function goPage() {
-      routerManager(RouterName.PersonalData, { path: RouterName.PersonalData });
+      routerManager(RouterName.Setting, { path: RouterName.Setting });
     }
     async function getUserInfo(id) {
       const result = (await HttpManager.getUserOfId(id)) as ResponseBody;
@@ -73,7 +71,7 @@ export default defineComponent({
       const collectIDList = result.data || []; // 存放收藏的歌曲ID
       // 通过歌曲ID获取歌曲信息
       for (const item of collectIDList) {
-        const result = await HttpManager.getSongOfId(item.songId) as ResponseBody;
+        const result = (await HttpManager.getSongOfId(item.songId)) as ResponseBody;
         collectSongList.value.push(result.data[0]);
       }
     }
@@ -97,5 +95,61 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/personal.scss";
+@import "@/assets/css/var.scss";
+
+.personal {
+  padding-top: $header-height + 150px;
+  background-color: $theme-background-color;
+
+  &::before {
+    /*背景*/
+    content: "";
+    background-color: $theme-color;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: $header-height + 150px;
+  }
+}
+
+.personal-info {
+  position: relative;
+  margin-bottom: 150px;
+  // 图片
+  .personal-img {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    border: 5px solid $color-white;
+    position: absolute;
+    top: -100px;
+    left: 50px;
+    cursor: pointer;
+  }
+  .personal-msg {
+    margin-left: 300px;
+    position: absolute;
+    top: -40px;
+
+    .username {
+      font-size: 50px;
+      font-weight: 600;
+    }
+
+    .introduction {
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+  .edit-info {
+    position: absolute;
+    right: 10vw;
+    margin-top: -50px;
+  }
+}
+
+/*歌单内容*/
+.personal-body {
+  padding: 0px 100px 40px 100px;
+}
 </style>

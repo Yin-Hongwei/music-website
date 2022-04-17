@@ -28,8 +28,12 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    public boolean updateUserAvator(Consumer consumer) {
+    public boolean updatePassword(Consumer consumer) {
+        return consumerMapper.updatePassword(consumer) > 0;
+    }
 
+    @Override
+    public boolean updateUserAvator(Consumer consumer) {
         return consumerMapper.updateUserAvator(consumer) > 0;
     }
 
@@ -40,7 +44,6 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     @Override
     public boolean veritypasswd(String username, String password) {
-
         return consumerMapper.verifyPassword(username, password) > 0;
     }
 
@@ -57,13 +60,11 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     @Override
     public List<Consumer> userOfId(Integer id) {
-
         return consumerMapper.userOfId(id);
     }
 
     @Override
     public List<Consumer> loginStatus(String username) {
-
         return consumerMapper.loginStatus(username);
     }
 }

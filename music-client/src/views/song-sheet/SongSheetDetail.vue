@@ -1,9 +1,7 @@
 <template>
   <el-container class="song-sheet-detail">
     <el-aside class="album-slide">
-      <div class="album-img">
-        <img :src="attachImageUrl(songDetails.pic)" alt="" />
-      </div>
+      <el-image class="album-img" :src="attachImageUrl(songDetails.pic)"/>
       <div class="album-info">
         <h2>简介：</h2>
         <span> {{ songDetails.introduction }} </span>
@@ -81,7 +79,6 @@ export default defineComponent({
     }
     async function getUserRank(userId, songListId) {
       const result = (await HttpManager.getUserRank(userId, songListId)) as ResponseBody;
-      console.log(result)
       score.value = result.data / 2;
       disabledRank.value = true;
       assistText.value = "已评价";

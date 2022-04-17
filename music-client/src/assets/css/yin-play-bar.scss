@@ -49,12 +49,8 @@
         width: calc($play-bar-height - 15px);
         height: calc($play-bar-height - 15px);
         border-radius: 4px;
-        overflow: hidden;
         margin-right: 10px;
-        img {
-          cursor: pointer;
-          height: 100%;
-        }
+        cursor: pointer;
       }
       .song-info {
         font-size: 14px;

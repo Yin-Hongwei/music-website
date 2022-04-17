@@ -1,9 +1,7 @@
 <template>
   <el-container class="singer-detail">
     <el-aside class="album-slide">
-      <div class="singer-img">
-        <img :src="attachImageUrl(songDetails.pic)" alt="" />
-      </div>
+      <el-image class="singer-img" :src="attachImageUrl(songDetails.pic)"/>
       <ul class="album-info">
         <li v-if="songDetails.sex !== 2">
           性别：{{ getUserSex(songDetails.sex) }}

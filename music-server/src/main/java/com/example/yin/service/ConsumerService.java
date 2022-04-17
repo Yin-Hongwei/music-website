@@ -12,6 +12,8 @@ public interface ConsumerService {
 
     boolean updateUserAvator(Consumer consumer);
 
+    boolean updatePassword(Consumer consumer);
+
     boolean existUser(String username);
 
     boolean veritypasswd(String username, String password);

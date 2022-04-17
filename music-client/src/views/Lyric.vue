@@ -1,8 +1,6 @@
 <template>
   <div class="song-container">
-    <div class="song-pic">
-      <img :src="attachImageUrl(songPic)" />
-    </div>
+    <el-image class="song-pic" :src="attachImageUrl(songPic)" />
     <ul class="song-info">
       <li>歌手：{{ singerName }}</li>
       <li>歌曲：{{ songTitle }}</li>
@@ -101,23 +99,23 @@ export default defineComponent({
   position: fixed;
   top: 120px;
   left: 50px;
+  display: flex;
+  flex-direction: column;
+
   .song-pic {
     height: 300px;
     width: 300px;
-    overflow: hidden;
     border: 4px solid white;
     border-radius: 12px;
-    img {
-      height: 100%;
-    }
   }
+
   .song-info {
     width: 300px;
     li {
       width: 100%;
       line-height: 40px;
       font-size: 18px;
-      text-align: center;
+      padding-left: 10%;
     }
   }
 }

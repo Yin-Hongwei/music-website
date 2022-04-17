@@ -1,34 +1,28 @@
 <template>
-  <div>
-    <div class="comment">
-      <h2>
-        <span>评论</span>
-        <span class="part__tit_desc">共 {{ commentList.length }} 条评论</span>
-      </h2>
-      <div class="comment-msg">
-        <el-input class="comment-input" type="textarea" placeholder="期待您的精彩评论..." :rows="2" v-model="textarea"> </el-input>
-      </div>
-      <el-button type="primary" class="sub-btn" @click="submitComment()">发表评论</el-button>
-    </div>
-    <ul class="popular" v-for="(item, index) in commentList" :key="index">
-      <li>
-        <div class="popular-img">
-          <img :src="attachImageUrl(userPicList[index])" alt="" />
-        </div>
-        <div class="popular-msg">
-          <ul>
-            <li class="name">{{ userNameList[index] }}</li>
-            <li class="time">{{ item.createTime }}</li>
-            <li class="content">{{ item.content }}</li>
-          </ul>
-        </div>
-        <div class="up" ref="up" @click="setSupport(item.id, item.up, index)">
-          <yin-icon :icon="iconList.ZAN"></yin-icon>
-          {{ item.up }}
-        </div>
-      </li>
-    </ul>
+  <div class="comment">
+    <h2 class="comment-title">
+      <span>评论</span>
+      <span class="comment-desc">共 {{ commentList.length }} 条评论</span>
+    </h2>
+    <el-input class="comment-input" type="textarea" placeholder="期待您的精彩评论..." :rows="2" v-model="textarea" />
+    <el-button class="sub-btn" type="primary" @click="submitComment()">发表评论</el-button>
   </div>
+  <ul class="popular">
+    <li v-for="(item, index) in commentList" :key="index">
+      <el-image class="popular-img" fit="contain" :src="attachImageUrl(userPicList[index])" />
+      <div class="popular-msg">
+        <ul>
+          <li class="name">{{ userNameList[index] }}</li>
+          <li class="time">{{ getBirth(item.createTime) }}</li>
+          <li class="content">{{ item.content }}</li>
+        </ul>
+      </div>
+      <div class="up" ref="up" @click="setSupport(item.id, item.up, index)">
+        <yin-icon :icon="iconList.ZAN"></yin-icon>
+        {{ item.up }}
+      </div>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
@@ -38,6 +32,7 @@ import YinIcon from "@/components/layouts/YinIcon.vue";
 import mixin from "@/mixins/mixin";
 import { HttpManager } from "@/api";
 import { Icon } from "@/enums";
+import { getBirth } from "@/utils";
 
 export default defineComponent({
   components: {
@@ -73,7 +68,7 @@ export default defineComponent({
         commentList.value = result.data;
         for (const item of commentList.value) {
           // 获取评论用户的昵称和头像
-          const resultUser = await HttpManager.getUserOfId(item.userId) as ResponseBody;
+          const resultUser = (await HttpManager.getUserOfId(item.userId)) as ResponseBody;
           userPicList.value.push(resultUser.data[0].avator);
           userNameList.value.push(resultUser.data[0].username);
         }
@@ -137,11 +132,90 @@ export default defineComponent({
       attachImageUrl: HttpManager.attachImageUrl,
       submitComment,
       setSupport,
+      getBirth,
     };
   },
 });
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/comment.scss";
+@import "@/assets/css/var.scss";
+@import "@/assets/css/global.scss";
+
+/*评论*/
+.comment {
+  position: relative;
+  margin-bottom: 60px;
+
+  .comment-title {
+    height: 50px;
+    line-height: 50px;
+
+    .comment-desc {
+      font-size: 14px;
+      font-weight: 400;
+      color: $color-grey;
+      margin-left: 10px;
+    }
+  }
+
+  .comment-input {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  .sub-btn {
+    position: absolute;
+    right: 0;
+  }
+}
+
+/*热门评论*/
+.popular {
+  width: 100%;
+  > li {
+    border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+    display: flex;
+    .popular-img {
+      width: 50px;
+    }
+
+    .popular-msg {
+      padding: 0 20px;
+      flex: 1;
+      li {
+        width: 100%;
+      }
+      .time {
+        font-size: 0.6rem;
+        color: rgba(0, 0, 0, 0.5);
+      }
+      .name {
+        color: rgba(0, 0, 0, 0.5);
+      }
+      .content {
+        font-size: 1rem;
+      }
+    }
+
+    .up {
+      display: flex;
+      align-items: center;
+      width: 40px;
+      justify-content: space-around;
+      font-size: 1rem;
+      cursor: pointer;
+
+      &:hover,
+      :deep(.icon):hover {
+        color: $color-grey;
+      }
+    }
+  }
+}
+
+.icon {
+  @include icon(1em);
+}
 </style>
