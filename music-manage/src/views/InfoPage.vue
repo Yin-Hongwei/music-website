@@ -60,17 +60,17 @@
     </el-col>
     <el-col :span="12">
       <h3>歌曲类型</h3>
-      <el-card class="cav-info" shadow="hover" :body-style="{ padding: '0px' }" id="songStyle"></el-card >
+      <el-card class="cav-info" shadow="hover" :body-style="{ padding: '0px' }" id="songStyle"></el-card>
     </el-col>
   </el-row>
   <el-row :gutter="20">
     <el-col :span="12">
       <h3>歌手性别比例</h3>
-      <el-card class="cav-info" shadow="hover" :body-style="{ padding: '0px' }" id="singerSex"></el-card >
+      <el-card class="cav-info" shadow="hover" :body-style="{ padding: '0px' }" id="singerSex"></el-card>
     </el-col>
     <el-col :span="12">
       <h3>歌手国籍</h3>
-      <el-card class="cav-info" shadow="hover" :body-style="{ padding: '0px' }" id="country"></el-card >
+      <el-card class="cav-info" shadow="hover" :body-style="{ padding: '0px' }" id="country"></el-card>
     </el-col>
   </el-row>
 </template>
@@ -173,9 +173,10 @@ function setSex(sex, arr) {
   return { value, name };
 }
 HttpManager.getAllUser().then((res) => {
-  userCount.value = (res as any).length;
-  userSex.series[0].data.push(setSex(0, res));
-  userSex.series[0].data.push(setSex(1, res));
+  const result = res as ResponseBody;
+  userCount.value = result.data.length;
+  userSex.series[0].data.push(setSex(0, result.data));
+  userSex.series[0].data.push(setSex(1, result.data));
 
   // const userSexChart = echarts.init(proxy.$refs.userSex);
   const userSexChart = echarts.init(document.getElementById("userSex"));
@@ -183,11 +184,12 @@ HttpManager.getAllUser().then((res) => {
 });
 
 HttpManager.getAllSong().then((res) => {
-  songCount.value = (res as any).length;
+  songCount.value = (res as ResponseBody).data.length;
 });
 HttpManager.getSongList().then((res) => {
-  songListCount.value = (res as any).length;
-  for (let item of res as any) {
+  const result = res as ResponseBody;
+  songListCount.value = result.data.length;
+  for (let item of result.data) {
     for (let i = 0; i < songStyle.xAxis.data.length; i++) {
       if (item.style.includes(songStyle.xAxis.data[i])) {
         songStyle.series[0].data[i]++;
@@ -200,13 +202,14 @@ HttpManager.getSongList().then((res) => {
 });
 
 HttpManager.getAllSinger().then((res) => {
-  singerCount.value = (res as any).length;
-  singerSex.series[0].data.push(setSex(0, res));
-  singerSex.series[0].data.push(setSex(1, res));
+  const result = res as ResponseBody;
+  singerCount.value = result.data.length;
+  singerSex.series[0].data.push(setSex(0, result.data));
+  singerSex.series[0].data.push(setSex(1, result.data));
   const singerSexChart = echarts.init(document.getElementById("singerSex"));
   singerSexChart.setOption(singerSex);
 
-  for (let item of res as any) {
+  for (let item of result.data) {
     for (let i = 0; i < country.xAxis.data.length; i++) {
       if (item.location.includes(country.xAxis.data[i])) {
         country.series[0].data[i]++;

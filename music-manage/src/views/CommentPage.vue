@@ -73,21 +73,16 @@ export default defineComponent({
       }
 
       promise.then((res) => {
-        for (let item of res) {
+        for (let item of (res as ResponseBody).data) {
           getUsers(item.userId, item);
         }
       });
     }
-    function getUsers(id, item) {
-      HttpManager.getUserOfId(id)
-        .then((res) => {
-          item.username = res[0].username;
-          tableData.value.push(item);
-          tempDate.value.push(item);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+    async function getUsers(id, item) {
+      const result = (await HttpManager.getUserOfId(id)) as ResponseBody;
+      item.username = result.data[0].username;
+      tableData.value.push(item);
+      tempDate.value.push(item);
     }
 
     /**
@@ -103,7 +98,7 @@ export default defineComponent({
         message: result.message,
         type: result.type,
       });
-      
+
       if (result.success) getData();
       delVisible.value = false;
     }

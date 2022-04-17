@@ -69,13 +69,13 @@ export default defineComponent({
     // 获取所有评论
     async function getComment() {
       try {
-        const result = (await HttpManager.getAllComment(type.value, playId.value)) as any[];
-        commentList.value = result;
-        for (const item of result) {
+        const result = (await HttpManager.getAllComment(type.value, playId.value)) as ResponseBody;
+        commentList.value = result.data;
+        for (const item of commentList.value) {
           // 获取评论用户的昵称和头像
-          const resultUser = await HttpManager.getUserOfId(item.userId);
-          userPicList.value.push(resultUser[0].avator);
-          userNameList.value.push(resultUser[0].username);
+          const resultUser = await HttpManager.getUserOfId(item.userId) as ResponseBody;
+          userPicList.value.push(resultUser.data[0].avator);
+          userNameList.value.push(resultUser.data[0].username);
         }
       } catch (error) {
         console.error(error);
@@ -97,7 +97,7 @@ export default defineComponent({
       params.append("type", `${type.value}`);
       params.append("content", textarea.value);
 
-      const result = (await HttpManager.setComment(params)) as { success: boolean; type: string };
+      const result = (await HttpManager.setComment(params)) as ResponseBody;
       (proxy as any).$message({
         message: result.success,
         type: result.type,
@@ -117,7 +117,7 @@ export default defineComponent({
       params.append("id", id);
       params.append("up", up + 1);
 
-      const result = (await HttpManager.setSupport(params)) as { success: boolean };
+      const result = (await HttpManager.setSupport(params)) as ResponseBody;
       if (result.success) {
         proxy.$refs.up[index].children[0].style.color = "#2796dd";
         await getComment();

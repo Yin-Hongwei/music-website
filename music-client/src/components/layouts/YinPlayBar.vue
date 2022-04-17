@@ -134,7 +134,7 @@ export default defineComponent({
         return
       }
 
-      const result = (await HttpManager.downloadMusic(this.songUrl)) as { data: any };
+      const result = (await HttpManager.downloadMusic(this.songUrl)) as ResponseBody;
       const eleLink = document.createElement("a");
       eleLink.download = `${this.singerName}-${this.songTitle}.mp3`;
       eleLink.style.display = "none";

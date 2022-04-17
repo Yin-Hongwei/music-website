@@ -2,7 +2,7 @@
   <div class="personal">
     <div class="personal-info">
       <div class="personal-img">
-        <img :src="attachImageUrl(userPic)" alt="" @click="dialogTableVisible = true"/>
+        <img :src="attachImageUrl(userPic)" alt="" @click="dialogTableVisible = true" />
       </div>
       <div class="personal-msg">
         <div class="username">{{ personalInfo.username }}</div>
@@ -22,15 +22,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  nextTick,
-  ref,
-  markRaw,
-  computed,
-  watch,
-  reactive,
-} from "vue";
+import { defineComponent, nextTick, ref, computed, watch, reactive } from "vue";
 import { useStore } from "vuex";
 import { Edit } from "@element-plus/icons-vue";
 import SongList from "@/components/SongList.vue";
@@ -67,37 +59,23 @@ export default defineComponent({
     function goPage() {
       routerManager(RouterName.PersonalData, { path: RouterName.PersonalData });
     }
-    function getUserInfo(id) {
-      HttpManager.getUserOfId(id)
-        .then((res) => {
-          personalInfo.username = res[0].username;
-          personalInfo.userSex = res[0].sex;
-          personalInfo.birth = res[0].birth;
-          personalInfo.introduction = res[0].introduction;
-          personalInfo.location = res[0].location;
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-    // 收藏的歌曲ID
-    async function getCollection(userId) {
-      const result = (await HttpManager.getCollectionOfUser(userId)) as any[];
-      const collectIDList = result || []; // 存放收藏的歌曲ID
-      // 通过歌曲ID获取歌曲信息
-      for (const item of collectIDList) {
-        getCollectSongList(item.songId);
-      }
+    async function getUserInfo(id) {
+      const result = (await HttpManager.getUserOfId(id)) as ResponseBody;
+      personalInfo.username = result.data[0].username;
+      personalInfo.userSex = result.data[0].sex;
+      personalInfo.birth = result.data[0].birth;
+      personalInfo.introduction = result.data[0].introduction;
+      personalInfo.location = result.data[0].location;
     }
     // 获取收藏的歌曲
-    function getCollectSongList(id) {
-      HttpManager.getSongOfId(id)
-        .then((res) => {
-          collectSongList.value.push(res[0]);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+    async function getCollection(userId) {
+      const result = (await HttpManager.getCollectionOfUser(userId)) as ResponseBody;
+      const collectIDList = result.data || []; // 存放收藏的歌曲ID
+      // 通过歌曲ID获取歌曲信息
+      for (const item of collectIDList) {
+        const result = await HttpManager.getSongOfId(item.songId) as ResponseBody;
+        collectSongList.value.push(result.data[0]);
+      }
     }
 
     nextTick(() => {

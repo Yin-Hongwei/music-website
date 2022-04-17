@@ -40,12 +40,12 @@ export default defineComponent({
 
     // 获取全部歌单
     async function getSongList() {
-      allPlayList.value = (await HttpManager.getSongList()) as any[];
+      allPlayList.value = ((await HttpManager.getSongList()) as ResponseBody).data;
       currentPage.value = 1;
     }
     // 通过类别获取歌单
     async function getSongListOfStyle(style) {
-      allPlayList.value = (await HttpManager.getSongListOfStyle(style)) as any[];
+      allPlayList.value = ((await HttpManager.getSongListOfStyle(style)) as ResponseBody).data;
       currentPage.value = 1;
     }
 

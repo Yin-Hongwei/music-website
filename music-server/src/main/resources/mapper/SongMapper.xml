@@ -44,11 +44,6 @@
     from song
     where name like #{name, jdbcType=VARCHAR}
   </select>
-  <select id="songOfName" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select *
-    from song
-    where name = #{name, jdbcType=VARCHAR}
-  </select>
   <delete id="deleteSong" parameterType="java.lang.Integer">
     delete from song
     where id = #{id, jdbcType=INTEGER}
