@@ -69,11 +69,4 @@ public class SongServiceImpl implements SongService {
     {
         return songMapper.songOfSingerName(name);
     }
-
-    @Override
-    public List<Song> songOfName(String name)
-
-    {
-        return songMapper.songOfName(name);
-    }
 }

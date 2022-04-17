@@ -66,22 +66,22 @@ export default defineComponent({
 
     // 收集歌单里面的歌曲
     async function getSongId(id) {
-      const result = (await HttpManager.getListSongOfSongId(id)) as any[];
+      const result = (await HttpManager.getListSongOfSongId(id)) as ResponseBody;
       // 获取歌单里的歌曲信息
-      for (const item of result) {
+      for (const item of result.data) {
         // 获取单里的歌曲
-        const resultSong = await HttpManager.getSongOfId(item.songId);
-        currentSongList.value.push(resultSong[0]);
+        const resultSong = await HttpManager.getSongOfId(item.songId) as ResponseBody;
+        currentSongList.value.push(resultSong.data[0]);
       }
     }
     // 获取评分
     async function getRank(id) {
-      const result = (await HttpManager.getRankOfSongListId(id)) as number;
-      rank.value = result / 2;
+      const result = (await HttpManager.getRankOfSongListId(id)) as ResponseBody;
+      rank.value = result.data / 2;
     }
     async function getUserRank(userId, songListId) {
-      const result = (await HttpManager.getUserRank(userId, songListId)) as string;
-      score.value = parseInt(result);
+      const result = (await HttpManager.getUserRank(userId, songListId)) as ResponseBody;
+      score.value = parseInt(result.data);
       disabledRank.value = true;
       assistText.value = "已评价";
     }

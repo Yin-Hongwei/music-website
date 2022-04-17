@@ -34,14 +34,14 @@ export default defineComponent({
 
     async function getSearchList(value) {
       if (!value) return;
-      const result = await HttpManager.getSongListOfLikeTitle(value) as any[];
-      if (!result.length) {
+      const result = await HttpManager.getSongListOfLikeTitle(value) as ResponseBody;
+      if (!result.data.length) {
         (proxy as any).$message({
           message: "暂无该歌曲内容",
           type: "warning",
         });
       } else {
-        playList.value = result;
+        playList.value = result.data;
       }
     }
 

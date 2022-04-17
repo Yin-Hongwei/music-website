@@ -66,15 +66,15 @@ export default defineComponent({
 
     getData();
 
-    // 通过用户id获取用户收藏的歌曲id
+    // 通过用户 ID 获取用户收藏的歌曲 ID
     async function getData() {
       tableData.value = [];
       tempDate.value = [];
       const result = (await HttpManager.getCollectionOfUser(proxy.$route.query.id)) as any;
-      for (let item of result) {
-        const result = await HttpManager.getSongOfId(item.songId);
-        tableData.value.push(result[0]);
-        tempDate.value.push(result[0]);
+      for (let item of result.data) {
+        const result = await HttpManager.getSongOfId(item.songId) as any;
+        tableData.value.push(result.data[0]);
+        tempDate.value.push(result.data[0]);
       }
     }
 

@@ -23,8 +23,6 @@ public interface CommentMapper {
 
     int deleteComment(Integer id);
 
-    List<Comment> allComment();
-
     List<Comment> commentOfSongId(Integer songId);
 
     List<Comment> commentOfSongListId(Integer songListId);

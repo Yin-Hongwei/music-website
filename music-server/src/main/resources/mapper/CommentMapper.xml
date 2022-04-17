@@ -19,10 +19,6 @@
     from comment
     where id = #{id, jdbcType=INTEGER}
   </select>
-  <select id="allComment" resultMap="BaseResultMap">
-    select *
-    from comment
-  </select>
   <select id="commentOfSongId" resultMap="BaseResultMap">
     select *
     from comment

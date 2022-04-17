@@ -44,7 +44,7 @@ public class ConsumerServiceImpl implements ConsumerService {
         return consumerMapper.verifyPassword(username, password) > 0;
     }
 
-    //    删除用户
+    // 删除用户
     @Override
     public boolean deleteUser(Integer id) {
         return consumerMapper.deleteUser(id) > 0;

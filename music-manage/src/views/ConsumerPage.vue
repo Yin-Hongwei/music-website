@@ -101,9 +101,9 @@ export default defineComponent({
     async function getData() {
       tableData.value = [];
       tempDate.value = [];
-      const result = (await HttpManager.getAllUser()) as any;
-      tableData.value = result;
-      tempDate.value = result;
+      const result = (await HttpManager.getAllUser()) as ResponseBody;
+      tableData.value = result.data;
+      tempDate.value = result.data;
       currentPage.value = 1;
     }
     // 获取当前页

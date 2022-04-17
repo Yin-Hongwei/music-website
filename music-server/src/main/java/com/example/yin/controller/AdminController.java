@@ -1,8 +1,10 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.FailMessage;
+import com.example.yin.common.ErrorMessage;
 import com.example.yin.common.SuccessMessage;
 import com.example.yin.service.impl.AdminServiceImpl;
+
+import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,10 +29,9 @@ public class AdminController {
         boolean res = adminService.veritypasswd(name, password);
         if (res) {
             session.setAttribute("name", name);
-            return new SuccessMessage("登录成功").getMessage();
+            return new SuccessMessage<Null>("登录成功").getMessage();
         } else {
-            return new FailMessage("用户名或密码错误").getMessage();
+            return new ErrorMessage("用户名或密码错误").getMessage();
         }
-
     }
 }

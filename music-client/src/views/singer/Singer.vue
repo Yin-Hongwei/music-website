@@ -46,9 +46,9 @@ const data = computed(() => {
 
 // 获取所有歌手
 async function getAllSinger() {
-  const result = await HttpManager.getAllSinger() as any[];
+  const result = await HttpManager.getAllSinger() as ResponseBody;
   currentPage.value = 1;
-  allPlayList.value = result;
+  allPlayList.value = result.data;
 }
 
 getAllSinger();
@@ -70,9 +70,9 @@ function handleChangeView(item) {
 
 // 通过性别对歌手分类
 async function getSingerSex(sex) {
-  const result = await HttpManager.getSingerOfSex(sex) as any[];
+  const result = await HttpManager.getSingerOfSex(sex) as ResponseBody;
   currentPage.value = 1;
-  allPlayList.value = result;
+  allPlayList.value = result.data;
 }
 </script>
 
