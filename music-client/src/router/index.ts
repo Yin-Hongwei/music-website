@@ -69,7 +69,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/personal-data",
         name: "personal-data",
-        component: () => import("@/views/personal/PersonalData.vue"),
+        component: () => import("@/views/setting/PersonalData.vue"),
       },
       {
         path: "/setting",
@@ -78,6 +78,16 @@ const routes: Array<RouteRecordRaw> = [
           requireAuth: true,
         },
         component: () => import("@/views/setting/Setting.vue"),
+        children: [
+          {
+            path: "/setting/PersonalData",
+            name: "personalData",
+            meta: {
+              requireAuth: true,
+            },
+            component: () => import("@/views/setting/PersonalData.vue"),
+          }
+        ]
       },
     ],
   },

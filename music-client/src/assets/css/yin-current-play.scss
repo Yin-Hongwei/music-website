@@ -25,7 +25,7 @@
   padding-bottom: $footer-height;
   z-index: 99;
   background-color: $color-white;
-  @include box-shadow(1px 1px 10px rgba(0, 0, 0, 0.4));
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
   overflow: hidden;
 }
 

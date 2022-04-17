@@ -6,12 +6,12 @@
       <span>{{ musicName }}</span>
     </div>
     <ul class="navbar">
-      <li :class="{active: item.name === activeNavName}" v-for="item in headerNavList" :key="item.path" @click="goPage(item.path, item.name)">
+      <li :class="{ active: item.name === activeNavName }" v-for="item in headerNavList" :key="item.path" @click="goPage(item.path, item.name)">
         {{ item.name }}
       </li>
       <!--搜索框-->
-      <li class="header-search"> 
-        <input type="text" placeholder="搜索音乐" @keyup.enter="goSearch()" v-model="keywords">
+      <li class="header-search">
+        <el-input placeholder="搜索" :prefix-icon="Search" v-model="keywords" @keyup.enter="goSearch()" />
       </li>
     </ul>
     <!--设置-->
@@ -21,9 +21,7 @@
       </li>
     </ul>
     <el-dropdown class="header-right" v-if="token" trigger="click">
-      <div class="user">
-        <img :src="attachImageUrl(userPic)" alt="">
-      </div>
+      <el-image class="user" fit="contain" :src="attachImageUrl(userPic)"/>
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item v-for="(item, index) in menuList" :key="index" @click.stop="goMenuList(item.path)">{{ item.name }}</el-dropdown-item>
@@ -34,78 +32,65 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  getCurrentInstance,
-  computed,
-  reactive,
-} from "vue";
+import { defineComponent, ref, getCurrentInstance, computed, reactive } from "vue";
+import { Search } from "@element-plus/icons-vue";
 import { useStore } from "vuex";
-import YinIcon from "./YinIcon.vue"
-import mixin from "@/mixins/mixin"
-import {
-  HEADERNAVLIST,
-  SIGNLIST,
-  MENULIST,
-  Icon,
-  MUSICNAME,
-  RouterName,
-  NavName,
-} from "@/enums";
-import { HttpManager } from "@/api"
+import YinIcon from "./YinIcon.vue";
+import mixin from "@/mixins/mixin";
+import { HEADERNAVLIST, SIGNLIST, MENULIST, Icon, MUSICNAME, RouterName, NavName } from "@/enums";
+import { HttpManager } from "@/api";
 
 export default defineComponent({
   components: {
-    YinIcon
+    YinIcon,
   },
   setup() {
     const { proxy } = getCurrentInstance();
     const store = useStore();
     const { changeIndex, routerManager } = mixin();
 
-    const musicName = ref(MUSICNAME)
+    const musicName = ref(MUSICNAME);
     const headerNavList = ref(HEADERNAVLIST); // 左侧导航栏
     const signList = ref(SIGNLIST); // 右侧导航栏
     const menuList = ref(MENULIST); // 用户下拉菜单项
     const iconList = reactive({
-      ERJI: Icon.ERJI
+      ERJI: Icon.ERJI,
     });
     const keywords = ref("");
     const activeNavName = computed(() => store.getters.activeNavName);
     const userPic = computed(() => store.getters.userPic);
     const token = computed(() => store.getters.token);
 
-    function goPage (path, name) {
+    function goPage(path, name) {
       if (!path && !name) {
-        changeIndex(NavName.Home)
-        routerManager(RouterName.Home, { path: RouterName.Home })
+        changeIndex(NavName.Home);
+        routerManager(RouterName.Home, { path: RouterName.Home });
       } else {
-        changeIndex(name)
-        routerManager(path, { path })
+        changeIndex(name);
+        routerManager(path, { path });
       }
     }
 
-    function goMenuList (path) {
-      if (path === 0) proxy.$store.commit("setIsCollection", false)
+    function goMenuList(path) {
+      if (path === 0) proxy.$store.commit("setIsCollection", false);
 
       if (path == RouterName.SignOut) {
-        proxy.$store.commit("setToken", false)
-        changeIndex(NavName.Home)
-        routerManager(RouterName.Home, { path: RouterName.Home })
-        } else {
-        routerManager(path, { path })
+        proxy.$store.commit("setToken", false);
+        changeIndex(NavName.Home);
+        routerManager(RouterName.Home, { path: RouterName.Home });
+      } else {
+        routerManager(path, { path });
       }
     }
-    function goSearch () {
+    function goSearch() {
       if (keywords.value !== "") {
-        proxy.$store.commit("setSearchWord", keywords.value)
-        routerManager(RouterName.Search, { path: RouterName.Search, query: { keywords: keywords.value } })
+        proxy.$store.commit("setSearchWord", keywords.value);
+        routerManager(RouterName.Search, { path: RouterName.Search, query: { keywords: keywords.value } });
       } else {
         (proxy as any).$message({
           message: "搜索内容不能为空",
-          type: "error"
-        })
+          type: "error",
+        });
       }
     }
 
@@ -119,13 +104,14 @@ export default defineComponent({
       activeNavName,
       userPic,
       token,
+      Search,
       goPage,
       goMenuList,
       goSearch,
       attachImageUrl: HttpManager.attachImageUrl,
-    }
+    };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>
@@ -135,7 +121,7 @@ export default defineComponent({
   .header-logo {
     margin: 0 1rem;
     // .icon {
-      // @include icon(($header-height / 3) * 2, $color-black);
+    // @include icon(($header-height / 3) * 2, $color-black);
     // }
   }
 }
@@ -161,7 +147,7 @@ export default defineComponent({
   padding: $header-padding;
   margin: $header-margin;
   background-color: $theme-header-color;
-  @include box-shadow($box-shadow);
+  box-shadow: $box-shadow;
   box-sizing: border-box;
   z-index: 100;
   display: flex;
@@ -191,17 +177,13 @@ export default defineComponent({
   /*搜索输入框*/
   .header-search {
     width: 100%;
-    input {
-      height: $header-search-height;
-      min-width: $header-search-width;
+    &::v-deep input {
+      text-indent: 5px;
+      max-width: $header-search-width;
       border-radius: $header-search-radius;
-      border: 0;
-      font-size: $font-size-default;
-      text-indent: 10px;
+      box-shadow: none;
       background-color: $color-light-grey;
-      &:focus {
-        outline: none;
-      }
+      color: $color-black;
     }
   }
 }
@@ -225,16 +207,11 @@ export default defineComponent({
   justify-content: flex-start;
 
   .user {
-    overflow: hidden;
     width: $header-user-width;
     height: $header-user-width;
     border-radius: $header-user-radius;
     margin-right: $header-user-margin;
     cursor: pointer;
-
-    img {
-      width: 100%;
-    }
   }
   .setting {
     font-size: 30px;
@@ -250,5 +227,4 @@ export default defineComponent({
   color: $theme-color !important;
   border-bottom: 5px solid $theme-color !important;
 }
-
 </style>

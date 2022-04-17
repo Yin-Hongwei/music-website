@@ -2,7 +2,7 @@
 $color-white: #ffffff;
 $color-light-white: #fefefe;
 $color-grey: #67757f;
-$color-light-grey: #ebeef0;
+$color-light-grey: #EFEFEF;
 $color-black: #000000;
 $color-blue-shallow: #a9dbf9;
 $color-blue: #95d2f6;
@@ -26,15 +26,15 @@ $font-size-logo: 1.5rem;
 $font-size-header: 1rem;
 
 // header
-$header-height: 56px;
+$header-height: 60px;
 $header-padding: 0 4%;
 $header-margin: 0;
 $header-logo-width: 10%;
 $header-logo-margin: 0 10px;
 $header-nav-padding: 0 0.5rem;
 $header-nav-margin: 0 0.5rem;
-$header-search-radius: 5px;
-$header-search-height: ($header-height / 2);
+$header-search-radius: 10px;
+$header-search-height: $header-height - 20px;
 $header-search-width: 25vw;
 $header-search-btn-height: ($header-height / 2);
 $header-search-btn-width: 60px;

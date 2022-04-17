@@ -35,6 +35,8 @@ public interface ConsumerMapper {
 
     int updateUserAvator(Consumer record);
 
+    int updatePassword(Consumer record);
+
     int deleteUser(Integer id);
 
     List<Consumer> allUser();

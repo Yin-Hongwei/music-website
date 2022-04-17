@@ -41,10 +41,12 @@
     select *
     from consumer
   </select>
+
   <delete id="deleteUser" parameterType="java.lang.Integer">
     delete from consumer
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.example.yin.domain.Consumer">
     insert into consumer (id, username, password,
       sex, phone_num, email, birth,
@@ -114,6 +116,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateUserMsg" parameterType="com.example.yin.domain.Consumer">
     update consumer
     <set >
@@ -160,7 +163,16 @@
         avator = #{avator,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id, jdbcType=INTEGER}
+  </update>
+  <update id="updatePassword" parameterType="com.example.yin.domain.Consumer">
+    update consumer
+    <set >
+      <if test="password != null">
+        password = #{password, jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id, jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.yin.domain.Consumer">
     update consumer
