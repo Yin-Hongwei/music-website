@@ -161,14 +161,13 @@ public class ConsumerController {
     public Object updateUserMsg(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String username = req.getParameter("username").trim();
-        String password = req.getParameter("password").trim();
         String sex = req.getParameter("sex").trim();
         String phone_num = req.getParameter("phone_num").trim();
         String email = req.getParameter("email").trim();
         String birth = req.getParameter("birth").trim();
         String introduction = req.getParameter("introduction").trim();
         String location = req.getParameter("location").trim();
-        // System.out.println(username+" "+password);
+        // System.out.println(username);
 
         Consumer consumer = new Consumer();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -180,7 +179,6 @@ public class ConsumerController {
         }
         consumer.setId(Integer.parseInt(id));
         consumer.setUsername(username);
-        consumer.setPassword(password);
         consumer.setSex(new Byte(sex));
         consumer.setPhoneNum(phone_num);
         consumer.setEmail(email);
@@ -194,6 +192,34 @@ public class ConsumerController {
             return new SuccessMessage<Null>("修改成功").getMessage();
         } else {
             return new ErrorMessage("修改失败").getMessage();
+        }
+    }
+
+    /**
+     * 更新用户密码
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/updatePassword", method = RequestMethod.POST)
+    public Object updatePassword(HttpServletRequest req) {
+        String id = req.getParameter("id").trim();
+        String username = req.getParameter("username").trim();
+        String old_password = req.getParameter("old_password").trim();
+        String password = req.getParameter("password").trim();
+
+        boolean res = consumerService.veritypasswd(username, old_password);
+        if (!res) {
+            return new ErrorMessage("密码输入错误").getMessage();
+        }
+
+        Consumer consumer = new Consumer();
+        consumer.setId(Integer.parseInt(id));
+        consumer.setPassword(password);
+
+        boolean result = consumerService.updatePassword(consumer);
+        if (result) {
+            return new SuccessMessage<Null>("密码修改成功").getMessage();
+        } else {
+            return new ErrorMessage("密码修改失败").getMessage();
         }
     }
 

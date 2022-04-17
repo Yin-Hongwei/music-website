@@ -18,18 +18,14 @@
 /*左*/
 .album-slide {
   .singer-img {
-    position: absolute;
     height: 250px;
     width: 250px;
-    top: 80px;
-    left: 50px;
     border-radius: 10%;
-    overflow: hidden;
     border: 5px solid $color-white;
     background-color: $color-white;
-    img {
-      width: 100%;
-    }
+    position: absolute;
+    top: 80px;
+    left: 50px;
   }
 
   .album-info {

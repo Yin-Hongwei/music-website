@@ -45,10 +45,10 @@ export const MENULIST = [
     name: NavName.Personal,
     path: RouterName.Personal,
   },
-  // {
-  //   name: NavName.Setting,
-  //   path: RouterName.Setting
-  // },
+  {
+    name: NavName.Setting,
+    path: RouterName.Setting
+  },
   {
     name: NavName.SignOut,
     path: RouterName.SignOut,
