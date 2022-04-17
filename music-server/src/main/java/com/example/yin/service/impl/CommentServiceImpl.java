@@ -30,12 +30,6 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public List<Comment> allComment()
-    {
-        return commentMapper.allComment();
-    }
-
-    @Override
     public List<Comment> commentOfSongId(Integer songId)
 
     {

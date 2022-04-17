@@ -1,12 +1,13 @@
 package com.example.yin.controller;
 
-import com.alibaba.fastjson.JSONObject;
+import com.example.yin.common.FatalMessage;
 import com.example.yin.common.ErrorMessage;
-import com.example.yin.common.FailMessage;
 import com.example.yin.common.SuccessMessage;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.Singer;
 import com.example.yin.service.impl.SingerServiceImpl;
+
+import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class SingerController {
@@ -64,32 +66,10 @@ public class SingerController {
 
         boolean res = singerService.addSinger(singer);
         if (res) {
-            return new SuccessMessage("添加成功").getMessage();
+            return new SuccessMessage<Null>("添加成功").getMessage();
         } else {
-            return new FailMessage("添加失败").getMessage();
+            return new ErrorMessage("添加失败").getMessage();
         }
-    }
-
-    // 返回所有歌手
-    @RequestMapping(value = "/singer", method = RequestMethod.GET)
-    public Object allSinger() {
-        return singerService.allSinger();
-    }
-
-    // 根据歌手名查找歌手
-    @RequestMapping(value = "/singer/name/detail", method = RequestMethod.GET)
-    public Object singerOfName(HttpServletRequest req) {
-        String name = req.getParameter("name").trim();
-        
-        return singerService.singerOfName(name);
-    }
-
-    // 根据歌手性别查找歌手
-    @RequestMapping(value = "/singer/sex/detail", method = RequestMethod.GET)
-    public Object singerOfSex(HttpServletRequest req) {
-        String sex = req.getParameter("sex").trim();
-
-        return singerService.singerOfSex(Integer.parseInt(sex));
     }
 
     // 删除歌手
@@ -99,10 +79,32 @@ public class SingerController {
 
         boolean res = singerService.deleteSinger(Integer.parseInt(id));
         if (res) {
-            return new SuccessMessage("删除成功").getMessage();
+            return new SuccessMessage<Null>("删除成功").getMessage();
         } else {
-            return new FailMessage("删除失败").getMessage();
+            return new ErrorMessage("删除失败").getMessage();
         }
+    }
+
+    // 返回所有歌手
+    @RequestMapping(value = "/singer", method = RequestMethod.GET)
+    public Object allSinger() {
+        return new SuccessMessage<List<Singer>>(null, singerService.allSinger()).getMessage();
+    }
+
+    // 根据歌手名查找歌手
+    @RequestMapping(value = "/singer/name/detail", method = RequestMethod.GET)
+    public Object singerOfName(HttpServletRequest req) {
+        String name = req.getParameter("name").trim();
+
+        return new SuccessMessage<List<Singer>>(null, singerService.singerOfName(name)).getMessage();
+    }
+
+    // 根据歌手性别查找歌手
+    @RequestMapping(value = "/singer/sex/detail", method = RequestMethod.GET)
+    public Object singerOfSex(HttpServletRequest req) {
+        String sex = req.getParameter("sex").trim();
+
+        return new SuccessMessage<List<Singer>>(null, singerService.singerOfSex(Integer.parseInt(sex))).getMessage();
     }
 
     // 更新歌手信息
@@ -133,9 +135,9 @@ public class SingerController {
 
         boolean res = singerService.updateSingerMsg(singer);
         if (res) {
-            return new SuccessMessage("修改成功").getMessage();
+            return new SuccessMessage<Null>("修改成功").getMessage();
         } else {
-            return new FailMessage("修改失败").getMessage();
+            return new ErrorMessage("修改失败").getMessage();
         }
     }
 
@@ -144,29 +146,29 @@ public class SingerController {
     @RequestMapping(value = "/singer/avatar/update", method = RequestMethod.POST)
     public Object updateSingerPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "singerPic";
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img"
+                + System.getProperty("file.separator") + "singerPic";
         File file1 = new File(filePath);
         if (!file1.exists()) {
             file1.mkdir();
         }
 
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeAvatorPath = "/img/singerPic/" + fileName;
+        String imgPath = "/img/singerPic/" + fileName;
         try {
             avatorFile.transferTo(dest);
             Singer singer = new Singer();
             singer.setId(id);
-            singer.setPic(storeAvatorPath);
+            singer.setPic(imgPath);
+
             boolean res = singerService.updateSingerPic(singer);
             if (res) {
-                JSONObject jsonObject =  new SuccessMessage("上传成功").getMessage();
-                jsonObject.put("data", storeAvatorPath);
-                return jsonObject;
+                return new SuccessMessage<String>("上传成功", imgPath).getMessage();
             } else {
-                return new FailMessage("上传失败").getMessage();
+                return new ErrorMessage("上传失败").getMessage();
             }
         } catch (IOException e) {
-            return new ErrorMessage("上传失败" + e.getMessage()).getMessage();
+            return new FatalMessage("上传失败" + e.getMessage()).getMessage();
         }
     }
 }

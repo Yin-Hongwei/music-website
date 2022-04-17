@@ -73,16 +73,16 @@ export default defineComponent({
     const userId = computed(() => store.getters.userId);
 
     async function getUserInfo(id) {
-      const result = await HttpManager.getUserOfId(id);
-      registerForm.username = result[0].username;
-      registerForm.password = result[0].password;
-      registerForm.sex = result[0].sex;
-      registerForm.phoneNum = result[0].phoneNum;
-      registerForm.email = result[0].email;
-      registerForm.birth = result[0].birth;
-      registerForm.introduction = result[0].introduction;
-      registerForm.location = result[0].location;
-      registerForm.userPic = result[0].avator;
+      const result = await HttpManager.getUserOfId(id) as ResponseBody;
+      registerForm.username = result.data[0].username;
+      registerForm.password = result.data[0].password;
+      registerForm.sex = result.data[0].sex;
+      registerForm.phoneNum = result.data[0].phoneNum;
+      registerForm.email = result.data[0].email;
+      registerForm.birth = result.data[0].birth;
+      registerForm.introduction = result.data[0].introduction;
+      registerForm.location = result.data[0].location;
+      registerForm.userPic = result.data[0].avator;
     }
 
     async function saveMsg() {
@@ -103,7 +103,7 @@ export default defineComponent({
       params.append("introduction", registerForm.introduction);
       params.append("location", registerForm.location);
 
-      const result = (await HttpManager.updateUserMsg(params)) as { success: boolean; message: string; type: string };
+      const result = (await HttpManager.updateUserMsg(params)) as ResponseBody;
       (proxy as any).$message({
         message: result.message,
         type: result.type,

@@ -12,8 +12,6 @@ public interface CommentService {
 
     boolean deleteComment(Integer id);
 
-    List<Comment> allComment();
-
     List<Comment> commentOfSongId(Integer songId);
 
     List<Comment> commentOfSongListId(Integer songListId);

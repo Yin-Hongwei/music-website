@@ -1,14 +1,18 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.FailMessage;
+import com.example.yin.common.ErrorMessage;
 import com.example.yin.common.SuccessMessage;
 import com.example.yin.domain.ListSong;
 import com.example.yin.service.impl.ListSongServiceImpl;
+
+import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,24 +35,10 @@ public class ListSongController {
 
         boolean res = listSongService.addListSong(listsong);
         if (res) {
-            return new SuccessMessage("添加成功").getMessage();
+            return new SuccessMessage<Null>("添加成功").getMessage();
         } else {
-            return new FailMessage("添加失败").getMessage();
+            return new ErrorMessage("添加失败").getMessage();
         }
-    }
-
-    // 返回歌单里包含的所有歌曲
-    @RequestMapping(value = "/listSong", method = RequestMethod.GET)
-    public Object allListSong() {
-        return listSongService.allListSong();
-    }
-
-    // 返回歌单里指定歌单ID的歌曲
-    @RequestMapping(value = "/listSong/detail", method = RequestMethod.GET)
-    public Object listSongOfSongId(HttpServletRequest req) {
-        String songListId = req.getParameter("songListId");
-        
-        return listSongService.listSongOfSongId(Integer.parseInt(songListId));
     }
 
     // 删除歌单里的歌曲
@@ -58,10 +48,19 @@ public class ListSongController {
 
         boolean res = listSongService.deleteListSong(Integer.parseInt(songId));
         if (res) {
-            return new SuccessMessage("删除成功").getMessage();
+            return new SuccessMessage<Null>("删除成功").getMessage();
         } else {
-            return new FailMessage("删除失败").getMessage();
+            return new ErrorMessage("删除失败").getMessage();
         }
+    }
+
+    // 返回歌单里指定歌单 ID 的歌曲
+    @RequestMapping(value = "/listSong/detail", method = RequestMethod.GET)
+    public Object listSongOfSongId(HttpServletRequest req) {
+        String songListId = req.getParameter("songListId");
+
+        return new SuccessMessage<List<ListSong>>("添加成功", listSongService.listSongOfSongId(Integer.parseInt(songListId)))
+                .getMessage();
     }
 
     // 更新歌单里面的歌曲信息
@@ -79,9 +78,9 @@ public class ListSongController {
 
         boolean res = listSongService.updateListSongMsg(listsong);
         if (res) {
-            return new SuccessMessage("修改成功").getMessage();
+            return new SuccessMessage<Null>("修改成功").getMessage();
         } else {
-            return new FailMessage("修改失败").getMessage();
+            return new ErrorMessage("修改失败").getMessage();
         }
     }
 }

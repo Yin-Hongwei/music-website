@@ -1,12 +1,13 @@
 package com.example.yin.controller;
 
-import com.alibaba.fastjson.JSONObject;
+import com.example.yin.common.FatalMessage;
 import com.example.yin.common.ErrorMessage;
-import com.example.yin.common.FailMessage;
 import com.example.yin.common.SuccessMessage;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.SongList;
 import com.example.yin.service.impl.SongListServiceImpl;
+
+import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class SongListController {
@@ -50,40 +52,10 @@ public class SongListController {
 
         boolean res = songListService.addSongList(songList);
         if (res) {
-            return new SuccessMessage("添加成功").getMessage();
+            return new SuccessMessage<Null>("添加成功").getMessage();
         } else {
-            return new FailMessage("添加失败").getMessage();
+            return new ErrorMessage("添加失败").getMessage();
         }
-    }
-
-    // 返回所有歌单
-    @RequestMapping(value = "/songList", method = RequestMethod.GET)
-    public Object allSongList() {
-        return songListService.allSongList();
-    }
-
-    // 返回指定标题对应的歌单
-    @RequestMapping(value = "/songList/title/detail", method = RequestMethod.GET)
-    public Object songListOfTitle(HttpServletRequest req) {
-        String title = req.getParameter("title").trim();
-        
-        return songListService.songListOfTitle(title);
-    }
-
-    // 返回标题包含文字的歌单
-    @RequestMapping(value = "/songList/likeTitle/detail", method = RequestMethod.GET)
-    public Object songListOfLikeTitle(HttpServletRequest req) {
-        String title = req.getParameter("title").trim();
-
-        return songListService.likeTitle('%' + title + '%');
-    }
-
-    // 返回指定类型的歌单
-    @RequestMapping(value = "/songList/style/detail", method = RequestMethod.GET)
-    public Object songListOfStyle(HttpServletRequest req) {
-        String style = req.getParameter("style").trim();
-
-        return songListService.likeStyle('%' + style + '%');
     }
 
     // 删除歌单
@@ -93,10 +65,32 @@ public class SongListController {
 
         boolean res = songListService.deleteSongList(Integer.parseInt(id));
         if (res) {
-            return new SuccessMessage("删除成功").getMessage();
+            return new SuccessMessage<Null>("删除成功").getMessage();
         } else {
-            return new FailMessage("删除失败").getMessage();
+            return new ErrorMessage("删除失败").getMessage();
         }
+    }
+
+    // 返回所有歌单
+    @RequestMapping(value = "/songList", method = RequestMethod.GET)
+    public Object allSongList() {
+        return new SuccessMessage<List<SongList>>(null, songListService.allSongList()).getMessage();
+    }
+
+    // 返回标题包含文字的歌单
+    @RequestMapping(value = "/songList/likeTitle/detail", method = RequestMethod.GET)
+    public Object songListOfLikeTitle(HttpServletRequest req) {
+        String title = req.getParameter("title").trim();
+
+        return new SuccessMessage<List<SongList>>(null, songListService.likeTitle('%' + title + '%')).getMessage();
+    }
+
+    // 返回指定类型的歌单
+    @RequestMapping(value = "/songList/style/detail", method = RequestMethod.GET)
+    public Object songListOfStyle(HttpServletRequest req) {
+        String style = req.getParameter("style").trim();
+
+        return new SuccessMessage<List<SongList>>(null, songListService.likeStyle('%' + style + '%')).getMessage();
     }
 
     // 更新歌单信息
@@ -116,9 +110,9 @@ public class SongListController {
 
         boolean res = songListService.updateSongListMsg(songList);
         if (res) {
-            return new SuccessMessage("修改成功").getMessage();
+            return new SuccessMessage<Null>("修改成功").getMessage();
         } else {
-            return new FailMessage("修改失败").getMessage();
+            return new ErrorMessage("修改失败").getMessage();
         }
     }
 
@@ -134,22 +128,21 @@ public class SongListController {
         }
 
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeAvatorPath = "/img/songListPic/" + fileName;
+        String imgPath = "/img/songListPic/" + fileName;
         try {
             avatorFile.transferTo(dest);
             SongList songList = new SongList();
             songList.setId(id);
-            songList.setPic(storeAvatorPath);
+            songList.setPic(imgPath);
+
             boolean res = songListService.updateSongListImg(songList);
             if (res) {
-                JSONObject jsonObject = new SuccessMessage("上传成功").getMessage();
-                jsonObject.put("data", storeAvatorPath);
-                return jsonObject;
+                return new SuccessMessage<String>("上传成功", imgPath).getMessage();
             } else {
-                return new FailMessage("上传失败").getMessage();
+                return new ErrorMessage("上传失败").getMessage();
             }
         } catch (IOException e) {
-            return new ErrorMessage("上传失败" + e.getMessage()).getMessage();
+            return new FatalMessage("上传失败" + e.getMessage()).getMessage();
         }
     }
 }

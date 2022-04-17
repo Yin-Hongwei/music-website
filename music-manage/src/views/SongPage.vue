@@ -39,11 +39,11 @@
       </el-table-column>
       <el-table-column label="资源更新" width="120" align="center">
         <template v-slot="scope">
-          <el-upload :action="uploadUrl(scope.row.id)" :show-file-list="false" :on-success="handleImgSuccess" :before-upload="beforeImgUpload">
+          <el-upload :action="updateSongImg(scope.row.id)" :show-file-list="false" :on-success="handleImgSuccess" :before-upload="beforeImgUpload">
             <el-button>更新图片</el-button>
           </el-upload>
           <br />
-          <el-upload :action="uploadUrl(scope.row.id)" :show-file-list="false" :on-success="handleSongSuccess" :before-upload="beforeSongUpload">
+          <el-upload :action="updateSongUrl(scope.row.id)" :show-file-list="false" :on-success="handleSongSuccess" :before-upload="beforeSongUpload">
             <el-button>更新歌曲</el-button>
           </el-upload>
         </template>
@@ -74,7 +74,7 @@
 
   <!--添加歌曲-->
   <el-dialog title="添加歌曲" v-model="centerDialogVisible">
-    <el-form :model="registerForm" id="add-song">
+    <el-form id="add-song" label-width="120px" :model="registerForm">
       <el-form-item label="歌曲名">
         <el-input type="text" name="name" v-model="registerForm.name"></el-input>
       </el-form-item>
@@ -180,9 +180,9 @@ export default defineComponent({
     async function getData() {
       tableData.value = [];
       tempDate.value = [];
-      const result = (await HttpManager.getSongOfSingerId(singerId.value)) as any;
-      tableData.value = result;
-      tempDate.value = result;
+      const result = (await HttpManager.getSongOfSingerId(singerId.value)) as ResponseBody;
+      tableData.value = result.data;
+      tempDate.value = result.data;
       currentPage.value = 1;
     }
     function setSongUrl(row) {
@@ -195,8 +195,11 @@ export default defineComponent({
       }
     }
     // 更新歌曲图片
-    function uploadUrl(id) {
-      return HttpManager.attachImageUrl(`/song/img/update?id=${id}`);
+    function updateSongImg(id) {
+      return HttpManager.updateSongImg(id);
+    }
+    function updateSongUrl(id) {
+      return HttpManager.updateSongUrl(id);
     }
     // 获取当前页
     function handleCurrentChange(val) {
@@ -383,7 +386,8 @@ export default defineComponent({
       beforeImgUpload,
       parseLyric,
       saveEdit,
-      uploadUrl,
+      updateSongImg,
+      updateSongUrl,
       deleteRow,
       confirm,
       attachImageUrl: HttpManager.attachImageUrl,

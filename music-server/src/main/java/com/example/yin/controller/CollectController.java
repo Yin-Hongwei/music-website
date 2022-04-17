@@ -1,9 +1,12 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.FailMessage;
+import com.example.yin.common.ErrorMessage;
 import com.example.yin.common.SuccessMessage;
+import com.example.yin.common.WarningMessage;
 import com.example.yin.domain.Collect;
 import com.example.yin.service.impl.CollectServiceImpl;
+
+import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class CollectController {
@@ -28,10 +33,8 @@ public class CollectController {
         String song_id = req.getParameter("songId");
         String song_list_id = req.getParameter("songListId");
 
-        if (song_id == "") {
-            return new SuccessMessage("收藏歌曲为空").getMessage();
-        } else if (collectService.existSongId(Integer.parseInt(user_id), Integer.parseInt(song_id))) {
-            return new FailMessage("已收藏").getMessage();
+        if (collectService.existSongId(Integer.parseInt(user_id), Integer.parseInt(song_id))) {
+            return new WarningMessage("已收藏").getMessage();
         }
 
         Collect collect = new Collect();
@@ -46,54 +49,31 @@ public class CollectController {
 
         boolean res = collectService.addCollection(collect);
         if (res) {
-            return new SuccessMessage("收藏成功").getMessage();
+            return new SuccessMessage<Null>("收藏成功").getMessage();
         } else {
-            return new FailMessage("收藏失败").getMessage();
+            return new ErrorMessage("收藏失败").getMessage();
         }
     }
 
-    // 返回所有用户收藏列表
-    @RequestMapping(value = "/collection", method = RequestMethod.GET)
-    public Object allCollection() {
-        return collectService.allCollect();
-    }
-
-    // 返回的指定用户ID收藏列表
-    @RequestMapping(value = "/collection/detail", method = RequestMethod.GET)
-    public Object collectionOfUser(HttpServletRequest req) {
-        String userId = req.getParameter("userId");
-        return collectService.collectionOfUser(Integer.parseInt(userId));
-    }
-
-    // 删除收藏的歌曲
+    // 取消收藏的歌曲
     @RequestMapping(value = "/collection/delete", method = RequestMethod.GET)
     public Object deleteCollection(HttpServletRequest req) {
         String user_id = req.getParameter("userId").trim();
         String song_id = req.getParameter("songId").trim();
-        return collectService.deleteCollect(Integer.parseInt(user_id), Integer.parseInt(song_id));
+
+        boolean res = collectService.deleteCollect(Integer.parseInt(user_id), Integer.parseInt(song_id));
+        if (res) {
+            return new SuccessMessage<Null>("取消收藏").getMessage();
+        } else {
+            return new ErrorMessage("取消收藏失败").getMessage();
+        }
     }
 
-    // 更新收藏
-    @ResponseBody
-    @RequestMapping(value = "/collection/update", method = RequestMethod.POST)
-    public Object updateCollectMsg(HttpServletRequest req) {
-        String id = req.getParameter("id").trim();
-        String user_id = req.getParameter("userId").trim();
-        String type = req.getParameter("type").trim();
-        String song_id = req.getParameter("songId").trim();
-        // String song_list_id = req.getParameter("songListId").trim();
+    // 返回的指定用户 ID 收藏的列表
+    @RequestMapping(value = "/collection/detail", method = RequestMethod.GET)
+    public Object collectionOfUser(HttpServletRequest req) {
+        String userId = req.getParameter("userId");
 
-        Collect collect = new Collect();
-        collect.setId(Integer.parseInt(id));
-        collect.setUserId(Integer.parseInt(user_id));
-        collect.setType(new Byte(type));
-        collect.setSongId(Integer.parseInt(song_id));
-
-        boolean res = collectService.updateCollectMsg(collect);
-        if (res) {
-            return new SuccessMessage("修改成功").getMessage();
-        } else {
-            return new FailMessage("修改失败").getMessage();
-        }
+        return new SuccessMessage<List<Collect>>("取消收藏", collectService.collectionOfUser(Integer.parseInt(userId))).getMessage();
     }
 }

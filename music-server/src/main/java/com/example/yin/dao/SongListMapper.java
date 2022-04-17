@@ -33,6 +33,4 @@ public interface SongListMapper {
     List<SongList> likeTitle(String title);
 
     List<SongList> likeStyle(String style);
-
-    List<SongList> songListOfTitle(String title);
 }

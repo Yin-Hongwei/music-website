@@ -23,11 +23,11 @@ const singerList = ref([]); // 歌手列表
 const { changeIndex } = mixin();
 try {
   HttpManager.getSongList().then((res) => {
-    songList.value = (res as any[]).sort().slice(0, 10);
+    songList.value = (res as ResponseBody).data.sort().slice(0, 10);
   });
 
   HttpManager.getAllSinger().then((res) => {
-    singerList.value = (res as any[]).sort().slice(0, 10);
+    singerList.value = (res as ResponseBody).data.sort().slice(0, 10);
   });
 
   onMounted(() => {

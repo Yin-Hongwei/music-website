@@ -1,12 +1,14 @@
 package com.example.yin.controller;
 
-import com.alibaba.fastjson.JSONObject;
+import com.example.yin.common.FatalMessage;
 import com.example.yin.common.ErrorMessage;
-import com.example.yin.common.FailMessage;
 import com.example.yin.common.SuccessMessage;
+import com.example.yin.common.WarningMessage;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.Consumer;
 import com.example.yin.service.impl.ConsumerServiceImpl;
+
+import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.DuplicateKeyException;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class ConsumerController {
@@ -53,6 +56,10 @@ public class ConsumerController {
         String introduction = req.getParameter("introduction").trim();
         String location = req.getParameter("location").trim();
         String avator = "/img/avatorImages/user.jpg";
+
+        if(consumerService.existUser(username)) {
+            return new WarningMessage("用户名已注册").getMessage();
+        }
 
         Consumer consumer = new Consumer();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -86,12 +93,12 @@ public class ConsumerController {
         try {
             boolean res = consumerService.addUser(consumer);
             if (res) {
-                return new SuccessMessage("注册成功").getMessage();
+                return new SuccessMessage<Null>("注册成功").getMessage();
             } else {
-                return new FailMessage("注册失败").getMessage();
+                return new ErrorMessage("注册失败").getMessage();
             }
         } catch (DuplicateKeyException e) {
-            return new ErrorMessage("用户名已注册").getMessage();
+            return new FatalMessage(e.getMessage()).getMessage();
         }
     }
 
@@ -105,14 +112,11 @@ public class ConsumerController {
         String password = req.getParameter("password");
 
         boolean res = consumerService.veritypasswd(username, password);
-
         if (res) {
-            JSONObject jsonObject = new SuccessMessage("登录成功").getMessage();
-            jsonObject.put("data", consumerService.loginStatus(username));
             session.setAttribute("username", username);
-            return jsonObject;
+            return new SuccessMessage<List<Consumer>>("登录成功", consumerService.loginStatus(username)).getMessage();
         } else {
-            return new FailMessage("用户名或密码错误").getMessage();
+            return new ErrorMessage("用户名或密码错误").getMessage();
         }
     }
 
@@ -121,16 +125,17 @@ public class ConsumerController {
      */
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public Object allUser() {
-        return consumerService.allUser();
+        return new SuccessMessage<List<Consumer>>(null, consumerService.allUser()).getMessage();
     }
 
     /**
-     * 返回指定ID的用户
+     * 返回指定 ID 的用户
      */
     @RequestMapping(value = "/user/detail", method = RequestMethod.GET)
     public Object userOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
-        return consumerService.userOfId(Integer.parseInt(id));
+
+        return new SuccessMessage<List<Consumer>>(null, consumerService.userOfId(Integer.parseInt(id))).getMessage();
     }
 
     /**
@@ -139,11 +144,12 @@ public class ConsumerController {
     @RequestMapping(value = "/user/delete", method = RequestMethod.GET)
     public Object deleteUser(HttpServletRequest req) {
         String id = req.getParameter("id");
+        
         boolean res = consumerService.deleteUser(Integer.parseInt(id));
         if (res) {
-            return new SuccessMessage("删除成功").getMessage();
+            return new SuccessMessage<Null>("删除成功").getMessage();
         } else {
-            return new FailMessage("删除失败").getMessage();
+            return new ErrorMessage("删除失败").getMessage();
         }
     }
 
@@ -185,9 +191,9 @@ public class ConsumerController {
 
         boolean res = consumerService.updateUserMsg(consumer);
         if (res) {
-            return new SuccessMessage("修改成功").getMessage();
+            return new SuccessMessage<Null>("修改成功").getMessage();
         } else {
-            return new FailMessage("修改失败").getMessage();
+            return new ErrorMessage("修改失败").getMessage();
         }
     }
 
@@ -198,30 +204,27 @@ public class ConsumerController {
     @RequestMapping(value = "/user/avatar/update", method = RequestMethod.POST)
     public Object updateUserPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
-        String filePath = Constants.PROJECT_PATH + System.getProperty("file.separator") + "img"
-                + System.getProperty("file.separator") + "avatorImages";
+        String filePath = Constants.PROJECT_PATH + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "avatorImages";
         File file1 = new File(filePath);
         if (!file1.exists()) {
             file1.mkdir();
         }
 
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeAvatorPath = "/img/avatorImages/" + fileName;
+        String imgPath = "/img/avatorImages/" + fileName;
         try {
             avatorFile.transferTo(dest);
             Consumer consumer = new Consumer();
             consumer.setId(id);
-            consumer.setAvator(storeAvatorPath);
+            consumer.setAvator(imgPath);
             boolean res = consumerService.updateUserAvator(consumer);
             if (res) {
-                JSONObject jsonObject = new SuccessMessage("上传成功").getMessage();
-                jsonObject.put("data", storeAvatorPath);
-                return jsonObject;
+                return new SuccessMessage<String>("上传成功", imgPath).getMessage();
             } else {
-                return new FailMessage("上传失败").getMessage();
+                return new ErrorMessage("上传失败").getMessage();
             }
         } catch (IOException e) {
-            return new ErrorMessage("上传失败" + e.getMessage()).getMessage();
+            return new FatalMessage("上传失败" + e.getMessage()).getMessage();
         }
     }
 }

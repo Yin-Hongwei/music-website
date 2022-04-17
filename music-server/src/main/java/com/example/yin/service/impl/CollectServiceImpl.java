@@ -24,20 +24,8 @@ public class CollectServiceImpl implements CollectService {
     }
 
     @Override
-    public boolean updateCollectMsg(Collect collect) {
-        return collectMapper.updateCollectMsg(collect) > 0 ? true : false;
-    }
-
-    @Override
     public boolean deleteCollect(Integer userId, Integer songId) {
         return collectMapper.deleteCollect(userId, songId) > 0 ? true : false;
-    }
-
-    @Override
-    public List<Collect> allCollect()
-
-    {
-        return collectMapper.allCollect();
     }
 
     @Override

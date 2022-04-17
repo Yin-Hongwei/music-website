@@ -2,11 +2,11 @@ package com.example.yin.common;
 
 import com.alibaba.fastjson.JSONObject;
 
-public class ErrorMessage {
+public class FatalMessage {
     JSONObject jsonObject = new JSONObject();
 
-    public ErrorMessage(String message) {
-        jsonObject.put("code", 200);
+    public FatalMessage(String message) {
+        jsonObject.put("code", 500);
         jsonObject.put("message", message);
         jsonObject.put("success", false);
         jsonObject.put("type", "error");

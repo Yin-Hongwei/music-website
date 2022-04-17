@@ -23,15 +23,13 @@ const HttpManager = {
   // 返回的指定用户ID收藏列表
   getCollectionOfUser: (userId) => get(`collection/detail?userId=${userId}`),
   // 删除收藏的歌曲
-  deleteCollection: (userId, songId) => get(`/collection/delete?userId=${userId}&&songId=${songId}`),
+  deleteCollection: (userId, songId) => get(`collection/delete?userId=${userId}&&songId=${songId}`),
 
   // =======================> 评论列表 API
   // 获得指定歌曲ID的评论列表
   getCommentOfSongId: (songId) => get(`comment/song/detail?songId=${songId}`),
   // 获得指定歌单ID的评论列表
   getCommentOfSongListId: (songListId) => get(`comment/songList/detail?songListId=${songListId}`),
-  // 更新评论
-  updateCommentMsg: (params) => post(`comment/update`, params),
   // 删除评论
   deleteComment: (id) => get(`comment/delete?id=${id}`),
 
@@ -56,6 +54,8 @@ const HttpManager = {
   getSongOfSingerName: (id) => get(`song/singerName/detail?name=${id}`),
   // 更新歌曲信息
   updateSongMsg: (params) => post(`song/update`, params),
+  updateSongUrl: (id) => `${getBaseURL()}/song/url/update?id=${id}`,
+  updateSongImg: (id) => `${getBaseURL()}/song/img/update?id=${id}`,
   // 删除歌曲
   deleteSong: (id) => get(`song/delete?id=${id}`),
 

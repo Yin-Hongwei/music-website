@@ -22,11 +22,7 @@ public interface CollectMapper {
 
     int existSongId(@Param("userId") Integer userId, @Param("songId") Integer songId);
 
-    int updateCollectMsg(Collect collect);
-
     int deleteCollect(@Param("userId") Integer userId, @Param("songId") Integer songId);
-
-    List<Collect> allCollect();
 
     List<Collect> collectionOfUser(Integer userId);
 }

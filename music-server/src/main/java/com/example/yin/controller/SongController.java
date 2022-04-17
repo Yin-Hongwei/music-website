@@ -1,29 +1,46 @@
 package com.example.yin.controller;
 
-import com.alibaba.fastjson.JSONObject;
+import com.example.yin.common.FatalMessage;
 import com.example.yin.common.ErrorMessage;
-import com.example.yin.common.FailMessage;
 import com.example.yin.common.SuccessMessage;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.Song;
 import com.example.yin.service.impl.SongServiceImpl;
+
+import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.unit.DataSize;
+import org.springframework.util.unit.DataUnit;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class SongController {
 
     @Autowired
     private SongServiceImpl songService;
+
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        // 文件最大10M,DataUnit提供5中类型B,KB,MB,GB,TB
+        factory.setMaxFileSize(DataSize.of(20, DataUnit.MEGABYTES));
+        // 设置总上传数据总大小10M
+        factory.setMaxRequestSize(DataSize.of(20, DataUnit.MEGABYTES));
+        return factory.createMultipartConfig();
+    }
 
     @Configuration
     public static class MyPicConfig implements WebMvcConfigurer {
@@ -68,53 +85,13 @@ public class SongController {
             song.setUrl(storeUrlPath);
             boolean res = songService.addSong(song);
             if (res) {
-                JSONObject jsonObject = new SuccessMessage("上传成功").getMessage();
-                jsonObject.put("data", storeUrlPath);
-                return jsonObject;
+                return new SuccessMessage<String>("上传成功", storeUrlPath).getMessage();
             } else {
-                return new FailMessage("上传失败").getMessage();
+                return new ErrorMessage("上传失败").getMessage();
             }
         } catch (IOException e) {
-            return new ErrorMessage("上传失败" + e.getMessage()).getMessage();
+            return new FatalMessage("上传失败" + e.getMessage()).getMessage();
         }
-    }
-
-    // 返回所有歌曲
-    @RequestMapping(value = "/song", method = RequestMethod.GET)
-    public Object allSong() {
-        return songService.allSong();
-    }
-
-    // 返回指定歌曲ID的歌曲
-    @RequestMapping(value = "/song/detail", method = RequestMethod.GET)
-    public Object songOfId(HttpServletRequest req) {
-        String id = req.getParameter("id");
-        
-        return songService.songOfId(Integer.parseInt(id));
-    }
-
-    // 返回指定歌手ID的歌曲
-    @RequestMapping(value = "/song/singer/detail", method = RequestMethod.GET)
-    public Object songOfSingerId(HttpServletRequest req) {
-        String singerId = req.getParameter("singerId");
-
-        return songService.songOfSingerId(Integer.parseInt(singerId));
-    }
-
-    // 返回指定歌手名的歌曲
-    @RequestMapping(value = "/song/singerName/detail", method = RequestMethod.GET)
-    public Object songOfSingerName(HttpServletRequest req) {
-        String name = req.getParameter("name");
-
-        return songService.songOfSingerName('%' + name + '%');
-    }
-
-    // 返回指定歌曲名的歌曲
-    @RequestMapping(value = "/song/name/detail", method = RequestMethod.GET)
-    public Object songOfName(HttpServletRequest req) {
-        String name = req.getParameter("name").trim();
-
-        return songService.songOfName(name);
     }
 
     // 删除歌曲
@@ -124,10 +101,40 @@ public class SongController {
 
         boolean res = songService.deleteSong(Integer.parseInt(id));
         if (res) {
-            return new SuccessMessage("删除成功").getMessage();
+            return new SuccessMessage<Null>("删除成功").getMessage();
         } else {
-            return new FailMessage("删除失败").getMessage();
+            return new ErrorMessage("删除失败").getMessage();
         }
+    }
+
+    // 返回所有歌曲
+    @RequestMapping(value = "/song", method = RequestMethod.GET)
+    public Object allSong() {
+        return new SuccessMessage<List<Song>>(null, songService.allSong()).getMessage();
+    }
+
+    // 返回指定歌曲ID的歌曲
+    @RequestMapping(value = "/song/detail", method = RequestMethod.GET)
+    public Object songOfId(HttpServletRequest req) {
+        String id = req.getParameter("id");
+
+        return new SuccessMessage<List<Song>>(null, songService.songOfId(Integer.parseInt(id))).getMessage();
+    }
+
+    // 返回指定歌手ID的歌曲
+    @RequestMapping(value = "/song/singer/detail", method = RequestMethod.GET)
+    public Object songOfSingerId(HttpServletRequest req) {
+        String singerId = req.getParameter("singerId");
+
+        return new SuccessMessage<List<Song>>(null, songService.songOfSingerId(Integer.parseInt(singerId))).getMessage();
+    }
+
+    // 返回指定歌手名的歌曲
+    @RequestMapping(value = "/song/singerName/detail", method = RequestMethod.GET)
+    public Object songOfSingerName(HttpServletRequest req) {
+        String name = req.getParameter("name");
+
+        return new SuccessMessage<List<Song>>(null, songService.songOfSingerName('%' + name + '%')).getMessage();
     }
 
     // 更新歌曲信息
@@ -150,9 +157,9 @@ public class SongController {
 
         boolean res = songService.updateSongMsg(song);
         if (res) {
-            return new SuccessMessage("修改成功").getMessage();
+            return new SuccessMessage<Null>("修改成功").getMessage();
         } else {
-            return new FailMessage("修改失败").getMessage();
+            return new ErrorMessage("修改失败").getMessage();
         }
     }
 
@@ -176,18 +183,16 @@ public class SongController {
             song.setPic(storeUrlPath);
             boolean res = songService.updateSongPic(song);
             if (res) {
-                JSONObject jsonObject = new SuccessMessage("上传成功").getMessage();
-                jsonObject.put("data", storeUrlPath);
-                return jsonObject;
+                return new SuccessMessage<String>("上传成功", storeUrlPath).getMessage();
             } else {
-                return new FailMessage("上传失败").getMessage();
+                return new ErrorMessage("上传失败").getMessage();
             }
         } catch (IOException e) {
-            return new ErrorMessage("上传失败" + e.getMessage()).getMessage();
+            return new FatalMessage("上传失败" + e.getMessage()).getMessage();
         }
     }
 
-    // 更新歌曲 URL
+    // 更新歌曲
     @ResponseBody
     @RequestMapping(value = "/song/url/update", method = RequestMethod.POST)
     public Object updateSongUrl(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {
@@ -207,14 +212,12 @@ public class SongController {
             song.setUrl(storeUrlPath);
             boolean res = songService.updateSongUrl(song);
             if (res) {
-                JSONObject jsonObject = new SuccessMessage("上传成功").getMessage();
-                jsonObject.put("data", storeUrlPath);
-                return jsonObject;
+                return new SuccessMessage<String>("更新成功", storeUrlPath).getMessage();
             } else {
-                return new FailMessage("上传失败").getMessage();
+                return new ErrorMessage("更新失败").getMessage();
             }
         } catch (IOException e) {
-            return new ErrorMessage("上传失败" + e.getMessage()).getMessage();
+            return new FatalMessage("更新失败" + e.getMessage()).getMessage();
         }
     }
 }
