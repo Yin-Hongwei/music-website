@@ -99,7 +99,7 @@ export default defineComponent({
 
       const result = (await HttpManager.setComment(params)) as ResponseBody;
       (proxy as any).$message({
-        message: result.success,
+        message: result.message,
         type: result.type,
       });
 
