@@ -1,28 +1,19 @@
 <template>
-  <div class="container">
-    <div class="search">
-      <nav class="search-nav">
-        <span
-          v-for="(item, index) in searchNavList"
-          :key="index"
-          :class="{ 'is-active': currentView === item.value }"
-          @click="currentView = item.value"
-        >
-          {{ item.name }}
-        </span>
-      </nav>
-      <component :is="currentView"></component>
-    </div>
+  <div class="search">
+    <yin-nav :styleList="searchNavList" :activeName="activeName" @click="handleChangeView"></yin-nav>
+    <component class="search-list" :is="currentView"></component>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import YinNav from "@/components/layouts/YinNav.vue";
 import SearchSong from "./SearchSong.vue";
 import SearchSongList from "./SearchSongList.vue";
 
 export default defineComponent({
   components: {
+    YinNav,
     SearchSong,
     SearchSongList,
   },
@@ -38,8 +29,15 @@ export default defineComponent({
           value: "SearchSongList",
         },
       ],
+      activeName: "歌曲",
       currentView: "SearchSong",
     };
+  },
+  methods: {
+    handleChangeView(item) {
+      this.activeName = item.name;
+      this.currentView = item.value;
+    },
   },
 });
 </script>
@@ -48,29 +46,12 @@ export default defineComponent({
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
 
-.container {
-  padding-top: $header-height + 30px;
-}
-
 .search {
   margin: auto;
-  background-color: $color-white;
-  border-radius: 12px;
   width: 900px;
-  position: relative;
-}
-
-.search-nav {
-  @include layout(space-around);
-  font-size: 1.5rem;
-  color: $color-black;
-  span {
-    line-height: 50px;
-    cursor: pointer;
+  
+  .search-list {
+    min-height: 480px;
   }
-}
-
-.is-active {
-  font-weight: 600;
 }
 </style>

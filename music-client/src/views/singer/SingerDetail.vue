@@ -1,23 +1,20 @@
 <template>
-  <el-container class="singer-detail">
+  <el-container>
     <el-aside class="album-slide">
-      <el-image class="singer-img" :src="attachImageUrl(songDetails.pic)"/>
-      <ul class="album-info">
-        <li v-if="songDetails.sex !== 2">
-          性别：{{ getUserSex(songDetails.sex) }}
-        </li>
-        <li>生日：{{ getBirth(songDetails.birth) }}</li>
-        <li>故乡：{{ songDetails.location }}</li>
-      </ul>
+      <el-image class="singer-img" fit="contain" :src="attachImageUrl(songDetails.pic)" />
+      <div class="album-info">
+        <h2>基本资料</h2>
+        <ul>
+          <li v-if="songDetails.sex !== 2">性别：{{ getUserSex(songDetails.sex) }}</li>
+          <li>生日：{{ getBirth(songDetails.birth) }}</li>
+          <li>故乡：{{ songDetails.location }}</li>
+        </ul>
+      </div>
     </el-aside>
     <el-main class="album-main">
-      <div class="intro">
-        <h2>{{ songDetails.name }}</h2>
-        <span>{{ songDetails.introduction }}</span>
-      </div>
-      <div class="album-body">
-        <song-list :songList="currentSongList"></song-list>
-      </div>
+      <h1>{{ songDetails.name }}</h1>
+      <p>{{ songDetails.introduction }}</p>
+      <song-list :songList="currentSongList"></song-list>
     </el-main>
   </el-container>
 </template>
@@ -62,5 +59,49 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/singer-detail.scss";
+@import "@/assets/css/var.scss";
+
+.album-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+
+  .singer-img {
+    height: 250px;
+    width: 250px;
+    border-radius: 10%;
+  }
+
+  .album-info {
+    width: 60%;
+    padding-top: 2rem;
+    li {
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+}
+
+.album-main > p {
+  color: rgba(0, 0, 0, 0.5);
+  margin: 10px 0 20px 0px;
+}
+
+@media screen and (min-width: $sm) {
+  .album-slide {
+    width: 400px;
+  }
+  .album-main {
+    min-width: 600px;
+    padding-right: 10vw;
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .album-slide {
+    display: none;
+  }
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="personal">
     <div class="personal-info">
-      <el-image class="personal-img" :src="attachImageUrl(userPic)" @click="dialogTableVisible = true" />
+      <el-image class="personal-img" fit="contain" :src="attachImageUrl(userPic)" @click="dialogTableVisible = true" />
       <div class="personal-msg">
         <div class="username">{{ personalInfo.username }}</div>
         <div class="introduction">{{ personalInfo.introduction }}</div>
@@ -99,12 +99,10 @@ export default defineComponent({
 
 .personal {
   padding-top: $header-height + 150px;
-  background-color: $theme-background-color;
 
   &::before {
-    /*背景*/
     content: "";
-    background-color: $theme-color;
+    background-color: $color-blue-shallow;
     position: absolute;
     top: 0;
     width: 100%;
@@ -114,22 +112,21 @@ export default defineComponent({
 
 .personal-info {
   position: relative;
-  margin-bottom: 150px;
-  // 图片
+  margin-bottom: 100px;
   .personal-img {
     height: 200px;
     width: 200px;
     border-radius: 50%;
     border: 5px solid $color-white;
     position: absolute;
-    top: -100px;
+    top: -160px;
     left: 50px;
     cursor: pointer;
   }
   .personal-msg {
     margin-left: 300px;
     position: absolute;
-    top: -40px;
+    top: -100px;
 
     .username {
       font-size: 50px;
@@ -144,12 +141,19 @@ export default defineComponent({
   .edit-info {
     position: absolute;
     right: 10vw;
-    margin-top: -50px;
+    margin-top: -100px;
   }
 }
 
-/*歌单内容*/
-.personal-body {
-  padding: 0px 100px 40px 100px;
+@media screen and (min-width: $sm) {
+  .personal-body {
+    padding: 0px 100px;
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .edit-info {
+    display: none;
+  }
 }
 </style>

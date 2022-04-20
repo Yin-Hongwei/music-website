@@ -1,12 +1,10 @@
 <template>
-  <div class="content">
-    <el-table style="width: 100%" stripe highlight-current-row :data="dataList" @row-click="handleClick">
-      <el-table-column type="index" width="50" />
-      <el-table-column prop="songName" label="歌曲名" />
-      <el-table-column prop="singerName" label="歌手" />
-      <el-table-column prop="introduction" label="专辑" />
-    </el-table>
-  </div>
+  <el-table class="content" stripe highlight-current-row :data="dataList" @row-click="handleClick">
+    <el-table-column type="index" width="50" />
+    <el-table-column prop="songName" label="歌曲名" />
+    <el-table-column prop="singerName" label="歌手" />
+    <el-table-column prop="introduction" label="专辑" />
+  </el-table>
 </template>
 
 <script lang="ts">
@@ -59,7 +57,8 @@ export default defineComponent({
 .content {
   background-color: $color-white;
   border-radius: $border-radius-songlist;
-  padding: 3%;
+  border: 1px solid $color-light-grey;
+  padding: 5px;
 }
 
 .content:deep(.el-table__row.current-row) {
