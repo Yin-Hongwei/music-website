@@ -84,18 +84,22 @@ export default defineComponent({
   }
 }
 
-.album-main > p {
-  color: rgba(0, 0, 0, 0.5);
-  margin: 10px 0 20px 0px;
+.album-main {
+  p {
+    color: rgba(0, 0, 0, 0.5);
+    margin: 10px 0 20px 0px;
+  }
 }
 
 @media screen and (min-width: $sm) {
   .album-slide {
+    position: fixed;
     width: 400px;
   }
   .album-main {
     min-width: 600px;
     padding-right: 10vw;
+    margin-left: 400px;
   }
 }
 

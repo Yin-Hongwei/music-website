@@ -62,7 +62,7 @@ export default defineComponent({
 }
 
 .content:deep(.el-table__row.current-row) {
-  color: $color-blue-active;
+  color: $color-black;
   font-weight: bold;
 }
 

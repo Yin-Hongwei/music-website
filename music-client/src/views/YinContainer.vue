@@ -40,7 +40,14 @@ window.addEventListener("beforeunload", () => {
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
 
-.el-header, .el-main {
+.el-container {
+  min-height: calc(100% - 60px);
+}
+.el-header {
   padding: 0;
+}
+.el-main {
+  padding-left: 0;
+  padding-right: 0;
 }
 </style>

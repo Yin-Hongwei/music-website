@@ -46,7 +46,6 @@
 }
 
 .menus {
-  background-color: $color-white;
   width: 100%;
   height: calc(100% - 19px);
   cursor: pointer;
@@ -59,14 +58,12 @@
     height: 40px;
     line-height: 40px;
     &:hover {
-      background-color: $color-blue-active;
-      color: $color-white;
+      background-color: $color-light-grey;
     }
   }
 }
 
 .is-play {
-  background-color: $color-blue;
-  color: $color-white;
+  color: $color-black;
   font-weight: bold;
 }

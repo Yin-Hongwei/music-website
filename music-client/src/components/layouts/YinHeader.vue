@@ -5,23 +5,15 @@
       <yin-icon :icon="iconList.ERJI"></yin-icon>
       <span>{{ musicName }}</span>
     </div>
-    <ul class="navbar">
-      <li :class="{ active: item.name === activeNavName }" v-for="item in headerNavList" :key="item.path" @click="goPage(item.path, item.name)">
-        {{ item.name }}
-      </li>
-      <!--搜索框-->
-      <li class="header-search">
-        <el-input placeholder="搜索" :prefix-icon="Search" v-model="keywords" @keyup.enter="goSearch()" />
-      </li>
-    </ul>
+    <yin-header-nav class="yin-header-nav" :styleList="headerNavList" :activeName="activeNavName" @click="goPage"></yin-header-nav>
+    <!--搜索框-->
+    <div class="header-search">
+      <el-input placeholder="搜索" :prefix-icon="Search" v-model="keywords" @keyup.enter="goSearch()" />
+    </div>
     <!--设置-->
-    <ul class="header-right sign" v-if="!token">
-      <li :class="{ active: item.name === activeNavName }" v-for="item in signList" :key="item.type" @click="goPage(item.path, item.name)">
-        {{ item.name }}
-      </li>
-    </ul>
-    <el-dropdown class="header-right" v-if="token" trigger="click">
-      <el-image class="user" fit="contain" :src="attachImageUrl(userPic)"/>
+    <yin-header-nav v-if="!token" :styleList="signList" :activeName="activeNavName" @click="goPage"></yin-header-nav>
+    <el-dropdown class="user-wrap" v-if="token" trigger="click">
+      <el-image class="user" fit="contain" :src="attachImageUrl(userPic)" />
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item v-for="(item, index) in menuList" :key="index" @click.stop="goMenuList(item.path)">{{ item.name }}</el-dropdown-item>
@@ -36,6 +28,7 @@ import { defineComponent, ref, getCurrentInstance, computed, reactive } from "vu
 import { Search } from "@element-plus/icons-vue";
 import { useStore } from "vuex";
 import YinIcon from "./YinIcon.vue";
+import YinHeaderNav from "./YinHeaderNav.vue";
 import mixin from "@/mixins/mixin";
 import { HEADERNAVLIST, SIGNLIST, MENULIST, Icon, MUSICNAME, RouterName, NavName } from "@/enums";
 import { HttpManager } from "@/api";
@@ -43,6 +36,7 @@ import { HttpManager } from "@/api";
 export default defineComponent({
   components: {
     YinIcon,
+    YinHeaderNav,
   },
   setup() {
     const { proxy } = getCurrentInstance();
@@ -117,12 +111,10 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
+
 @media screen and (min-width: $sm) {
   .header-logo {
     margin: 0 1rem;
-    // .icon {
-    // @include icon(($header-height / 3) * 2, $color-black);
-    // }
   }
 }
 
@@ -137,7 +129,7 @@ export default defineComponent({
     display: none;
   }
 }
-/*头部*/
+
 .yin-header {
   position: fixed;
   width: 100%;
@@ -154,7 +146,7 @@ export default defineComponent({
   flex-wrap: nowrap;
 }
 
-/*左侧LOGO*/
+/* LOGO */
 .header-logo {
   font-size: $font-size-logo;
   font-weight: bold;
@@ -168,42 +160,30 @@ export default defineComponent({
   }
 }
 
-/*navbar*/
-.navbar {
-  display: flex;
-  white-space: nowrap;
+.yin-header-nav {
   flex: 1;
-  /*搜索输入框*/
-  .header-search {
-    width: 100%;
-    &::v-deep input {
-      text-indent: 5px;
-      max-width: $header-search-width;
-      border-radius: $header-search-radius;
-      box-shadow: none;
-      background-color: $color-light-grey;
-      color: $color-black;
-    }
+}
+
+/*搜索输入框*/
+.header-search {
+  margin: 0 20px;
+  width: 100%;
+  &::v-deep input {
+    text-indent: 5px;
+    max-width: $header-search-max-width;
+    min-width: $header-search-min-width;
+    border-radius: $header-search-radius;
+    box-shadow: none;
+    background-color: $color-light-grey;
+    color: $color-black;
   }
 }
 
-.navbar,
-.header-right.sign {
-  li {
-    margin: $header-nav-margin;
-    padding: $header-nav-padding;
-    font-size: $font-size-header;
-    color: $color-grey;
-    cursor: pointer;
-  }
-}
 /*用户*/
-.header-right {
+.user-wrap {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  justify-content: flex-start;
 
   .user {
     width: $header-user-width;
@@ -212,18 +192,5 @@ export default defineComponent({
     margin-right: $header-user-margin;
     cursor: pointer;
   }
-  .setting {
-    font-size: 30px;
-    cursor: pointer;
-  }
-}
-
-.show {
-  display: block;
-}
-
-.active {
-  color: $theme-color !important;
-  border-bottom: 5px solid $theme-color !important;
 }
 </style>

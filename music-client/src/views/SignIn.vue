@@ -1,7 +1,7 @@
 <template>
   <yin-login-logo></yin-login-logo>
-  <div class="sign-in">
-    <div class="sign-in-head">
+  <div class="sign">
+    <div class="sign-head">
       <span>帐号登录</span>
     </div>
     <el-form ref="signInForm" status-icon :model="registerForm" :rules="SignInRules">
@@ -11,7 +11,7 @@
       <el-form-item prop="password">
         <el-input type="password" placeholder="密码" v-model="registerForm.password" @keyup.enter="handleLoginIn"></el-input>
       </el-form-item>
-      <el-form-item class="sign-in-btn">
+      <el-form-item class="sign-btn">
         <el-button @click="handleSignUp">注册</el-button>
         <el-button type="primary" @click="handleLoginIn">登录</el-button>
       </el-form-item>
@@ -86,61 +86,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/var.scss";
-@import "@/assets/css/global.scss";
-
-@media screen and (min-width: $sm) {
-  .login-logo {
-    width: 50vw;
-  }
-
-  .sign-in {
-    width: 300px;
-    left: 60vw;
-    top: $header-height + 60px;
-  }
-}
-
-@media screen and (max-width: $sm) {
-  .login-logo {
-    width: 100vw;
-  }
-  .sign-in {
-    width: 70vw;
-    top: $header-height + 20px;
-    transform: translateX(1.5vw);
-  }
-}
-
-.login-logo {
-  height: 100vh;
-  background-color: $color-blue-light;
-  overflow: hidden;
-  @include layout(center, center);
-  .icon {
-    @include icon(6.5em, $color-blue-dark);
-    transform: rotate(-30deg);
-  }
-}
-
-.sign-in {
-  position: absolute;
-  padding: 30px 50px;
-  border-radius: 10px;
-  background-color: $color-white;
-
-  .sign-in-head {
-    text-align: center;
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: 600;
-  }
-
-  .sign-in-btn:deep(.el-form-item__content) {
-    @include layout(space-between);
-    button {
-      width: 50%;
-    }
-  }
-}
+@import "@/assets/css/sign.scss";
 </style>

@@ -2,13 +2,11 @@
   <el-container>
     <el-aside class="album-slide">
       <el-image class="album-img" fit="contain" :src="attachImageUrl(songDetails.pic)" />
-      <div class="album-info">
-        <h2>简介</h2>
-        <p>{{ songDetails.introduction }}</p>
-      </div>
+      <h3 class="album-info">{{ songDetails.title }}</h3>
     </el-aside>
     <el-main class="album-main">
-      <h1>{{ songDetails.title }}</h1>
+      <h1>简介</h1>
+      <p>{{ songDetails.introduction }}</p>
       <!--评分-->
       <div class="album-score">
         <div>
@@ -140,12 +138,20 @@ export default defineComponent({
   }
 
   .album-info {
-    width: 60%;
+    width: 70%;
     padding-top: 2rem;
   }
 }
 
 .album-main {
+  h1 {
+    font-size: 22px;
+  }
+
+  p {
+    color: rgba(0, 0, 0, 0.5);
+    margin: 10px 0 20px 0px;
+  }
   /*歌单打分*/
   .album-score {
     display: flex;
@@ -164,17 +170,19 @@ export default defineComponent({
   }
 
   .album-body {
-    margin: 10px 0 20px 0px;
+    margin: 20px 0 20px 0px;
   }
 }
 
 @media screen and (min-width: $sm) {
   .album-slide {
+    position: fixed;
     width: 400px;
   }
   .album-main {
     min-width: 600px;
     padding-right: 10vw;
+    margin-left: 400px;
   }
 }
 

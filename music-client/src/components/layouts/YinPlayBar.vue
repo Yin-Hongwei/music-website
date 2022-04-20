@@ -29,7 +29,7 @@
           <yin-icon v-else :icon="iconList.JINGYIN"></yin-icon>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-slider style="height: 150px; margin: 10px 0" v-model="volume" :vertical="true"></el-slider>
+              <el-slider class="yin-slider" style="height: 150px; margin: 10px 0" v-model="volume" :vertical="true"></el-slider>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
