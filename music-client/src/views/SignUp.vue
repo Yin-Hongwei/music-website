@@ -1,7 +1,7 @@
 <template>
   <yin-login-logo></yin-login-logo>
-  <div class="sign-up">
-    <div class="sign-up-head">
+  <div class="sign">
+    <div class="sign-head">
       <span>用户注册</span>
     </div>
     <el-form ref="signUpForm" label-width="70px" status-icon :model="registerForm" :rules="SignUpRules">
@@ -35,7 +35,7 @@
           <el-option v-for="item in AREA" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item class="sign-up-btn">
+      <el-form-item class="sign-btn">
         <el-button @click="goBack()">登录</el-button>
         <el-button type="primary" @click="handleSignUp(formRef)">确定</el-button>
       </el-form-item>
@@ -114,50 +114,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/var.scss";
-@import "@/assets/css/global.scss";
-
-@media screen and (min-width: $sm) {
-  .login-logo {
-    width: 50vw;
-  }
-
-  .sign-up {
-    width: 300px;
-    left: 60vw;
-    top: $header-height + 60px;
-  }
-}
-
-@media screen and (max-width: $sm) {
-  .login-logo {
-    width: 100vw;
-  }
-  .sign-up {
-    width: 70vw;
-    top: $header-height + 20px;
-    transform: translateX(1.5vw);
-  }
-}
-
-.sign-up {
-  position: absolute;
-  padding: 30px 50px;
-  border-radius: 10px;
-  background-color: $color-white;
-
-  .sign-up-head {
-    text-align: center;
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: 600;
-  }
-
-  .sign-up-btn {
-    @include layout(space-between);
-    button {
-      width: 47%;
-    }
-  }
-}
+@import "@/assets/css/sign.scss";
 </style>

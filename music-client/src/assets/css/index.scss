@@ -41,6 +41,10 @@ header {
   margin: 0;
 }
 
+html, body, #app {
+  height: 100%;
+}
+
 ul,
 li {
   list-style: none;

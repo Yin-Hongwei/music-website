@@ -1,5 +1,5 @@
 <template>
-  <div class="the-footer">
+  <div class="yin-footer">
     <p v-for="(item, index) in footerList" :key="index">
       {{ item }}
     </p>
@@ -25,9 +25,11 @@ export default defineComponent({
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
 
-.the-footer {
+.yin-footer {
   width: 100%;
+  height: $footer-height;
   padding: 20px 0;
+  box-sizing: border-box;
   font-size: 14px;
   @include layout(center, center, column);
 }

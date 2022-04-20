@@ -119,14 +119,14 @@ export default defineComponent({
     border-radius: 50%;
     border: 5px solid $color-white;
     position: absolute;
-    top: -160px;
+    top: -180px;
     left: 50px;
     cursor: pointer;
   }
   .personal-msg {
     margin-left: 300px;
     position: absolute;
-    top: -100px;
+    top: -120px;
 
     .username {
       font-size: 50px;
@@ -141,7 +141,7 @@ export default defineComponent({
   .edit-info {
     position: absolute;
     right: 10vw;
-    margin-top: -100px;
+    margin-top: -120px;
   }
 }
 
