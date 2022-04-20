@@ -6,16 +6,18 @@ const validateName = (rule, value, callback) => {
     callback();
   }
 };
-const validatePassword = (rule, value, callback) => {
+
+export const validatePassword = (rule, value, callback) => {
   if (value === "") {
-    callback(new Error("请输入密码"));
+    callback(new Error("密码不能为空"));
   } else {
     callback();
   }
 };
+
 export const SignInRules = {
-  username: [{ validator: validateName, message: "请输入用户名", trigger: "blur", min: 3 }],
-  password: [{ validator: validatePassword, message: "请输入密码", trigger: "blur", min: 3 }],
+  username: [{ validator: validateName, trigger: "blur", min: 3 }],
+  password: [{ validator: validatePassword, trigger: "blur", min: 3 }],
 };
 
 // 注册规则
