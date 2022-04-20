@@ -16,15 +16,15 @@
         </div>
       </div>
       <div class="song-ctr">
-        <yin-icon :icon="playStateList[playStateIndex]" @click="changePlayState"></yin-icon>
+        <yin-icon class="yin-play-show" :icon="playStateList[playStateIndex]" @click="changePlayState"></yin-icon>
         <!--上一首-->
-        <yin-icon :icon="iconList.SHANGYISHOU" @click="prev"></yin-icon>
+        <yin-icon class="yin-play-show" :icon="iconList.SHANGYISHOU" @click="prev"></yin-icon>
         <!--播放-->
         <yin-icon :icon="playBtnIcon" @click="togglePlay"></yin-icon>
         <!--下一首-->
-        <yin-icon :icon="iconList.XIAYISHOU" @click="next"></yin-icon>
+        <yin-icon class="yin-play-show" :icon="iconList.XIAYISHOU" @click="next"></yin-icon>
         <!--音量-->
-        <el-dropdown trigger="click">
+        <el-dropdown class="yin-play-show" trigger="click">
           <yin-icon v-if="volume !== 0" :icon="iconList.YINLIANG"></yin-icon>
           <yin-icon v-else :icon="iconList.JINGYIN"></yin-icon>
           <template #dropdown>
@@ -36,9 +36,9 @@
       </div>
       <div class="song-ctr song-edit">
         <!--收藏-->
-        <yin-icon :class="{ active: isCollection }" :icon="iconList.XIHUAN" @click="collection"></yin-icon>
+        <yin-icon class="yin-play-show" :class="{ active: isCollection }" :icon="iconList.XIHUAN" @click="collection"></yin-icon>
         <!--下载-->
-        <yin-icon :icon="iconList.XIAZAI" @click="downloadMusic"></yin-icon>
+        <yin-icon class="yin-play-show" :icon="iconList.XIAZAI" @click="downloadMusic"></yin-icon>
         <!--歌曲列表-->
         <yin-icon :icon="iconList.LIEBIAO" @click="changeAside"></yin-icon>
       </div>

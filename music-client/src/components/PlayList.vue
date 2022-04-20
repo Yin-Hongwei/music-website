@@ -61,7 +61,6 @@ export default defineComponent({
   .play-title {
     height: 60px;
     line-height: 60px;
-    padding-top: 10px;
     font-size: 28px;
     font-weight: 500;
     text-align: center;
@@ -80,6 +79,12 @@ export default defineComponent({
     height: 0;
     padding-bottom: 100%;
     overflow: hidden;
+    border-radius: 5px;
+
+    .card-img {
+      width: 100%;
+      transition: all 0.4s ease;
+    }
   }
 
   .card-name {
@@ -94,12 +99,6 @@ export default defineComponent({
   &:hover .card-img {
     transform: scale(1.2);
   }
-}
-
-.card-img {
-  width: 100%;
-  border-radius: 5px;
-  transition: all 0.4s ease;
 }
 
 .mask {
@@ -117,7 +116,7 @@ export default defineComponent({
   .mask-icon {
     @include icon(2em, rgba(240, 240, 240, 1));
   }
-  
+
   &:hover {
     opacity: 1;
     cursor: pointer;

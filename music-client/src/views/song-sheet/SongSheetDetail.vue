@@ -1,16 +1,14 @@
 <template>
-  <el-container class="song-sheet-detail">
+  <el-container>
     <el-aside class="album-slide">
-      <el-image class="album-img" :src="attachImageUrl(songDetails.pic)"/>
+      <el-image class="album-img" fit="contain" :src="attachImageUrl(songDetails.pic)" />
       <div class="album-info">
-        <h2>简介：</h2>
-        <span> {{ songDetails.introduction }} </span>
+        <h2>简介</h2>
+        <p>{{ songDetails.introduction }}</p>
       </div>
     </el-aside>
     <el-main class="album-main">
-      <div class="album-title">
-        <p>{{ songDetails.title }}</p>
-      </div>
+      <h1>{{ songDetails.title }}</h1>
       <!--评分-->
       <div class="album-score">
         <div>
@@ -24,10 +22,8 @@
         </div>
       </div>
       <!--歌曲-->
-      <div class="album-body">
-        <song-list :songList="currentSongList"></song-list>
-        <comment :playId="songListId" :type="1"></comment>
-      </div>
+      <song-list class="album-body" :songList="currentSongList"></song-list>
+      <comment :playId="songListId" :type="1"></comment>
     </el-main>
   </el-container>
 </template>
@@ -68,7 +64,7 @@ export default defineComponent({
       // 获取歌单里的歌曲信息
       for (const item of result.data) {
         // 获取单里的歌曲
-        const resultSong = await HttpManager.getSongOfId(item.songId) as ResponseBody;
+        const resultSong = (await HttpManager.getSongOfId(item.songId)) as ResponseBody;
         currentSongList.value.push(resultSong.data[0]);
       }
     }
@@ -129,5 +125,62 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/song-sheet-detail.scss";
+@import "@/assets/css/var.scss";
+
+.album-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+
+  .album-img {
+    height: 250px;
+    width: 250px;
+    border-radius: 10%;
+  }
+
+  .album-info {
+    width: 60%;
+    padding-top: 2rem;
+  }
+}
+
+.album-main {
+  /*歌单打分*/
+  .album-score {
+    display: flex;
+    align-items: center;
+    margin: 1vw;
+
+    h3 {
+      margin: 10px 0;
+    }
+    span {
+      font-size: 60px;
+    }
+    & > div:last-child {
+      margin-left: 10%;
+    }
+  }
+
+  .album-body {
+    margin: 10px 0 20px 0px;
+  }
+}
+
+@media screen and (min-width: $sm) {
+  .album-slide {
+    width: 400px;
+  }
+  .album-main {
+    min-width: 600px;
+    padding-right: 10vw;
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .album-slide {
+    display: none;
+  }
+}
 </style>
