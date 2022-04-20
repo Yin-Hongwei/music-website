@@ -1,0 +1,40 @@
+@import "@/assets/css/var.scss";
+@import "@/assets/css/global.scss";
+
+@media screen and (min-width: $sm) {
+  .sign {
+    width: 300px;
+    position: absolute;
+    left: 60vw;
+    top: $header-height + 60px;
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .sign {
+    width: 60vw;
+    position: relative;
+    margin: auto;
+    margin-top: -78vh;
+  }
+}
+
+.sign {
+  padding: 30px 50px;
+  border-radius: 10px;
+  background-color: $color-white;
+
+  .sign-head {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .sign-btn:deep(.el-form-item__content) {
+    @include layout(space-between);
+    button {
+      width: 50%;
+    }
+  }
+}

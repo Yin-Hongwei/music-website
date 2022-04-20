@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, getCurrentInstance, onMounted } from "vue";
+import { defineComponent, getCurrentInstance } from "vue";
 
 export default defineComponent({
   props: {
@@ -30,12 +30,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "@/assets/css/var.scss";
-@import "@/assets/css/global.scss";
 
 .yin-nav {
   width: 100%;
   li {
-    display: inline-block;
     line-height: 2rem;
     font-size: 1rem;
     color: $color-grey;
@@ -45,7 +43,6 @@ export default defineComponent({
   li.active {
     color: $color-black;
     font-weight: 600;
-    border-bottom: 0.2rem solid $color-black;
   }
 }
 
