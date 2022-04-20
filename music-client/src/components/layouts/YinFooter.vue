@@ -28,7 +28,7 @@ export default defineComponent({
 .the-footer {
   width: 100%;
   padding: 20px 0;
-  background-color: $theme-footer-color;
+  font-size: 14px;
   @include layout(center, center, column);
 }
 

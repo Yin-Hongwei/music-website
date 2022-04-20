@@ -43,8 +43,6 @@
     }
 
     .info-box {
-      width: 30%;
-      margin-left: 30px;
       .song-bar-img {
         width: calc($play-bar-height - 15px);
         height: calc($play-bar-height - 15px);
@@ -81,6 +79,11 @@
 }
 
 @media screen and (min-width: $sm) {
+  .info-box {
+    width: 30%;
+    min-width: 200px;
+    margin-left: 30px;
+  }
   .song-ctr,
   .info-box,
   .song-edit {
@@ -90,8 +93,14 @@
 }
 
 @media screen and (max-width: $sm) {
-  .info-box,
-  .song-edit {
+  .info-box {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    margin-left: 10px;
+  }
+
+  .yin-play-show {
     display: none;
   }
 }

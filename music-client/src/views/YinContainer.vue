@@ -1,11 +1,19 @@
 <template>
-  <yin-header></yin-header>
-  <router-view />
-  <yin-current-play></yin-current-play>
-  <yin-play-bar></yin-play-bar>
-  <yin-scroll-top></yin-scroll-top>
-  <yin-footer></yin-footer>
-  <yin-audio></yin-audio>
+  <el-container>
+    <el-header>
+      <yin-header></yin-header>
+    </el-header>
+    <el-main>
+      <router-view />
+      <yin-current-play></yin-current-play>
+      <yin-play-bar></yin-play-bar>
+      <yin-scroll-top></yin-scroll-top>
+      <yin-audio></yin-audio>
+    </el-main>
+    <el-footer>
+      <yin-footer></yin-footer>
+    </el-footer>
+  </el-container>
 </template>
 
 <script lang="ts" setup>
@@ -32,7 +40,7 @@ window.addEventListener("beforeunload", () => {
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
 
-#app {
-  @include layout(flex-start, stretch, column);
+.el-header, .el-main {
+  padding: 0;
 }
 </style>

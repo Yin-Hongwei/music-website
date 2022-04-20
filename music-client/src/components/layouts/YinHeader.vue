@@ -140,7 +140,6 @@ export default defineComponent({
 /*头部*/
 .yin-header {
   position: fixed;
-  // @include layout;
   width: 100%;
   height: $header-height;
   line-height: $header-height;

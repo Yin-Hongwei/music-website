@@ -1,4 +1,5 @@
-@import "var.scss";
+@import "./var.scss";
+@import "./global.scss";
 
 html,
 body,
@@ -46,17 +47,18 @@ li {
   display: inline-block;
 }
 
-html {
-  width: 100%;
-  font-size: 14px;
-  background-color: $theme-background-color;
+.pagination {
+  @include layout(center);
+  transform: translateY(15px);
 }
 
-div {
-  box-sizing: content-box;
+@media screen and (min-width: $sm) {
+  .play-list-container {
+    margin: 0 8% 30px 8%;
+  }
 }
 
-/*表单*/
+/*el*/
 .el-select-dropdown__item {
   display: block !important;
 }
