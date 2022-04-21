@@ -144,8 +144,8 @@ export default defineComponent({
         YINLIANG: Icon.YINLIANG1,
         JINGYIN: Icon.JINGYIN,
         LIEBIAO: Icon.LIEBIAO,
-        dislike: Icon.dislike,
-        like: Icon.like,
+        dislike: Icon.Dislike,
+        like: Icon.Like,
       },
     };
   },

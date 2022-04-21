@@ -55,6 +55,8 @@ const HttpManager = {
   // =======================> 评论 API
   // 添加评论
   setComment: (params) => post(`comment/add`, params),
+  // 删除评论
+  deleteComment: (id) => get(`comment/delete?id=${id}`),
   // 点赞
   setSupport: (params) => post(`comment/like`, params),
   // 返回所有评论

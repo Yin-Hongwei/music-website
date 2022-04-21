@@ -57,8 +57,8 @@ export default defineComponent({
     const { songList } = toRefs(props);
 
     const iconList = reactive({
-      dislike: Icon.dislike,
-      like: Icon.like,
+      dislike: Icon.Dislike,
+      like: Icon.Like,
     });
 
     const songUrl = computed(() => store.getters.songUrl);
