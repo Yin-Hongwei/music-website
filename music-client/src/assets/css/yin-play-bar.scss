@@ -37,9 +37,6 @@
         width: 5rem;
         cursor: pointer;
       }
-      .icon.active {
-        color: red !important;
-      }
     }
 
     .info-box {
@@ -75,7 +72,11 @@
 }
 
 .icon {
-  @include icon(1.2em, $color-black);
+  @include icon(1.1em, $color-black);
+}
+
+.active.icon {
+  color: $color-red;
 }
 
 @media screen and (min-width: $sm) {

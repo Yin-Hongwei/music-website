@@ -2,6 +2,7 @@ import { getCurrentInstance, computed } from "vue";
 import { useStore } from "vuex";
 import { LocationQueryRaw } from "vue-router";
 import { RouterName } from "@/enums";
+import { HttpManager } from "@/api";
 
 interface routerOptions {
   path?: string;
@@ -32,12 +33,14 @@ export default function () {
     return str.split("-")[0];
   }
 
-  function checkStatus() {
+  // 判断登录状态
+  function checkStatus(status?: boolean) {
     if (!token.value) {
-      (proxy as any).$message({
-        message: "请先登录",
-        type: "warning",
-      });
+      if (status !== false)
+        (proxy as any).$message({
+          message: "请先登录",
+          type: "warning",
+        });
       return false;
     }
     return true;
@@ -59,6 +62,30 @@ export default function () {
     });
   }
 
+  // 下载
+  async function downloadMusic({ songUrl, songName }) {
+    if (!songUrl) {
+      (proxy as any).$message({
+        message: "下载链接为空！",
+        type: "error",
+      });
+      console.error("下载链接为空！");
+      return;
+    }
+
+    const result = (await HttpManager.downloadMusic(songUrl)) as ResponseBody;
+    const eleLink = document.createElement("a");
+    eleLink.download = `${songName}.mp3`;
+    eleLink.style.display = "none";
+    // 字符内容转变成 blob 地址
+    const blob = new Blob([result.data]);
+    eleLink.href = URL.createObjectURL(blob);
+    document.body.appendChild(eleLink); // 触发点击
+    eleLink.click();
+    document.body.removeChild(eleLink); // 移除
+  }
+
+  // 导航索引
   function changeIndex(value) {
     proxy.$store.commit("setActiveNavName", value);
   }
@@ -100,5 +127,6 @@ export default function () {
     playMusic,
     routerManager,
     goBack,
+    downloadMusic,
   };
 }
