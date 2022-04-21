@@ -20,7 +20,7 @@
                   "
                   >下载</el-dropdown-item
                 >
-                <el-dropdown-item :icon="Delete" @click="deleteCollection({ id: scope.row.id })">删除</el-dropdown-item>
+                <el-dropdown-item :icon="Delete" v-if="show" @click="deleteCollection({ id: scope.row.id })">删除</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -44,6 +44,9 @@ export default defineComponent({
   },
   props: {
     songList: Array,
+    show: {
+      default: false
+    }
   },
   emits: ["changeData"],
   setup(props) {

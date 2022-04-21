@@ -9,7 +9,7 @@
       <el-button class="edit-info" round :icon="Edit" @click="goPage()">修改个人信息</el-button>
     </div>
     <div class="personal-body">
-      <song-list :songList="collectSongList" @changeData="changeData"></song-list>
+      <song-list :songList="collectSongList" :show="true" @changeData="changeData"></song-list>
     </div>
     <el-dialog v-model="dialogTableVisible" title="修改头像">
       <upload></upload>
