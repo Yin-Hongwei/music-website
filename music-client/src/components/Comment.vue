@@ -9,17 +9,17 @@
   </div>
   <ul class="popular">
     <li v-for="(item, index) in commentList" :key="index">
-      <el-image class="popular-img" fit="contain" :src="attachImageUrl(userPicList[index])" />
+      <el-image class="popular-img" fit="contain" :src="attachImageUrl(item.avator)" />
       <div class="popular-msg">
         <ul>
-          <li class="name">{{ userNameList[index] }}</li>
-          <li class="time">{{ getBirth(item.createTime) }}</li>
+          <li class="name">{{ item.username }}</li>
+          <li class="time">{{ formatDate(item.createTime) }}</li>
           <li class="content">{{ item.content }}</li>
         </ul>
       </div>
-      <div class="up" ref="up" @click="setSupport(item.id, item.up, index)">
-        <yin-icon :icon="iconList.ZAN"></yin-icon>
-        {{ item.up }}
+      <div class="comment-ctr" @click="setSupport(item.id, item.up, index)">
+        <div><yin-icon :icon="iconList.Support"></yin-icon> {{ item.up }}</div>
+        <el-icon v-if="item.userId === userId" @click="deleteComment(item.id, index)"><delete /></el-icon>
       </div>
     </li>
   </ul>
@@ -28,15 +28,17 @@
 <script lang="ts">
 import { defineComponent, getCurrentInstance, ref, toRefs, computed, watch, reactive, onMounted } from "vue";
 import { useStore } from "vuex";
+import { Delete } from "@element-plus/icons-vue";
 import YinIcon from "@/components/layouts/YinIcon.vue";
 import mixin from "@/mixins/mixin";
 import { HttpManager } from "@/api";
 import { Icon } from "@/enums";
-import { getBirth } from "@/utils";
+import { formatDate } from "@/utils";
 
 export default defineComponent({
   components: {
     YinIcon,
+    Delete,
   },
   props: {
     playId: Number || String, // 歌曲ID或歌单ID
@@ -49,11 +51,9 @@ export default defineComponent({
 
     const { playId, type } = toRefs(props);
     const commentList = ref([]); // 存放评论内容
-    const userPicList = ref([]); // 保存评论用户头像
-    const userNameList = ref([]); // 保存评论用户名字
     const textarea = ref(""); // 存放输入内容
     const iconList = reactive({
-      ZAN: Icon.ZAN,
+      Support: Icon.Support,
     });
     const userId = computed(() => store.getters.userId);
     const songId = computed(() => store.getters.songId);
@@ -66,11 +66,11 @@ export default defineComponent({
       try {
         const result = (await HttpManager.getAllComment(type.value, playId.value)) as ResponseBody;
         commentList.value = result.data;
-        for (const item of commentList.value) {
+        for (let index = 0; index < commentList.value.length; index++) {
           // 获取评论用户的昵称和头像
-          const resultUser = (await HttpManager.getUserOfId(item.userId)) as ResponseBody;
-          userPicList.value.push(resultUser.data[0].avator);
-          userNameList.value.push(resultUser.data[0].username);
+          const resultUser = (await HttpManager.getUserOfId(commentList.value[index].userId)) as ResponseBody;
+          commentList.value[index].avator = resultUser.data[0].avator;
+          commentList.value[index].username = resultUser.data[0].username;
         }
       } catch (error) {
         console.error(error);
@@ -104,6 +104,17 @@ export default defineComponent({
       }
     }
 
+    // 删除评论
+    async function deleteComment(id, index) {
+      const result = (await HttpManager.deleteComment(id)) as ResponseBody;
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
+
+      if (result.success) commentList.value.splice(index, 1);
+    }
+
     // 点赞
     async function setSupport(id, up, index) {
       if (!checkStatus()) return;
@@ -124,15 +135,15 @@ export default defineComponent({
     });
 
     return {
+      userId,
       commentList,
-      userPicList,
-      userNameList,
       textarea,
       iconList,
       attachImageUrl: HttpManager.attachImageUrl,
       submitComment,
       setSupport,
-      getBirth,
+      formatDate,
+      deleteComment,
     };
   },
 });
@@ -199,13 +210,16 @@ export default defineComponent({
       }
     }
 
-    .up {
+    .comment-ctr {
       display: flex;
       align-items: center;
-      width: 40px;
-      justify-content: space-around;
+      width: 80px;
       font-size: 1rem;
       cursor: pointer;
+
+      .el-icon {
+        margin: 0 10px;
+      }
 
       &:hover,
       :deep(.icon):hover {
