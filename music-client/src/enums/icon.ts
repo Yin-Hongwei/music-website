@@ -11,7 +11,8 @@ export const enum Icon {
   XIAYISHOU = "#icon-ziyuanldpi1", // 下一首
   JINGYIN = "#icon-yinliangjingyinheix", // 静音
   LIEBIAO = "#icon-liebiao", // 列表
-  XIHUAN = "#icon-xihuan-shi", // 收藏
+  dislike = "#icon-xihuan1", // 未收藏
+  like = "#icon-xihuan", // 收藏
   ZAN = "#icon-zan", // 赞
   XUNHUAN = "#icon-xunhuan", // 循环
   LUANXU = "#icon-xunhuan1", // 乱序

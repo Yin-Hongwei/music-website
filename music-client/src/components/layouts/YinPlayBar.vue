@@ -8,7 +8,7 @@
     <div class="control-box">
       <div class="info-box">
         <!--歌曲图片-->
-        <el-image class="song-bar-img" fit="contain" :src="attachImageUrl(songPic)" @click="goPlayerPage"/>
+        <el-image class="song-bar-img" fit="contain" :src="attachImageUrl(songPic)" @click="goPlayerPage" />
         <!--播放开始结束时间-->
         <div v-if="songId">
           <div class="song-info">{{ this.songTitle }} - {{ this.singerName }}</div>
@@ -36,9 +36,23 @@
       </div>
       <div class="song-ctr song-edit">
         <!--收藏-->
-        <yin-icon class="yin-play-show" :class="{ active: isCollection }" :icon="iconList.XIHUAN" @click="collection"></yin-icon>
+        <yin-icon
+          class="yin-play-show"
+          :class="{ active: isCollection }"
+          :icon="isCollection ? iconList.like : iconList.dislike"
+          @click="changeCollection"
+        ></yin-icon>
         <!--下载-->
-        <yin-icon class="yin-play-show" :icon="iconList.XIAZAI" @click="downloadMusic"></yin-icon>
+        <yin-icon
+          class="yin-play-show"
+          :icon="iconList.download"
+          @click="
+            downloadMusic({
+              songUrl,
+              songName: singerName + '-' + songTitle,
+            })
+          "
+        ></yin-icon>
         <!--歌曲列表-->
         <yin-icon :icon="iconList.LIEBIAO" @click="changeAside"></yin-icon>
       </div>
@@ -47,8 +61,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { mapGetters } from "vuex";
+import { defineComponent, getCurrentInstance, ref, computed, onMounted, watch } from "vue";
+import { mapGetters, useStore } from "vuex";
 import mixin from "@/mixins/mixin";
 import YinIcon from "./YinIcon.vue";
 import { HttpManager } from "@/api";
@@ -56,9 +70,61 @@ import { formatSeconds } from "@/utils";
 import { Icon, RouterName } from "@/enums";
 
 export default defineComponent({
+  components: {
+    YinIcon,
+  },
   setup() {
-    const { routerManager, playMusic, checkStatus } = mixin();
-    return { playMusic, routerManager, checkStatus, attachImageUrl: HttpManager.attachImageUrl };
+    const { proxy } = getCurrentInstance();
+    const store = useStore();
+    const { routerManager, playMusic, checkStatus, downloadMusic } = mixin();
+
+    const isCollection = ref(false); // 是否收藏
+
+    const userId = computed(() => store.getters.userId);
+    const songId = computed(() => store.getters.songId);
+    const token = computed(() => store.getters.token);
+
+    watch(songId, () => {
+      initCollection();
+    });
+    watch(token, (value) => {
+      if (!value) isCollection.value = false;
+    });
+
+    async function initCollection() {
+      if (!checkStatus(false)) return;
+
+      const params = new URLSearchParams();
+      params.append("userId", userId.value);
+      params.append("type", "0"); // 0 代表歌曲， 1 代表歌单
+      params.append("songId", songId.value);
+      isCollection.value = ((await HttpManager.isCollection(params)) as ResponseBody).data;
+    }
+
+    async function changeCollection() {
+      if (!checkStatus()) return;
+
+      const params = new URLSearchParams();
+      params.append("userId", userId.value);
+      params.append("type", "0"); // 0 代表歌曲， 1 代表歌单
+      params.append("songId", songId.value);
+
+      const result = isCollection.value
+        ? ((await HttpManager.deleteCollection(params)) as ResponseBody)
+        : ((await HttpManager.setCollection(params)) as ResponseBody);
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
+
+      if (result.data == true || result.data == false) isCollection.value = result.data;
+    }
+
+    onMounted(() => {
+      initCollection();
+    });
+
+    return { isCollection, playMusic, routerManager, checkStatus, attachImageUrl: HttpManager.attachImageUrl, changeCollection, downloadMusic };
   },
   data() {
     return {
@@ -71,19 +137,17 @@ export default defineComponent({
       playStateList: [Icon.XUNHUAN, Icon.LUANXU],
       playStateIndex: 0,
       iconList: {
-        XIAZAI: Icon.XIAZAI,
+        download: Icon.XIAZAI,
         ZHEDIE: Icon.ZHEDIE,
         SHANGYISHOU: Icon.SHANGYISHOU,
         XIAYISHOU: Icon.XIAYISHOU,
         YINLIANG: Icon.YINLIANG1,
         JINGYIN: Icon.JINGYIN,
         LIEBIAO: Icon.LIEBIAO,
-        XIHUAN: Icon.XIHUAN,
+        dislike: Icon.dislike,
+        like: Icon.like,
       },
     };
-  },
-  components: {
-    YinIcon,
   },
   computed: {
     ...mapGetters([
@@ -101,7 +165,6 @@ export default defineComponent({
       "currentPlayIndex", // 当前歌曲在歌曲列表的位置
       "showAside", // 是否显示侧边栏
       "autoNext", // 用于触发自动播放下一首
-      "isCollection", // 是否收藏
     ]),
   },
   watch: {
@@ -125,24 +188,6 @@ export default defineComponent({
     },
   },
   methods: {
-    // 下载
-    async downloadMusic() {
-      if (!this.songUrl) {
-        console.error('下载链接为空！')
-        return
-      }
-
-      const result = (await HttpManager.downloadMusic(this.songUrl)) as ResponseBody;
-      const eleLink = document.createElement("a");
-      eleLink.download = `${this.singerName}-${this.songTitle}.mp3`;
-      eleLink.style.display = "none";
-      // 字符内容转变成blob地址
-      const blob = new Blob([result.data]);
-      eleLink.href = URL.createObjectURL(blob);
-      document.body.appendChild(eleLink); // 触发点击
-      eleLink.click();
-      document.body.removeChild(eleLink); // 移除
-    },
     changeAside() {
       this.$store.commit("setShowAside", !this.showAside);
     },
@@ -208,22 +253,6 @@ export default defineComponent({
     },
     goPlayerPage() {
       this.routerManager(RouterName.Lyric, { path: `${RouterName.Lyric}/${this.songId}` });
-    },
-    async collection() {
-      if (!this.checkStatus()) return;
-
-      const params = new URLSearchParams();
-      params.append("userId", this.userId);
-      params.append("type", "0"); // 0 代表歌曲， 1 代表歌单
-      params.append("songId", this.songId);
-
-      const result = (await HttpManager.setCollection(params)) as ResponseBody;
-      (this as any).$message({
-        message: result.message,
-        type: result.type,
-      });
-
-      if (result.success)  (this as any).$store.commit("setIsCollection", true);
     },
   },
 });

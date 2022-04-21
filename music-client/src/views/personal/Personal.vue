@@ -9,9 +9,7 @@
       <el-button class="edit-info" round :icon="Edit" @click="goPage()">修改个人信息</el-button>
     </div>
     <div class="personal-body">
-      <song-list :songList="collectSongList">
-        <template v-slot:title>我的收藏</template>
-      </song-list>
+      <song-list :songList="collectSongList" :show="true" @changeData="changeData"></song-list>
     </div>
     <el-dialog v-model="dialogTableVisible" title="修改头像">
       <upload></upload>
@@ -67,6 +65,7 @@ export default defineComponent({
     }
     // 获取收藏的歌曲
     async function getCollection(userId) {
+      collectSongList.value = []
       const result = (await HttpManager.getCollectionOfUser(userId)) as ResponseBody;
       const collectIDList = result.data || []; // 存放收藏的歌曲ID
       // 通过歌曲ID获取歌曲信息
@@ -74,6 +73,10 @@ export default defineComponent({
         const result = (await HttpManager.getSongOfId(item.songId)) as ResponseBody;
         collectSongList.value.push(result.data[0]);
       }
+    }
+
+    function changeData() {
+      getCollection(userId.value);
     }
 
     nextTick(() => {
@@ -89,6 +92,7 @@ export default defineComponent({
       personalInfo,
       attachImageUrl: HttpManager.attachImageUrl,
       goPage,
+      changeData,
     };
   },
 });
@@ -112,7 +116,7 @@ export default defineComponent({
 
 .personal-info {
   position: relative;
-  margin-bottom: 100px;
+  margin-bottom: 60px;
   .personal-img {
     height: 200px;
     width: 200px;

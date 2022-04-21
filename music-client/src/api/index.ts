@@ -40,6 +40,10 @@ const HttpManager = {
   // 添加收藏的歌曲 type: 0 代表歌曲， 1 代表歌单
   setCollection: (params) => post(`collection/add`, params),
 
+  deleteCollection: (params) => post(`collection/delete`, params),
+
+  isCollection: (params) => post(`collection/status`, params),
+
   // =======================> 评分 API
   // 提交评分
   setRank: (params) => post(`rankList/add`, params),

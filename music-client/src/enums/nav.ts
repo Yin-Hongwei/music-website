@@ -47,7 +47,7 @@ export const MENULIST = [
   },
   {
     name: NavName.Setting,
-    path: RouterName.Setting
+    path: RouterName.Setting,
   },
   {
     name: NavName.SignOut,

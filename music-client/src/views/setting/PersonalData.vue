@@ -27,7 +27,7 @@
     <el-form-item prop="email" label="邮箱">
       <el-input v-model="registerForm.email" placeholder="邮箱"></el-input>
     </el-form-item>
-    <el-form-item class="btn">
+    <el-form-item>
       <el-button @click="goBack(-1)">取消</el-button>
       <el-button type="primary" @click="saveMsg()">保存</el-button>
     </el-form-item>

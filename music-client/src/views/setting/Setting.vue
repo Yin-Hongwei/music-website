@@ -9,7 +9,7 @@
         <Password></Password>
       </el-tab-pane>
       <el-tab-pane label="账号和安全" class="content">
-        <el-button type="danger" round @click="cancelAccount">注销账号</el-button>
+        <el-button type="danger" :icon="Delete" @click="cancelAccount">注销账号</el-button>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import { defineComponent, getCurrentInstance, computed, reactive } from "vue";
+import { Delete } from "@element-plus/icons-vue";
 import PersonalData from "./PersonalData.vue";
 import Password from "./Password.vue";
 import { HttpManager } from "@/api";
@@ -47,6 +48,7 @@ export default defineComponent({
     }
 
     return {
+      Delete,
       cancelAccount,
     };
   },
