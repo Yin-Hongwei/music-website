@@ -66,8 +66,6 @@ export default defineComponent({
     }
 
     function goMenuList(path) {
-      if (path === 0) proxy.$store.commit("setIsCollection", false);
-
       if (path == RouterName.SignOut) {
         proxy.$store.commit("setToken", false);
         changeIndex(NavName.Home);

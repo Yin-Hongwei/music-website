@@ -1,24 +1,66 @@
 <template>
-  <el-table class="content" stripe highlight-current-row :data="dataList" @row-click="handleClick">
-    <el-table-column type="index" width="50" />
-    <el-table-column prop="songName" label="歌曲名" />
-    <el-table-column prop="singerName" label="歌手" />
-    <el-table-column prop="introduction" label="专辑" />
-  </el-table>
+  <div class="content">
+    <el-table highlight-current-row :data="dataList" @row-click="handleClick">
+      <el-table-column prop="songName" label="歌曲" />
+      <el-table-column prop="singerName" label="歌手" />
+      <el-table-column prop="introduction" label="专辑" />
+      <el-table-column label="编辑" width="80" align="center">
+        <template #default="scope">
+          <el-dropdown>
+            <el-icon @click="handleEdit(scope.row)"><MoreFilled /></el-icon>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item
+                  :icon="Download"
+                  @click="
+                    downloadMusic({
+                      songUrl: scope.row.url,
+                      songName: scope.row.name,
+                    })
+                  "
+                  >下载</el-dropdown-item
+                >
+                <el-dropdown-item :icon="Delete" @click="deleteCollection({ id: scope.row.id })">删除</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, computed } from "vue";
+import { defineComponent, getCurrentInstance, toRefs, computed, reactive } from "vue";
+import { useStore } from "vuex";
 import mixin from "@/mixins/mixin";
+import { MoreFilled, Delete, Download } from "@element-plus/icons-vue";
+import { HttpManager } from "@/api";
+import { Icon } from "@/enums";
 
 export default defineComponent({
+  components: {
+    MoreFilled,
+  },
   props: {
     songList: Array,
   },
+  emits: ["changeData"],
   setup(props) {
-    const { getSongTitle, getSingerName, playMusic } = mixin();
+    const { getSongTitle, getSingerName, playMusic, checkStatus, downloadMusic } = mixin();
+    const { proxy } = getCurrentInstance();
+    const store = useStore();
 
     const { songList } = toRefs(props);
+
+    const iconList = reactive({
+      dislike: Icon.dislike,
+      like: Icon.like,
+    });
+
+    const songUrl = computed(() => store.getters.songUrl);
+    const singerName = computed(() => store.getters.singerName);
+    const songTitle = computed(() => store.getters.songTitle);
     const dataList = computed(() => {
       const list = [];
       songList.value.forEach((item: any, index) => {
@@ -42,9 +84,41 @@ export default defineComponent({
       });
     }
 
+    function handleEdit(row) {
+      console.log("row", row);
+    }
+
+    const userId = computed(() => store.getters.userId);
+
+    async function deleteCollection({ id }) {
+      if (!checkStatus()) return;
+
+      const params = new URLSearchParams();
+      params.append("userId", userId.value);
+      params.append("type", "0"); // 0 代表歌曲， 1 代表歌单
+      params.append("songId", id);
+
+      const result = (await HttpManager.deleteCollection(params)) as ResponseBody;
+      (proxy as any).$message({
+        message: result.message,
+        type: result.type,
+      });
+
+      if (result.data === false) proxy.$emit("changeData", result.data);
+    }
+
     return {
       dataList,
+      iconList,
+      Delete,
+      Download,
+      songUrl,
+      singerName,
+      songTitle,
       handleClick,
+      handleEdit,
+      downloadMusic,
+      deleteCollection,
     };
   },
 });
@@ -57,8 +131,7 @@ export default defineComponent({
 .content {
   background-color: $color-white;
   border-radius: $border-radius-songlist;
-  border: 1px solid $color-light-grey;
-  padding: 5px;
+  padding: 10px;
 }
 
 .content:deep(.el-table__row.current-row) {
@@ -68,5 +141,9 @@ export default defineComponent({
 
 .content:deep(.el-table__row) {
   cursor: pointer;
+}
+
+.icon {
+  @include icon(1.2em, $color-black);
 }
 </style>

@@ -8,7 +8,6 @@ export default {
     songUrl: "", // 音乐 URL
     songPic: `/img/songPic/tubiao.jpg`, // 歌曲图片
     singerName: "", //  歌手名
-    isCollection: false, // 是否收藏
     lyric: [], // 处理后的歌词数据
 
     /** 音乐播放信息 */
@@ -31,7 +30,6 @@ export default {
     songUrl: (state) => state.songUrl,
     songPic: (state) => state.songPic,
     singerName: (state) => state.singerName,
-    isCollection: (state) => state.isCollection,
     lyric: (state) => state.lyric,
 
     isPlay: (state) => state.isPlay,
@@ -61,9 +59,6 @@ export default {
     },
     setSingerName: (state, singerName) => {
       state.singerName = singerName;
-    },
-    setIsCollection: (state, isCollection) => {
-      state.isCollection = isCollection;
     },
     setAutoNext: (state, autoNext) => {
       state.autoNext = autoNext;
