@@ -110,7 +110,7 @@ export default defineComponent({
       params.append("songId", songId.value);
 
       const result = isCollection.value
-        ? ((await HttpManager.deleteCollection(params)) as ResponseBody)
+        ? ((await HttpManager.deleteCollection(userId.value, songId.value)) as ResponseBody)
         : ((await HttpManager.setCollection(params)) as ResponseBody);
       (proxy as any).$message({
         message: result.message,
@@ -121,7 +121,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      initCollection();
+      if(songId.value) initCollection();
     });
 
     return { isCollection, playMusic, routerManager, checkStatus, attachImageUrl: HttpManager.attachImageUrl, changeCollection, downloadMusic };

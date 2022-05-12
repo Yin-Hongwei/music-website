@@ -17,7 +17,7 @@
           <li class="content">{{ item.content }}</li>
         </ul>
       </div>
-      <div class="comment-ctr" @click="setSupport(item.id, item.up, index)">
+      <div ref="up" class="comment-ctr" @click="setSupport(item.id, item.up, index)">
         <div><yin-icon :icon="iconList.Support"></yin-icon> {{ item.up }}</div>
         <el-icon v-if="item.userId === userId" @click="deleteComment(item.id, index)"><delete /></el-icon>
       </div>
@@ -125,7 +125,7 @@ export default defineComponent({
 
       const result = (await HttpManager.setSupport(params)) as ResponseBody;
       if (result.success) {
-        proxy.$refs.up[index].children[0].style.color = "#2796dd";
+        // proxy.$refs.up[index].children[0].style.color = "#2796dd";
         await getComment();
       }
     }
