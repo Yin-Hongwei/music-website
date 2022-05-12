@@ -17,9 +17,7 @@
                       songUrl: scope.row.url,
                       songName: scope.row.name,
                     })
-                  "
-                  >下载</el-dropdown-item
-                >
+                  ">下载</el-dropdown-item>
                 <el-dropdown-item :icon="Delete" v-if="show" @click="deleteCollection({ id: scope.row.id })">删除</el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -96,12 +94,7 @@ export default defineComponent({
     async function deleteCollection({ id }) {
       if (!checkStatus()) return;
 
-      const params = new URLSearchParams();
-      params.append("userId", userId.value);
-      params.append("type", "0"); // 0 代表歌曲， 1 代表歌单
-      params.append("songId", id);
-
-      const result = (await HttpManager.deleteCollection(params)) as ResponseBody;
+      const result = (await HttpManager.deleteCollection(userId.value, id)) as ResponseBody;
       (proxy as any).$message({
         message: result.message,
         type: result.type,
