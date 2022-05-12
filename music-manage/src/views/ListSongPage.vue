@@ -104,12 +104,9 @@ export default defineComponent({
     async function saveSong() {
       const id = `${registerForm.singerName}-${registerForm.songName}`;
       const result = (await HttpManager.getSongOfSingerName(id)) as ResponseBody;
-      (proxy as any).$message({
-        message: result.message,
-        type: result.type,
-      });
+
       if (result.success) {
-        addSong(result[0].id);
+        addSong(result.data[0].id);
       }
     }
     async function addSong(id) {

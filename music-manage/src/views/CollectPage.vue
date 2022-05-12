@@ -7,7 +7,7 @@
 
   <div class="container">
     <div class="handle-box">
-      <el-button @click="deleteAll" disabled>批量删除</el-button>
+      <el-button @click="deleteAll">批量删除</el-button>
       <el-input placeholder="筛选歌曲" v-model="searchWord"></el-input>
     </div>
     <el-table height="550px" border size="small" :data="tableData" @selection-change="handleSelectionChange">
@@ -15,7 +15,7 @@
       <el-table-column prop="name" label="歌手-歌曲"></el-table-column>
       <el-table-column label="操作" width="90" align="center">
         <template v-slot="scope">
-          <el-button type="danger" @click="deleteRow(scope.row.id)" disabled>删除</el-button>
+          <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
