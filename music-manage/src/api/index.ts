@@ -1,4 +1,4 @@
-import { get, post, getBaseURL } from './request'
+import { get, post, deletes, getBaseURL } from './request'
 
 const HttpManager = {
   // 获取图片信息
@@ -23,7 +23,7 @@ const HttpManager = {
   // 返回的指定用户ID收藏列表
   getCollectionOfUser: (userId) => get(`collection/detail?userId=${userId}`),
   // 删除收藏的歌曲
-  deleteCollection: (userId, songId) => get(`collection/delete?userId=${userId}&&songId=${songId}`),
+  deleteCollection: (userId, songId) => deletes(`collection/delete?userId=${userId}&&songId=${songId}`),
 
   // =======================> 评论列表 API
   // 获得指定歌曲ID的评论列表
