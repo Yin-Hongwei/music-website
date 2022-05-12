@@ -1,4 +1,4 @@
-import { getBaseURL, get, post } from "./request";
+import { getBaseURL, get, post, deletes } from "./request";
 
 const HttpManager = {
   // 获取图片信息
@@ -40,7 +40,7 @@ const HttpManager = {
   // 添加收藏的歌曲 type: 0 代表歌曲， 1 代表歌单
   setCollection: (params) => post(`collection/add`, params),
 
-  deleteCollection: (params) => post(`collection/delete`, params),
+  deleteCollection: (userId, songId) => deletes(`collection/delete?userId=${userId}&&songId=${songId}`),
 
   isCollection: (params) => post(`collection/status`, params),
 
