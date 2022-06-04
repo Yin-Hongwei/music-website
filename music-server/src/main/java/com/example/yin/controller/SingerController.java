@@ -1,12 +1,11 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.FatalMessage;
 import com.example.yin.common.ErrorMessage;
+import com.example.yin.common.FatalMessage;
 import com.example.yin.common.SuccessMessage;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.Singer;
 import com.example.yin.service.impl.SingerServiceImpl;
-
 import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -39,8 +38,7 @@ public class SingerController {
     }
 
     // 添加歌手
-    @ResponseBody
-    @RequestMapping(value = "/singer/add", method = RequestMethod.POST)
+    @PostMapping("/singer/add")
     public Object addSinger(HttpServletRequest req) {
         String name = req.getParameter("name").trim();
         String sex = req.getParameter("sex").trim();
@@ -73,7 +71,7 @@ public class SingerController {
     }
 
     // 删除歌手
-    @RequestMapping(value = "/singer/delete", method = RequestMethod.GET)
+    @GetMapping("/singer/delete")
     public Object deleteSinger(HttpServletRequest req) {
         String id = req.getParameter("id");
 
@@ -86,13 +84,13 @@ public class SingerController {
     }
 
     // 返回所有歌手
-    @RequestMapping(value = "/singer", method = RequestMethod.GET)
+    @GetMapping("/singer")
     public Object allSinger() {
         return new SuccessMessage<List<Singer>>(null, singerService.allSinger()).getMessage();
     }
 
     // 根据歌手名查找歌手
-    @RequestMapping(value = "/singer/name/detail", method = RequestMethod.GET)
+    @GetMapping("/singer/name/detail")
     public Object singerOfName(HttpServletRequest req) {
         String name = req.getParameter("name").trim();
 
@@ -100,7 +98,7 @@ public class SingerController {
     }
 
     // 根据歌手性别查找歌手
-    @RequestMapping(value = "/singer/sex/detail", method = RequestMethod.GET)
+    @GetMapping("/singer/sex/detail")
     public Object singerOfSex(HttpServletRequest req) {
         String sex = req.getParameter("sex").trim();
 
@@ -108,8 +106,7 @@ public class SingerController {
     }
 
     // 更新歌手信息
-    @ResponseBody
-    @RequestMapping(value = "/singer/update", method = RequestMethod.POST)
+    @PostMapping("/singer/update")
     public Object updateSingerMsg(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String name = req.getParameter("name").trim();
@@ -142,8 +139,7 @@ public class SingerController {
     }
 
     // 更新歌手头像
-    @ResponseBody
-    @RequestMapping(value = "/singer/avatar/update", method = RequestMethod.POST)
+    @PostMapping("/singer/avatar/update")
     public Object updateSingerPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img"

@@ -16,7 +16,7 @@ public interface ConsumerService {
 
     boolean existUser(String username);
 
-    boolean veritypasswd(String username, String password);
+    boolean verityPasswd(String username, String password);
 
     boolean deleteUser(Integer id);
 

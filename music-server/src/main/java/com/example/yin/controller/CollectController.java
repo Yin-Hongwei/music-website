@@ -6,10 +6,7 @@ import com.example.yin.domain.Collect;
 import com.example.yin.service.impl.CollectServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,7 +21,7 @@ public class CollectController {
 
     // 添加收藏的歌曲
     @ResponseBody
-    @RequestMapping(value = "/collection/add", method = RequestMethod.POST)
+    @PostMapping("/collection/add")
     public Object addCollection(HttpServletRequest req) {
         String user_id = req.getParameter("userId");
         String type = req.getParameter("type");
@@ -50,7 +47,7 @@ public class CollectController {
     }
 
     // 取消收藏的歌曲
-    @RequestMapping(value = "/collection/delete", method = RequestMethod.DELETE)
+    @DeleteMapping("/collection/delete")
     public Object deleteCollection(HttpServletRequest req) {
         String user_id = req.getParameter("userId").trim();
         String song_id = req.getParameter("songId").trim();
@@ -64,7 +61,7 @@ public class CollectController {
     }
 
     // 是否收藏歌曲
-    @RequestMapping(value = "/collection/status", method = RequestMethod.POST)
+    @PostMapping("/collection/status")
     public Object isCollection(HttpServletRequest req) {
         String user_id = req.getParameter("userId").trim();
         String song_id = req.getParameter("songId").trim();
@@ -78,7 +75,7 @@ public class CollectController {
     }
 
     // 返回的指定用户 ID 收藏的列表
-    @RequestMapping(value = "/collection/detail", method = RequestMethod.GET)
+    @GetMapping("/collection/detail")
     public Object collectionOfUser(HttpServletRequest req) {
         String userId = req.getParameter("userId");
 

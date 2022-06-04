@@ -104,17 +104,17 @@ public class ConsumerController {
 
     /**
      * 登录判断
+     * 这里用不了  requestBody 因为前端传回来的东西 不是j
      */
-    @ResponseBody
-    @RequestMapping(value = "/user/login/status", method = RequestMethod.POST)
+    @PostMapping("/user/login/status")
     public Object loginStatus(HttpServletRequest req, HttpSession session) {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        boolean res = consumerService.veritypasswd(username, password);
+        boolean res = consumerService.verityPasswd(username, password);
         if (res) {
             session.setAttribute("username", username);
-            return new SuccessMessage<List<Consumer>>("登录成功", consumerService.loginStatus(username)).getMessage();
+            return new SuccessMessage<>("登录成功", consumerService.loginStatus(username)).getMessage();
         } else {
             return new ErrorMessage("用户名或密码错误").getMessage();
         }
@@ -123,7 +123,7 @@ public class ConsumerController {
     /**
      * 返回所有用户
      */
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    @GetMapping( "/user")
     public Object allUser() {
         return new SuccessMessage<List<Consumer>>(null, consumerService.allUser()).getMessage();
     }
@@ -131,7 +131,7 @@ public class ConsumerController {
     /**
      * 返回指定 ID 的用户
      */
-    @RequestMapping(value = "/user/detail", method = RequestMethod.GET)
+    @GetMapping("/user/detail")
     public Object userOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
 
@@ -141,7 +141,7 @@ public class ConsumerController {
     /**
      * 删除用户
      */
-    @RequestMapping(value = "/user/delete", method = RequestMethod.GET)
+    @GetMapping("/user/delete")
     public Object deleteUser(HttpServletRequest req) {
         String id = req.getParameter("id");
         
@@ -156,8 +156,7 @@ public class ConsumerController {
     /**
      * 更新用户信息
      */
-    @ResponseBody
-    @RequestMapping(value = "/user/update", method = RequestMethod.POST)
+    @PostMapping("/user/update")
     public Object updateUserMsg(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String username = req.getParameter("username").trim();
@@ -198,15 +197,14 @@ public class ConsumerController {
     /**
      * 更新用户密码
      */
-    @ResponseBody
-    @RequestMapping(value = "/user/updatePassword", method = RequestMethod.POST)
+    @PostMapping("/user/updatePassword")
     public Object updatePassword(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String username = req.getParameter("username").trim();
         String old_password = req.getParameter("old_password").trim();
         String password = req.getParameter("password").trim();
 
-        boolean res = consumerService.veritypasswd(username, old_password);
+        boolean res = consumerService.verityPasswd(username, old_password);
         if (!res) {
             return new ErrorMessage("密码输入错误").getMessage();
         }
@@ -227,7 +225,7 @@ public class ConsumerController {
      * 更新用户头像
      */
     @ResponseBody
-    @RequestMapping(value = "/user/avatar/update", method = RequestMethod.POST)
+    @PostMapping("/user/avatar/update")
     public Object updateUserPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
         String filePath = Constants.PROJECT_PATH + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "avatorImages";

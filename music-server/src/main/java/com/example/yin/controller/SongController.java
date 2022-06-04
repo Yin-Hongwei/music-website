@@ -54,8 +54,7 @@ public class SongController {
     }
 
     // 添加歌曲
-    @ResponseBody
-    @RequestMapping(value = "/song/add", method = RequestMethod.POST)
+    @PostMapping("/song/add")
     public Object addSong(HttpServletRequest req, @RequestParam("file") MultipartFile mpfile) {
         String singer_id = req.getParameter("singerId").trim();
         String name = req.getParameter("name").trim();
@@ -95,7 +94,7 @@ public class SongController {
     }
 
     // 删除歌曲
-    @RequestMapping(value = "/song/delete", method = RequestMethod.GET)
+    @DeleteMapping("/song/delete")
     public Object deleteSong(HttpServletRequest req) {
         String id = req.getParameter("id");
 
@@ -108,13 +107,13 @@ public class SongController {
     }
 
     // 返回所有歌曲
-    @RequestMapping(value = "/song", method = RequestMethod.GET)
+    @GetMapping("/song")
     public Object allSong() {
         return new SuccessMessage<List<Song>>(null, songService.allSong()).getMessage();
     }
 
     // 返回指定歌曲ID的歌曲
-    @RequestMapping(value = "/song/detail", method = RequestMethod.GET)
+    @GetMapping("/song/detail")
     public Object songOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
 
@@ -122,7 +121,7 @@ public class SongController {
     }
 
     // 返回指定歌手ID的歌曲
-    @RequestMapping(value = "/song/singer/detail", method = RequestMethod.GET)
+    @GetMapping("/song/singer/detail")
     public Object songOfSingerId(HttpServletRequest req) {
         String singerId = req.getParameter("singerId");
 
@@ -130,7 +129,7 @@ public class SongController {
     }
 
     // 返回指定歌手名的歌曲
-    @RequestMapping(value = "/song/singerName/detail", method = RequestMethod.GET)
+    @GetMapping("/song/singerName/detail")
     public Object songOfSingerName(HttpServletRequest req) {
         String name = req.getParameter("name");
 
@@ -138,8 +137,7 @@ public class SongController {
     }
 
     // 更新歌曲信息
-    @ResponseBody
-    @RequestMapping(value = "/song/update", method = RequestMethod.POST)
+    @PostMapping("/song/update")
     public Object updateSongMsg(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String singer_id = req.getParameter("singerId").trim();
@@ -164,8 +162,7 @@ public class SongController {
     }
 
     // 更新歌曲图片
-    @ResponseBody
-    @RequestMapping(value = "/song/img/update", method = RequestMethod.POST)
+    @PostMapping("/song/img/update")
     public Object updateSongPic(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {
         String fileName = System.currentTimeMillis() + urlFile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songPic";
@@ -193,8 +190,7 @@ public class SongController {
     }
 
     // 更新歌曲
-    @ResponseBody
-    @RequestMapping(value = "/song/url/update", method = RequestMethod.POST)
+    @PostMapping("/song/url/update")
     public Object updateSongUrl(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {
         String fileName = urlFile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "song";

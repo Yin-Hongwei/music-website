@@ -43,7 +43,7 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    public boolean veritypasswd(String username, String password) {
+    public boolean verityPasswd(String username, String password) {
         return consumerMapper.verifyPassword(username, password) > 0;
     }
 

@@ -14,7 +14,7 @@
     </commentGenerator>
 
     <!-- 数据库的相关配置 -->
-    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/tp_music?serverTimezone=Asia/Shanghai&amp;nullCatalogMeansCurrent=true" userId="root" password="1026"/>
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/tp_music?serverTimezone=Asia/Shanghai&amp;nullCatalogMeansCurrent=true" userId="root" password="root"/>
 
     <javaTypeResolver>
       <property name="forceBigDecimals" value="false"/>
