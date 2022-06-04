@@ -11,8 +11,8 @@
 .sts4-cache
 target/
 .DS_Store
-img/
-song/
+../img/
+../song/
 logs/
 
 ### IntelliJ IDEA ###
