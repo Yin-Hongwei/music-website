@@ -1,13 +1,9 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.FatalMessage;
-import com.example.yin.common.ErrorMessage;
-import com.example.yin.common.SuccessMessage;
+import com.example.yin.common.Message;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.Song;
 import com.example.yin.service.impl.SongServiceImpl;
-
-import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
@@ -24,13 +20,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 
 @RestController
 public class SongController {
 
     @Autowired
     private SongServiceImpl songService;
+
+    private Message message = new Message();
 
     @Bean
     public MultipartConfigElement multipartConfigElement() {
@@ -84,12 +81,12 @@ public class SongController {
             song.setUrl(storeUrlPath);
             boolean res = songService.addSong(song);
             if (res) {
-                return new SuccessMessage<String>("上传成功", storeUrlPath).getMessage();
+                return message.success("上传成功", storeUrlPath);
             } else {
-                return new ErrorMessage("上传失败").getMessage();
+                return message.error("上传失败");
             }
         } catch (IOException e) {
-            return new FatalMessage("上传失败" + e.getMessage()).getMessage();
+            return message.fatal("上传失败" + e.getMessage());
         }
     }
 
@@ -100,16 +97,16 @@ public class SongController {
 
         boolean res = songService.deleteSong(Integer.parseInt(id));
         if (res) {
-            return new SuccessMessage<Null>("删除成功").getMessage();
+            return message.success("删除成功");
         } else {
-            return new ErrorMessage("删除失败").getMessage();
+            return message.error("删除失败");
         }
     }
 
     // 返回所有歌曲
     @GetMapping("/song")
     public Object allSong() {
-        return new SuccessMessage<List<Song>>(null, songService.allSong()).getMessage();
+        return message.success(null, songService.allSong());
     }
 
     // 返回指定歌曲ID的歌曲
@@ -117,7 +114,7 @@ public class SongController {
     public Object songOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
 
-        return new SuccessMessage<List<Song>>(null, songService.songOfId(Integer.parseInt(id))).getMessage();
+        return message.success(null, songService.songOfId(Integer.parseInt(id)));
     }
 
     // 返回指定歌手ID的歌曲
@@ -125,7 +122,7 @@ public class SongController {
     public Object songOfSingerId(HttpServletRequest req) {
         String singerId = req.getParameter("singerId");
 
-        return new SuccessMessage<List<Song>>(null, songService.songOfSingerId(Integer.parseInt(singerId))).getMessage();
+        return message.success(null, songService.songOfSingerId(Integer.parseInt(singerId)));
     }
 
     // 返回指定歌手名的歌曲
@@ -133,21 +130,21 @@ public class SongController {
     public Object songOfSingerName(HttpServletRequest req) {
         String name = req.getParameter("name");
 
-        return new SuccessMessage<List<Song>>(null, songService.songOfSingerName('%' + name + '%')).getMessage();
+        return message.success(null, songService.songOfSingerName('%' + name + '%'));
     }
 
     // 更新歌曲信息
     @PostMapping("/song/update")
     public Object updateSongMsg(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
-        String singer_id = req.getParameter("singerId").trim();
+        String singerId = req.getParameter("singerId").trim();
         String name = req.getParameter("name").trim();
         String introduction = req.getParameter("introduction").trim();
         String lyric = req.getParameter("lyric").trim();
 
         Song song = new Song();
         song.setId(Integer.parseInt(id));
-        song.setSingerId(Integer.parseInt(singer_id));
+        song.setSingerId(Integer.parseInt(singerId));
         song.setName(name);
         song.setIntroduction(introduction);
         song.setUpdateTime(new Date());
@@ -155,9 +152,9 @@ public class SongController {
 
         boolean res = songService.updateSongMsg(song);
         if (res) {
-            return new SuccessMessage<Null>("修改成功").getMessage();
+            return message.success("修改成功");
         } else {
-            return new ErrorMessage("修改失败").getMessage();
+            return message.error("修改失败");
         }
     }
 
@@ -180,12 +177,12 @@ public class SongController {
             song.setPic(storeUrlPath);
             boolean res = songService.updateSongPic(song);
             if (res) {
-                return new SuccessMessage<String>("上传成功", storeUrlPath).getMessage();
+                return message.success("上传成功", storeUrlPath);
             } else {
-                return new ErrorMessage("上传失败").getMessage();
+                return message.error("上传失败");
             }
         } catch (IOException e) {
-            return new FatalMessage("上传失败" + e.getMessage()).getMessage();
+            return message.fatal("上传失败" + e.getMessage());
         }
     }
 
@@ -208,12 +205,12 @@ public class SongController {
             song.setUrl(storeUrlPath);
             boolean res = songService.updateSongUrl(song);
             if (res) {
-                return new SuccessMessage<String>("更新成功", storeUrlPath).getMessage();
+                return message.success("更新成功", storeUrlPath);
             } else {
-                return new ErrorMessage("更新失败").getMessage();
+                return message.error("更新失败");
             }
         } catch (IOException e) {
-            return new FatalMessage("更新失败" + e.getMessage()).getMessage();
+            return message.fatal("更新失败" + e.getMessage());
         }
     }
 }

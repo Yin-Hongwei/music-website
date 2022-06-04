@@ -1,48 +1,49 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.ErrorMessage;
-import com.example.yin.common.SuccessMessage;
+import com.example.yin.common.Message;
 import com.example.yin.domain.Comment;
 import com.example.yin.service.impl.CommentServiceImpl;
-
-import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.List;
 
 @RestController
 public class CommentController {
     @Autowired
     private CommentServiceImpl commentService;
 
+    private Message message = new Message();
+
     // 提交评论
     @ResponseBody
     @PostMapping("/comment/add")
     public Object addComment(HttpServletRequest req) {
-        String user_id = req.getParameter("userId");
+        String userId = req.getParameter("userId");
         String type = req.getParameter("type");
-        String song_list_id = req.getParameter("songListId");
-        String song_id = req.getParameter("songId");
+        String songListId = req.getParameter("songListId");
+        String songId = req.getParameter("songId");
         String content = req.getParameter("content").trim();
 
         Comment comment = new Comment();
-        comment.setUserId(Integer.parseInt(user_id));
+        comment.setUserId(Integer.parseInt(userId));
         comment.setType(new Byte(type));
         if (new Byte(type) == 0) {
-            comment.setSongId(Integer.parseInt(song_id));
+            comment.setSongId(Integer.parseInt(songId));
         } else if (new Byte(type) == 1) {
-            comment.setSongListId(Integer.parseInt(song_list_id));
+            comment.setSongListId(Integer.parseInt(songListId));
         }
         comment.setContent(content);
         comment.setCreateTime(new Date());
         boolean res = commentService.addComment(comment);
         if (res) {
-            return new SuccessMessage<Null>("评论成功").getMessage();
+            return message.success("评论成功");
         } else {
-            return new ErrorMessage("评论失败").getMessage();
+            return message.error("评论失败");
         }
     }
 
@@ -53,9 +54,9 @@ public class CommentController {
 
         boolean res = commentService.deleteComment(Integer.parseInt(id));
         if (res) {
-            return new SuccessMessage<Null>("删除成功").getMessage();
+            return message.success("删除成功");
         } else {
-            return new ErrorMessage("删除失败").getMessage();
+            return message.error("删除失败");
         }
     }
 
@@ -64,7 +65,7 @@ public class CommentController {
     public Object commentOfSongId(HttpServletRequest req) {
         String songId = req.getParameter("songId");
 
-        return new SuccessMessage<List<Comment>>(null, commentService.commentOfSongId(Integer.parseInt(songId))).getMessage();
+        return message.success(null, commentService.commentOfSongId(Integer.parseInt(songId)));
     }
 
     // 获得指定歌单 ID 的评论列表
@@ -72,8 +73,7 @@ public class CommentController {
     public Object commentOfSongListId(HttpServletRequest req) {
         String songListId = req.getParameter("songListId");
 
-        return new SuccessMessage<List<Comment>>(null, commentService.commentOfSongListId(Integer.parseInt(songListId)))
-                .getMessage();
+        return message.success(null, commentService.commentOfSongListId(Integer.parseInt(songListId)));
     }
 
     // 点赞
@@ -88,9 +88,9 @@ public class CommentController {
 
         boolean res = commentService.updateCommentMsg(comment);
         if (res) {
-            return new SuccessMessage<Null>("点赞成功").getMessage();
+            return message.success("点赞成功");
         } else {
-            return new ErrorMessage("点赞失败").getMessage();
+            return message.error("点赞失败");
         }
     }
 }
