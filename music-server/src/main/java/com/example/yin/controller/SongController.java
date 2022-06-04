@@ -109,6 +109,7 @@ public class SongController {
         return message.success(null, songService.allSong());
     }
 
+    //TODO ok
     // 返回指定歌曲ID的歌曲
     @GetMapping("/song/detail")
     public Object songOfId(HttpServletRequest req) {

@@ -3,6 +3,7 @@ package com.example.yin.controller;
 import com.example.yin.common.Message;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.Consumer;
+import com.example.yin.service.ConsumerService;
 import com.example.yin.service.impl.ConsumerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -43,64 +44,13 @@ public class ConsumerController {
     @ResponseBody
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     public Object addUser(HttpServletRequest req) {
-        String username = req.getParameter("username").trim();
-        String password = req.getParameter("password").trim();
-        String sex = req.getParameter("sex").trim();
-        String phone_num = req.getParameter("phone_num").trim();
-        String email = req.getParameter("email").trim();
-        String birth = req.getParameter("birth").trim();
-        String introduction = req.getParameter("introduction").trim();
-        String location = req.getParameter("location").trim();
-        String avator = "/img/avatorImages/user.jpg";
-
-        if (consumerService.existUser(username)) {
-            return message.warning("用户名已注册");
-        }
-
-        Consumer consumer = new Consumer();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date myBirth = new Date();
-        try {
-            myBirth = dateFormat.parse(birth);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        consumer.setUsername(username);
-        consumer.setPassword(password);
-        consumer.setSex(new Byte(sex));
-        if ("".equals(phone_num)) {
-            consumer.setPhoneNum(null);
-        } else {
-            consumer.setPhoneNum(phone_num);
-        }
-
-        if ("".equals(email)) {
-            consumer.setEmail(null);
-        } else {
-            consumer.setEmail(email);
-        }
-        consumer.setBirth(myBirth);
-        consumer.setIntroduction(introduction);
-        consumer.setLocation(location);
-        consumer.setAvator(avator);
-        consumer.setCreateTime(new Date());
-        consumer.setUpdateTime(new Date());
-
-        try {
-            boolean res = consumerService.addUser(consumer);
-            if (res) {
-                return message.success("注册成功");
-            } else {
-                return message.error("注册失败");
-            }
-        } catch (DuplicateKeyException e) {
-            return message.fatal(e.getMessage());
-        }
+        return consumerService.addUser(req);
     }
 
     /**
+     * TODO
      * 登录判断
-     * 这里用不了  requestBody 因为前端传回来的东西 不是j
+     * 这里用不了  requestBody 因为前端传回来的东西 不是json
      */
     @PostMapping("/user/login/status")
     public Object loginStatus(HttpServletRequest req, HttpSession session) {
@@ -126,13 +76,14 @@ public class ConsumerController {
         return message.success(null, consumerService.allUser());
     }
 
+    //TODO ok
     /**
      * 返回指定 ID 的用户
      */
     @GetMapping("/user/detail")
     public Object userOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
-
+        //没问题的 既然登录进来了 那么肯定存在
         return message.success(null, consumerService.userOfId(Integer.parseInt(id)));
     }
 
@@ -199,10 +150,10 @@ public class ConsumerController {
     public Object updatePassword(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String username = req.getParameter("username").trim();
-        String old_password = req.getParameter("old_password").trim();
+        String oldPassword = req.getParameter("old_password").trim();
         String password = req.getParameter("password").trim();
 
-        boolean res = consumerService.verityPasswd(username, old_password);
+        boolean res = consumerService.verityPasswd(username, oldPassword);
         if (!res) {
             return message.error("密码输入错误");
         }

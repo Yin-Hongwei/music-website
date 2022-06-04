@@ -18,21 +18,20 @@ public class CollectController {
     private Message message = new Message();
 
     // 添加收藏的歌曲
-    @ResponseBody
     @PostMapping("/collection/add")
     public Object addCollection(HttpServletRequest req) {
-        String user_id = req.getParameter("userId");
+        String userId = req.getParameter("userId");
         String type = req.getParameter("type");
-        String song_id = req.getParameter("songId");
-        String song_list_id = req.getParameter("songListId");
+        String songId = req.getParameter("songId");
+        String songListId = req.getParameter("songListId");
 
         Collect collect = new Collect();
-        collect.setUserId(Integer.parseInt(user_id));
+        collect.setUserId(Integer.parseInt(userId));
         collect.setType(new Byte(type));
         if (new Byte(type) == 0) {
-            collect.setSongId(Integer.parseInt(song_id));
+            collect.setSongId(Integer.parseInt(songId));
         } else if (new Byte(type) == 1) {
-            collect.setSongListId(Integer.parseInt(song_list_id));
+            collect.setSongListId(Integer.parseInt(songListId));
         }
         collect.setCreateTime(new Date());
 
@@ -44,6 +43,7 @@ public class CollectController {
         }
     }
 
+    //TODO  这些其实有点偏简单的逻辑  所以就一点 所以放在外面
     // 取消收藏的歌曲
     @DeleteMapping("/collection/delete")
     public Object deleteCollection(HttpServletRequest req) {

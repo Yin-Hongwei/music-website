@@ -2,11 +2,12 @@ package com.example.yin.service;
 
 import com.example.yin.domain.Consumer;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface ConsumerService {
 
-    boolean addUser(Consumer consumer);
+    Object addUser(HttpServletRequest request);
 
     boolean updateUserMsg(Consumer consumer);
 
