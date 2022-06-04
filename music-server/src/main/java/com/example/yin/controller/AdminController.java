@@ -6,14 +6,14 @@ import com.example.yin.service.impl.AdminServiceImpl;
 
 import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ *  后台管理的相关事宜
+ */
 @RestController
 public class AdminController {
     @Autowired
@@ -21,7 +21,7 @@ public class AdminController {
 
     // 判断是否登录成功
     @ResponseBody
-    @RequestMapping(value = "/admin/login/status", method = RequestMethod.POST)
+    @PostMapping("/admin/login/status")
     public Object loginStatus(HttpServletRequest req, HttpSession session) {
         String name = req.getParameter("name");
         String password = req.getParameter("password");
