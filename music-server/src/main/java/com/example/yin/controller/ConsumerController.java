@@ -1,14 +1,9 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.FatalMessage;
-import com.example.yin.common.ErrorMessage;
-import com.example.yin.common.SuccessMessage;
-import com.example.yin.common.WarningMessage;
+import com.example.yin.common.Message;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.Consumer;
 import com.example.yin.service.impl.ConsumerServiceImpl;
-
-import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.DuplicateKeyException;
@@ -24,13 +19,14 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @RestController
 public class ConsumerController {
 
     @Autowired
     private ConsumerServiceImpl consumerService;
+
+    private Message message = new Message();
 
     @Configuration
     public static class MyPicConfig implements WebMvcConfigurer {
@@ -57,8 +53,8 @@ public class ConsumerController {
         String location = req.getParameter("location").trim();
         String avator = "/img/avatorImages/user.jpg";
 
-        if(consumerService.existUser(username)) {
-            return new WarningMessage("用户名已注册").getMessage();
+        if (consumerService.existUser(username)) {
+            return message.warning("用户名已注册");
         }
 
         Consumer consumer = new Consumer();
@@ -93,12 +89,12 @@ public class ConsumerController {
         try {
             boolean res = consumerService.addUser(consumer);
             if (res) {
-                return new SuccessMessage<Null>("注册成功").getMessage();
+                return message.success("注册成功");
             } else {
-                return new ErrorMessage("注册失败").getMessage();
+                return message.error("注册失败");
             }
         } catch (DuplicateKeyException e) {
-            return new FatalMessage(e.getMessage()).getMessage();
+            return message.fatal(e.getMessage());
         }
     }
 
@@ -112,20 +108,22 @@ public class ConsumerController {
         String password = req.getParameter("password");
 
         boolean res = consumerService.verityPasswd(username, password);
+
+        //TODO 登陆这块的话  暂时可以不用修改
         if (res) {
             session.setAttribute("username", username);
-            return new SuccessMessage<>("登录成功", consumerService.loginStatus(username)).getMessage();
+            return message.success("登录成功", consumerService.loginStatus(username));
         } else {
-            return new ErrorMessage("用户名或密码错误").getMessage();
+            return message.error("用户名或密码错误");
         }
     }
 
     /**
      * 返回所有用户
      */
-    @GetMapping( "/user")
+    @GetMapping("/user")
     public Object allUser() {
-        return new SuccessMessage<List<Consumer>>(null, consumerService.allUser()).getMessage();
+        return message.success(null, consumerService.allUser());
     }
 
     /**
@@ -135,7 +133,7 @@ public class ConsumerController {
     public Object userOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
 
-        return new SuccessMessage<List<Consumer>>(null, consumerService.userOfId(Integer.parseInt(id))).getMessage();
+        return message.success(null, consumerService.userOfId(Integer.parseInt(id)));
     }
 
     /**
@@ -144,12 +142,12 @@ public class ConsumerController {
     @GetMapping("/user/delete")
     public Object deleteUser(HttpServletRequest req) {
         String id = req.getParameter("id");
-        
+
         boolean res = consumerService.deleteUser(Integer.parseInt(id));
         if (res) {
-            return new SuccessMessage<Null>("删除成功").getMessage();
+            return message.success("删除成功");
         } else {
-            return new ErrorMessage("删除失败").getMessage();
+            return message.error("删除失败");
         }
     }
 
@@ -161,7 +159,7 @@ public class ConsumerController {
         String id = req.getParameter("id").trim();
         String username = req.getParameter("username").trim();
         String sex = req.getParameter("sex").trim();
-        String phone_num = req.getParameter("phone_num").trim();
+        String phoneNum = req.getParameter("phone_num").trim();
         String email = req.getParameter("email").trim();
         String birth = req.getParameter("birth").trim();
         String introduction = req.getParameter("introduction").trim();
@@ -179,7 +177,7 @@ public class ConsumerController {
         consumer.setId(Integer.parseInt(id));
         consumer.setUsername(username);
         consumer.setSex(new Byte(sex));
-        consumer.setPhoneNum(phone_num);
+        consumer.setPhoneNum(phoneNum);
         consumer.setEmail(email);
         consumer.setIntroduction(introduction);
         consumer.setLocation(location);
@@ -188,9 +186,9 @@ public class ConsumerController {
 
         boolean res = consumerService.updateUserMsg(consumer);
         if (res) {
-            return new SuccessMessage<Null>("修改成功").getMessage();
+            return message.success("修改成功");
         } else {
-            return new ErrorMessage("修改失败").getMessage();
+            return message.error("修改失败");
         }
     }
 
@@ -206,7 +204,7 @@ public class ConsumerController {
 
         boolean res = consumerService.verityPasswd(username, old_password);
         if (!res) {
-            return new ErrorMessage("密码输入错误").getMessage();
+            return message.error("密码输入错误");
         }
 
         Consumer consumer = new Consumer();
@@ -215,9 +213,9 @@ public class ConsumerController {
 
         boolean result = consumerService.updatePassword(consumer);
         if (result) {
-            return new SuccessMessage<Null>("密码修改成功").getMessage();
+            return message.success("密码修改成功");
         } else {
-            return new ErrorMessage("密码修改失败").getMessage();
+            return message.error("密码修改失败");
         }
     }
 
@@ -243,12 +241,12 @@ public class ConsumerController {
             consumer.setAvator(imgPath);
             boolean res = consumerService.updateUserAvator(consumer);
             if (res) {
-                return new SuccessMessage<String>("上传成功", imgPath).getMessage();
+                return message.success("上传成功", imgPath);
             } else {
-                return new ErrorMessage("上传失败").getMessage();
+                return message.error("上传失败");
             }
         } catch (IOException e) {
-            return new FatalMessage("上传失败" + e.getMessage()).getMessage();
+            return message.fatal("上传失败" + e.getMessage());
         }
     }
 }

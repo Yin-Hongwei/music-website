@@ -1,15 +1,12 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.ErrorMessage;
-import com.example.yin.common.SuccessMessage;
+import com.example.yin.common.Message;
 import com.example.yin.domain.ListSong;
 import com.example.yin.service.impl.ListSongServiceImpl;
-
-import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,21 +16,23 @@ public class ListSongController {
     @Autowired
     private ListSongServiceImpl listSongService;
 
+    private Message message = new Message();
+
     // 给歌单添加歌曲
     @PostMapping("/listSong/add")
     public Object addListSong(HttpServletRequest req) {
-        String song_id = req.getParameter("songId").trim();
-        String song_list_id = req.getParameter("songListId").trim();
+        String songId = req.getParameter("songId").trim();
+        String songListId = req.getParameter("songListId").trim();
 
         ListSong listsong = new ListSong();
-        listsong.setSongId(Integer.parseInt(song_id));
-        listsong.setSongListId(Integer.parseInt(song_list_id));
+        listsong.setSongId(Integer.parseInt(songId));
+        listsong.setSongListId(Integer.parseInt(songListId));
 
         boolean res = listSongService.addListSong(listsong);
         if (res) {
-            return new SuccessMessage<Null>("添加成功").getMessage();
+            return message.success("添加成功");
         } else {
-            return new ErrorMessage("添加失败").getMessage();
+            return message.error("添加失败");
         }
     }
 
@@ -44,9 +43,9 @@ public class ListSongController {
 
         boolean res = listSongService.deleteListSong(Integer.parseInt(songId));
         if (res) {
-            return new SuccessMessage<Null>("删除成功").getMessage();
+            return message.success("删除成功");
         } else {
-            return new ErrorMessage("删除失败").getMessage();
+            return message.error("删除失败");
         }
     }
 
@@ -55,27 +54,26 @@ public class ListSongController {
     public Object listSongOfSongId(HttpServletRequest req) {
         String songListId = req.getParameter("songListId");
 
-        return new SuccessMessage<List<ListSong>>("添加成功", listSongService.listSongOfSongId(Integer.parseInt(songListId)))
-                .getMessage();
+        return message.success("查询成功", listSongService.listSongOfSongId(Integer.parseInt(songListId)));
     }
 
     // 更新歌单里面的歌曲信息
     @PostMapping("/listSong/update")
     public Object updateListSongMsg(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
-        String song_id = req.getParameter("songId").trim();
-        String song_list_id = req.getParameter("songListId").trim();
+        String songId = req.getParameter("songId").trim();
+        String songListId = req.getParameter("songListId").trim();
 
         ListSong listsong = new ListSong();
         listsong.setId(Integer.parseInt(id));
-        listsong.setSongId(Integer.parseInt(song_id));
-        listsong.setSongListId(Integer.parseInt(song_list_id));
+        listsong.setSongId(Integer.parseInt(songId));
+        listsong.setSongListId(Integer.parseInt(songListId));
 
         boolean res = listSongService.updateListSongMsg(listsong);
         if (res) {
-            return new SuccessMessage<Null>("修改成功").getMessage();
+            return message.success("修改成功");
         } else {
-            return new ErrorMessage("修改失败").getMessage();
+            return message.error("修改失败");
         }
     }
 }

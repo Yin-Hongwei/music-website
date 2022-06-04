@@ -1,16 +1,15 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.FatalMessage;
-import com.example.yin.common.ErrorMessage;
-import com.example.yin.common.SuccessMessage;
+import com.example.yin.common.Message;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.SongList;
 import com.example.yin.service.impl.SongListServiceImpl;
-
-import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -18,13 +17,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 public class SongListController {
 
     @Autowired
     private SongListServiceImpl songListService;
+
+    private Message message = new Message();
 
     @Configuration
     public static class MyPicConfig implements WebMvcConfigurer {
@@ -51,9 +51,9 @@ public class SongListController {
 
         boolean res = songListService.addSongList(songList);
         if (res) {
-            return new SuccessMessage<Null>("添加成功").getMessage();
+            return message.success("添加成功");
         } else {
-            return new ErrorMessage("添加失败").getMessage();
+            return message.error("添加失败");
         }
     }
 
@@ -64,16 +64,16 @@ public class SongListController {
 
         boolean res = songListService.deleteSongList(Integer.parseInt(id));
         if (res) {
-            return new SuccessMessage<Null>("删除成功").getMessage();
+            return message.success("删除成功");
         } else {
-            return new ErrorMessage("删除失败").getMessage();
+            return message.error("删除失败");
         }
     }
 
     // 返回所有歌单
     @GetMapping("/songList")
     public Object allSongList() {
-        return new SuccessMessage<List<SongList>>(null, songListService.allSongList()).getMessage();
+        return message.success(null, songListService.allSongList());
     }
 
     // 返回标题包含文字的歌单
@@ -81,7 +81,7 @@ public class SongListController {
     public Object songListOfLikeTitle(HttpServletRequest req) {
         String title = req.getParameter("title").trim();
 
-        return new SuccessMessage<>(null, songListService.likeTitle('%' + title + '%')).getMessage();
+        return message.success(null, songListService.likeTitle('%' + title + '%'));
     }
 
     // 返回指定类型的歌单
@@ -89,7 +89,7 @@ public class SongListController {
     public Object songListOfStyle(HttpServletRequest req) {
         String style = req.getParameter("style").trim();
 
-        return new SuccessMessage<List<SongList>>(null, songListService.likeStyle('%' + style + '%')).getMessage();
+        return message.success(null, songListService.likeStyle('%' + style + '%'));
     }
 
     // 更新歌单信息
@@ -108,9 +108,9 @@ public class SongListController {
 
         boolean res = songListService.updateSongListMsg(songList);
         if (res) {
-            return new SuccessMessage<Null>("修改成功").getMessage();
+            return message.success("修改成功");
         } else {
-            return new ErrorMessage("修改失败").getMessage();
+            return message.error("修改失败");
         }
     }
 
@@ -134,12 +134,12 @@ public class SongListController {
 
             boolean res = songListService.updateSongListImg(songList);
             if (res) {
-                return new SuccessMessage<String>("上传成功", imgPath).getMessage();
+                return message.success("上传成功", imgPath);
             } else {
-                return new ErrorMessage("上传失败").getMessage();
+                return message.error("上传失败");
             }
         } catch (IOException e) {
-            return new FatalMessage("上传失败" + e.getMessage()).getMessage();
+            return message.fatal("上传失败" + e.getMessage());
         }
     }
 }
