@@ -7,10 +7,7 @@ import com.example.yin.service.impl.RankListServiceImpl;
 
 import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,8 +18,7 @@ public class RankListController {
     private RankListServiceImpl rankListService;
 
     // 提交评分
-    @ResponseBody
-    @RequestMapping(value = "/rankList/add", method = RequestMethod.POST)
+    @PostMapping("/rankList/add")
     public Object addRank(HttpServletRequest req) {
         String songListId = req.getParameter("songListId").trim();
         String consumerId = req.getParameter("consumerId").trim();
@@ -42,7 +38,7 @@ public class RankListController {
     }
 
     // 获取指定歌单的评分
-    @RequestMapping(value = "/rankList", method = RequestMethod.GET)
+    @GetMapping("/rankList")
     public Object rankOfSongListId(HttpServletRequest req) {
         String songListId = req.getParameter("songListId");
         
@@ -50,7 +46,7 @@ public class RankListController {
     }
     
     // 获取指定用户的歌单评分
-    @RequestMapping(value = "/rankList/user", method = RequestMethod.GET)
+    @GetMapping("/rankList/user")
     public Object getUserRank(HttpServletRequest req) {
         String consumerId = req.getParameter("consumerId");
         String songListId = req.getParameter("songListId");

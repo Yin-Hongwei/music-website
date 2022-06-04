@@ -22,6 +22,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <!--web启动  内嵌tomcat-->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -34,29 +35,35 @@
             </exclusions>
         </dependency>
 
+        <!--引入测试-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
+        <!--自动生成器的依赖配置-->
         <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-core</artifactId>
             <version>1.3.2</version>
         </dependency>
 
+        <!--mysql-connector-java就是帮助java程序操作mysql的驱动程序。通过与mysql服务端建立连接，发送sql语句并且获取结果集-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.16</version>
         </dependency>
 
+        <!--主要提供了三个功能：第一个是对数据源的装配，第二个是提供一个JdbcTemplate简化使用，第三个是事务。-->
+        <!--其实这里并不用配置  因为底下的mybatis的启动类已经引入了对应包-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
 
+        <!--这里面有点小工具啥的-->
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -107,6 +114,10 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>2.12.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
 

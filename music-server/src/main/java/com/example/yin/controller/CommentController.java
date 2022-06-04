@@ -7,10 +7,7 @@ import com.example.yin.service.impl.CommentServiceImpl;
 
 import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -23,7 +20,7 @@ public class CommentController {
 
     // 提交评论
     @ResponseBody
-    @RequestMapping(value = "/comment/add", method = RequestMethod.POST)
+    @PostMapping("/comment/add")
     public Object addComment(HttpServletRequest req) {
         String user_id = req.getParameter("userId");
         String type = req.getParameter("type");
@@ -50,7 +47,7 @@ public class CommentController {
     }
 
     // 删除评论
-    @RequestMapping(value = "/comment/delete", method = RequestMethod.GET)
+    @GetMapping("/comment/delete")
     public Object deleteComment(HttpServletRequest req) {
         String id = req.getParameter("id");
 
@@ -63,7 +60,7 @@ public class CommentController {
     }
 
     // 获得指定歌曲 ID 的评论列表
-    @RequestMapping(value = "/comment/song/detail", method = RequestMethod.GET)
+    @GetMapping("/comment/song/detail")
     public Object commentOfSongId(HttpServletRequest req) {
         String songId = req.getParameter("songId");
 
@@ -71,7 +68,7 @@ public class CommentController {
     }
 
     // 获得指定歌单 ID 的评论列表
-    @RequestMapping(value = "/comment/songList/detail", method = RequestMethod.GET)
+    @GetMapping("/comment/songList/detail")
     public Object commentOfSongListId(HttpServletRequest req) {
         String songListId = req.getParameter("songListId");
 
@@ -80,8 +77,7 @@ public class CommentController {
     }
 
     // 点赞
-    @ResponseBody
-    @RequestMapping(value = "/comment/like", method = RequestMethod.POST)
+    @PostMapping("/comment/like")
     public Object commentOfLike(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String up = req.getParameter("up").trim();

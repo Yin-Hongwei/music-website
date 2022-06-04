@@ -7,10 +7,7 @@ import com.example.yin.service.impl.ListSongServiceImpl;
 
 import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,8 +20,7 @@ public class ListSongController {
     private ListSongServiceImpl listSongService;
 
     // 给歌单添加歌曲
-    @ResponseBody
-    @RequestMapping(value = "/listSong/add", method = RequestMethod.POST)
+    @PostMapping("/listSong/add")
     public Object addListSong(HttpServletRequest req) {
         String song_id = req.getParameter("songId").trim();
         String song_list_id = req.getParameter("songListId").trim();
@@ -42,7 +38,7 @@ public class ListSongController {
     }
 
     // 删除歌单里的歌曲
-    @RequestMapping(value = "/listSong/delete", method = RequestMethod.GET)
+    @GetMapping("/listSong/delete")
     public Object deleteListSong(HttpServletRequest req) {
         String songId = req.getParameter("songId");
 
@@ -55,7 +51,7 @@ public class ListSongController {
     }
 
     // 返回歌单里指定歌单 ID 的歌曲
-    @RequestMapping(value = "/listSong/detail", method = RequestMethod.GET)
+    @GetMapping("/listSong/detail")
     public Object listSongOfSongId(HttpServletRequest req) {
         String songListId = req.getParameter("songListId");
 
@@ -64,8 +60,7 @@ public class ListSongController {
     }
 
     // 更新歌单里面的歌曲信息
-    @ResponseBody
-    @RequestMapping(value = "/listSong/update", method = RequestMethod.POST)
+    @PostMapping("/listSong/update")
     public Object updateListSongMsg(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String song_id = req.getParameter("songId").trim();
