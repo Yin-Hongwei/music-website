@@ -38,7 +38,7 @@ public class WebCharacterEncodingFilter implements WebMvcConfigurer {
 
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        if (converters.size() > 0) {
+        if (!converters.isEmpty()) {
             converters.add(converters.get(0));
             converters.set(0, responseBodyConverter());
         } else {

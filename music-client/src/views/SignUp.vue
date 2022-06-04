@@ -77,18 +77,17 @@ export default defineComponent({
       });
       if (!canRun) return;
 
-      const params = new URLSearchParams();
-      params.append("username", registerForm.username);
-      params.append("password", registerForm.password);
-      params.append("sex", registerForm.sex);
-      params.append("phone_num", registerForm.phoneNum);
-      params.append("email", registerForm.email);
-      params.append("birth", getBirth(registerForm.birth));
-      params.append("introduction", registerForm.introduction);
-      params.append("location", registerForm.location);
 
       try {
-        const result = (await HttpManager.SignUp(params)) as ResponseBody;
+        const username = registerForm.username;
+        const password = registerForm.password;
+        const sex = registerForm.sex;
+        const phoneNum = registerForm.phoneNum;
+        const email = registerForm.email;
+        const birth = registerForm.birth;
+        const introduction = registerForm.introduction;
+        const location = registerForm.location;
+        const result = (await HttpManager.SignUp({username,password,sex,phoneNum,email,birth,introduction,location})) as ResponseBody;
         (proxy as any).$message({
           message: result.message,
           type: result.type,

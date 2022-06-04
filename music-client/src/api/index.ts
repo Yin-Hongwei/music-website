@@ -5,14 +5,14 @@ const HttpManager = {
   attachImageUrl: (url) => url ? `${getBaseURL()}/${url}` : "https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png",
   // =======================> 用户 API
   // 登录
-  signIn: (params) => post(`user/login/status`, params),
+  signIn: ({username,password}) => post(`user/login/status`, {username,password}),
   // 注册
-  SignUp: (params) => post(`user/add`, params),
+  SignUp: ({username,password,sex,phoneNum,email,birth,introduction,location}) => post(`user/add`, {username,password,sex,phoneNum,email,birth,introduction,location}),
   // 删除用户
   deleteUser: (id) => get(`user/delete?id=${id}`),
   // 更新用户信息
-  updateUserMsg: (params) => post(`user/update`, params),
-  updateUserPassword: (params) => post(`user/updatePassword`, params),
+  updateUserMsg: ({id,username,sex,phoneNum,email,birth,introduction,location}) => post(`user/update`, {id,username,sex,phoneNum,email,birth,introduction,location}),
+  updateUserPassword: ({id,username,oldPassword,password}) => post(`user/updatePassword`, {id,username,oldPassword,password}),
   // 返回指定ID的用户
   getUserOfId: (id) => get(`user/detail?id=${id}`),
   // 更新用户头像
