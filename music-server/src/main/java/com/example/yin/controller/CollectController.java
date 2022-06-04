@@ -1,10 +1,13 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.Message;
+import com.example.yin.common.R;
 import com.example.yin.domain.Collect;
 import com.example.yin.service.impl.CollectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -15,35 +18,34 @@ public class CollectController {
     @Autowired
     private CollectServiceImpl collectService;
 
-    private Message message = new Message();
 
     // 添加收藏的歌曲
-    @ResponseBody
     @PostMapping("/collection/add")
     public Object addCollection(HttpServletRequest req) {
-        String user_id = req.getParameter("userId");
+        String userId = req.getParameter("userId");
         String type = req.getParameter("type");
-        String song_id = req.getParameter("songId");
-        String song_list_id = req.getParameter("songListId");
+        String songId = req.getParameter("songId");
+        String songListId = req.getParameter("songListId");
 
         Collect collect = new Collect();
-        collect.setUserId(Integer.parseInt(user_id));
+        collect.setUserId(Integer.parseInt(userId));
         collect.setType(new Byte(type));
         if (new Byte(type) == 0) {
-            collect.setSongId(Integer.parseInt(song_id));
+            collect.setSongId(Integer.parseInt(songId));
         } else if (new Byte(type) == 1) {
-            collect.setSongListId(Integer.parseInt(song_list_id));
+            collect.setSongListId(Integer.parseInt(songListId));
         }
         collect.setCreateTime(new Date());
 
         boolean res = collectService.addCollection(collect);
         if (res) {
-            return message.success("收藏成功", true);
+            return R.success("收藏成功", true);
         } else {
-            return message.error("收藏失败");
+            return R.error("收藏失败");
         }
     }
 
+    //TODO  这些其实有点偏简单的逻辑  所以就一点 所以放在外面
     // 取消收藏的歌曲
     @DeleteMapping("/collection/delete")
     public Object deleteCollection(HttpServletRequest req) {
@@ -52,9 +54,9 @@ public class CollectController {
 
         boolean res = collectService.deleteCollect(Integer.parseInt(userId), Integer.parseInt(songId));
         if (res) {
-            return message.success("取消收藏", false);
+            return R.success("取消收藏", false);
         } else {
-            return message.error("取消收藏失败");
+            return R.error("取消收藏失败");
         }
     }
 
@@ -66,9 +68,9 @@ public class CollectController {
 
         boolean res = collectService.existSongId(Integer.parseInt(userId), Integer.parseInt(songId));
         if (res) {
-            return message.success("已收藏", true);
+            return R.success("已收藏", true);
         } else {
-            return message.success("未收藏", false);
+            return R.success("未收藏", false);
         }
     }
 
@@ -77,6 +79,6 @@ public class CollectController {
     public Object collectionOfUser(HttpServletRequest req) {
         String userId = req.getParameter("userId");
 
-        return message.success("取消收藏", collectService.collectionOfUser(Integer.parseInt(userId)));
+        return R.success("取消收藏", collectService.collectionOfUser(Integer.parseInt(userId)));
     }
 }

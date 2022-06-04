@@ -1,10 +1,9 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.Message;
+import com.example.yin.common.R;
 import com.example.yin.service.impl.AdminServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +17,8 @@ public class AdminController {
     @Autowired
     private AdminServiceImpl adminService;
 
-    private Message message = new Message<>();
 
     // 判断是否登录成功
-    @ResponseBody
     @PostMapping("/admin/login/status")
     public Object loginStatus(HttpServletRequest req, HttpSession session) {
         String name = req.getParameter("name");
@@ -30,9 +27,9 @@ public class AdminController {
         boolean res = adminService.veritypasswd(name, password);
         if (res) {
             session.setAttribute("name", name);
-            return message.success("登录成功");
+            return R.success("登录成功");
         } else {
-            return message.error("用户名或密码错误");
+            return R.error("用户名或密码错误");
         }
     }
 }

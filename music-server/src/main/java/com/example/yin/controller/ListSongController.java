@@ -1,6 +1,6 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.Message;
+import com.example.yin.common.R;
 import com.example.yin.domain.ListSong;
 import com.example.yin.service.impl.ListSongServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ public class ListSongController {
     @Autowired
     private ListSongServiceImpl listSongService;
 
-    private Message message = new Message();
 
     // 给歌单添加歌曲
     @PostMapping("/listSong/add")
@@ -30,9 +29,9 @@ public class ListSongController {
 
         boolean res = listSongService.addListSong(listsong);
         if (res) {
-            return message.success("添加成功");
+            return R.success("添加成功");
         } else {
-            return message.error("添加失败");
+            return R.error("添加失败");
         }
     }
 
@@ -43,9 +42,9 @@ public class ListSongController {
 
         boolean res = listSongService.deleteListSong(Integer.parseInt(songId));
         if (res) {
-            return message.success("删除成功");
+            return R.success("删除成功");
         } else {
-            return message.error("删除失败");
+            return R.error("删除失败");
         }
     }
 
@@ -54,7 +53,7 @@ public class ListSongController {
     public Object listSongOfSongId(HttpServletRequest req) {
         String songListId = req.getParameter("songListId");
 
-        return message.success("查询成功", listSongService.listSongOfSongId(Integer.parseInt(songListId)));
+        return R.success("查询成功", listSongService.listSongOfSongId(Integer.parseInt(songListId)));
     }
 
     // 更新歌单里面的歌曲信息
@@ -71,9 +70,9 @@ public class ListSongController {
 
         boolean res = listSongService.updateListSongMsg(listsong);
         if (res) {
-            return message.success("修改成功");
+            return R.success("修改成功");
         } else {
-            return message.error("修改失败");
+            return R.error("修改失败");
         }
     }
 }

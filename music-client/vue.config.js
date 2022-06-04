@@ -5,6 +5,7 @@ module.exports = defineConfig({
     config.plugin('define').tap(definitions => {
         Object.assign(definitions[0]['process.env'], {
           NODE_HOST: '"http://localhost:8888"',
+            // NODE_HOST: '"http://music-backend.onlyicanstopmyself.top:9000"',
         });
         return definitions;
     });

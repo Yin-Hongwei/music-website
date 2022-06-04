@@ -1,29 +1,34 @@
 package com.example.yin.service;
 
+import com.example.yin.common.R;
 import com.example.yin.domain.Consumer;
+import com.example.yin.request.ConsumerRequest;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface ConsumerService {
 
-    boolean addUser(Consumer consumer);
+    R addUser(ConsumerRequest registryRequest);
 
-    boolean updateUserMsg(Consumer consumer);
+    R updateUserMsg(ConsumerRequest updateRequest);
 
-    boolean updateUserAvator(Consumer consumer);
+    R updateUserAvator(MultipartFile avatorFile, int id);
 
-    boolean updatePassword(Consumer consumer);
+    R updatePassword(ConsumerRequest updatePasswordRequest);
 
     boolean existUser(String username);
 
     boolean verityPasswd(String username, String password);
 
-    boolean deleteUser(Integer id);
+    R deleteUser(Integer id);
 
     List<Consumer> allUser();
 
     List<Consumer> userOfId(Integer id);
 
-    List<Consumer> loginStatus(String username);
+    R loginStatus(ConsumerRequest loginRequest, HttpSession session);
 
 }

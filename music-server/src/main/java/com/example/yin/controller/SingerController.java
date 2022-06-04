@@ -1,18 +1,14 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.Message;
-import com.example.yin.constant.Constants;
+import com.example.yin.common.R;
 import com.example.yin.domain.Singer;
 import com.example.yin.service.impl.SingerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -27,16 +23,6 @@ public class SingerController {
     @Autowired
     private SingerServiceImpl singerService;
 
-    private Message message = new Message();
-
-    @Configuration
-    public static class MyPicConfig implements WebMvcConfigurer {
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/singerPic/**")
-                    .addResourceLocations(Constants.SINGER_PIC_PATH);
-        }
-    }
 
     // 添加歌手
     @PostMapping("/singer/add")
@@ -65,9 +51,9 @@ public class SingerController {
 
         boolean res = singerService.addSinger(singer);
         if (res) {
-            return message.success("添加成功");
+            return R.success("添加成功");
         } else {
-            return message.error("添加失败");
+            return R.error("添加失败");
         }
     }
 
@@ -78,16 +64,16 @@ public class SingerController {
 
         boolean res = singerService.deleteSinger(Integer.parseInt(id));
         if (res) {
-            return message.success("删除成功");
+            return R.success("删除成功");
         } else {
-            return message.error("删除失败");
+            return R.error("删除失败");
         }
     }
 
     // 返回所有歌手
     @GetMapping("/singer")
     public Object allSinger() {
-        return message.success(null, singerService.allSinger());
+        return R.success(null, singerService.allSinger());
     }
 
     // 根据歌手名查找歌手
@@ -95,7 +81,7 @@ public class SingerController {
     public Object singerOfName(HttpServletRequest req) {
         String name = req.getParameter("name").trim();
 
-        return message.success(null, singerService.singerOfName(name));
+        return R.success(null, singerService.singerOfName(name));
     }
 
     // 根据歌手性别查找歌手
@@ -103,7 +89,7 @@ public class SingerController {
     public Object singerOfSex(HttpServletRequest req) {
         String sex = req.getParameter("sex").trim();
 
-        return message.success(null, singerService.singerOfSex(Integer.parseInt(sex)));
+        return R.success(null, singerService.singerOfSex(Integer.parseInt(sex)));
     }
 
     // 更新歌手信息
@@ -133,9 +119,9 @@ public class SingerController {
 
         boolean res = singerService.updateSingerMsg(singer);
         if (res) {
-            return message.success("修改成功");
+            return R.success("修改成功");
         } else {
-            return message.error("修改失败");
+            return R.error("修改失败");
         }
     }
 
@@ -160,12 +146,12 @@ public class SingerController {
 
             boolean res = singerService.updateSingerPic(singer);
             if (res) {
-                return message.success("上传成功", imgPath);
+                return R.success("上传成功", imgPath);
             } else {
-                return message.error("上传失败");
+                return R.error("上传失败");
             }
         } catch (IOException e) {
-            return message.fatal("上传失败" + e.getMessage());
+            return R.fatal("上传失败" + e.getMessage());
         }
     }
 }

@@ -29,9 +29,7 @@ public class CollectServiceImpl implements CollectService {
     }
 
     @Override
-    public List<Collect> collectionOfUser(Integer userId)
-
-    {
+    public List<Collect> collectionOfUser(Integer userId) {
         return collectMapper.collectionOfUser(userId);
     }
 }

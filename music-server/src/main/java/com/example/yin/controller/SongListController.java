@@ -1,18 +1,14 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.Message;
-import com.example.yin.constant.Constants;
+import com.example.yin.common.R;
 import com.example.yin.domain.SongList;
 import com.example.yin.service.impl.SongListServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -24,16 +20,6 @@ public class SongListController {
     @Autowired
     private SongListServiceImpl songListService;
 
-    private Message message = new Message();
-
-    @Configuration
-    public static class MyPicConfig implements WebMvcConfigurer {
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/songListPic/**")
-                    .addResourceLocations(Constants.SONGLIST_PIC_PATH);
-        }
-    }
 
     // 添加歌单
     @PostMapping("/songList/add")
@@ -51,9 +37,9 @@ public class SongListController {
 
         boolean res = songListService.addSongList(songList);
         if (res) {
-            return message.success("添加成功");
+            return R.success("添加成功");
         } else {
-            return message.error("添加失败");
+            return R.error("添加失败");
         }
     }
 
@@ -64,16 +50,16 @@ public class SongListController {
 
         boolean res = songListService.deleteSongList(Integer.parseInt(id));
         if (res) {
-            return message.success("删除成功");
+            return R.success("删除成功");
         } else {
-            return message.error("删除失败");
+            return R.error("删除失败");
         }
     }
 
     // 返回所有歌单
     @GetMapping("/songList")
     public Object allSongList() {
-        return message.success(null, songListService.allSongList());
+        return R.success(null, songListService.allSongList());
     }
 
     // 返回标题包含文字的歌单
@@ -81,7 +67,7 @@ public class SongListController {
     public Object songListOfLikeTitle(HttpServletRequest req) {
         String title = req.getParameter("title").trim();
 
-        return message.success(null, songListService.likeTitle('%' + title + '%'));
+        return R.success(null, songListService.likeTitle('%' + title + '%'));
     }
 
     // 返回指定类型的歌单
@@ -89,7 +75,7 @@ public class SongListController {
     public Object songListOfStyle(HttpServletRequest req) {
         String style = req.getParameter("style").trim();
 
-        return message.success(null, songListService.likeStyle('%' + style + '%'));
+        return R.success(null, songListService.likeStyle('%' + style + '%'));
     }
 
     // 更新歌单信息
@@ -108,9 +94,9 @@ public class SongListController {
 
         boolean res = songListService.updateSongListMsg(songList);
         if (res) {
-            return message.success("修改成功");
+            return R.success("修改成功");
         } else {
-            return message.error("修改失败");
+            return R.error("修改失败");
         }
     }
 
@@ -134,12 +120,12 @@ public class SongListController {
 
             boolean res = songListService.updateSongListImg(songList);
             if (res) {
-                return message.success("上传成功", imgPath);
+                return R.success("上传成功", imgPath);
             } else {
-                return message.error("上传失败");
+                return R.error("上传失败");
             }
         } catch (IOException e) {
-            return message.fatal("上传失败" + e.getMessage());
+            return R.fatal("上传失败" + e.getMessage());
         }
     }
 }

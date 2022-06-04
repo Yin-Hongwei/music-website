@@ -1,6 +1,6 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.Message;
+import com.example.yin.common.R;
 import com.example.yin.domain.RankList;
 import com.example.yin.service.impl.RankListServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ public class RankListController {
     @Autowired
     private RankListServiceImpl rankListService;
 
-    private Message message = new Message();
 
     // 提交评分
     @PostMapping("/rankList/add")
@@ -32,9 +31,9 @@ public class RankListController {
 
         boolean res = rankListService.addRank(rankList);
         if (res) {
-            return message.success("评价成功");
+            return R.success("评价成功");
         } else {
-            return message.error("评价失败");
+            return R.error("评价失败");
         }
     }
 
@@ -43,7 +42,7 @@ public class RankListController {
     public Object rankOfSongListId(HttpServletRequest req) {
         String songListId = req.getParameter("songListId");
 
-        return message.success(null, rankListService.rankOfSongListId(Long.parseLong(songListId)));
+        return R.success(null, rankListService.rankOfSongListId(Long.parseLong(songListId)));
     }
 
     // 获取指定用户的歌单评分
@@ -52,6 +51,6 @@ public class RankListController {
         String consumerId = req.getParameter("consumerId");
         String songListId = req.getParameter("songListId");
 
-        return message.success(null, rankListService.getUserRank(Long.parseLong(consumerId), Long.parseLong(songListId)));
+        return R.success(null, rankListService.getUserRank(Long.parseLong(consumerId), Long.parseLong(songListId)));
     }
 }
