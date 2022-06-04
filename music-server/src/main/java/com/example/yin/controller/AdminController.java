@@ -1,23 +1,24 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.ErrorMessage;
-import com.example.yin.common.SuccessMessage;
+import com.example.yin.common.Message;
 import com.example.yin.service.impl.AdminServiceImpl;
-
-import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- *  后台管理的相关事宜
+ * 后台管理的相关事宜
  */
 @RestController
 public class AdminController {
     @Autowired
     private AdminServiceImpl adminService;
+
+    private Message message = new Message<>();
 
     // 判断是否登录成功
     @ResponseBody
@@ -29,9 +30,9 @@ public class AdminController {
         boolean res = adminService.veritypasswd(name, password);
         if (res) {
             session.setAttribute("name", name);
-            return new SuccessMessage<Null>("登录成功").getMessage();
+            return message.success("登录成功");
         } else {
-            return new ErrorMessage("用户名或密码错误").getMessage();
+            return message.error("用户名或密码错误");
         }
     }
 }
