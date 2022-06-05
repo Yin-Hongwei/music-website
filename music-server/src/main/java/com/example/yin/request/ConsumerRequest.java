@@ -2,6 +2,8 @@ package com.example.yin.request;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @Author 祝英台炸油条
  * @Time : 2022/6/5 19:35
@@ -9,14 +11,16 @@ import lombok.Data;
  **/
 @Data
 public class ConsumerRequest {
-    String id;
+    Integer id;
     String username;
+    String oldPassword; //因为会用到用户旧密码 这无所谓的对应即可
     String password;
-    String sex;
+    Byte sex;
     String phoneNum;
     String email;
-    String birth;
+    Date birth;
     String introduction;
     String location;
     String avator;
+    Date createTime;
 }
