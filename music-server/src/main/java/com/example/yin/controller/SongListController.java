@@ -1,18 +1,14 @@
 package com.example.yin.controller;
 
 import com.example.yin.common.R;
-import com.example.yin.constant.Constants;
 import com.example.yin.domain.SongList;
 import com.example.yin.service.impl.SongListServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -24,15 +20,6 @@ public class SongListController {
     @Autowired
     private SongListServiceImpl songListService;
 
-
-    @Configuration
-    public static class MyPicConfig implements WebMvcConfigurer {
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/songListPic/**")
-                    .addResourceLocations(Constants.SONGLIST_PIC_PATH);
-        }
-    }
 
     // 添加歌单
     @PostMapping("/songList/add")
