@@ -3,6 +3,7 @@ package com.example.yin.service.impl;
 import com.example.yin.common.R;
 import com.example.yin.dao.ConsumerMapper;
 import com.example.yin.domain.Consumer;
+import com.example.yin.request.ConsumerRequest;
 import com.example.yin.service.ConsumerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -21,12 +22,11 @@ public class ConsumerServiceImpl implements ConsumerService {
     private ConsumerMapper consumerMapper;
 
 
-
     /**
      * 新增用户
      */
     @Override
-    public Object addUser(HttpServletRequest req) {
+    public R addUser(HttpServletRequest req) {
         String username = req.getParameter("username").trim();
         String password = req.getParameter("password").trim();
         String sex = req.getParameter("sex").trim();
@@ -71,7 +71,7 @@ public class ConsumerServiceImpl implements ConsumerService {
         consumer.setUpdateTime(new Date());
 
         try {
-            boolean res = consumerMapper.insertSelective(consumer)>0;
+            boolean res = consumerMapper.insertSelective(consumer) > 0;
             if (res) {
                 return R.success("注册成功");
             } else {
@@ -124,7 +124,15 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    public List<Consumer> loginStatus(String username) {
-        return consumerMapper.loginStatus(username);
+    public R loginStatus(ConsumerRequest loginRequest) {
+
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
+
+        if (this.verityPasswd(username, password)) {
+            return R.success("登录成功", consumerMapper.loginStatus(username));
+        } else {
+            return R.error("用户名或密码错误");
+        }
     }
 }

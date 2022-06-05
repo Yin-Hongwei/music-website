@@ -3,6 +3,7 @@ package com.example.yin.controller;
 import com.example.yin.common.R;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.Consumer;
+import com.example.yin.request.ConsumerRequest;
 import com.example.yin.service.impl.ConsumerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,7 @@ public class ConsumerController {
     private ConsumerServiceImpl consumerService;
 
 
+    //TODO 这个配置类的目的是什么
     @Configuration
     public static class MyPicConfig implements WebMvcConfigurer {
         @Override
@@ -38,38 +40,26 @@ public class ConsumerController {
     /**
      * 用户注册
      */
-    @ResponseBody
-    @RequestMapping(value = "/user/add", method = RequestMethod.POST)
-    public Object addUser(HttpServletRequest req) {
+    @PostMapping("/user/add")
+    public R addUser(HttpServletRequest req) {
         return consumerService.addUser(req);
     }
 
     /**
-     * TODO
+     * TODO 前台页面调用
      * 登录判断
-     * 这里用不了  requestBody 因为前端传回来的东西 不是json
      */
     @PostMapping("/user/login/status")
-    public Object loginStatus(HttpServletRequest req, HttpSession session) {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+    public R loginStatus(@RequestBody ConsumerRequest loginRequest, HttpSession session) {
 
-        boolean res = consumerService.verityPasswd(username, password);
-
-        //TODO 登陆这块的话  暂时可以不用修改
-        if (res) {
-            session.setAttribute("username", username);
-            return R.success("登录成功", consumerService.loginStatus(username));
-        } else {
-            return R.error("用户名或密码错误");
-        }
+        return consumerService.loginStatus(loginRequest);
     }
 
     /**
      * 返回所有用户
      */
     @GetMapping("/user")
-    public Object allUser() {
+    public R allUser() {
         return R.success(null, consumerService.allUser());
     }
 
@@ -78,7 +68,7 @@ public class ConsumerController {
      * 返回指定 ID 的用户
      */
     @GetMapping("/user/detail")
-    public Object userOfId(HttpServletRequest req) {
+    public R userOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
         //没问题的 既然登录进来了 那么肯定存在
         return R.success(null, consumerService.userOfId(Integer.parseInt(id)));
@@ -88,7 +78,7 @@ public class ConsumerController {
      * 删除用户
      */
     @GetMapping("/user/delete")
-    public Object deleteUser(HttpServletRequest req) {
+    public R deleteUser(HttpServletRequest req) {
         String id = req.getParameter("id");
 
         boolean res = consumerService.deleteUser(Integer.parseInt(id));
@@ -103,7 +93,7 @@ public class ConsumerController {
      * 更新用户信息
      */
     @PostMapping("/user/update")
-    public Object updateUserMsg(HttpServletRequest req) {
+    public R updateUserMsg(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String username = req.getParameter("username").trim();
         String sex = req.getParameter("sex").trim();
@@ -112,7 +102,6 @@ public class ConsumerController {
         String birth = req.getParameter("birth").trim();
         String introduction = req.getParameter("introduction").trim();
         String location = req.getParameter("location").trim();
-        // System.out.println(username);
 
         Consumer consumer = new Consumer();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -144,7 +133,7 @@ public class ConsumerController {
      * 更新用户密码
      */
     @PostMapping("/user/updatePassword")
-    public Object updatePassword(HttpServletRequest req) {
+    public R updatePassword(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String username = req.getParameter("username").trim();
         String oldPassword = req.getParameter("old_password").trim();
@@ -170,9 +159,8 @@ public class ConsumerController {
     /**
      * 更新用户头像
      */
-    @ResponseBody
     @PostMapping("/user/avatar/update")
-    public Object updateUserPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
+    public R updateUserPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
         String filePath = Constants.PROJECT_PATH + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "avatorImages";
         File file1 = new File(filePath);

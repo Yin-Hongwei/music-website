@@ -1,6 +1,8 @@
 package com.example.yin.service;
 
+import com.example.yin.common.R;
 import com.example.yin.domain.Consumer;
+import com.example.yin.request.ConsumerRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,6 +27,6 @@ public interface ConsumerService {
 
     List<Consumer> userOfId(Integer id);
 
-    List<Consumer> loginStatus(String username);
+    R loginStatus(ConsumerRequest loginRequest);
 
 }

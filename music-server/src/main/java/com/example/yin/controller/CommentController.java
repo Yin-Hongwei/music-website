@@ -6,7 +6,6 @@ import com.example.yin.service.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ public class CommentController {
 
 
     // 提交评论
-    @ResponseBody
     @PostMapping("/comment/add")
     public Object addComment(HttpServletRequest req) {
         String userId = req.getParameter("userId");

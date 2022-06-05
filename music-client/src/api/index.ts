@@ -5,7 +5,7 @@ const HttpManager = {
   attachImageUrl: (url) => url ? `${getBaseURL()}/${url}` : "https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png",
   // =======================> 用户 API
   // 登录
-  signIn: (params) => post(`user/login/status`, params),
+  signIn: ({username,password}) => post(`user/login/status`, {username,password}),
   // 注册
   SignUp: (params) => post(`user/add`, params),
   // 删除用户
