@@ -1,13 +1,11 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.Message;
+import com.example.yin.common.R;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.Consumer;
-import com.example.yin.service.ConsumerService;
 import com.example.yin.service.impl.ConsumerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -27,7 +25,6 @@ public class ConsumerController {
     @Autowired
     private ConsumerServiceImpl consumerService;
 
-    private Message message = new Message();
 
     @Configuration
     public static class MyPicConfig implements WebMvcConfigurer {
@@ -62,9 +59,9 @@ public class ConsumerController {
         //TODO 登陆这块的话  暂时可以不用修改
         if (res) {
             session.setAttribute("username", username);
-            return message.success("登录成功", consumerService.loginStatus(username));
+            return R.success("登录成功", consumerService.loginStatus(username));
         } else {
-            return message.error("用户名或密码错误");
+            return R.error("用户名或密码错误");
         }
     }
 
@@ -73,7 +70,7 @@ public class ConsumerController {
      */
     @GetMapping("/user")
     public Object allUser() {
-        return message.success(null, consumerService.allUser());
+        return R.success(null, consumerService.allUser());
     }
 
     //TODO ok
@@ -84,7 +81,7 @@ public class ConsumerController {
     public Object userOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
         //没问题的 既然登录进来了 那么肯定存在
-        return message.success(null, consumerService.userOfId(Integer.parseInt(id)));
+        return R.success(null, consumerService.userOfId(Integer.parseInt(id)));
     }
 
     /**
@@ -96,9 +93,9 @@ public class ConsumerController {
 
         boolean res = consumerService.deleteUser(Integer.parseInt(id));
         if (res) {
-            return message.success("删除成功");
+            return R.success("删除成功");
         } else {
-            return message.error("删除失败");
+            return R.error("删除失败");
         }
     }
 
@@ -137,9 +134,9 @@ public class ConsumerController {
 
         boolean res = consumerService.updateUserMsg(consumer);
         if (res) {
-            return message.success("修改成功");
+            return R.success("修改成功");
         } else {
-            return message.error("修改失败");
+            return R.error("修改失败");
         }
     }
 
@@ -155,7 +152,7 @@ public class ConsumerController {
 
         boolean res = consumerService.verityPasswd(username, oldPassword);
         if (!res) {
-            return message.error("密码输入错误");
+            return R.error("密码输入错误");
         }
 
         Consumer consumer = new Consumer();
@@ -164,9 +161,9 @@ public class ConsumerController {
 
         boolean result = consumerService.updatePassword(consumer);
         if (result) {
-            return message.success("密码修改成功");
+            return R.success("密码修改成功");
         } else {
-            return message.error("密码修改失败");
+            return R.error("密码修改失败");
         }
     }
 
@@ -192,12 +189,12 @@ public class ConsumerController {
             consumer.setAvator(imgPath);
             boolean res = consumerService.updateUserAvator(consumer);
             if (res) {
-                return message.success("上传成功", imgPath);
+                return R.success("上传成功", imgPath);
             } else {
-                return message.error("上传失败");
+                return R.error("上传失败");
             }
         } catch (IOException e) {
-            return message.fatal("上传失败" + e.getMessage());
+            return R.fatal("上传失败" + e.getMessage());
         }
     }
 }

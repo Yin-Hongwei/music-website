@@ -1,10 +1,13 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.Message;
+import com.example.yin.common.R;
 import com.example.yin.domain.Collect;
 import com.example.yin.service.impl.CollectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -15,7 +18,6 @@ public class CollectController {
     @Autowired
     private CollectServiceImpl collectService;
 
-    private Message message = new Message();
 
     // 添加收藏的歌曲
     @PostMapping("/collection/add")
@@ -37,9 +39,9 @@ public class CollectController {
 
         boolean res = collectService.addCollection(collect);
         if (res) {
-            return message.success("收藏成功", true);
+            return R.success("收藏成功", true);
         } else {
-            return message.error("收藏失败");
+            return R.error("收藏失败");
         }
     }
 
@@ -52,9 +54,9 @@ public class CollectController {
 
         boolean res = collectService.deleteCollect(Integer.parseInt(userId), Integer.parseInt(songId));
         if (res) {
-            return message.success("取消收藏", false);
+            return R.success("取消收藏", false);
         } else {
-            return message.error("取消收藏失败");
+            return R.error("取消收藏失败");
         }
     }
 
@@ -66,9 +68,9 @@ public class CollectController {
 
         boolean res = collectService.existSongId(Integer.parseInt(userId), Integer.parseInt(songId));
         if (res) {
-            return message.success("已收藏", true);
+            return R.success("已收藏", true);
         } else {
-            return message.success("未收藏", false);
+            return R.success("未收藏", false);
         }
     }
 
@@ -77,6 +79,6 @@ public class CollectController {
     public Object collectionOfUser(HttpServletRequest req) {
         String userId = req.getParameter("userId");
 
-        return message.success("取消收藏", collectService.collectionOfUser(Integer.parseInt(userId)));
+        return R.success("取消收藏", collectService.collectionOfUser(Integer.parseInt(userId)));
     }
 }

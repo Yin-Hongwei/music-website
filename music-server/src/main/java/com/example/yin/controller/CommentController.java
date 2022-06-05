@@ -1,6 +1,6 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.Message;
+import com.example.yin.common.R;
 import com.example.yin.domain.Comment;
 import com.example.yin.service.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ public class CommentController {
     @Autowired
     private CommentServiceImpl commentService;
 
-    private Message message = new Message();
 
     // 提交评论
     @ResponseBody
@@ -41,9 +40,9 @@ public class CommentController {
         comment.setCreateTime(new Date());
         boolean res = commentService.addComment(comment);
         if (res) {
-            return message.success("评论成功");
+            return R.success("评论成功");
         } else {
-            return message.error("评论失败");
+            return R.error("评论失败");
         }
     }
 
@@ -54,9 +53,9 @@ public class CommentController {
 
         boolean res = commentService.deleteComment(Integer.parseInt(id));
         if (res) {
-            return message.success("删除成功");
+            return R.success("删除成功");
         } else {
-            return message.error("删除失败");
+            return R.error("删除失败");
         }
     }
 
@@ -65,7 +64,7 @@ public class CommentController {
     public Object commentOfSongId(HttpServletRequest req) {
         String songId = req.getParameter("songId");
 
-        return message.success(null, commentService.commentOfSongId(Integer.parseInt(songId)));
+        return R.success(null, commentService.commentOfSongId(Integer.parseInt(songId)));
     }
 
     // 获得指定歌单 ID 的评论列表
@@ -73,7 +72,7 @@ public class CommentController {
     public Object commentOfSongListId(HttpServletRequest req) {
         String songListId = req.getParameter("songListId");
 
-        return message.success(null, commentService.commentOfSongListId(Integer.parseInt(songListId)));
+        return R.success(null, commentService.commentOfSongListId(Integer.parseInt(songListId)));
     }
 
     // 点赞
@@ -88,9 +87,9 @@ public class CommentController {
 
         boolean res = commentService.updateCommentMsg(comment);
         if (res) {
-            return message.success("点赞成功");
+            return R.success("点赞成功");
         } else {
-            return message.error("点赞失败");
+            return R.error("点赞失败");
         }
     }
 }

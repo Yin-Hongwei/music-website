@@ -1,6 +1,6 @@
 package com.example.yin.service.impl;
 
-import com.example.yin.common.Message;
+import com.example.yin.common.R;
 import com.example.yin.dao.ConsumerMapper;
 import com.example.yin.domain.Consumer;
 import com.example.yin.service.ConsumerService;
@@ -21,7 +21,6 @@ public class ConsumerServiceImpl implements ConsumerService {
     private ConsumerMapper consumerMapper;
 
 
-    private Message message = new Message();
 
     /**
      * 新增用户
@@ -39,7 +38,7 @@ public class ConsumerServiceImpl implements ConsumerService {
         String avator = "/img/avatorImages/user.jpg";
 
         if (this.existUser(username)) {
-            return message.warning("用户名已注册");
+            return R.warning("用户名已注册");
         }
 
         Consumer consumer = new Consumer();
@@ -74,12 +73,12 @@ public class ConsumerServiceImpl implements ConsumerService {
         try {
             boolean res = consumerMapper.insertSelective(consumer)>0;
             if (res) {
-                return message.success("注册成功");
+                return R.success("注册成功");
             } else {
-                return message.error("注册失败");
+                return R.error("注册失败");
             }
         } catch (DuplicateKeyException e) {
-            return message.fatal(e.getMessage());
+            return R.fatal(e.getMessage());
         }
     }
 

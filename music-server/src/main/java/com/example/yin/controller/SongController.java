@@ -1,6 +1,6 @@
 package com.example.yin.controller;
 
-import com.example.yin.common.Message;
+import com.example.yin.common.R;
 import com.example.yin.constant.Constants;
 import com.example.yin.domain.Song;
 import com.example.yin.service.impl.SongServiceImpl;
@@ -27,7 +27,6 @@ public class SongController {
     @Autowired
     private SongServiceImpl songService;
 
-    private Message message = new Message();
 
     @Bean
     public MultipartConfigElement multipartConfigElement() {
@@ -81,12 +80,12 @@ public class SongController {
             song.setUrl(storeUrlPath);
             boolean res = songService.addSong(song);
             if (res) {
-                return message.success("上传成功", storeUrlPath);
+                return R.success("上传成功", storeUrlPath);
             } else {
-                return message.error("上传失败");
+                return R.error("上传失败");
             }
         } catch (IOException e) {
-            return message.fatal("上传失败" + e.getMessage());
+            return R.fatal("上传失败" + e.getMessage());
         }
     }
 
@@ -97,16 +96,16 @@ public class SongController {
 
         boolean res = songService.deleteSong(Integer.parseInt(id));
         if (res) {
-            return message.success("删除成功");
+            return R.success("删除成功");
         } else {
-            return message.error("删除失败");
+            return R.error("删除失败");
         }
     }
 
     // 返回所有歌曲
     @GetMapping("/song")
     public Object allSong() {
-        return message.success(null, songService.allSong());
+        return R.success(null, songService.allSong());
     }
 
     //TODO ok
@@ -115,7 +114,7 @@ public class SongController {
     public Object songOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
 
-        return message.success(null, songService.songOfId(Integer.parseInt(id)));
+        return R.success(null, songService.songOfId(Integer.parseInt(id)));
     }
 
     // 返回指定歌手ID的歌曲
@@ -123,7 +122,7 @@ public class SongController {
     public Object songOfSingerId(HttpServletRequest req) {
         String singerId = req.getParameter("singerId");
 
-        return message.success(null, songService.songOfSingerId(Integer.parseInt(singerId)));
+        return R.success(null, songService.songOfSingerId(Integer.parseInt(singerId)));
     }
 
     // 返回指定歌手名的歌曲
@@ -131,7 +130,7 @@ public class SongController {
     public Object songOfSingerName(HttpServletRequest req) {
         String name = req.getParameter("name");
 
-        return message.success(null, songService.songOfSingerName('%' + name + '%'));
+        return R.success(null, songService.songOfSingerName('%' + name + '%'));
     }
 
     // 更新歌曲信息
@@ -153,9 +152,9 @@ public class SongController {
 
         boolean res = songService.updateSongMsg(song);
         if (res) {
-            return message.success("修改成功");
+            return R.success("修改成功");
         } else {
-            return message.error("修改失败");
+            return R.error("修改失败");
         }
     }
 
@@ -178,12 +177,12 @@ public class SongController {
             song.setPic(storeUrlPath);
             boolean res = songService.updateSongPic(song);
             if (res) {
-                return message.success("上传成功", storeUrlPath);
+                return R.success("上传成功", storeUrlPath);
             } else {
-                return message.error("上传失败");
+                return R.error("上传失败");
             }
         } catch (IOException e) {
-            return message.fatal("上传失败" + e.getMessage());
+            return R.fatal("上传失败" + e.getMessage());
         }
     }
 
@@ -206,12 +205,12 @@ public class SongController {
             song.setUrl(storeUrlPath);
             boolean res = songService.updateSongUrl(song);
             if (res) {
-                return message.success("更新成功", storeUrlPath);
+                return R.success("更新成功", storeUrlPath);
             } else {
-                return message.error("更新失败");
+                return R.error("更新失败");
             }
         } catch (IOException e) {
-            return message.fatal("更新失败" + e.getMessage());
+            return R.fatal("更新失败" + e.getMessage());
         }
     }
 }

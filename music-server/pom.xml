@@ -154,6 +154,11 @@
 
     <build>
         <plugins>
+            <!-- 加上这段代码  打包插件 因为启动不起来 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
