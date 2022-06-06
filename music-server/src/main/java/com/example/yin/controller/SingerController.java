@@ -2,7 +2,7 @@ package com.example.yin.controller;
 
 import com.example.yin.common.R;
 import com.example.yin.domain.Singer;
-import com.example.yin.service.impl.SingerServiceImpl;
+import com.example.yin.service.SingerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,12 +21,12 @@ import java.util.Date;
 public class SingerController {
 
     @Autowired
-    private SingerServiceImpl singerService;
+    private SingerService singerService;
 
 
     // 添加歌手
     @PostMapping("/singer/add")
-    public Object addSinger(HttpServletRequest req) {
+    public R addSinger(HttpServletRequest req) {
         String name = req.getParameter("name").trim();
         String sex = req.getParameter("sex").trim();
         String birth = req.getParameter("birth").trim();
@@ -59,7 +59,7 @@ public class SingerController {
 
     // 删除歌手
     @GetMapping("/singer/delete")
-    public Object deleteSinger(HttpServletRequest req) {
+    public R deleteSinger(HttpServletRequest req) {
         String id = req.getParameter("id");
 
         boolean res = singerService.deleteSinger(Integer.parseInt(id));
@@ -72,13 +72,13 @@ public class SingerController {
 
     // 返回所有歌手
     @GetMapping("/singer")
-    public Object allSinger() {
+    public R allSinger() {
         return R.success(null, singerService.allSinger());
     }
 
     // 根据歌手名查找歌手
     @GetMapping("/singer/name/detail")
-    public Object singerOfName(HttpServletRequest req) {
+    public R singerOfName(HttpServletRequest req) {
         String name = req.getParameter("name").trim();
 
         return R.success(null, singerService.singerOfName(name));
@@ -86,7 +86,7 @@ public class SingerController {
 
     // 根据歌手性别查找歌手
     @GetMapping("/singer/sex/detail")
-    public Object singerOfSex(HttpServletRequest req) {
+    public R singerOfSex(HttpServletRequest req) {
         String sex = req.getParameter("sex").trim();
 
         return R.success(null, singerService.singerOfSex(Integer.parseInt(sex)));
@@ -94,7 +94,7 @@ public class SingerController {
 
     // 更新歌手信息
     @PostMapping("/singer/update")
-    public Object updateSingerMsg(HttpServletRequest req) {
+    public R updateSingerMsg(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String name = req.getParameter("name").trim();
         String sex = req.getParameter("sex").trim();
@@ -127,7 +127,7 @@ public class SingerController {
 
     // 更新歌手头像
     @PostMapping("/singer/avatar/update")
-    public Object updateSingerPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
+    public R updateSingerPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img"
                 + System.getProperty("file.separator") + "singerPic";

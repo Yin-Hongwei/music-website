@@ -1,13 +1,10 @@
 package com.example.yin.service;
 
 import com.example.yin.common.R;
-import com.example.yin.domain.Consumer;
 import com.example.yin.request.ConsumerRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 public interface ConsumerService {
 
@@ -25,9 +22,9 @@ public interface ConsumerService {
 
     R deleteUser(Integer id);
 
-    List<Consumer> allUser();
+    R allUser();
 
-    List<Consumer> userOfId(Integer id);
+    R userOfId(Integer id);
 
     R loginStatus(ConsumerRequest loginRequest, HttpSession session);
 

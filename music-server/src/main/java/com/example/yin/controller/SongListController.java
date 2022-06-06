@@ -2,7 +2,7 @@ package com.example.yin.controller;
 
 import com.example.yin.common.R;
 import com.example.yin.domain.SongList;
-import com.example.yin.service.impl.SongListServiceImpl;
+import com.example.yin.service.SongListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +18,12 @@ import java.io.IOException;
 public class SongListController {
 
     @Autowired
-    private SongListServiceImpl songListService;
+    private SongListService songListService;
 
 
     // 添加歌单
     @PostMapping("/songList/add")
-    public Object addSongList(HttpServletRequest req) {
+    public R addSongList(HttpServletRequest req) {
         String title = req.getParameter("title").trim();
         String introduction = req.getParameter("introduction").trim();
         String style = req.getParameter("style").trim();
@@ -45,7 +45,7 @@ public class SongListController {
 
     // 删除歌单
     @GetMapping("/songList/delete")
-    public Object deleteSongList(HttpServletRequest req) {
+    public R deleteSongList(HttpServletRequest req) {
         String id = req.getParameter("id");
 
         boolean res = songListService.deleteSongList(Integer.parseInt(id));
@@ -58,13 +58,13 @@ public class SongListController {
 
     // 返回所有歌单
     @GetMapping("/songList")
-    public Object allSongList() {
+    public R allSongList() {
         return R.success(null, songListService.allSongList());
     }
 
     // 返回标题包含文字的歌单
     @GetMapping("/songList/likeTitle/detail")
-    public Object songListOfLikeTitle(HttpServletRequest req) {
+    public R songListOfLikeTitle(HttpServletRequest req) {
         String title = req.getParameter("title").trim();
 
         return R.success(null, songListService.likeTitle('%' + title + '%'));
@@ -72,7 +72,7 @@ public class SongListController {
 
     // 返回指定类型的歌单
     @GetMapping("/songList/style/detail")
-    public Object songListOfStyle(HttpServletRequest req) {
+    public R songListOfStyle(HttpServletRequest req) {
         String style = req.getParameter("style").trim();
 
         return R.success(null, songListService.likeStyle('%' + style + '%'));
@@ -80,7 +80,7 @@ public class SongListController {
 
     // 更新歌单信息
     @PostMapping("/songList/update")
-    public Object updateSongListMsg(HttpServletRequest req) {
+    public R updateSongListMsg(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String title = req.getParameter("title").trim();
         String introduction = req.getParameter("introduction").trim();
@@ -102,7 +102,7 @@ public class SongListController {
 
     // 更新歌单图片
     @PostMapping("/songList/img/update")
-    public Object updateSongListPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
+    public R updateSongListPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songListPic";
         File file1 = new File(filePath);

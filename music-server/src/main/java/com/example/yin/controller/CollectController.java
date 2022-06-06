@@ -6,8 +6,6 @@ import com.example.yin.service.CollectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 public class CollectController {
 
@@ -38,9 +36,7 @@ public class CollectController {
 
     // 返回的指定用户 ID 收藏的列表
     @GetMapping("/collection/detail")
-    public R collectionOfUser(HttpServletRequest req) {
-        String userId = req.getParameter("userId");
-
-        return R.success("取消收藏", collectService.collectionOfUser(Integer.parseInt(userId)));
+    public R collectionOfUser(@RequestParam Integer userId) {
+        return collectService.collectionOfUser(userId);
     }
 }
