@@ -40,7 +40,7 @@ public class ConsumerController {
      */
     @GetMapping("/user")
     public R allUser() {
-        return R.success(null, consumerService.allUser());
+        return consumerService.allUser();
     }
 
 
@@ -50,7 +50,7 @@ public class ConsumerController {
      */
     @GetMapping("/user/detail")
     public R userOfId(@RequestParam int id) {
-        return R.success(null, consumerService.userOfId(id));
+        return consumerService.userOfId(id);
     }
 
     /**

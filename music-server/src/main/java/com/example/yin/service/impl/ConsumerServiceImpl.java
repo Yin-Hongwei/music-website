@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class ConsumerServiceImpl implements ConsumerService {
@@ -137,13 +136,13 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    public List<Consumer> allUser() {
-        return consumerMapper.allUser();
+    public R allUser() {
+        return R.success(null, consumerMapper.allUser());
     }
 
     @Override
-    public List<Consumer> userOfId(Integer id) {
-        return consumerMapper.userOfId(id);
+    public R userOfId(Integer id) {
+        return R.success(null, consumerMapper.userOfId(id));
     }
 
     @Override

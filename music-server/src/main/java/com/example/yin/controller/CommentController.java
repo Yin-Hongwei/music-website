@@ -19,7 +19,7 @@ public class CommentController {
 
     // 提交评论
     @PostMapping("/comment/add")
-    public Object addComment(HttpServletRequest req) {
+    public R addComment(HttpServletRequest req) {
         String userId = req.getParameter("userId");
         String type = req.getParameter("type");
         String songListId = req.getParameter("songListId");
@@ -46,7 +46,7 @@ public class CommentController {
 
     // 删除评论
     @GetMapping("/comment/delete")
-    public Object deleteComment(HttpServletRequest req) {
+    public R deleteComment(HttpServletRequest req) {
         String id = req.getParameter("id");
 
         boolean res = commentService.deleteComment(Integer.parseInt(id));
@@ -59,7 +59,7 @@ public class CommentController {
 
     // 获得指定歌曲 ID 的评论列表
     @GetMapping("/comment/song/detail")
-    public Object commentOfSongId(HttpServletRequest req) {
+    public R commentOfSongId(HttpServletRequest req) {
         String songId = req.getParameter("songId");
 
         return R.success(null, commentService.commentOfSongId(Integer.parseInt(songId)));
@@ -75,7 +75,7 @@ public class CommentController {
 
     // 点赞
     @PostMapping("/comment/like")
-    public Object commentOfLike(HttpServletRequest req) {
+    public R commentOfLike(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String up = req.getParameter("up").trim();
 
