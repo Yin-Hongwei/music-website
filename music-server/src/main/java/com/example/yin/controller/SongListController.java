@@ -56,10 +56,11 @@ public class SongListController {
         }
     }
 
+    //TODO 这块就是前端显现相应的歌单list
     // 返回所有歌单
     @GetMapping("/songList")
     public R allSongList() {
-        return R.success(null, songListService.allSongList());
+        return songListService.allSongList();
     }
 
     // 返回标题包含文字的歌单
