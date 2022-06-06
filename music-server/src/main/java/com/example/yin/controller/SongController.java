@@ -91,7 +91,7 @@ public class SongController {
     // 返回所有歌曲
     @GetMapping("/song")
     public R allSong() {
-        return R.success(null, songService.allSong());
+        return songService.allSong();
     }
 
     //TODO ok
@@ -105,18 +105,14 @@ public class SongController {
 
     // 返回指定歌手ID的歌曲
     @GetMapping("/song/singer/detail")
-    public R songOfSingerId(HttpServletRequest req) {
-        String singerId = req.getParameter("singerId");
-
-        return R.success(null, songService.songOfSingerId(Integer.parseInt(singerId)));
+    public R songOfSingerId(@RequestParam int singerId) {
+        return songService.songOfSingerId(singerId);
     }
 
     // 返回指定歌手名的歌曲
     @GetMapping("/song/singerName/detail")
-    public R songOfSingerName(HttpServletRequest req) {
-        String name = req.getParameter("name");
-
-        return R.success(null, songService.songOfSingerName('%' + name + '%'));
+    public R songOfSingerName(@RequestParam String name) {
+        return songService.songOfSingerName('%' + name + '%');
     }
 
     // 更新歌曲信息

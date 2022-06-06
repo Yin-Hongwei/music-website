@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.example.yin.common.R;
 import com.example.yin.dao.SongMapper;
 import com.example.yin.domain.Song;
 import com.example.yin.service.SongService;
@@ -15,58 +16,50 @@ public class SongServiceImpl implements SongService {
     private SongMapper songMapper;
 
     @Override
-    public List<Song> allSong()
-    {
-        return songMapper.allSong();
+    public R allSong() {
+        return R.success(null, songMapper.allSong());
     }
 
     @Override
-    public boolean addSong(Song song)
-    {
+    public boolean addSong(Song song) {
 
-        return songMapper.insertSelective(song) > 0?true:false;
+        return songMapper.insertSelective(song) > 0;
     }
 
     @Override
     public boolean updateSongMsg(Song song) {
-        return songMapper.updateSongMsg(song) >0 ?true:false;
+        return songMapper.updateSongMsg(song) > 0;
     }
 
     @Override
     public boolean updateSongUrl(Song song) {
 
-        return songMapper.updateSongUrl(song) >0 ?true:false;
+        return songMapper.updateSongUrl(song) > 0;
     }
 
     @Override
     public boolean updateSongPic(Song song) {
 
-        return songMapper.updateSongPic(song) >0 ?true:false;
+        return songMapper.updateSongPic(song) > 0;
     }
 
     @Override
     public boolean deleteSong(Integer id) {
-        return songMapper.deleteSong(id) >0 ?true:false;
+        return songMapper.deleteSong(id) > 0;
     }
 
     @Override
-    public List<Song> songOfSingerId(Integer singerId)
-
-    {
-        return songMapper.songOfSingerId(singerId);
+    public R songOfSingerId(Integer singerId) {
+        return R.success(null, songMapper.songOfSingerId(singerId));
     }
 
     @Override
-    public List<Song> songOfId(Integer id)
-
-    {
+    public List<Song> songOfId(Integer id) {
         return songMapper.songOfId(id);
     }
 
     @Override
-    public List<Song> songOfSingerName(String name)
-
-    {
-        return songMapper.songOfSingerName(name);
+    public R songOfSingerName(String name) {
+        return R.success(null, songMapper.songOfSingerName(name));
     }
 }

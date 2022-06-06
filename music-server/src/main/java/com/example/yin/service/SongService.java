@@ -1,5 +1,6 @@
 package com.example.yin.service;
 
+import com.example.yin.common.R;
 import com.example.yin.domain.Song;
 
 import java.util.List;
@@ -16,11 +17,11 @@ public interface SongService {
 
     boolean deleteSong(Integer id);
 
-    List<Song> allSong();
+    R allSong();
 
-    List<Song> songOfSingerId(Integer singerId);
+    R songOfSingerId(Integer singerId);
 
     List<Song> songOfId(Integer id);
 
-    List<Song> songOfSingerName(String name);
+    R songOfSingerName(String name);
 }

@@ -3,8 +3,6 @@ package com.example.yin.service;
 import com.example.yin.common.R;
 import com.example.yin.domain.SongList;
 
-import java.util.List;
-
 public interface SongListService {
 
     boolean addSongList (SongList songList);
@@ -17,7 +15,7 @@ public interface SongListService {
 
     R allSongList();
 
-    List<SongList> likeTitle(String title);
+    R likeTitle(String title);
 
-    List<SongList> likeStyle(String style);
+    R likeStyle(String style);
 }

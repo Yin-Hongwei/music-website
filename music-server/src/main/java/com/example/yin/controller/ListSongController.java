@@ -6,6 +6,7 @@ import com.example.yin.service.ListSongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,10 +51,8 @@ public class ListSongController {
 
     // 返回歌单里指定歌单 ID 的歌曲
     @GetMapping("/listSong/detail")
-    public R listSongOfSongId(HttpServletRequest req) {
-        String songListId = req.getParameter("songListId");
-
-        return R.success("查询成功", listSongService.listSongOfSongId(Integer.parseInt(songListId)));
+    public R listSongOfSongId(@RequestParam int songListId ) {
+        return listSongService.listSongOfSongId(songListId);
     }
 
     // 更新歌单里面的歌曲信息

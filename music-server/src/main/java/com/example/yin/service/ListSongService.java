@@ -1,5 +1,6 @@
 package com.example.yin.service;
 
+import com.example.yin.common.R;
 import com.example.yin.domain.ListSong;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface ListSongService {
 
     List<ListSong> allListSong();
 
-    List<ListSong> listSongOfSongId(Integer songListId);
+    R listSongOfSongId(Integer songListId);
 }

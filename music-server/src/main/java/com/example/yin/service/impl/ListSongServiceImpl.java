@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.example.yin.common.R;
 import com.example.yin.dao.ListSongMapper;
 import com.example.yin.domain.ListSong;
 import com.example.yin.service.ListSongService;
@@ -15,8 +16,7 @@ public class ListSongServiceImpl implements ListSongService {
     private ListSongMapper listSongMapper;
 
     @Override
-    public List<ListSong> allListSong()
-    {
+    public List<ListSong> allListSong() {
         return listSongMapper.allListSong();
     }
 
@@ -31,15 +31,13 @@ public class ListSongServiceImpl implements ListSongService {
     }
 
     @Override
-    public boolean addListSong(ListSong listSong)
-    {
+    public boolean addListSong(ListSong listSong) {
         return listSongMapper.insertSelective(listSong) > 0;
     }
 
     @Override
-    public List<ListSong> listSongOfSongId(Integer songListId)
-    {
-        return listSongMapper.listSongOfSongId(songListId);
+    public R listSongOfSongId(Integer songListId) {
+        return R.success("查询成功", listSongMapper.listSongOfSongId(songListId));
     }
 
 }

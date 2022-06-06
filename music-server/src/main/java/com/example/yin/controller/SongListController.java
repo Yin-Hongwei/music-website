@@ -65,18 +65,14 @@ public class SongListController {
 
     // 返回标题包含文字的歌单
     @GetMapping("/songList/likeTitle/detail")
-    public R songListOfLikeTitle(HttpServletRequest req) {
-        String title = req.getParameter("title").trim();
-
-        return R.success(null, songListService.likeTitle('%' + title + '%'));
+    public R songListOfLikeTitle(@RequestParam String title) {
+        return songListService.likeTitle('%' + title + '%');
     }
 
     // 返回指定类型的歌单
     @GetMapping("/songList/style/detail")
-    public R songListOfStyle(HttpServletRequest req) {
-        String style = req.getParameter("style").trim();
-
-        return R.success(null, songListService.likeStyle('%' + style + '%'));
+    public R songListOfStyle(@RequestParam String style) {
+        return songListService.likeStyle('%' + style + '%');
     }
 
     // 更新歌单信息

@@ -7,8 +7,6 @@ import com.example.yin.service.SongListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class SongListServiceImpl implements SongListService {
 
@@ -17,41 +15,37 @@ public class SongListServiceImpl implements SongListService {
 
     @Override
     public boolean updateSongListMsg(SongList songList) {
-        return songListMapper.updateSongListMsg(songList) >0 ?true:false;
+        return songListMapper.updateSongListMsg(songList) > 0 ? true : false;
     }
 
     @Override
     public boolean deleteSongList(Integer id) {
-        return songListMapper.deleteSongList(id) >0 ?true:false;
+        return songListMapper.deleteSongList(id) > 0 ? true : false;
     }
 
     @Override
-    public R allSongList()
-    {
+    public R allSongList() {
         return R.success(null, songListMapper.allSongList());
     }
 
     @Override
-    public List<SongList> likeTitle(String title)
-    {
-        return songListMapper.likeTitle(title);
+    public R likeTitle(String title) {
+        return R.success(null, songListMapper.likeTitle(title));
     }
 
     @Override
-    public List<SongList> likeStyle(String style)
-    {
-        return songListMapper.likeStyle(style);
+    public R likeStyle(String style) {
+        return R.success(null, songListMapper.likeStyle(style));
     }
 
     @Override
-    public boolean addSongList(SongList songList)
-    {
-        return songListMapper.insertSelective(songList) > 0?true:false;
+    public boolean addSongList(SongList songList) {
+        return songListMapper.insertSelective(songList) > 0 ? true : false;
     }
 
     @Override
     public boolean updateSongListImg(SongList songList) {
 
-        return songListMapper.updateSongListImg(songList) >0 ?true:false;
+        return songListMapper.updateSongListImg(songList) > 0 ? true : false;
     }
 }
