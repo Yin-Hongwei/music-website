@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.yin.dao.CommentMapper">
-  <resultMap id="BaseResultMap" type="com.example.yin.domain.Comment">
+<mapper namespace="com.example.yin.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.example.yin.model.domain.Comment">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="song_id" property="songId" jdbcType="INTEGER" />
@@ -33,11 +33,11 @@
     delete from comment
     where id = #{id, jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.example.yin.domain.Comment">
+  <insert id="insert" parameterType="com.example.yin.model.domain.Comment">
     insert into comment (id, user_id, song_id, song_list_id, content, create_time, type, up)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{songId,jdbcType=INTEGER}, #{songListId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{type,jdbcType=TINYINT}, #{up,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.example.yin.domain.Comment">
+  <insert id="insertSelective" parameterType="com.example.yin.model.domain.Comment">
     insert into comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -84,7 +84,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateCommentMsg" parameterType="com.example.yin.domain.Comment">
+  <update id="updateCommentMsg" parameterType="com.example.yin.model.domain.Comment">
     update comment
     <set >
       <if test="userId != null">
@@ -111,7 +111,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.yin.domain.Comment">
+  <update id="updateByPrimaryKey" parameterType="com.example.yin.model.domain.Comment">
     update comment
     set user_id = #{userId,jdbcType=INTEGER},
       song_id = #{songId,jdbcType=INTEGER},

@@ -1,6 +1,6 @@
-package com.example.yin.dao;
+package com.example.yin.mapper;
 
-import com.example.yin.domain.Singer;
+import com.example.yin.model.domain.Singer;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

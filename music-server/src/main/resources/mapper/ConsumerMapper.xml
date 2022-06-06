@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.yin.dao.ConsumerMapper">
-  <resultMap id="BaseResultMap" type="com.example.yin.domain.Consumer">
+<mapper namespace="com.example.yin.mapper.ConsumerMapper">
+  <resultMap id="BaseResultMap" type="com.example.yin.model.domain.Consumer">
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
@@ -47,14 +47,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="com.example.yin.domain.Consumer">
+  <insert id="insert" parameterType="com.example.yin.model.domain.Consumer">
     insert into consumer (id, username, password,
       sex, phone_num, email, birth,
       introduction, location, avator,
       create_time, update_time)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, #{phoneNum,jdbcType=CHAR}, #{email,jdbcType=CHAR}, #{birth,jdbcType=TIMESTAMP}, #{introduction,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{avator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.example.yin.domain.Consumer">
+  <insert id="insertSelective" parameterType="com.example.yin.model.domain.Consumer">
     insert into consumer
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="username != null">
@@ -117,7 +117,7 @@
     </trim>
   </insert>
 
-  <update id="updateUserMsg" parameterType="com.example.yin.domain.Consumer">
+  <update id="updateUserMsg" parameterType="com.example.yin.model.domain.Consumer">
     update consumer
     <set >
       <if test="username != null">
@@ -156,7 +156,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateUserAvator" parameterType="com.example.yin.domain.Consumer">
+  <update id="updateUserAvator" parameterType="com.example.yin.model.domain.Consumer">
     update consumer
     <set >
       <if test="avator != null">
@@ -165,7 +165,7 @@
     </set>
     where id = #{id, jdbcType=INTEGER}
   </update>
-  <update id="updatePassword" parameterType="com.example.yin.domain.Consumer">
+  <update id="updatePassword" parameterType="com.example.yin.model.domain.Consumer">
     update consumer
     <set >
       <if test="password != null">
@@ -174,7 +174,7 @@
     </set>
     where id = #{id, jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.yin.domain.Consumer">
+  <update id="updateByPrimaryKey" parameterType="com.example.yin.model.domain.Consumer">
     update consumer
     set username = #{username,jdbcType=VARCHAR},
     password = #{password,jdbcType=VARCHAR},

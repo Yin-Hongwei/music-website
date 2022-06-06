@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.yin.dao.SingerMapper">
-  <resultMap id="BaseResultMap" type="com.example.yin.domain.Singer">
+<mapper namespace="com.example.yin.mapper.SingerMapper">
+  <resultMap id="BaseResultMap" type="com.example.yin.model.domain.Singer">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="TINYINT" />
@@ -38,11 +38,11 @@
     delete from singer
     where id = #{id, jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.example.yin.domain.Singer">
+  <insert id="insert" parameterType="com.example.yin.model.domain.Singer">
     insert into singer (id, name, sex, pic, birth, location, introduction)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, #{pic,jdbcType=VARCHAR}, #{birth,jdbcType=TIMESTAMP}, #{location,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.example.yin.domain.Singer">
+  <insert id="insertSelective" parameterType="com.example.yin.model.domain.Singer">
     insert into singer
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -84,7 +84,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateSingerMsg" parameterType="com.example.yin.domain.Singer">
+  <update id="updateSingerMsg" parameterType="com.example.yin.model.domain.Singer">
     update singer
     <set >
       <if test="name != null">
@@ -108,7 +108,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateSingerPic" parameterType="com.example.yin.domain.Consumer">
+  <update id="updateSingerPic" parameterType="com.example.yin.model.domain.Consumer">
     update singer
     <set >
       <if test="pic != null">
@@ -117,7 +117,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.yin.domain.Singer">
+  <update id="updateByPrimaryKey" parameterType="com.example.yin.model.domain.Singer">
     update singer
     set name = #{name,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=TINYINT},

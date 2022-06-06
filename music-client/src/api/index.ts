@@ -3,7 +3,7 @@ import { getBaseURL, get, post, deletes } from "./request";
 const HttpManager = {
   // 获取图片信息
   attachImageUrl: (url) => url ? `${getBaseURL()}/${url}` : "https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png",
-  // =======================> 用户 API
+  // =======================> 用户 API 完成
   // 登录
   signIn: ({username,password}) => post(`user/login/status`, {username,password}),
   // 注册
@@ -18,7 +18,7 @@ const HttpManager = {
   // 更新用户头像
   uploadUrl: (userId) => `${getBaseURL()}/user/avatar/update?id=${userId}`,
 
-  // =======================> 歌单 API
+  // =======================> 歌单 API 完成
   // 获取全部歌单
   getSongList: () => get("songList"),
   // 获取歌单类型
@@ -28,13 +28,13 @@ const HttpManager = {
   // 返回歌单里指定歌单ID的歌曲
   getListSongOfSongId: (songListId) => get(`listSong/detail?songListId=${songListId}`),
 
-  // =======================> 歌手 API
+  // =======================> 歌手 API  完成
   // 返回所有歌手
   getAllSinger: () => get("singer"),
   // 通过性别对歌手分类
   getSingerOfSex: (sex) => get(`singer/sex/detail?sex=${sex}`),
 
-  // =======================> 收藏 API
+  // =======================> 收藏 API 完成
   // 返回的指定用户ID的收藏列表
   getCollectionOfUser: (userId) => get(`collection/detail?userId=${userId}`),
   // 添加收藏的歌曲 type: 0 代表歌曲， 1 代表歌单
@@ -44,15 +44,15 @@ const HttpManager = {
 
   isCollection: ({userId, type, songId}) => post(`collection/status`, {userId, type, songId}),
 
-  // =======================> 评分 API
+  // =======================> 评分 API 完成
   // 提交评分
-  setRank: (params) => post(`rankList/add`, params),
+  setRank: ({songListId,consumerId,score}) => post(`rankList/add`, {songListId,consumerId,score}),
   // 获取指定歌单的评分
   getRankOfSongListId: (songListId) => get(`rankList?songListId=${songListId}`),
   // 获取指定用户的歌单评分
   getUserRank: (consumerId, songListId) => get(`/rankList/user?consumerId=${consumerId}&songListId=${songListId}`),
 
-  // =======================> 评论 API
+  // =======================> 评论 API 完成
   // 添加评论
   setComment: ({userId,content,songId,songListId,nowType}) => post(`comment/add`, {userId,content,songId,songListId,nowType}),
   // 删除评论

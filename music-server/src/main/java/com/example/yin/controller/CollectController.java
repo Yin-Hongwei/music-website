@@ -1,7 +1,7 @@
 package com.example.yin.controller;
 
 import com.example.yin.common.R;
-import com.example.yin.request.CollectRequest;
+import com.example.yin.model.request.CollectRequest;
 import com.example.yin.service.CollectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ public class CollectController {
     // 取消收藏的歌曲
     @DeleteMapping("/collection/delete")
     public R deleteCollection(@RequestParam Integer userId, @RequestParam Integer songId) {
-        return collectService.deleteCollect(userId,songId);
+        return collectService.deleteCollect(userId, songId);
     }
 
     // 是否收藏歌曲
