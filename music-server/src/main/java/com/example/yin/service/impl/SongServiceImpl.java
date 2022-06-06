@@ -8,8 +8,10 @@ import com.example.yin.service.SongService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -26,15 +28,49 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public boolean addSong(Song song) {
+    public R addSong(HttpServletRequest req, @RequestParam("file") MultipartFile mpfile) {
+        String singerId = req.getParameter("singerId").trim();
+        String name = req.getParameter("name").trim();
+        String introduction = req.getParameter("introduction").trim();
+        String pic = "/img/songPic/tubiao.jpg";
+        String lyric = req.getParameter("lyric").trim();
 
-        return songMapper.insertSelective(song) > 0;
+        String fileName = mpfile.getOriginalFilename();
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "song";
+        File file1 = new File(filePath);
+        if (!file1.exists()) {
+            if (!file1.mkdir()) {
+                return R.fatal("创建文件失败");
+            }
+        }
+
+        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
+        String storeUrlPath = "/song/" + fileName;
+        try {
+            mpfile.transferTo(dest);
+        } catch (IOException e) {
+            return R.fatal("上传失败" + e.getMessage());
+        }
+        Song song = new Song();
+        song.setSingerId(Integer.parseInt(singerId));
+        song.setName(name);
+        song.setIntroduction(introduction);
+        song.setCreateTime(new Date());
+        song.setUpdateTime(new Date());
+        song.setPic(pic);
+        song.setLyric(lyric);
+        song.setUrl(storeUrlPath);
+        if (songMapper.insertSelective(song) > 0) {
+            return R.success("上传成功", storeUrlPath);
+        } else {
+            return R.error("上传失败");
+        }
     }
 
     @Override
     public R updateSongMsg(SongRequest updateSongRequest) {
         Song song = new Song();
-        BeanUtils.copyProperties(updateSongRequest,song);
+        BeanUtils.copyProperties(updateSongRequest, song);
         song.setUpdateTime(new Date());
         if (songMapper.updateSongMsg(song) > 0) {
             return R.success("修改成功");

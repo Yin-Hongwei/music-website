@@ -2,18 +2,15 @@ package com.example.yin.service;
 
 import com.example.yin.common.R;
 import com.example.yin.domain.ListSong;
-
-import java.util.List;
+import com.example.yin.request.ListSongRequest;
 
 public interface ListSongService {
 
-    boolean addListSong(ListSong listSong);
+    R addListSong(ListSongRequest addListSongRequest);
 
     boolean updateListSongMsg(ListSong listSong);
 
-    boolean deleteListSong(Integer songId);
-
-    List<ListSong> allListSong();
+    R deleteListSong(Integer songId);
 
     R listSongOfSongId(Integer songListId);
 }

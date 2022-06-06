@@ -31,7 +31,7 @@
     delete from list_song
     where song_id = #{song_id, jdbcType=INTEGER}
   </delete>
-  <insert id="insertSelective" parameterType="com.example.yin.domain.ListSong">
+  `<insert id="insertSelective" parameterType="com.example.yin.domain.ListSong">
     insert into list_song
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
