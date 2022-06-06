@@ -1,45 +1,62 @@
 package com.example.yin.service.impl;
 
+import com.example.yin.common.R;
 import com.example.yin.dao.CommentMapper;
 import com.example.yin.domain.Comment;
+import com.example.yin.request.CommentRequest;
 import com.example.yin.service.CommentService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Date;
 
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentMapper commentMapper;
 
     @Override
-    public boolean addComment(Comment comment) {
-        return commentMapper.insertSelective(comment) > 0 ? true:false;
+    public R addComment(CommentRequest addCommentRequest) {
+        Comment comment = new Comment();
+        BeanUtils.copyProperties(addCommentRequest, comment);
+        comment.setType(addCommentRequest.getNowType());
+        comment.setCreateTime(new Date());
+        if (commentMapper.insertSelective(comment) > 0) {
+            return R.success("评论成功");
+        } else {
+            return R.error("评论失败");
+        }
     }
 
     @Override
-    public boolean updateCommentMsg(Comment comment) {
-        return commentMapper.updateCommentMsg(comment) >0 ?true:false;
+    public R updateCommentMsg(CommentRequest addCommentRequest) {
+        Comment comment = new Comment();
+        BeanUtils.copyProperties(addCommentRequest,comment);
+        if (commentMapper.updateCommentMsg(comment) > 0) {
+            return R.success("点赞成功");
+        } else {
+            return R.error("点赞失败");
+        }
     }
 
-//    删除评论
+    //    删除评论
     @Override
-    public boolean deleteComment(Integer id) {
-        return commentMapper.deleteComment(id) >0 ?true:false;
+    public R deleteComment(Integer id) {
+        if (commentMapper.deleteComment(id) > 0) {
+            return R.success("删除成功");
+        } else {
+            return R.error("删除失败");
+        }
     }
 
     @Override
-    public List<Comment> commentOfSongId(Integer songId)
-
-    {
-        return commentMapper.commentOfSongId(songId);
+    public R commentOfSongId(Integer songId) {
+        return R.success(null, commentMapper.commentOfSongId(songId));
     }
 
     @Override
-    public List<Comment> commentOfSongListId(Integer songListId)
-
-    {
-        return commentMapper.commentOfSongListId(songListId);
+    public R commentOfSongListId(Integer songListId) {
+        return R.success(null, commentMapper.commentOfSongListId(songListId));
     }
 }

@@ -54,11 +54,11 @@ const HttpManager = {
 
   // =======================> 评论 API
   // 添加评论
-  setComment: (params) => post(`comment/add`, params),
+  setComment: ({userId,content,songId,songListId,nowType}) => post(`comment/add`, {userId,content,songId,songListId,nowType}),
   // 删除评论
   deleteComment: (id) => get(`comment/delete?id=${id}`),
   // 点赞
-  setSupport: (params) => post(`comment/like`, params),
+  setSupport: ({id,up}) => post(`comment/like`, {id,up}),
   // 返回所有评论
   getAllComment: (type, id) => {
     let url = "";
