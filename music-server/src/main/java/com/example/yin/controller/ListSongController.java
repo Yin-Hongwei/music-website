@@ -2,7 +2,7 @@ package com.example.yin.controller;
 
 import com.example.yin.common.R;
 import com.example.yin.domain.ListSong;
-import com.example.yin.service.impl.ListSongServiceImpl;
+import com.example.yin.service.ListSongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ListSongController {
 
     @Autowired
-    private ListSongServiceImpl listSongService;
+    private ListSongService listSongService;
 
 
     // 给歌单添加歌曲
     @PostMapping("/listSong/add")
-    public Object addListSong(HttpServletRequest req) {
+    public R addListSong(HttpServletRequest req) {
         String songId = req.getParameter("songId").trim();
         String songListId = req.getParameter("songListId").trim();
 
@@ -37,7 +37,7 @@ public class ListSongController {
 
     // 删除歌单里的歌曲
     @GetMapping("/listSong/delete")
-    public Object deleteListSong(HttpServletRequest req) {
+    public R deleteListSong(HttpServletRequest req) {
         String songId = req.getParameter("songId");
 
         boolean res = listSongService.deleteListSong(Integer.parseInt(songId));
@@ -50,7 +50,7 @@ public class ListSongController {
 
     // 返回歌单里指定歌单 ID 的歌曲
     @GetMapping("/listSong/detail")
-    public Object listSongOfSongId(HttpServletRequest req) {
+    public R listSongOfSongId(HttpServletRequest req) {
         String songListId = req.getParameter("songListId");
 
         return R.success("查询成功", listSongService.listSongOfSongId(Integer.parseInt(songListId)));
@@ -58,7 +58,7 @@ public class ListSongController {
 
     // 更新歌单里面的歌曲信息
     @PostMapping("/listSong/update")
-    public Object updateListSongMsg(HttpServletRequest req) {
+    public R updateListSongMsg(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String songId = req.getParameter("songId").trim();
         String songListId = req.getParameter("songListId").trim();

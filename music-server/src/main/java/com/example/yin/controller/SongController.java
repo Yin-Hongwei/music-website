@@ -2,7 +2,7 @@ package com.example.yin.controller;
 
 import com.example.yin.common.R;
 import com.example.yin.domain.Song;
-import com.example.yin.service.impl.SongServiceImpl;
+import com.example.yin.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +21,7 @@ import java.util.Date;
 public class SongController {
 
     @Autowired
-    private SongServiceImpl songService;
+    private SongService songService;
 
 
     @Bean
@@ -37,7 +37,7 @@ public class SongController {
 
     // 添加歌曲
     @PostMapping("/song/add")
-    public Object addSong(HttpServletRequest req, @RequestParam("file") MultipartFile mpfile) {
+    public R addSong(HttpServletRequest req, @RequestParam("file") MultipartFile mpfile) {
         String singer_id = req.getParameter("singerId").trim();
         String name = req.getParameter("name").trim();
         String introduction = req.getParameter("introduction").trim();
@@ -77,7 +77,7 @@ public class SongController {
 
     // 删除歌曲
     @DeleteMapping("/song/delete")
-    public Object deleteSong(HttpServletRequest req) {
+    public R deleteSong(HttpServletRequest req) {
         String id = req.getParameter("id");
 
         boolean res = songService.deleteSong(Integer.parseInt(id));
@@ -90,14 +90,14 @@ public class SongController {
 
     // 返回所有歌曲
     @GetMapping("/song")
-    public Object allSong() {
+    public R allSong() {
         return R.success(null, songService.allSong());
     }
 
     //TODO ok
     // 返回指定歌曲ID的歌曲
     @GetMapping("/song/detail")
-    public Object songOfId(HttpServletRequest req) {
+    public R songOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
 
         return R.success(null, songService.songOfId(Integer.parseInt(id)));
@@ -105,7 +105,7 @@ public class SongController {
 
     // 返回指定歌手ID的歌曲
     @GetMapping("/song/singer/detail")
-    public Object songOfSingerId(HttpServletRequest req) {
+    public R songOfSingerId(HttpServletRequest req) {
         String singerId = req.getParameter("singerId");
 
         return R.success(null, songService.songOfSingerId(Integer.parseInt(singerId)));
@@ -113,7 +113,7 @@ public class SongController {
 
     // 返回指定歌手名的歌曲
     @GetMapping("/song/singerName/detail")
-    public Object songOfSingerName(HttpServletRequest req) {
+    public R songOfSingerName(HttpServletRequest req) {
         String name = req.getParameter("name");
 
         return R.success(null, songService.songOfSingerName('%' + name + '%'));
@@ -121,7 +121,7 @@ public class SongController {
 
     // 更新歌曲信息
     @PostMapping("/song/update")
-    public Object updateSongMsg(HttpServletRequest req) {
+    public R updateSongMsg(HttpServletRequest req) {
         String id = req.getParameter("id").trim();
         String singerId = req.getParameter("singerId").trim();
         String name = req.getParameter("name").trim();
@@ -146,7 +146,7 @@ public class SongController {
 
     // 更新歌曲图片
     @PostMapping("/song/img/update")
-    public Object updateSongPic(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {
+    public R updateSongPic(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {
         String fileName = System.currentTimeMillis() + urlFile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songPic";
         File file1 = new File(filePath);
@@ -174,7 +174,7 @@ public class SongController {
 
     // 更新歌曲
     @PostMapping("/song/url/update")
-    public Object updateSongUrl(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {
+    public R updateSongUrl(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {
         String fileName = urlFile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "song";
         File file1 = new File(filePath);
