@@ -73,7 +73,7 @@ public class SingerController {
     // 返回所有歌手
     @GetMapping("/singer")
     public R allSinger() {
-        return R.success(null, singerService.allSinger());
+        return singerService.allSinger();
     }
 
     // 根据歌手名查找歌手

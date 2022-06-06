@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.example.yin.common.R;
 import com.example.yin.dao.SingerMapper;
 import com.example.yin.domain.Singer;
 import com.example.yin.service.SingerService;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SingerServiceImpl implements SingerService{
+public class SingerServiceImpl implements SingerService {
 
     @Autowired
     private SingerMapper singerMapper;
@@ -31,28 +32,22 @@ public class SingerServiceImpl implements SingerService{
     }
 
     @Override
-    public List<Singer> allSinger()
-    {
-        return singerMapper.allSinger();
+    public R allSinger() {
+        return R.success(null, singerMapper.allSinger());
     }
 
     @Override
-    public boolean addSinger(Singer singer)  {
-
+    public boolean addSinger(Singer singer) {
         return singerMapper.insertSelective(singer) > 0;
     }
 
     @Override
-    public List<Singer> singerOfName(String name)
-
-    {
+    public List<Singer> singerOfName(String name) {
         return singerMapper.singerOfName(name);
     }
 
     @Override
-    public List<Singer> singerOfSex(Integer sex)
-
-    {
+    public List<Singer> singerOfSex(Integer sex) {
         return singerMapper.singerOfSex(sex);
     }
 }

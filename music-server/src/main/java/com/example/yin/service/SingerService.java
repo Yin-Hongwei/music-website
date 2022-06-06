@@ -1,5 +1,6 @@
 package com.example.yin.service;
 
+import com.example.yin.common.R;
 import com.example.yin.domain.Singer;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface SingerService {
 
     boolean deleteSinger(Integer id);
 
-    List<Singer> allSinger();
+    R allSinger();
 
     List<Singer> singerOfName(String name);
 
