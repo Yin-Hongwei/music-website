@@ -3,11 +3,16 @@ package com.example.yin.service.impl;
 import com.example.yin.common.R;
 import com.example.yin.dao.SongMapper;
 import com.example.yin.domain.Song;
+import com.example.yin.request.SongRequest;
 import com.example.yin.service.SongService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 
 @Service
 public class SongServiceImpl implements SongService {
@@ -27,25 +32,79 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public boolean updateSongMsg(Song song) {
-        return songMapper.updateSongMsg(song) > 0;
+    public R updateSongMsg(SongRequest updateSongRequest) {
+        Song song = new Song();
+        BeanUtils.copyProperties(updateSongRequest,song);
+        song.setUpdateTime(new Date());
+        if (songMapper.updateSongMsg(song) > 0) {
+            return R.success("修改成功");
+        } else {
+            return R.error("修改失败");
+        }
     }
 
     @Override
-    public boolean updateSongUrl(Song song) {
-
-        return songMapper.updateSongUrl(song) > 0;
+    public R updateSongUrl(MultipartFile urlFile, int id) {
+        String fileName = urlFile.getOriginalFilename();
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "song";
+        File file1 = new File(filePath);
+        if (!file1.exists()) {
+            if (!file1.mkdir()) {
+                return R.fatal("创建目的文件夹失败");
+            }
+        }
+        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
+        String storeUrlPath = "/song/" + fileName;
+        try {
+            urlFile.transferTo(dest);
+        } catch (IOException e) {
+            return R.fatal("更新失败" + e.getMessage());
+        }
+        Song song = new Song();
+        song.setId(id);
+        song.setUrl(storeUrlPath);
+        if (songMapper.updateSongUrl(song) > 0) {
+            return R.success("更新成功", storeUrlPath);
+        } else {
+            return R.error("更新失败");
+        }
     }
 
     @Override
-    public boolean updateSongPic(Song song) {
+    public R updateSongPic(MultipartFile urlFile, int id) {
+        String fileName = System.currentTimeMillis() + urlFile.getOriginalFilename();
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songPic";
+        File file1 = new File(filePath);
+        if (!file1.exists()) {
+            if (!file1.mkdir()) {
+                return R.fatal("创建文件夹失败");
+            }
+        }
 
-        return songMapper.updateSongPic(song) > 0;
+        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
+        String storeUrlPath = "/img/songPic/" + fileName;
+        try {
+            urlFile.transferTo(dest);
+        } catch (IOException e) {
+            return R.fatal("上传失败" + e.getMessage());
+        }
+        Song song = new Song();
+        song.setId(id);
+        song.setPic(storeUrlPath);
+        if (songMapper.updateSongPic(song) > 0) {
+            return R.success("上传成功", storeUrlPath);
+        } else {
+            return R.error("上传失败");
+        }
     }
 
     @Override
-    public boolean deleteSong(Integer id) {
-        return songMapper.deleteSong(id) > 0;
+    public R deleteSong(Integer id) {
+        if (songMapper.deleteSong(id) > 0) {
+            return R.success("删除成功");
+        } else {
+            return R.error("删除失败");
+        }
     }
 
     @Override
@@ -54,8 +113,8 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public List<Song> songOfId(Integer id) {
-        return songMapper.songOfId(id);
+    public R songOfId(Integer id) {
+        return R.success(null, songMapper.songOfId(id));
     }
 
     @Override

@@ -80,16 +80,13 @@ public class SingerController {
     @GetMapping("/singer/name/detail")
     public R singerOfName(HttpServletRequest req) {
         String name = req.getParameter("name").trim();
-
         return R.success(null, singerService.singerOfName(name));
     }
 
     // 根据歌手性别查找歌手
     @GetMapping("/singer/sex/detail")
-    public R singerOfSex(HttpServletRequest req) {
-        String sex = req.getParameter("sex").trim();
-
-        return R.success(null, singerService.singerOfSex(Integer.parseInt(sex)));
+    public R singerOfSex(@RequestParam int sex) {
+        return singerService.singerOfSex(sex);
     }
 
     // 更新歌手信息

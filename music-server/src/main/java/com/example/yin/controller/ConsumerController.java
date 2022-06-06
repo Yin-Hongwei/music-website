@@ -63,7 +63,7 @@ public class ConsumerController {
     }
 
     /**
-     * TODO 前台界面的调用
+     * TODO 前后台界面的调用
      * 更新用户信息
      */
     @PostMapping("/user/update")
@@ -72,7 +72,7 @@ public class ConsumerController {
     }
 
     /**
-     * TODO 前台更新用户的密码
+     * TODO 前后台更新用户的密码
      * 更新用户密码
      */
     @PostMapping("/user/updatePassword")

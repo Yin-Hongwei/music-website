@@ -3,29 +3,25 @@ import { get, post, deletes, getBaseURL } from './request'
 const HttpManager = {
   // 获取图片信息
   attachImageUrl: (url) => `${getBaseURL()}/${url}`,
-  // =======================> 管理员 API
+  // =======================> 管理员 API 完成
   // 是否登录成功
-  getLoginStatus: (params) => post(`admin/login/status`, params),
+  getLoginStatus: ({username,password}) => post(`admin/login/status`, {username,password}),
 
-  // =======================> 用户 API
+  // =======================> 用户 API 完成
   // 返回所有用户
   getAllUser: () => get(`user`),
   // 返回指定ID的用户
   getUserOfId: (id) => get(`user/detail?id=${id}`),
-  // 添加用户
-  setUser: (params) => post(`user/add`, params),
-  // 更新用户信息
-  updateUserMsg: (params) => post(`user/update`, params),
   // 删除用户
   deleteUser: (id) => get(`user/delete?id=${id}`),
 
-  // =======================> 收藏列表 API
+  // =======================> 收藏列表 API 完成
   // 返回的指定用户ID收藏列表
   getCollectionOfUser: (userId) => get(`collection/detail?userId=${userId}`),
   // 删除收藏的歌曲
   deleteCollection: (userId, songId) => deletes(`collection/delete?userId=${userId}&&songId=${songId}`),
 
-  // =======================> 评论列表 API
+  // =======================> 评论列表 API 完成
   // 获得指定歌曲ID的评论列表
   getCommentOfSongId: (songId) => get(`comment/song/detail?songId=${songId}`),
   // 获得指定歌单ID的评论列表
@@ -43,7 +39,7 @@ const HttpManager = {
   // 删除歌手
   deleteSinger: (id) => get(`singer/delete?id=${id}`),
 
-  // =======================> 歌曲 API
+  // =======================> 歌曲 API  完成
   // 返回所有歌曲
   getAllSong: () => get(`song`),
   // 返回指定歌手ID的歌曲
@@ -53,14 +49,14 @@ const HttpManager = {
   // 返回指定歌手名的歌曲
   getSongOfSingerName: (id) => get(`song/singerName/detail?name=${id}`),
   // 更新歌曲信息
-  updateSongMsg: (params) => post(`song/update`, params),
+  updateSongMsg: ({id,singerId,name,introduction,lyric}) => post(`song/update`, {id,singerId,name,introduction,lyric}),
   updateSongUrl: (id) => `${getBaseURL()}/song/url/update?id=${id}`,
   updateSongImg: (id) => `${getBaseURL()}/song/img/update?id=${id}`,
   // 删除歌曲
   deleteSong: (id) => get(`song/delete?id=${id}`),
 
   // =======================> 歌单 API
-  // 添加歌单
+  // 添加歌单t
   setSongList: (params) => post(`songList/add`, params),
   // 获取全部歌单
   getSongList: () => get(`songList`),

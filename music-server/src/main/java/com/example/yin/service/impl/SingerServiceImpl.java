@@ -47,7 +47,7 @@ public class SingerServiceImpl implements SingerService {
     }
 
     @Override
-    public List<Singer> singerOfSex(Integer sex) {
-        return singerMapper.singerOfSex(sex);
+    public R singerOfSex(Integer sex) {
+        return R.success(null, singerMapper.singerOfSex(sex));
     }
 }

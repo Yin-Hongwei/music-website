@@ -19,5 +19,5 @@ public interface SingerService {
 
     List<Singer> singerOfName(String name);
 
-    List<Singer> singerOfSex(Integer sex);
+    R singerOfSex(Integer sex);
 }
