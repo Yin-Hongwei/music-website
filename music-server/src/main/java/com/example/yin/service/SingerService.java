@@ -1,23 +1,22 @@
 package com.example.yin.service;
 
 import com.example.yin.common.R;
-import com.example.yin.domain.Singer;
-
-import java.util.List;
+import com.example.yin.model.request.SingerRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface SingerService {
 
-    boolean addSinger (Singer singer);
+    R addSinger (SingerRequest addSingerRequest);
 
-    boolean updateSingerMsg(Singer singer);
+    R updateSingerMsg(SingerRequest updateSingerRequest);
 
-    boolean updateSingerPic(Singer singer);
+    R updateSingerPic(MultipartFile avatorFile, int id);
 
-    boolean deleteSinger(Integer id);
+    R deleteSinger(Integer id);
 
     R allSinger();
 
-    List<Singer> singerOfName(String name);
+    R singerOfName(String name);
 
-    List<Singer> singerOfSex(Integer sex);
+    R singerOfSex(Integer sex);
 }

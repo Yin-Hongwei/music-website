@@ -1,9 +1,9 @@
 package com.example.yin.service.impl;
 
 import com.example.yin.common.R;
-import com.example.yin.dao.CollectMapper;
-import com.example.yin.domain.Collect;
-import com.example.yin.request.CollectRequest;
+import com.example.yin.mapper.CollectMapper;
+import com.example.yin.model.domain.Collect;
+import com.example.yin.model.request.CollectRequest;
 import com.example.yin.service.CollectService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
-package com.example.yin.dao;
+package com.example.yin.mapper;
 
-import com.example.yin.domain.Collect;
+import com.example.yin.model.domain.Collect;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

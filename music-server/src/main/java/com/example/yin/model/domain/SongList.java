@@ -1,4 +1,4 @@
-package com.example.yin.domain;
+package com.example.yin.model.domain;
 
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;

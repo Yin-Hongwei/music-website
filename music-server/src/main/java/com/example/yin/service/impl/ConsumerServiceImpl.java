@@ -2,9 +2,9 @@ package com.example.yin.service.impl;
 
 import com.example.yin.common.R;
 import com.example.yin.constant.Constants;
-import com.example.yin.dao.ConsumerMapper;
-import com.example.yin.domain.Consumer;
-import com.example.yin.request.ConsumerRequest;
+import com.example.yin.mapper.ConsumerMapper;
+import com.example.yin.model.domain.Consumer;
+import com.example.yin.model.request.ConsumerRequest;
 import com.example.yin.service.ConsumerService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;

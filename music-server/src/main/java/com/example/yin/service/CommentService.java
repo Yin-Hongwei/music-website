@@ -1,7 +1,7 @@
 package com.example.yin.service;
 
 import com.example.yin.common.R;
-import com.example.yin.request.CommentRequest;
+import com.example.yin.model.request.CommentRequest;
 
 public interface CommentService {
 

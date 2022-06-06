@@ -1,21 +1,28 @@
-package com.example.yin.domain;
+package com.example.yin.model.domain;
 
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.io.Serializable;
+import java.util.Date;
 
 @Data
-public class ListSong implements Serializable {
-
+public class Collect {
     private Integer id;
+
+    private Integer userId;
+
+    private Byte type;
 
     private Integer songId;
 
     private Integer songListId;
 
+    private Date createTime;
+
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
+
 }

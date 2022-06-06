@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.yin.dao.CollectMapper">
-  <resultMap id="BaseResultMap" type="com.example.yin.domain.Collect">
+<mapper namespace="com.example.yin.mapper.CollectMapper">
+  <resultMap id="BaseResultMap" type="com.example.yin.model.domain.Collect">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="TINYINT" />
@@ -34,11 +34,11 @@
     where user_id = #{userId, jdbcType=INTEGER}
     and song_id = #{songId, jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.example.yin.domain.Collect">
+  <insert id="insert" parameterType="com.example.yin.model.domain.Collect">
     insert into collection (id, user_id, type, song_id, song_list_id, create_time)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, #{songId,jdbcType=INTEGER}, #{songListId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.example.yin.domain.Collect">
+  <insert id="insertSelective" parameterType="com.example.yin.model.domain.Collect">
     insert into collect
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -75,7 +75,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.example.yin.domain.Collect">
+  <update id="updateByPrimaryKey" parameterType="com.example.yin.model.domain.Collect">
     update collect
     set user_id = #{userId,jdbcType=INTEGER},
       type = #{type,jdbcType=TINYINT},

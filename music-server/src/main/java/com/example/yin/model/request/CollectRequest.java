@@ -1,4 +1,4 @@
-package com.example.yin.request;
+package com.example.yin.model.request;
 
 import lombok.Data;
 

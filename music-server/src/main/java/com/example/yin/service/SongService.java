@@ -1,26 +1,26 @@
 package com.example.yin.service;
 
-import com.example.yin.domain.Song;
-
-import java.util.List;
+import com.example.yin.common.R;
+import com.example.yin.model.request.SongRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface SongService {
 
-    boolean addSong (Song song);
+    R addSong (SongRequest addSongRequest,  MultipartFile mpfile);
 
-    boolean updateSongMsg(Song song);
+    R updateSongMsg(SongRequest updateSongRequest);
 
-    boolean updateSongUrl(Song song);
+    R updateSongUrl(MultipartFile urlFile, int id);
 
-    boolean updateSongPic(Song song);
+    R updateSongPic(MultipartFile urlFile, int id);
 
-    boolean deleteSong(Integer id);
+    R deleteSong(Integer id);
 
-    List<Song> allSong();
+    R allSong();
 
-    List<Song> songOfSingerId(Integer singerId);
+    R songOfSingerId(Integer singerId);
 
-    List<Song> songOfId(Integer id);
+    R songOfId(Integer id);
 
-    List<Song> songOfSingerName(String name);
+    R songOfSingerName(String name);
 }

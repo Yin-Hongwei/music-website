@@ -1,12 +1,13 @@
-package com.example.yin.domain;
+package com.example.yin.model.request;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
+/**
+ * @Author 祝英台炸油条
+ * @Time : 2022/6/6 16:57
+ **/
 @Data
-public class RankList implements Serializable {
-
+public class RankListRequest {
     private Long id;
 
     private Long songListId;
@@ -14,5 +15,4 @@ public class RankList implements Serializable {
     private Long consumerId;
 
     private Integer score;
-
 }

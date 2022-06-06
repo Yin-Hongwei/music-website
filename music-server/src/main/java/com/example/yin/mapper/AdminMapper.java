@@ -1,6 +1,6 @@
-package com.example.yin.dao;
+package com.example.yin.mapper;
 
-import com.example.yin.domain.Admin;
+import com.example.yin.model.domain.Admin;
 import org.springframework.stereotype.Repository;
 
 @Repository
