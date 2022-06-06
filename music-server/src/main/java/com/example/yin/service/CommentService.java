@@ -1,19 +1,18 @@
 package com.example.yin.service;
 
-import com.example.yin.domain.Comment;
-
-import java.util.List;
+import com.example.yin.common.R;
+import com.example.yin.request.CommentRequest;
 
 public interface CommentService {
 
-    boolean addComment(Comment comment);
+    R addComment(CommentRequest addCommentRequest);
 
-    boolean updateCommentMsg(Comment comment);
+    R updateCommentMsg(CommentRequest upCommentRequest);
 
-    boolean deleteComment(Integer id);
+    R deleteComment(Integer id);
 
-    List<Comment> commentOfSongId(Integer songId);
+    R commentOfSongId(Integer songId);
 
-    List<Comment> commentOfSongListId(Integer songListId);
+    R commentOfSongListId(Integer songListId);
 
 }

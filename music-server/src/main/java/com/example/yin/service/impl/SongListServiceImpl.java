@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.example.yin.common.R;
 import com.example.yin.dao.SongListMapper;
 import com.example.yin.domain.SongList;
 import com.example.yin.service.SongListService;
@@ -25,9 +26,9 @@ public class SongListServiceImpl implements SongListService {
     }
 
     @Override
-    public List<SongList> allSongList()
+    public R allSongList()
     {
-        return songListMapper.allSongList();
+        return R.success(null, songListMapper.allSongList());
     }
 
     @Override
