@@ -2,7 +2,7 @@ package com.example.yin.controller;
 
 import com.example.yin.common.R;
 import com.example.yin.domain.Comment;
-import com.example.yin.service.impl.CommentServiceImpl;
+import com.example.yin.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +14,7 @@ import java.util.Date;
 @RestController
 public class CommentController {
     @Autowired
-    private CommentServiceImpl commentService;
+    private CommentService commentService;
 
 
     // 提交评论
