@@ -38,11 +38,11 @@ const HttpManager = {
   // 返回的指定用户ID的收藏列表
   getCollectionOfUser: (userId) => get(`collection/detail?userId=${userId}`),
   // 添加收藏的歌曲 type: 0 代表歌曲， 1 代表歌单
-  setCollection: (params) => post(`collection/add`, params),
+  setCollection: ({userId,type,songId}) => post(`collection/add`,{userId,type,songId}),
 
   deleteCollection: (userId, songId) => deletes(`collection/delete?userId=${userId}&&songId=${songId}`),
 
-  isCollection: (params) => post(`collection/status`, params),
+  isCollection: ({userId, type, songId}) => post(`collection/status`, {userId, type, songId}),
 
   // =======================> 评分 API
   // 提交评分

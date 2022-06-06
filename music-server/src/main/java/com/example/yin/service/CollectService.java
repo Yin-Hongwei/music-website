@@ -1,16 +1,18 @@
 package com.example.yin.service;
 
+import com.example.yin.common.R;
 import com.example.yin.domain.Collect;
+import com.example.yin.request.CollectRequest;
 
 import java.util.List;
 
 public interface CollectService {
 
-    boolean addCollection(Collect collect);
+    R addCollection(CollectRequest addCollectRequest);
 
-    boolean existSongId(Integer userId, Integer songId);
+    R existSongId(CollectRequest isCollectRequest);
 
-    boolean deleteCollect(Integer userId, Integer songId);
+    R deleteCollect(Integer userId,Integer songId);
 
     List<Collect> collectionOfUser(Integer userId);
 }

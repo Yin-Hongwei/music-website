@@ -1,12 +1,15 @@
-package com.example.yin.domain;
+package com.example.yin.request;
 
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Date;
 
+/**
+ * @Author 祝英台炸油条
+ * @Time : 2022/6/6 13:11
+ **/
 @Data
-public class Collect {
+public class CollectRequest {
     private Integer id;
 
     private Integer userId;
@@ -18,11 +21,4 @@ public class Collect {
     private Integer songListId;
 
     private Date createTime;
-
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
 }

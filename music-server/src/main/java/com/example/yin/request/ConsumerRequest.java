@@ -11,16 +11,27 @@ import java.util.Date;
  **/
 @Data
 public class ConsumerRequest {
-    Integer id;
-    String username;
-    String oldPassword; //因为会用到用户旧密码 这无所谓的对应即可
-    String password;
-    Byte sex;
-    String phoneNum;
-    String email;
-    Date birth;
-    String introduction;
-    String location;
-    String avator;
-    Date createTime;
+    private Integer id;
+
+    private String username;
+
+    private String oldPassword; //因为会用到用户旧密码 这无所谓的对应即可
+
+    private String password;
+
+    private Byte sex;
+
+    private String phoneNum;
+
+    private String email;
+
+    private Date birth;
+
+    private String introduction;
+
+    private String location;
+
+    private String avator;
+
+    private Date createTime;
 }

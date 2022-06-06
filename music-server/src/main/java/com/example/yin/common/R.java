@@ -1,6 +1,5 @@
 package com.example.yin.common;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 
 /**
