@@ -3,7 +3,9 @@ package com.example.yin.service.impl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.SongListMapper;
 import com.example.yin.model.domain.SongList;
+import com.example.yin.model.request.SongListRequest;
 import com.example.yin.service.SongListService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,8 +21,14 @@ public class SongListServiceImpl implements SongListService {
     private SongListMapper songListMapper;
 
     @Override
-    public boolean updateSongListMsg(SongList songList) {
-        return songListMapper.updateSongListMsg(songList) > 0;
+    public R updateSongListMsg(SongListRequest updateSongListRequest) {
+        SongList songList = new SongList();
+        BeanUtils.copyProperties(updateSongListRequest,songList);
+        if (songListMapper.updateSongListMsg(songList) > 0) {
+            return R.success("修改成功");
+        } else {
+            return R.error("修改失败");
+        }
     }
 
     @Override
@@ -48,8 +56,16 @@ public class SongListServiceImpl implements SongListService {
     }
 
     @Override
-    public boolean addSongList(SongList songList) {
-        return songListMapper.insertSelective(songList) > 0;
+    public R addSongList(SongListRequest addSongListRequest) {
+        SongList songList = new SongList();
+        BeanUtils.copyProperties(addSongListRequest,songList);
+        String pic = "/img/songListPic/123.jpg";
+        songList.setPic(pic);
+        if (songListMapper.insertSelective(songList) > 0) {
+            return R.success("添加成功");
+        } else {
+            return R.error("添加失败");
+        }
     }
 
     @Override
