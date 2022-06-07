@@ -1,17 +1,11 @@
 package com.example.yin.controller;
 
 import com.example.yin.common.R;
-import com.example.yin.model.domain.Singer;
 import com.example.yin.model.request.SingerRequest;
 import com.example.yin.service.SingerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @RestController
 public class SingerController {

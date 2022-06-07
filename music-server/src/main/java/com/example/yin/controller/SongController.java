@@ -1,7 +1,6 @@
 package com.example.yin.controller;
 
 import com.example.yin.common.R;
-import com.example.yin.model.domain.Song;
 import com.example.yin.model.request.SongRequest;
 import com.example.yin.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.MultipartConfigElement;
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
 
 @RestController
 public class SongController {
