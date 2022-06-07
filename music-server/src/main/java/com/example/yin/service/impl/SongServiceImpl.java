@@ -26,9 +26,34 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public boolean addSong(Song song) {
-
-        return songMapper.insertSelective(song) > 0;
+    public R addSong(SongRequest addSongRequest,  MultipartFile mpfile) {
+        Song song = new Song();
+        BeanUtils.copyProperties(addSongRequest,song);
+        String pic = "/img/songPic/tubiao.jpg";
+        String fileName = mpfile.getOriginalFilename();
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "song";
+        File file1 = new File(filePath);
+        if (!file1.exists()) {
+            if (!file1.mkdir()) {
+                return R.fatal("创建文件失败");
+            }
+        }
+        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
+        String storeUrlPath = "/song/" + fileName;
+        try {
+            mpfile.transferTo(dest);
+        } catch (IOException e) {
+            return R.fatal("上传失败" + e.getMessage());
+        }
+        song.setCreateTime(new Date());
+        song.setUpdateTime(new Date());
+        song.setPic(pic);
+        song.setUrl(storeUrlPath);
+        if (songMapper.insertSelective(song) > 0) {
+            return R.success("上传成功", storeUrlPath);
+        } else {
+            return R.error("上传失败");
+        }
     }
 
     @Override
