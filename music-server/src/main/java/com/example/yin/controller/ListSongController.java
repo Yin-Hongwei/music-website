@@ -2,12 +2,10 @@ package com.example.yin.controller;
 
 import com.example.yin.common.R;
 import com.example.yin.model.domain.ListSong;
+import com.example.yin.model.request.ListSongRequest;
 import com.example.yin.service.ListSongService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,20 +18,8 @@ public class ListSongController {
 
     // 给歌单添加歌曲
     @PostMapping("/listSong/add")
-    public R addListSong(HttpServletRequest req) {
-        String songId = req.getParameter("songId").trim();
-        String songListId = req.getParameter("songListId").trim();
-
-        ListSong listsong = new ListSong();
-        listsong.setSongId(Integer.parseInt(songId));
-        listsong.setSongListId(Integer.parseInt(songListId));
-
-        boolean res = listSongService.addListSong(listsong);
-        if (res) {
-            return R.success("添加成功");
-        } else {
-            return R.error("添加失败");
-        }
+    public R addListSong(@RequestBody ListSongRequest addListSongRequest) {
+        return listSongService.addListSong(addListSongRequest);
     }
 
     // 删除歌单里的歌曲
