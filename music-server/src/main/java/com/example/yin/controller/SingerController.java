@@ -56,6 +56,6 @@ public class SingerController {
     // 更新歌手头像
     @PostMapping("/singer/avatar/update")
     public R updateSingerPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
-        return singerService.updateSingerPic(avatorFile,id);
+        return singerService.updateSingerPic(avatorFile, id);
     }
 }

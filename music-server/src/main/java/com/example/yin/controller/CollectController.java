@@ -24,7 +24,7 @@ public class CollectController {
     // 取消收藏的歌曲
     @DeleteMapping("/collection/delete")
     public R deleteCollection(@RequestParam Integer userId, @RequestParam Integer songId) {
-        return collectService.deleteCollect(userId,songId);
+        return collectService.deleteCollect(userId, songId);
     }
 
     // 是否收藏歌曲

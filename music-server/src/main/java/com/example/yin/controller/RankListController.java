@@ -27,7 +27,7 @@ public class RankListController {
 
     // 获取指定用户的歌单评分
     @GetMapping("/rankList/user")
-    public R getUserRank(@RequestParam Long consumerId,@RequestParam Long songListId) {
+    public R getUserRank(@RequestParam Long consumerId, @RequestParam Long songListId) {
         return rankListService.getUserRank(consumerId, songListId);
     }
 }

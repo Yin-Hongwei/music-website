@@ -30,7 +30,7 @@ public class ListSongController {
 
     // 返回歌单里指定歌单 ID 的歌曲
     @GetMapping("/listSong/detail")
-    public R listSongOfSongId(@RequestParam int songListId ) {
+    public R listSongOfSongId(@RequestParam int songListId) {
         return listSongService.listSongOfSongId(songListId);
     }
 
