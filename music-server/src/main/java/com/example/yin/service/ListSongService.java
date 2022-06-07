@@ -10,10 +10,11 @@ public interface ListSongService {
 
     R addListSong(ListSongRequest addListSongRequest);
 
-    boolean updateListSongMsg(ListSong listSong);
+    R updateListSongMsg(ListSongRequest updateListSongRequest);
 
     R deleteListSong(Integer songId);
 
+    //看看这啥
     List<ListSong> allListSong();
 
     R listSongOfSongId(Integer songListId);

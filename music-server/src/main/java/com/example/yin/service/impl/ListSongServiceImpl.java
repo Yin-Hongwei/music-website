@@ -23,8 +23,14 @@ public class ListSongServiceImpl implements ListSongService {
     }
 
     @Override
-    public boolean updateListSongMsg(ListSong listSong) {
-        return listSongMapper.updateListSongMsg(listSong) > 0;
+    public R updateListSongMsg(ListSongRequest updateListSongRequest) {
+        ListSong listSong = new ListSong();
+        BeanUtils.copyProperties(updateListSongRequest,listSong);
+        if (listSongMapper.updateListSongMsg(listSong) > 0) {
+            return R.success("修改成功");
+        } else {
+            return R.error("修改失败");
+        }
     }
 
     @Override

@@ -36,21 +36,7 @@ public class ListSongController {
 
     // 更新歌单里面的歌曲信息
     @PostMapping("/listSong/update")
-    public R updateListSongMsg(HttpServletRequest req) {
-        String id = req.getParameter("id").trim();
-        String songId = req.getParameter("songId").trim();
-        String songListId = req.getParameter("songListId").trim();
-
-        ListSong listsong = new ListSong();
-        listsong.setId(Integer.parseInt(id));
-        listsong.setSongId(Integer.parseInt(songId));
-        listsong.setSongListId(Integer.parseInt(songListId));
-
-        boolean res = listSongService.updateListSongMsg(listsong);
-        if (res) {
-            return R.success("修改成功");
-        } else {
-            return R.error("修改失败");
-        }
+    public R updateListSongMsg(@RequestBody ListSongRequest updateListSongRequest) {
+        return listSongService.updateListSongMsg(updateListSongRequest);
     }
 }
