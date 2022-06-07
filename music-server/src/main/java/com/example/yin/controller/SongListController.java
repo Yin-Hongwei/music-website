@@ -100,29 +100,6 @@ public class SongListController {
     // 更新歌单图片
     @PostMapping("/songList/img/update")
     public R updateSongListPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
-        String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songListPic";
-        File file1 = new File(filePath);
-        if (!file1.exists()) {
-            file1.mkdir();
-        }
-
-        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String imgPath = "/img/songListPic/" + fileName;
-        try {
-            avatorFile.transferTo(dest);
-            SongList songList = new SongList();
-            songList.setId(id);
-            songList.setPic(imgPath);
-
-            boolean res = songListService.updateSongListImg(songList);
-            if (res) {
-                return R.success("上传成功", imgPath);
-            } else {
-                return R.error("上传失败");
-            }
-        } catch (IOException e) {
-            return R.fatal("上传失败" + e.getMessage());
-        }
+        return songListService.updateSongListImg(avatorFile,id);
     }
 }

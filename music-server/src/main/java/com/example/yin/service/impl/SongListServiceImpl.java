@@ -6,6 +6,11 @@ import com.example.yin.model.domain.SongList;
 import com.example.yin.service.SongListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 @Service
 public class SongListServiceImpl implements SongListService {
@@ -44,8 +49,27 @@ public class SongListServiceImpl implements SongListService {
     }
 
     @Override
-    public boolean updateSongListImg(SongList songList) {
-
-        return songListMapper.updateSongListImg(songList) > 0 ? true : false;
+    public R updateSongListImg(MultipartFile avatorFile, @RequestParam("id") int id) {
+        String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songListPic";
+        File file1 = new File(filePath);
+        if (!file1.exists()) {
+            file1.mkdir();
+        }
+        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
+        String imgPath = "/img/songListPic/" + fileName;
+        try {
+            avatorFile.transferTo(dest);
+        } catch (IOException e) {
+            return R.fatal("上传失败" + e.getMessage());
+        }
+        SongList songList = new SongList();
+        songList.setId(id);
+        songList.setPic(imgPath);
+        if (songListMapper.updateSongListImg(songList) > 0) {
+            return R.success("上传成功", imgPath);
+        } else {
+            return R.error("上传失败");
+        }
     }
 }

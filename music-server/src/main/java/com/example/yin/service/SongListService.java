@@ -2,6 +2,7 @@ package com.example.yin.service;
 
 import com.example.yin.common.R;
 import com.example.yin.model.domain.SongList;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface SongListService {
 
@@ -9,7 +10,7 @@ public interface SongListService {
 
     boolean updateSongListMsg(SongList songList);
 
-    boolean updateSongListImg(SongList songList);
+    R updateSongListImg(MultipartFile avatorFile, int id);
 
     boolean deleteSongList(Integer id);
 
