@@ -1,7 +1,7 @@
 package com.example.yin.service.impl;
 
 import com.example.yin.common.R;
-import com.example.yin.dao.SingerMapper;
+import com.example.yin.mapper.SingerMapper;
 import com.example.yin.model.domain.Singer;
 import com.example.yin.service.SingerService;
 import org.springframework.beans.factory.annotation.Autowired;

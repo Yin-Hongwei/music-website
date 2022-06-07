@@ -1,7 +1,7 @@
 package com.example.yin.service.impl;
 
 import com.example.yin.common.R;
-import com.example.yin.dao.CommentMapper;
+import com.example.yin.mapper.CommentMapper;
 import com.example.yin.model.domain.Comment;
 import com.example.yin.model.request.CommentRequest;
 import com.example.yin.service.CommentService;

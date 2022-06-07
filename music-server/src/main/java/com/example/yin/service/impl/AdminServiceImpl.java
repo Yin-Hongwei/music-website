@@ -1,7 +1,7 @@
 package com.example.yin.service.impl;
 
 import com.example.yin.common.R;
-import com.example.yin.dao.AdminMapper;
+import com.example.yin.mapper.AdminMapper;
 import com.example.yin.model.request.AdminRequest;
 import com.example.yin.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
