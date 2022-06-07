@@ -27,8 +27,12 @@ public class SingerServiceImpl implements SingerService {
     }
 
     @Override
-    public boolean deleteSinger(Integer id) {
-        return singerMapper.deleteSinger(id) > 0;
+    public R deleteSinger(Integer id) {
+        if (singerMapper.deleteSinger(id) > 0) {
+            return R.success("删除成功");
+        } else {
+            return R.error("删除失败");
+        }
     }
 
     @Override

@@ -13,7 +13,7 @@ public interface SingerService {
 
     boolean updateSingerPic(Singer singer);
 
-    boolean deleteSinger(Integer id);
+    R deleteSinger(Integer id);
 
     R allSinger();
 

@@ -59,15 +59,8 @@ public class SingerController {
 
     // 删除歌手
     @GetMapping("/singer/delete")
-    public R deleteSinger(HttpServletRequest req) {
-        String id = req.getParameter("id");
-
-        boolean res = singerService.deleteSinger(Integer.parseInt(id));
-        if (res) {
-            return R.success("删除成功");
-        } else {
-            return R.error("删除失败");
-        }
+    public R deleteSinger(@RequestParam int id) {
+        return singerService.deleteSinger(id);
     }
 
     // 返回所有歌手
