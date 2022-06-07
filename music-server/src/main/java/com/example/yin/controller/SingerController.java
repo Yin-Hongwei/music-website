@@ -52,35 +52,8 @@ public class SingerController {
 
     // 更新歌手信息
     @PostMapping("/singer/update")
-    public R updateSingerMsg(HttpServletRequest req) {
-        String id = req.getParameter("id").trim();
-        String name = req.getParameter("name").trim();
-        String sex = req.getParameter("sex").trim();
-        String birth = req.getParameter("birth").trim();
-        String location = req.getParameter("location").trim();
-        String introduction = req.getParameter("introduction").trim();
-
-        Singer singer = new Singer();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date myBirth = new Date();
-        try {
-            myBirth = dateFormat.parse(birth);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        singer.setId(Integer.parseInt(id));
-        singer.setName(name);
-        singer.setSex(new Byte(sex));
-        singer.setBirth(myBirth);
-        singer.setLocation(location);
-        singer.setIntroduction(introduction);
-
-        boolean res = singerService.updateSingerMsg(singer);
-        if (res) {
-            return R.success("修改成功");
-        } else {
-            return R.error("修改失败");
-        }
+    public R updateSingerMsg(@RequestBody SingerRequest updateSingerRequest) {
+        return singerService.updateSingerMsg(updateSingerRequest);
     }
 
     // 更新歌手头像

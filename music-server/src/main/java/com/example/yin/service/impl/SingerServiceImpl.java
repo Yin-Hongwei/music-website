@@ -20,8 +20,14 @@ public class SingerServiceImpl implements SingerService {
     private SingerMapper singerMapper;
 
     @Override
-    public boolean updateSingerMsg(Singer singer) {
-        return singerMapper.updateSingerMsg(singer) > 0;
+    public R updateSingerMsg(SingerRequest updateSingerRequest) {
+        Singer singer = new Singer();
+        BeanUtils.copyProperties(updateSingerRequest,singer);
+        if (singerMapper.updateSingerMsg(singer) > 0) {
+            return R.success("修改成功");
+        } else {
+            return R.error("修改失败");
+        }
     }
 
     @Override
