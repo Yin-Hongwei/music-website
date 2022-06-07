@@ -12,7 +12,7 @@ public interface SongListService {
 
     R updateSongListImg(MultipartFile avatorFile, int id);
 
-    boolean deleteSongList(Integer id);
+    R deleteSongList(Integer id);
 
     R allSongList();
 

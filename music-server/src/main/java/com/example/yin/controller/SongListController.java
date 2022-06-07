@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 
 @RestController
 public class SongListController {
@@ -45,15 +43,8 @@ public class SongListController {
 
     // 删除歌单
     @GetMapping("/songList/delete")
-    public R deleteSongList(HttpServletRequest req) {
-        String id = req.getParameter("id");
-
-        boolean res = songListService.deleteSongList(Integer.parseInt(id));
-        if (res) {
-            return R.success("删除成功");
-        } else {
-            return R.error("删除失败");
-        }
+    public R deleteSongList(@RequestParam int id) {
+        return songListService.deleteSongList(id);
     }
 
     //TODO 这块就是前端显现相应的歌单list
