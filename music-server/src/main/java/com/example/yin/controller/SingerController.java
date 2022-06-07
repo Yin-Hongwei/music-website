@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -71,9 +69,8 @@ public class SingerController {
 
     // 根据歌手名查找歌手
     @GetMapping("/singer/name/detail")
-    public R singerOfName(HttpServletRequest req) {
-        String name = req.getParameter("name").trim();
-        return R.success(null, singerService.singerOfName(name));
+    public R singerOfName(@RequestParam String name) {
+        return singerService.singerOfName(name);
     }
 
     // 根据歌手性别查找歌手
@@ -118,30 +115,6 @@ public class SingerController {
     // 更新歌手头像
     @PostMapping("/singer/avatar/update")
     public R updateSingerPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
-        String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img"
-                + System.getProperty("file.separator") + "singerPic";
-        File file1 = new File(filePath);
-        if (!file1.exists()) {
-            file1.mkdir();
-        }
-
-        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String imgPath = "/img/singerPic/" + fileName;
-        try {
-            avatorFile.transferTo(dest);
-            Singer singer = new Singer();
-            singer.setId(id);
-            singer.setPic(imgPath);
-
-            boolean res = singerService.updateSingerPic(singer);
-            if (res) {
-                return R.success("上传成功", imgPath);
-            } else {
-                return R.error("上传失败");
-            }
-        } catch (IOException e) {
-            return R.fatal("上传失败" + e.getMessage());
-        }
+        return singerService.updateSingerPic(avatorFile, id);
     }
 }
