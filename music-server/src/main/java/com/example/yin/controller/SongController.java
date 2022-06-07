@@ -1,6 +1,7 @@
 package com.example.yin.controller;
 
 import com.example.yin.common.R;
+import com.example.yin.model.domain.Song;
 import com.example.yin.model.request.SongRequest;
 import com.example.yin.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 
 @RestController
 public class SongController {
@@ -35,7 +39,43 @@ public class SongController {
     // 添加歌曲
     @PostMapping("/song/add")
     public R addSong(HttpServletRequest req, @RequestParam("file") MultipartFile mpfile) {
-        return songService.addSong(req, mpfile);
+        String singerId = req.getParameter("singerId").trim();
+        String name = req.getParameter("name").trim();
+        String introduction = req.getParameter("introduction").trim();
+        String pic = "/img/songPic/tubiao.jpg";
+        String lyric = req.getParameter("lyric").trim();
+
+        String fileName = mpfile.getOriginalFilename();
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "song";
+        File file1 = new File(filePath);
+        if (!file1.exists()) {
+            if (!file1.mkdir()) {
+                return R.fatal("创建文件失败");
+            }
+        }
+
+        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
+        String storeUrlPath = "/song/" + fileName;
+        try {
+            mpfile.transferTo(dest);
+            Song song = new Song();
+            song.setSingerId(Integer.parseInt(singerId));
+            song.setName(name);
+            song.setIntroduction(introduction);
+            song.setCreateTime(new Date());
+            song.setUpdateTime(new Date());
+            song.setPic(pic);
+            song.setLyric(lyric);
+            song.setUrl(storeUrlPath);
+            boolean res = songService.addSong(song);
+            if (res) {
+                return R.success("上传成功", storeUrlPath);
+            } else {
+                return R.error("上传失败");
+            }
+        } catch (IOException e) {
+            return R.fatal("上传失败" + e.getMessage());
+        }
     }
 
     // 删除歌曲

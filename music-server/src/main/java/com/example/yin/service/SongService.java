@@ -1,15 +1,13 @@
 package com.example.yin.service;
 
 import com.example.yin.common.R;
+import com.example.yin.model.domain.Song;
 import com.example.yin.model.request.SongRequest;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
 
 public interface SongService {
 
-    R addSong (HttpServletRequest req, @RequestParam("file") MultipartFile mpfile);
+    boolean addSong (Song song);
 
     R updateSongMsg(SongRequest updateSongRequest);
 

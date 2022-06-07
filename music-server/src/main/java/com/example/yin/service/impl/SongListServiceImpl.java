@@ -1,17 +1,11 @@
 package com.example.yin.service.impl;
 
 import com.example.yin.common.R;
-import com.example.yin.mapper.SongListMapper;
+import com.example.yin.dao.SongListMapper;
 import com.example.yin.model.domain.SongList;
-import com.example.yin.model.request.SongListRequest;
 import com.example.yin.service.SongListService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
 
 @Service
 public class SongListServiceImpl implements SongListService {
@@ -20,23 +14,13 @@ public class SongListServiceImpl implements SongListService {
     private SongListMapper songListMapper;
 
     @Override
-    public R updateSongListMsg(SongListRequest updateSongListRequest) {
-        SongList songList = new SongList();
-        BeanUtils.copyProperties(updateSongListRequest, songList);
-        if (songListMapper.updateSongListMsg(songList) > 0) {
-            return R.success("修改成功");
-        } else {
-            return R.error("修改失败");
-        }
+    public boolean updateSongListMsg(SongList songList) {
+        return songListMapper.updateSongListMsg(songList) > 0 ? true : false;
     }
 
     @Override
-    public R deleteSongList(Integer id) {
-        if (songListMapper.deleteSongList(id) > 0) {
-            return R.success("删除成功");
-        } else {
-            return R.error("删除失败");
-        }
+    public boolean deleteSongList(Integer id) {
+        return songListMapper.deleteSongList(id) > 0 ? true : false;
     }
 
     @Override
@@ -55,42 +39,13 @@ public class SongListServiceImpl implements SongListService {
     }
 
     @Override
-    public R addSongList(SongListRequest addSongListRequest) {
-        SongList songList = new SongList();
-        BeanUtils.copyProperties(addSongListRequest, songList);
-        String pic = "/img/songListPic/123.jpg";
-        songList.setPic(pic);
-        if (songListMapper.insertSelective(songList) > 0) {
-            return R.success("添加成功");
-        } else {
-            return R.error("添加失败");
-        }
+    public boolean addSongList(SongList songList) {
+        return songListMapper.insertSelective(songList) > 0 ? true : false;
     }
 
     @Override
-    public R updateSongListImg(MultipartFile avatorFile, int id) {
-        String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songListPic";
-        File file1 = new File(filePath);
-        if (!file1.exists()) {
-            if (!file1.mkdir()) {
-                return R.fatal("文件创建失败");
-            }
-        }
-        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String imgPath = "/img/songListPic/" + fileName;
-        try {
-            avatorFile.transferTo(dest);
-        } catch (IOException e) {
-            return R.fatal("上传失败" + e.getMessage());
-        }
-        SongList songList = new SongList();
-        songList.setId(id);
-        songList.setPic(imgPath);
-        if (songListMapper.updateSongListImg(songList) > 0) {
-            return R.success("上传成功", imgPath);
-        } else {
-            return R.error("上传失败");
-        }
+    public boolean updateSongListImg(SongList songList) {
+
+        return songListMapper.updateSongListImg(songList) > 0 ? true : false;
     }
 }

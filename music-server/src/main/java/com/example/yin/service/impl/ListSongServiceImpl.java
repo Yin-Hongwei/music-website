@@ -1,11 +1,9 @@
 package com.example.yin.service.impl;
 
 import com.example.yin.common.R;
-import com.example.yin.mapper.ListSongMapper;
+import com.example.yin.dao.ListSongMapper;
 import com.example.yin.model.domain.ListSong;
-import com.example.yin.model.request.ListSongRequest;
 import com.example.yin.service.ListSongService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +15,7 @@ public class ListSongServiceImpl implements ListSongService {
     @Autowired
     private ListSongMapper listSongMapper;
 
+    @Override
     public List<ListSong> allListSong() {
         return listSongMapper.allListSong();
     }
@@ -27,23 +26,13 @@ public class ListSongServiceImpl implements ListSongService {
     }
 
     @Override
-    public R deleteListSong(Integer songId) {
-        if (listSongMapper.deleteListSong(songId) > 0) {
-            return R.success("删除成功");
-        } else {
-            return R.error("删除失败");
-        }
+    public boolean deleteListSong(Integer songId) {
+        return listSongMapper.deleteListSong(songId) > 0;
     }
 
     @Override
-    public R addListSong(ListSongRequest addListSongRequest) {
-        ListSong listSong = new ListSong();
-        BeanUtils.copyProperties(addListSongRequest, listSong);
-        if (listSongMapper.insertSelective(listSong) > 0) {
-            return R.success("添加成功");
-        } else {
-            return R.error("添加失败");
-        }
+    public boolean addListSong(ListSong listSong) {
+        return listSongMapper.insertSelective(listSong) > 0;
     }
 
     @Override

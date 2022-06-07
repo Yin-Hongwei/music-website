@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.yin.mapper.ListSongMapper">
+<mapper namespace="com.example.yin.dao.ListSongMapper">
   <resultMap id="BaseResultMap" type="com.example.yin.model.domain.ListSong">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="song_id" property="songId" jdbcType="INTEGER" />
@@ -31,7 +31,7 @@
     delete from list_song
     where song_id = #{song_id, jdbcType=INTEGER}
   </delete>
-  `<insert id="insertSelective" parameterType="com.example.yin.model.domain.ListSong">
+  <insert id="insertSelective" parameterType="com.example.yin.model.domain.ListSong">
     insert into list_song
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
