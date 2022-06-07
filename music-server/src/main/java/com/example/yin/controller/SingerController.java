@@ -2,12 +2,10 @@ package com.example.yin.controller;
 
 import com.example.yin.common.R;
 import com.example.yin.model.domain.Singer;
+import com.example.yin.model.request.SingerRequest;
 import com.example.yin.service.SingerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,35 +22,8 @@ public class SingerController {
 
     // 添加歌手
     @PostMapping("/singer/add")
-    public R addSinger(HttpServletRequest req) {
-        String name = req.getParameter("name").trim();
-        String sex = req.getParameter("sex").trim();
-        String birth = req.getParameter("birth").trim();
-        String location = req.getParameter("location").trim();
-        String introduction = req.getParameter("introduction").trim();
-        String pic = "/img/avatorImages/user.jpg";
-
-        Singer singer = new Singer();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date myBirth = new Date();
-        try {
-            myBirth = dateFormat.parse(birth);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        singer.setName(name);
-        singer.setSex(new Byte(sex));
-        singer.setBirth(myBirth);
-        singer.setLocation(location);
-        singer.setIntroduction(introduction);
-        singer.setPic(pic);
-
-        boolean res = singerService.addSinger(singer);
-        if (res) {
-            return R.success("添加成功");
-        } else {
-            return R.error("添加失败");
-        }
+    public R addSinger(@RequestBody SingerRequest addSingerRequest) {
+        return singerService.addSinger(addSingerRequest);
     }
 
     // 删除歌手

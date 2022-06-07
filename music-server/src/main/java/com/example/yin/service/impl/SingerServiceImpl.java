@@ -3,7 +3,9 @@ package com.example.yin.service.impl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.SingerMapper;
 import com.example.yin.model.domain.Singer;
+import com.example.yin.model.request.SingerRequest;
 import com.example.yin.service.SingerService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,8 +66,16 @@ public class SingerServiceImpl implements SingerService {
     }
 
     @Override
-    public boolean addSinger(Singer singer) {
-        return singerMapper.insertSelective(singer) > 0;
+    public R addSinger(SingerRequest addSingerRequest) {
+        Singer singer = new Singer();
+        BeanUtils.copyProperties(addSingerRequest, singer);
+        String pic = "/img/avatorImages/user.jpg";
+        singer.setPic(pic);
+        if (singerMapper.insertSelective(singer) > 0) {
+            return R.success("添加成功");
+        } else {
+            return R.error("添加失败");
+        }
     }
 
     @Override

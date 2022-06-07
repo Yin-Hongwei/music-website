@@ -1,13 +1,10 @@
 package com.example.yin.controller;
 
 import com.example.yin.common.R;
-import com.example.yin.model.domain.ListSong;
 import com.example.yin.model.request.ListSongRequest;
 import com.example.yin.service.ListSongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class ListSongController {
@@ -30,7 +27,7 @@ public class ListSongController {
 
     // 返回歌单里指定歌单 ID 的歌曲
     @GetMapping("/listSong/detail")
-    public R listSongOfSongId(@RequestParam int songListId ) {
+    public R listSongOfSongId(@RequestParam int songListId) {
         return listSongService.listSongOfSongId(songListId);
     }
 
