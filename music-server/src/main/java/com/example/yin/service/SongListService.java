@@ -1,7 +1,7 @@
 package com.example.yin.service;
 
 import com.example.yin.common.R;
-import com.example.yin.request.SongListRequest;
+import com.example.yin.model.request.SongListRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface SongListService {

@@ -1,21 +1,16 @@
-package com.example.yin.request;
+package com.example.yin.model.domain;
 
 import lombok.Data;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Date;
 
-/**
- * @Author 祝英台炸油条
- * @Time : 2022/6/5 19:35
- * 这块 现在尝试把所有有关用户的属性都放入
- **/
 @Data
-public class ConsumerRequest {
+public class Consumer {
+
     private Integer id;
 
     private String username;
-
-    private String oldPassword; //因为会用到用户旧密码 这无所谓的对应即可
 
     private String password;
 
@@ -34,4 +29,11 @@ public class ConsumerRequest {
     private String avator;
 
     private Date createTime;
+
+    private Date updateTime;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

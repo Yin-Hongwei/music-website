@@ -1,7 +1,7 @@
 package com.example.yin.service;
 
 import com.example.yin.common.R;
-import com.example.yin.request.RankListRequest;
+import com.example.yin.model.request.RankListRequest;
 
 public interface RankListService {
 

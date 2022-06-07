@@ -1,7 +1,7 @@
 package com.example.yin.controller;
 
 import com.example.yin.common.R;
-import com.example.yin.request.ConsumerRequest;
+import com.example.yin.model.request.ConsumerRequest;
 import com.example.yin.service.ConsumerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

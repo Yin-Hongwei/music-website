@@ -1,9 +1,9 @@
 package com.example.yin.service.impl;
 
 import com.example.yin.common.R;
-import com.example.yin.dao.RankListMapper;
-import com.example.yin.domain.RankList;
-import com.example.yin.request.RankListRequest;
+import com.example.yin.mapper.RankListMapper;
+import com.example.yin.model.domain.RankList;
+import com.example.yin.model.request.RankListRequest;
 import com.example.yin.service.RankListService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

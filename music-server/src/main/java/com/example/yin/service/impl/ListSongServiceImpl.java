@@ -1,9 +1,9 @@
 package com.example.yin.service.impl;
 
 import com.example.yin.common.R;
-import com.example.yin.dao.ListSongMapper;
-import com.example.yin.domain.ListSong;
-import com.example.yin.request.ListSongRequest;
+import com.example.yin.mapper.ListSongMapper;
+import com.example.yin.model.domain.ListSong;
+import com.example.yin.model.request.ListSongRequest;
 import com.example.yin.service.ListSongService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.example.yin.service;
 
 import com.example.yin.common.R;
-import com.example.yin.request.ConsumerRequest;
+import com.example.yin.model.request.ConsumerRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;

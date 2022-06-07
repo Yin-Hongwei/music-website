@@ -32,7 +32,7 @@
     </sqlMapGenerator>
 
     <!-- Mapper 接口文件的位置 -->
-    <javaClientGenerator targetPackage="com.example.yin.dao" targetProject="src/main/java" type="XMLMAPPER">
+    <javaClientGenerator targetPackage="com.example.yin.mapper" targetProject="src/main/java" type="XMLMAPPER">
       <property name="enableSubPackages" value="false"/>
     </javaClientGenerator>
 

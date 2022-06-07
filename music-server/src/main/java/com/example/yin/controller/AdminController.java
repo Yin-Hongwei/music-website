@@ -1,7 +1,7 @@
 package com.example.yin.controller;
 
 import com.example.yin.common.R;
-import com.example.yin.request.AdminRequest;
+import com.example.yin.model.request.AdminRequest;
 import com.example.yin.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-
+    //TODO 这一块要去做 密码的校验得给密码加密
     // 判断是否登录成功
     @PostMapping("/admin/login/status")
     public R loginStatus(@RequestBody AdminRequest adminRequest, HttpSession session) {
