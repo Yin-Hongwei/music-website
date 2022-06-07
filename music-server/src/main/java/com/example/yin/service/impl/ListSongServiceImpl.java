@@ -26,8 +26,12 @@ public class ListSongServiceImpl implements ListSongService {
     }
 
     @Override
-    public boolean deleteListSong(Integer songId) {
-        return listSongMapper.deleteListSong(songId) > 0;
+    public R deleteListSong(Integer songId) {
+        if (listSongMapper.deleteListSong(songId) > 0) {
+            return R.success("删除成功");
+        } else {
+            return R.error("删除失败");
+        }
     }
 
     @Override

@@ -38,15 +38,8 @@ public class ListSongController {
 
     // 删除歌单里的歌曲
     @GetMapping("/listSong/delete")
-    public R deleteListSong(HttpServletRequest req) {
-        String songId = req.getParameter("songId");
-
-        boolean res = listSongService.deleteListSong(Integer.parseInt(songId));
-        if (res) {
-            return R.success("删除成功");
-        } else {
-            return R.error("删除失败");
-        }
+    public R deleteListSong(@RequestParam int songId) {
+        return listSongService.deleteListSong(songId);
     }
 
     // 返回歌单里指定歌单 ID 的歌曲

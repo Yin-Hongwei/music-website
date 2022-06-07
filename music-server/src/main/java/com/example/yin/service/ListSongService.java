@@ -11,7 +11,7 @@ public interface ListSongService {
 
     boolean updateListSongMsg(ListSong listSong);
 
-    boolean deleteListSong(Integer songId);
+    R deleteListSong(Integer songId);
 
     List<ListSong> allListSong();
 
