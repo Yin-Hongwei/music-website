@@ -33,11 +33,10 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
      */
     @Override
     public R addUser(ConsumerRequest registryRequest) {
-        Consumer consumer = new Consumer();
-        consumer.setUsername(registryRequest.getUsername());
-        if (consumerMapper.selectCount(new QueryWrapper<>(consumer))>0) {
+        if (this.existUser(registryRequest.getUsername())) {
             return R.warning("用户名已注册");
         }
+        Consumer consumer = new Consumer();
         BeanUtils.copyProperties(registryRequest, consumer);
         //都用用
         if (StringUtils.isBlank(consumer.getPhoneNum())) {
@@ -65,7 +64,7 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
         Consumer consumer = new Consumer();
         BeanUtils.copyProperties(updateRequest, consumer);
         consumer.setUpdateTime(new Date());
-        if (consumerMapper.updateUserMsg(consumer) > 0) {
+        if (consumerMapper.updateById(consumer) > 0) {
             return R.success("修改成功");
         } else {
             return R.error("修改失败");
@@ -83,7 +82,7 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
         consumer.setId(updatePasswordRequest.getId());
         consumer.setPassword(updatePasswordRequest.getPassword());
 
-        if (consumerMapper.updatePassword(consumer) > 0) {
+        if (consumerMapper.updateById(consumer) > 0) {
             return R.success("密码修改成功");
         } else {
             return R.error("密码修改失败");
@@ -109,7 +108,7 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
         Consumer consumer = new Consumer();
         consumer.setId(id);
         consumer.setAvator(imgPath);
-        if (consumerMapper.updateUserAvator(consumer) > 0) {
+        if (consumerMapper.updateById(consumer) > 0) {
             return R.success("上传成功", imgPath);
         } else {
             return R.error("上传失败");
@@ -118,18 +117,23 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
 
     @Override
     public boolean existUser(String username) {
-        return consumerMapper.existUsername(username) > 0;
+        Consumer consumer = new Consumer();
+        consumer.setUsername(username);
+        return consumerMapper.selectCount(new QueryWrapper<>(consumer)) > 0;
     }
 
     @Override
     public boolean verityPasswd(String username, String password) {
-        return consumerMapper.verifyPassword(username, password) > 0;
+        Consumer consumer = new Consumer();
+        consumer.setUsername(username);
+        consumer.setUsername(password);
+        return consumerMapper.selectCount(new QueryWrapper<>(consumer)) > 0;
     }
 
     // 删除用户
     @Override
     public R deleteUser(Integer id) {
-        if (consumerMapper.deleteUser(id) > 0) {
+        if (consumerMapper.deleteById(id) > 0) {
             return R.success("删除成功");
         } else {
             return R.error("删除失败");
@@ -138,12 +142,12 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
 
     @Override
     public R allUser() {
-        return R.success(null, consumerMapper.allUser());
+        return R.success(null, consumerMapper.selectList(null));
     }
 
     @Override
     public R userOfId(Integer id) {
-        return R.success(null, consumerMapper.userOfId(id));
+        return R.success(null, consumerMapper.selectById(id));
     }
 
     @Override
@@ -154,7 +158,9 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
 
         if (this.verityPasswd(username, password)) {
             session.setAttribute("username", username);
-            return R.success("登录成功", consumerMapper.loginStatus(username));
+            Consumer consumer = new Consumer();
+            consumer.setUsername(username);
+            return R.success("登录成功", consumerMapper.selectOne(new QueryWrapper<>(consumer)));
         } else {
             return R.error("用户名或密码错误");
         }
