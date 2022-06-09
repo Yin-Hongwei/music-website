@@ -42,13 +42,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!--自动生成器的依赖配置-->
-        <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-core</artifactId>
-            <version>1.3.2</version>
-        </dependency>
-
         <!--mysql-connector-java就是帮助java程序操作mysql的驱动程序。通过与mysql服务端建立连接，发送sql语句并且获取结果集-->
         <dependency>
             <groupId>mysql</groupId>
@@ -56,12 +49,20 @@
             <version>8.0.16</version>
         </dependency>
 
-        <!--主要提供了三个功能：第一个是对数据源的装配，第二个是提供一个JdbcTemplate简化使用，第三个是事务。-->
-        <!--其实这里并不用配置  因为底下的mybatis的启动类已经引入了对应包-->
+        <!--mybatis用来和数据库进行交互-->
+
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.4</version>
+        </dependency>
+
 
         <!--这里面有点小工具啥的-->
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
@@ -71,12 +72,6 @@
             <version>3.8.1</version>
         </dependency>
 
-        <!-- Mybatis spring boot -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.1.1</version>
-        </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <dependency>
@@ -110,31 +105,12 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.12.1</version>
-        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
 
-
-        <!--        页面视图依赖-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-        <!--        </dependency>-->
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-data-rest</artifactId>-->
-        <!--        </dependency>-->
     </dependencies>
 
     <!--    阿里云搭建的国内镜像http://maven.aliyun.com，跑起来速度很快，可以进行配置-->
@@ -168,35 +144,6 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-
-            <!--            <plugin>-->
-            <!--            &lt;!&ndash;Mybatis-generator插件,用于自动生成Mapper和POJO&ndash;&gt;-->
-            <!--            <groupId>org.mybatis.generator</groupId>-->
-            <!--            <artifactId>mybatis-generator-maven-plugin</artifactId>-->
-            <!--            <version>1.3.2</version>-->
-            <!--            <configuration>-->
-            <!--            &lt;!&ndash;配置文件的位置&ndash;&gt;-->
-            <!--            <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>-->
-            <!--            <verbose>true</verbose>-->
-            <!--            <overwrite>true</overwrite>-->
-            <!--            </configuration>-->
-            <!--            <executions>-->
-            <!--            <execution>-->
-            <!--            <id>Generate MyBatis Artifacts</id>-->
-            <!--            <goals>-->
-            <!--            <goal>generate</goal>-->
-            <!--            </goals>-->
-            <!--            </execution>-->
-            <!--            </executions>-->
-            <!--            <dependencies>-->
-            <!--            <dependency>-->
-            <!--            <groupId>org.mybatis.generator</groupId>-->
-            <!--            <artifactId>mybatis-generator-core</artifactId>-->
-            <!--            <version>1.3.2</version>-->
-            <!--            </dependency>-->
-            <!--            </dependencies>-->
-            <!--            </plugin>-->
-
         </plugins>
     </build>
 

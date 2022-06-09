@@ -1,5 +1,7 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.SingerMapper;
 import com.example.yin.model.domain.Singer;
@@ -14,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Service
-public class SingerServiceImpl implements SingerService {
+public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> implements SingerService {
 
     @Autowired
     private SingerMapper singerMapper;
@@ -22,8 +24,8 @@ public class SingerServiceImpl implements SingerService {
     @Override
     public R updateSingerMsg(SingerRequest updateSingerRequest) {
         Singer singer = new Singer();
-        BeanUtils.copyProperties(updateSingerRequest,singer);
-        if (singerMapper.updateSingerMsg(singer) > 0) {
+        BeanUtils.copyProperties(updateSingerRequest, singer);
+        if (singerMapper.updateById(singer) > 0) {
             return R.success("修改成功");
         } else {
             return R.error("修改失败");
@@ -50,7 +52,7 @@ public class SingerServiceImpl implements SingerService {
         Singer singer = new Singer();
         singer.setId(id);
         singer.setPic(imgPath);
-        if (singerMapper.updateSingerPic(singer) > 0) {
+        if (singerMapper.updateById(singer) > 0) {
             return R.success("上传成功", imgPath);
         } else {
             return R.error("上传失败");
@@ -59,7 +61,7 @@ public class SingerServiceImpl implements SingerService {
 
     @Override
     public R deleteSinger(Integer id) {
-        if (singerMapper.deleteSinger(id) > 0) {
+        if (singerMapper.deleteById(id) > 0) {
             return R.success("删除成功");
         } else {
             return R.error("删除失败");
@@ -68,7 +70,7 @@ public class SingerServiceImpl implements SingerService {
 
     @Override
     public R allSinger() {
-        return R.success(null, singerMapper.allSinger());
+        return R.success(null, singerMapper.selectList(null));
     }
 
     @Override
@@ -77,7 +79,7 @@ public class SingerServiceImpl implements SingerService {
         BeanUtils.copyProperties(addSingerRequest, singer);
         String pic = "/img/avatorImages/user.jpg";
         singer.setPic(pic);
-        if (singerMapper.insertSelective(singer) > 0) {
+        if (singerMapper.insert(singer) > 0) {
             return R.success("添加成功");
         } else {
             return R.error("添加失败");
@@ -86,11 +88,15 @@ public class SingerServiceImpl implements SingerService {
 
     @Override
     public R singerOfName(String name) {
-        return R.success(null, singerMapper.singerOfName(name));
+        QueryWrapper<Singer> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name",name);
+        return R.success(null, singerMapper.selectList(queryWrapper));
     }
 
     @Override
     public R singerOfSex(Integer sex) {
-        return R.success(null, singerMapper.singerOfSex(sex));
+        QueryWrapper<Singer> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name",sex);
+        return R.success(null, singerMapper.selectList(queryWrapper));
     }
 }
