@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.RankListMapper;
@@ -24,7 +25,7 @@ public class RankListServiceImpl extends ServiceImpl<RankListMapper, RankList> i
     public R addRank(RankListRequest rankListAddRequest) {
         RankList rankList = new RankList();
         BeanUtils.copyProperties(rankListAddRequest, rankList);
-        if (rankMapper.insertSelective(rankList) > 0) {
+        if (rankMapper.insert(rankList) > 0) {
             return R.success("评价成功");
         } else {
             return R.error("评价失败");
@@ -34,12 +35,17 @@ public class RankListServiceImpl extends ServiceImpl<RankListMapper, RankList> i
     @Override
     public R rankOfSongListId(Long songListId) {
         // 评分总人数如果为 0，则返回0；否则返回计算出的结果
-        int rankNum = rankMapper.selectRankNum(songListId);
+        RankList rankList = new RankList();
+        rankList.setSongListId(songListId);
+        long rankNum = rankMapper.selectCount(new QueryWrapper<>(rankList));
         return R.success(null, (rankNum <= 0) ? 0 : rankMapper.selectScoreSum(songListId) / rankNum);
     }
 
     @Override
     public R getUserRank(Long consumerId, Long songListId) {
+        RankList rankList = new RankList();
+        rankList.setConsumerId(consumerId);
+        rankList.setSongListId(songListId);
         return R.success(null, rankMapper.selectUserRank(consumerId, songListId));
     }
 }

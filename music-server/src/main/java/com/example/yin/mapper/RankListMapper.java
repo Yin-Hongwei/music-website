@@ -8,9 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RankListMapper extends BaseMapper<RankList> {
 
-    int insert(RankList record);
 
-    int insertSelective(RankList record);
 
     /**
      * 查总分
@@ -18,13 +16,6 @@ public interface RankListMapper extends BaseMapper<RankList> {
      * @return
      */
     int selectScoreSum(Long songListId);
-
-    /**
-     * 查总评分人数
-     * @param songListId
-     * @return
-     */
-    int selectRankNum(Long songListId);
 
     /**
      * 查制定用户评分

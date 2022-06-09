@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.SongMapper;
@@ -23,7 +24,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
 
     @Override
     public R allSong() {
-        return R.success(null, songMapper.allSong());
+        return R.success(null, songMapper.selectList(null));
     }
 
     @Override
@@ -50,7 +51,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
         song.setUpdateTime(new Date());
         song.setPic(pic);
         song.setUrl(storeUrlPath);
-        if (songMapper.insertSelective(song) > 0) {
+        if (songMapper.insert(song) > 0) {
             return R.success("上传成功", storeUrlPath);
         } else {
             return R.error("上传失败");
@@ -62,7 +63,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
         Song song = new Song();
         BeanUtils.copyProperties(updateSongRequest, song);
         song.setUpdateTime(new Date());
-        if (songMapper.updateSongMsg(song) > 0) {
+        if (songMapper.updateById(song) > 0) {
             return R.success("修改成功");
         } else {
             return R.error("修改失败");
@@ -89,7 +90,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
         Song song = new Song();
         song.setId(id);
         song.setUrl(storeUrlPath);
-        if (songMapper.updateSongUrl(song) > 0) {
+        if (songMapper.updateById(song) > 0) {
             return R.success("更新成功", storeUrlPath);
         } else {
             return R.error("更新失败");
@@ -117,7 +118,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
         Song song = new Song();
         song.setId(id);
         song.setPic(storeUrlPath);
-        if (songMapper.updateSongPic(song) > 0) {
+        if (songMapper.updateById(song) > 0) {
             return R.success("上传成功", storeUrlPath);
         } else {
             return R.error("上传失败");
@@ -126,7 +127,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
 
     @Override
     public R deleteSong(Integer id) {
-        if (songMapper.deleteSong(id) > 0) {
+        if (songMapper.deleteById(id) > 0) {
             return R.success("删除成功");
         } else {
             return R.error("删除失败");
@@ -135,16 +136,20 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
 
     @Override
     public R songOfSingerId(Integer singerId) {
-        return R.success(null, songMapper.songOfSingerId(singerId));
+        Song song = new Song();
+        song.setSingerId(singerId);
+        return R.success(null, songMapper.selectList(new QueryWrapper<>(song)));
     }
 
     @Override
     public R songOfId(Integer id) {
-        return R.success(null, songMapper.songOfId(id));
+        return R.success(null, songMapper.selectById(id));
     }
 
     @Override
     public R songOfSingerName(String name) {
-        return R.success(null, songMapper.songOfSingerName(name));
+        Song song = new Song();
+        song.setName(name);
+        return R.success(null, songMapper.selectList(new QueryWrapper<>(song)));
     }
 }

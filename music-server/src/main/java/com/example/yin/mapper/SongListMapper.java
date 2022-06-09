@@ -10,24 +10,6 @@ import java.util.List;
 
 public interface SongListMapper extends BaseMapper<SongList> {
 
-    int insert(SongList record);
-
-    int insertSelective(SongList record);
-
-    SongList selectByPrimaryKey(Integer id);
-
-
-    int updateByPrimaryKeyWithBLOBs(SongList record);
-
-    int updateByPrimaryKey(SongList record);
-
-    int updateSongListMsg(SongList record);
-
-    int updateSongListImg(SongList record);
-
-    int deleteSongList(Integer id);
-
-    List<SongList> allSongList();
 
     List<SongList> likeTitle(String title);
 

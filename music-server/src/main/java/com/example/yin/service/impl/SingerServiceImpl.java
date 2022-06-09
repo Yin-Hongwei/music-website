@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.SingerMapper;
@@ -24,7 +25,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
     public R updateSingerMsg(SingerRequest updateSingerRequest) {
         Singer singer = new Singer();
         BeanUtils.copyProperties(updateSingerRequest, singer);
-        if (singerMapper.updateSingerMsg(singer) > 0) {
+        if (singerMapper.updateById(singer) > 0) {
             return R.success("修改成功");
         } else {
             return R.error("修改失败");
@@ -51,7 +52,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
         Singer singer = new Singer();
         singer.setId(id);
         singer.setPic(imgPath);
-        if (singerMapper.updateSingerPic(singer) > 0) {
+        if (singerMapper.updateById(singer) > 0) {
             return R.success("上传成功", imgPath);
         } else {
             return R.error("上传失败");
@@ -60,7 +61,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
 
     @Override
     public R deleteSinger(Integer id) {
-        if (singerMapper.deleteSinger(id) > 0) {
+        if (singerMapper.deleteById(id) > 0) {
             return R.success("删除成功");
         } else {
             return R.error("删除失败");
@@ -69,7 +70,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
 
     @Override
     public R allSinger() {
-        return R.success(null, singerMapper.allSinger());
+        return R.success(null, singerMapper.selectList(null));
     }
 
     @Override
@@ -78,7 +79,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
         BeanUtils.copyProperties(addSingerRequest, singer);
         String pic = "/img/avatorImages/user.jpg";
         singer.setPic(pic);
-        if (singerMapper.insertSelective(singer) > 0) {
+        if (singerMapper.insert(singer) > 0) {
             return R.success("添加成功");
         } else {
             return R.error("添加失败");
@@ -87,7 +88,9 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
 
     @Override
     public R singerOfName(String name) {
-        return R.success(null, singerMapper.singerOfName(name));
+        Singer singer = new Singer();
+        singer.setName(name);
+        return R.success(null, singerMapper.selectList(new QueryWrapper<>(singer)));
     }
 
     @Override
