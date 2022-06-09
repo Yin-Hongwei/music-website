@@ -1,12 +1,13 @@
 package com.example.yin.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.yin.common.R;
 import com.example.yin.model.domain.ListSong;
 import com.example.yin.model.request.ListSongRequest;
 
 import java.util.List;
 
-public interface ListSongService {
+public interface ListSongService extends IService<ListSong> {
 
     R addListSong(ListSongRequest addListSongRequest);
 
