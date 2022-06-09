@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CollectMapper extends BaseMapper<Collect> {
 
-    int insert(Collect record);
+
 
     int insertSelective(Collect record);
 
