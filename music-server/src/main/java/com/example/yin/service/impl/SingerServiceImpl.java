@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.SingerMapper;
 import com.example.yin.model.domain.Singer;
@@ -14,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Service
-public class SingerServiceImpl implements SingerService {
+public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> implements SingerService {
 
     @Autowired
     private SingerMapper singerMapper;
@@ -22,7 +23,7 @@ public class SingerServiceImpl implements SingerService {
     @Override
     public R updateSingerMsg(SingerRequest updateSingerRequest) {
         Singer singer = new Singer();
-        BeanUtils.copyProperties(updateSingerRequest,singer);
+        BeanUtils.copyProperties(updateSingerRequest, singer);
         if (singerMapper.updateSingerMsg(singer) > 0) {
             return R.success("修改成功");
         } else {

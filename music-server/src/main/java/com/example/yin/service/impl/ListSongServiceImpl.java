@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.ListSongMapper;
 import com.example.yin.model.domain.ListSong;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ListSongServiceImpl implements ListSongService {
+public class ListSongServiceImpl extends ServiceImpl<ListSongMapper, ListSong> implements ListSongService {
 
     @Autowired
     private ListSongMapper listSongMapper;
@@ -25,7 +26,7 @@ public class ListSongServiceImpl implements ListSongService {
     @Override
     public R updateListSongMsg(ListSongRequest updateListSongRequest) {
         ListSong listSong = new ListSong();
-        BeanUtils.copyProperties(updateListSongRequest,listSong);
+        BeanUtils.copyProperties(updateListSongRequest, listSong);
         if (listSongMapper.updateListSongMsg(listSong) > 0) {
             return R.success("修改成功");
         } else {
@@ -45,7 +46,7 @@ public class ListSongServiceImpl implements ListSongService {
     @Override
     public R addListSong(ListSongRequest addListSongRequest) {
         ListSong listSong = new ListSong();
-        BeanUtils.copyProperties(addListSongRequest,listSong);
+        BeanUtils.copyProperties(addListSongRequest, listSong);
         if (listSongMapper.insertSelective(listSong) > 0) {
             return R.success("添加成功");
         } else {

@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.RankListMapper;
 import com.example.yin.model.domain.RankList;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author Administrator
  */
 @Service
-public class RankListServiceImpl implements RankListService {
+public class RankListServiceImpl extends ServiceImpl<RankListMapper, RankList> implements RankListService {
 
 
     @Autowired
@@ -22,7 +23,7 @@ public class RankListServiceImpl implements RankListService {
     @Override
     public R addRank(RankListRequest rankListAddRequest) {
         RankList rankList = new RankList();
-        BeanUtils.copyProperties(rankListAddRequest,rankList);
+        BeanUtils.copyProperties(rankListAddRequest, rankList);
         if (rankMapper.insertSelective(rankList) > 0) {
             return R.success("评价成功");
         } else {

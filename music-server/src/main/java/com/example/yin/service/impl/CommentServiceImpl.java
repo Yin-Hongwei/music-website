@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.CommentMapper;
 import com.example.yin.model.domain.Comment;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
     @Autowired
     private CommentMapper commentMapper;
 
@@ -32,7 +33,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public R updateCommentMsg(CommentRequest addCommentRequest) {
         Comment comment = new Comment();
-        BeanUtils.copyProperties(addCommentRequest,comment);
+        BeanUtils.copyProperties(addCommentRequest, comment);
         if (commentMapper.updateCommentMsg(comment) > 0) {
             return R.success("点赞成功");
         } else {

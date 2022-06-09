@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.CollectMapper;
 import com.example.yin.model.domain.Collect;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class CollectServiceImpl implements CollectService {
+public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> implements CollectService {
     @Autowired
     private CollectMapper collectMapper;
 

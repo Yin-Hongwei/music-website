@@ -1,14 +1,14 @@
 package com.example.yin.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.yin.model.domain.Consumer;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ConsumerMapper {
+public interface ConsumerMapper extends BaseMapper<Consumer> {
 
-    int deleteByPrimaryKey(Integer id);
 
     int insert(Consumer record);
 
@@ -19,9 +19,6 @@ public interface ConsumerMapper {
      */
     int insertSelective(Consumer record);
 
-    Consumer selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Consumer record);
 
     int updateByPrimaryKey(Consumer record);
 
@@ -29,7 +26,6 @@ public interface ConsumerMapper {
 
     int existUsername(String username);
 
-    int addUser(Consumer consumer);
 
     int updateUserMsg(Consumer record);
 

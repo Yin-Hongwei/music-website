@@ -1,5 +1,7 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.constant.Constants;
 import com.example.yin.mapper.ConsumerMapper;
@@ -19,7 +21,8 @@ import java.io.IOException;
 import java.util.Date;
 
 @Service
-public class ConsumerServiceImpl implements ConsumerService {
+public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
+        implements ConsumerService {
 
     @Autowired
     private ConsumerMapper consumerMapper;
@@ -30,18 +33,16 @@ public class ConsumerServiceImpl implements ConsumerService {
      */
     @Override
     public R addUser(ConsumerRequest registryRequest) {
-        String username = registryRequest.getUsername();
-        if (this.existUser(username)) {
+        Consumer consumer = new Consumer();
+        consumer.setUsername(registryRequest.getUsername());
+        if (consumerMapper.selectCount(new QueryWrapper<>(consumer))>0) {
             return R.warning("用户名已注册");
         }
-
-        Consumer consumer = new Consumer();
         BeanUtils.copyProperties(registryRequest, consumer);
         //都用用
         if (StringUtils.isBlank(consumer.getPhoneNum())) {
             consumer.setPhoneNum(null);
         }
-
         if ("".equals(consumer.getEmail())) {
             consumer.setEmail(null);
         }
@@ -49,7 +50,7 @@ public class ConsumerServiceImpl implements ConsumerService {
         consumer.setCreateTime(new Date());
         consumer.setUpdateTime(new Date());
         try {
-            if (consumerMapper.insertSelective(consumer) > 0) {
+            if (consumerMapper.insert(consumer) > 0) {
                 return R.success("注册成功");
             } else {
                 return R.error("注册失败");

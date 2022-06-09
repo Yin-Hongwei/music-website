@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.SongMapper;
 import com.example.yin.model.domain.Song;
@@ -15,7 +16,7 @@ import java.io.IOException;
 import java.util.Date;
 
 @Service
-public class SongServiceImpl implements SongService {
+public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements SongService {
 
     @Autowired
     private SongMapper songMapper;
@@ -26,9 +27,9 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public R addSong(SongRequest addSongRequest,  MultipartFile mpfile) {
+    public R addSong(SongRequest addSongRequest, MultipartFile mpfile) {
         Song song = new Song();
-        BeanUtils.copyProperties(addSongRequest,song);
+        BeanUtils.copyProperties(addSongRequest, song);
         String pic = "/img/songPic/tubiao.jpg";
         String fileName = mpfile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "song";
@@ -59,7 +60,7 @@ public class SongServiceImpl implements SongService {
     @Override
     public R updateSongMsg(SongRequest updateSongRequest) {
         Song song = new Song();
-        BeanUtils.copyProperties(updateSongRequest,song);
+        BeanUtils.copyProperties(updateSongRequest, song);
         song.setUpdateTime(new Date());
         if (songMapper.updateSongMsg(song) > 0) {
             return R.success("修改成功");

@@ -1,21 +1,19 @@
 package com.example.yin.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.yin.model.domain.Singer;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface SingerMapper {
-    int deleteByPrimaryKey(Integer id);
+public interface SingerMapper extends BaseMapper<Singer> {
 
     int insert(Singer record);
 
     int insertSelective(Singer record);
 
     Singer selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Singer record);
 
     int updateByPrimaryKey(Singer record);
 

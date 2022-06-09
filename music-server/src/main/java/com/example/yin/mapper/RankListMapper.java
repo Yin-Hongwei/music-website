@@ -1,11 +1,12 @@
 package com.example.yin.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.yin.model.domain.RankList;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RankListMapper {
+public interface RankListMapper extends BaseMapper<RankList> {
 
     int insert(RankList record);
 

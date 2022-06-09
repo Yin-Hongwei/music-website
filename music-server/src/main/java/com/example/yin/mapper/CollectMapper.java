@@ -1,5 +1,6 @@
 package com.example.yin.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.yin.model.domain.Collect;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -7,8 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CollectMapper {
-    int deleteByPrimaryKey(Integer id);
+public interface CollectMapper extends BaseMapper<Collect> {
 
     int insert(Collect record);
 
@@ -16,7 +16,6 @@ public interface CollectMapper {
 
     Collect selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Collect record);
 
     int updateByPrimaryKey(Collect record);
 

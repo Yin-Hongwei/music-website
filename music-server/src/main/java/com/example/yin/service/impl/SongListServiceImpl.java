@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.SongListMapper;
 import com.example.yin.model.domain.SongList;
@@ -15,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Service
-public class SongListServiceImpl implements SongListService {
+public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> implements SongListService {
 
     @Autowired
     private SongListMapper songListMapper;
@@ -23,7 +24,7 @@ public class SongListServiceImpl implements SongListService {
     @Override
     public R updateSongListMsg(SongListRequest updateSongListRequest) {
         SongList songList = new SongList();
-        BeanUtils.copyProperties(updateSongListRequest,songList);
+        BeanUtils.copyProperties(updateSongListRequest, songList);
         if (songListMapper.updateSongListMsg(songList) > 0) {
             return R.success("修改成功");
         } else {
@@ -58,7 +59,7 @@ public class SongListServiceImpl implements SongListService {
     @Override
     public R addSongList(SongListRequest addSongListRequest) {
         SongList songList = new SongList();
-        BeanUtils.copyProperties(addSongListRequest,songList);
+        BeanUtils.copyProperties(addSongListRequest, songList);
         String pic = "/img/songListPic/123.jpg";
         songList.setPic(pic);
         if (songListMapper.insertSelective(songList) > 0) {
