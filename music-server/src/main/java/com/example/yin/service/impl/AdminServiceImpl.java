@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.AdminMapper;
@@ -19,7 +20,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Override
     public R verityPasswd(AdminRequest adminRequest, HttpSession session) {
-        if (adminMapper.verifyPassword(adminRequest.getUsername(), adminRequest.getPassword()) > 0) {
+        QueryWrapper<Admin> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name",adminRequest.getUsername());
+        queryWrapper.eq("password",adminRequest.getPassword());
+        if (adminMapper.selectCount(queryWrapper) > 0) {
             session.setAttribute("name", adminRequest.getUsername());
             return R.success("登录成功");
         } else {
