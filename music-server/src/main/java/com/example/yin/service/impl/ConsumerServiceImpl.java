@@ -48,6 +48,7 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
         //TODO 当我们升级到mbp的时候 就可以进行优化 插入修改
         consumer.setCreateTime(new Date());
         consumer.setUpdateTime(new Date());
+        consumer.setAvator("img/avatorImages/user.jpg");
         try {
             if (consumerMapper.insert(consumer) > 0) {
                 return R.success("注册成功");
@@ -117,17 +118,17 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
 
     @Override
     public boolean existUser(String username) {
-        Consumer consumer = new Consumer();
-        consumer.setUsername(username);
-        return consumerMapper.selectCount(new QueryWrapper<>(consumer)) > 0;
+        QueryWrapper<Consumer> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username",username);
+        return consumerMapper.selectCount(queryWrapper) > 0;
     }
 
     @Override
     public boolean verityPasswd(String username, String password) {
-        Consumer consumer = new Consumer();
-        consumer.setUsername(username);
-        consumer.setPassword(password);
-        return consumerMapper.selectCount(new QueryWrapper<>(consumer)) > 0;
+        QueryWrapper<Consumer> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username",username);
+        queryWrapper.eq("password",password);
+        return consumerMapper.selectCount(queryWrapper) > 0;
     }
 
     // 删除用户
@@ -147,7 +148,9 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
 
     @Override
     public R userOfId(Integer id) {
-        return R.success(null, consumerMapper.selectById(id));
+        QueryWrapper<Consumer> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id",id);
+        return R.success(null, consumerMapper.selectList(queryWrapper));
     }
 
     @Override
