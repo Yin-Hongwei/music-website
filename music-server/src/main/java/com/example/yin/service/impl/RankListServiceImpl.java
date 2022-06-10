@@ -46,6 +46,6 @@ public class RankListServiceImpl extends ServiceImpl<RankListMapper, RankList> i
         RankList rankList = new RankList();
         rankList.setConsumerId(consumerId);
         rankList.setSongListId(songListId);
-        return R.success(null, rankMapper.selectUserRank(consumerId, songListId));
+        return R.success(null, rankMapper.selectOne(new QueryWrapper<>(rankList)).getScore());
     }
 }
