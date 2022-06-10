@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.SongListMapper;
@@ -25,7 +26,7 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     public R updateSongListMsg(SongListRequest updateSongListRequest) {
         SongList songList = new SongList();
         BeanUtils.copyProperties(updateSongListRequest, songList);
-        if (songListMapper.updateSongListMsg(songList) > 0) {
+        if (songListMapper.updateById(songList) > 0) {
             return R.success("修改成功");
         } else {
             return R.error("修改失败");
@@ -34,7 +35,7 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
 
     @Override
     public R deleteSongList(Integer id) {
-        if (songListMapper.deleteSongList(id) > 0) {
+        if (songListMapper.deleteById(id) > 0) {
             return R.success("删除成功");
         } else {
             return R.error("删除失败");
@@ -43,17 +44,21 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
 
     @Override
     public R allSongList() {
-        return R.success(null, songListMapper.allSongList());
+        return R.success(null, songListMapper.selectList(null));
     }
 
     @Override
     public R likeTitle(String title) {
-        return R.success(null, songListMapper.likeTitle(title));
+        QueryWrapper<SongList> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("title",title);
+        return R.success(null, songListMapper.selectList(queryWrapper));
     }
 
     @Override
     public R likeStyle(String style) {
-        return R.success(null, songListMapper.likeStyle(style));
+        QueryWrapper<SongList> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("style",style);
+        return R.success(null, songListMapper.selectList(queryWrapper));
     }
 
     @Override
@@ -62,7 +67,7 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
         BeanUtils.copyProperties(addSongListRequest, songList);
         String pic = "/img/songListPic/123.jpg";
         songList.setPic(pic);
-        if (songListMapper.insertSelective(songList) > 0) {
+        if (songListMapper.insert(songList) > 0) {
             return R.success("添加成功");
         } else {
             return R.error("添加失败");
