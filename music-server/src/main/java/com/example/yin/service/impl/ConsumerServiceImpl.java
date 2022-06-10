@@ -13,12 +13,16 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
+
+import static com.example.yin.constant.Constants.SALT;
 
 @Service
 public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
@@ -38,6 +42,9 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
         }
         Consumer consumer = new Consumer();
         BeanUtils.copyProperties(registryRequest, consumer);
+        //MD5加密
+        String password = DigestUtils.md5DigestAsHex((SALT + registryRequest.getPassword()).getBytes(StandardCharsets.UTF_8));
+        consumer.setPassword(password);
         //都用用
         if (StringUtils.isBlank(consumer.getPhoneNum())) {
             consumer.setPhoneNum(null);
@@ -75,13 +82,14 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
     @Override
     public R updatePassword(ConsumerRequest updatePasswordRequest) {
 
-        if (!this.verityPasswd(updatePasswordRequest.getUsername(), updatePasswordRequest.getOldPassword())) {
+       if (!this.verityPasswd(updatePasswordRequest.getUsername(),updatePasswordRequest.getOldPassword())) {
             return R.error("密码输入错误");
         }
 
         Consumer consumer = new Consumer();
         consumer.setId(updatePasswordRequest.getId());
-        consumer.setPassword(updatePasswordRequest.getPassword());
+        String secretPassword = DigestUtils.md5DigestAsHex((SALT + updatePasswordRequest.getPassword()).getBytes(StandardCharsets.UTF_8));
+        consumer.setPassword(secretPassword);
 
         if (consumerMapper.updateById(consumer) > 0) {
             return R.success("密码修改成功");
@@ -127,7 +135,9 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
     public boolean verityPasswd(String username, String password) {
         QueryWrapper<Consumer> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username",username);
-        queryWrapper.eq("password",password);
+        String secretPassword = DigestUtils.md5DigestAsHex((SALT + password).getBytes(StandardCharsets.UTF_8));
+
+        queryWrapper.eq("password",secretPassword);
         return consumerMapper.selectCount(queryWrapper) > 0;
     }
 
