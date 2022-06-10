@@ -126,7 +126,7 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
     public boolean verityPasswd(String username, String password) {
         Consumer consumer = new Consumer();
         consumer.setUsername(username);
-        consumer.setUsername(password);
+        consumer.setPassword(password);
         return consumerMapper.selectCount(new QueryWrapper<>(consumer)) > 0;
     }
 
@@ -160,7 +160,7 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
             session.setAttribute("username", username);
             Consumer consumer = new Consumer();
             consumer.setUsername(username);
-            return R.success("登录成功", consumerMapper.selectOne(new QueryWrapper<>(consumer)));
+            return R.success("登录成功", consumerMapper.selectList(new QueryWrapper<>(consumer)));
         } else {
             return R.error("用户名或密码错误");
         }
