@@ -18,7 +18,7 @@ public class WebPicConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/avatorImages/**")
-                .addResourceLocations(Constants.AVATOR_IMAGES_PATH);
+                .addResourceLocations(Constants.AVATAR_IMAGES_PATH);
         registry.addResourceHandler("/img/singerPic/**")
                 .addResourceLocations(Constants.SINGER_PIC_PATH);
         registry.addResourceHandler("/img/songPic/**")
@@ -26,7 +26,7 @@ public class WebPicConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/song/**")
                 .addResourceLocations(Constants.SONG_PATH);
         registry.addResourceHandler("/img/songListPic/**")
-                .addResourceLocations(Constants.SONGLIST_PIC_PATH);
+                .addResourceLocations(Constants.SONG_LIST_PIC_PATH);
     }
 
 }
