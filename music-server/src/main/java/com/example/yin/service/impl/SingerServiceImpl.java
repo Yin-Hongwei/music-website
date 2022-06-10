@@ -94,7 +94,9 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
     }
 
     @Override
-    public R singerOfSex(Integer sex) {
-        return R.success(null, singerMapper.singerOfSex(sex));
+    public R singerOfSex(Byte sex) {
+        Singer singer = new Singer();
+        singer.setSex(sex);
+        return R.success(null, singerMapper.selectList(new QueryWrapper<>(singer)));
     }
 }

@@ -40,7 +40,7 @@ public class SingerController {
 
     // 根据歌手性别查找歌手
     @GetMapping("/singer/sex/detail")
-    public R singerOfSex(@RequestParam int sex) {
+    public R singerOfSex(@RequestParam Byte sex) {
         return singerService.singerOfSex(sex);
     }
 

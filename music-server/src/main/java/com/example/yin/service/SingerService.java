@@ -20,5 +20,5 @@ public interface SingerService extends IService<Singer> {
 
     R singerOfName(String name);
 
-    R singerOfSex(Integer sex);
+    R singerOfSex(Byte sex);
 }
