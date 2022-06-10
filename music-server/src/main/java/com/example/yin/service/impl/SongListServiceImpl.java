@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.SongListMapper;
@@ -48,12 +49,16 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
 
     @Override
     public R likeTitle(String title) {
-        return R.success(null, songListMapper.likeTitle(title));
+        QueryWrapper<SongList> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("title", title);
+        return R.success(null, songListMapper.selectList(queryWrapper));
     }
 
     @Override
     public R likeStyle(String style) {
-        return R.success(null, songListMapper.likeStyle(style));
+        QueryWrapper<SongList> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("style", style);
+        return R.success(null, songListMapper.selectList(queryWrapper));
     }
 
     @Override
