@@ -92,7 +92,7 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
         SongList songList = new SongList();
         songList.setId(id);
         songList.setPic(imgPath);
-        if (songListMapper.updateSongListImg(songList) > 0) {
+        if (songListMapper.updateById(songList) > 0) {
             return R.success("上传成功", imgPath);
         } else {
             return R.error("上传失败");
