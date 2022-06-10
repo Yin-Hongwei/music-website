@@ -34,8 +34,8 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     @Override
     public R existSongId(CollectRequest isCollectRequest) {
         QueryWrapper<Collect> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("userId",isCollectRequest.getUserId());
-        queryWrapper.eq("songId",isCollectRequest.getSongId());
+        queryWrapper.eq("user_id",isCollectRequest.getUserId());
+        queryWrapper.eq("song_id",isCollectRequest.getSongId());
         if (collectMapper.selectCount(queryWrapper) > 0) {
             return R.success("已收藏", true);
         } else {
@@ -46,8 +46,8 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     @Override
     public R deleteCollect(Integer userId, Integer songId) {
         QueryWrapper<Collect> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("userId",userId);
-        queryWrapper.eq("songId",songId);
+        queryWrapper.eq("user_id",userId);
+        queryWrapper.eq("song_id",songId);
         if (collectMapper.delete(queryWrapper) > 0) {
             return R.success("取消收藏", false);
         } else {
@@ -58,7 +58,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     @Override
     public R collectionOfUser(Integer userId) {
         QueryWrapper<Collect> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("userId",userId);
+        queryWrapper.eq("user_id",userId);
         return R.success("用户收藏", collectMapper.selectList(queryWrapper));
     }
 }
