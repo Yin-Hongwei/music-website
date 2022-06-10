@@ -1,5 +1,6 @@
 package com.example.yin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.CollectMapper;
@@ -23,7 +24,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
         Collect collect = new Collect();
         BeanUtils.copyProperties(addCollectRequest, collect);
         collect.setCreateTime(new Date());
-        if (collectMapper.insertSelective(collect) > 0) {
+        if (collectMapper.insert(collect) > 0) {
             return R.success("收藏成功", true);
         } else {
             return R.error("收藏失败");
@@ -32,8 +33,10 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
 
     @Override
     public R existSongId(CollectRequest isCollectRequest) {
-
-        if (collectMapper.existSongId(isCollectRequest.getUserId(), isCollectRequest.getSongId()) > 0) {
+        QueryWrapper<Collect> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("userId",isCollectRequest.getUserId());
+        queryWrapper.eq("songId",isCollectRequest.getSongId());
+        if (collectMapper.selectCount(queryWrapper) > 0) {
             return R.success("已收藏", true);
         } else {
             return R.success("未收藏", false);
@@ -42,7 +45,10 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
 
     @Override
     public R deleteCollect(Integer userId, Integer songId) {
-        if (collectMapper.deleteCollect(userId, songId) > 0) {
+        QueryWrapper<Collect> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("userId",userId);
+        queryWrapper.eq("songId",songId);
+        if (collectMapper.delete(queryWrapper) > 0) {
             return R.success("取消收藏", false);
         } else {
             return R.error("取消收藏失败");
@@ -51,6 +57,8 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
 
     @Override
     public R collectionOfUser(Integer userId) {
-        return R.success("取消收藏", collectMapper.collectionOfUser(userId));
+        QueryWrapper<Collect> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("userId",userId);
+        return R.success("用户收藏", collectMapper.selectList(queryWrapper));
     }
 }
