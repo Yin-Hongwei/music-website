@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.yin.mapper.AdminMapper">
-  <resultMap id="BaseResultMap" type="com.example.yin.model.domain.Admin">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, name, password
-  </sql>
-  
+    <resultMap id="BaseResultMap" type="com.example.yin.model.domain.Admin">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , name, password
+    </sql>
+
 </mapper>

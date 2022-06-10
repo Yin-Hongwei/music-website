@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.yin.mapper.ListSongMapper">
-  <resultMap id="BaseResultMap" type="com.example.yin.model.domain.ListSong">
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="song_id" property="songId" jdbcType="INTEGER" />
-    <result column="song_list_id" property="songListId" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, song_id, song_list_id
-  </sql>
+    <resultMap id="BaseResultMap" type="com.example.yin.model.domain.ListSong">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="song_id" property="songId" jdbcType="INTEGER"/>
+        <result column="song_list_id" property="songListId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , song_id, song_list_id
+    </sql>
 
 </mapper>
