@@ -62,7 +62,6 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
     public R updateSongMsg(SongRequest updateSongRequest) {
         Song song = new Song();
         BeanUtils.copyProperties(updateSongRequest, song);
-        song.setUpdateTime(new Date());
         if (songMapper.updateById(song) > 0) {
             return R.success("修改成功");
         } else {

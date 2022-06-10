@@ -11,8 +11,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
 public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> implements CollectService {
     @Autowired
@@ -23,7 +21,6 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
         //作者用type来判断收藏的是歌还是歌单
         Collect collect = new Collect();
         BeanUtils.copyProperties(addCollectRequest, collect);
-        collect.setCreateTime(new Date());
         if (collectMapper.insert(collect) > 0) {
             return R.success("收藏成功", true);
         } else {

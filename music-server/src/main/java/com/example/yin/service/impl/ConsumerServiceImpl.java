@@ -20,7 +20,6 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
 
 import static com.example.yin.constant.Constants.SALT;
 
@@ -52,9 +51,6 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
         if ("".equals(consumer.getEmail())) {
             consumer.setEmail(null);
         }
-        //TODO 当我们升级到mbp的时候 就可以进行优化 插入修改
-        consumer.setCreateTime(new Date());
-        consumer.setUpdateTime(new Date());
         consumer.setAvator("img/avatorImages/user.jpg");
         try {
             if (consumerMapper.insert(consumer) > 0) {
@@ -71,7 +67,6 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
     public R updateUserMsg(ConsumerRequest updateRequest) {
         Consumer consumer = new Consumer();
         BeanUtils.copyProperties(updateRequest, consumer);
-        consumer.setUpdateTime(new Date());
         if (consumerMapper.updateById(consumer) > 0) {
             return R.success("修改成功");
         } else {

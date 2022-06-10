@@ -11,8 +11,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
     @Autowired
@@ -23,7 +21,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         Comment comment = new Comment();
         BeanUtils.copyProperties(addCommentRequest, comment);
         comment.setType(addCommentRequest.getNowType());
-        comment.setCreateTime(new Date());
         if (commentMapper.insert(comment) > 0) {
             return R.success("评论成功");
         } else {

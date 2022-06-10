@@ -1,8 +1,6 @@
 package com.example.yin.model.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -22,6 +20,7 @@ public class Comment {
 
     private String content;
 
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     private Byte type;
