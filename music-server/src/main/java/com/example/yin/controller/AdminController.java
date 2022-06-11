@@ -18,7 +18,6 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    //TODO 这一块要去做 密码的校验得给密码加密
     // 判断是否登录成功
     @PostMapping("/admin/login/status")
     public R loginStatus(@RequestBody AdminRequest adminRequest, HttpSession session) {
