@@ -1,0 +1,398 @@
+2022-06-10 15:53:34 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 13352 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 15:53:34 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 15:53:34 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 15:53:34 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 15:53:36 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.AdminMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:53:36 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CollectMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:53:36 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CommentMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:53:36 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.RankListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:53:36 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SingerMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:53:36 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:53:37 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:53:38 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 15:53:38 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3765 ms
+2022-06-10 15:53:38 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 15:53:38 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 15:53:38 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 5.212 seconds (JVM running for 7.384)
+2022-06-10 15:53:39 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 15:53:39 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 15:53:46 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 15:53:47 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 15:54:27 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 6860 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 15:54:27 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 15:54:27 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 15:54:27 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 15:54:28 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.AdminMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:54:29 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CollectMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:54:29 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CommentMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:54:29 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.RankListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:54:29 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SingerMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:54:29 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:54:29 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:54:30 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 15:54:30 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3286 ms
+2022-06-10 15:54:31 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 15:54:31 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 15:54:31 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.858 seconds (JVM running for 6.532)
+2022-06-10 15:55:00 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 9988 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 15:55:00 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 15:55:00 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 15:55:00 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 15:55:02 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.AdminMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:55:02 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CollectMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:55:02 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CommentMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:55:02 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.RankListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:55:02 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SingerMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:55:02 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:55:02 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:55:03 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 15:55:03 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 2799 ms
+2022-06-10 15:55:04 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 15:55:04 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 15:55:04 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.094 seconds (JVM running for 5.465)
+2022-06-10 15:55:07 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 15:55:07 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 2 ms
+2022-06-10 15:55:07 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 15:55:07 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 15:56:14 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 6680 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 15:56:14 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 15:56:14 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 15:56:14 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 15:56:16 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.AdminMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:56:16 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CollectMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:56:16 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CommentMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:56:16 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.RankListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:56:16 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SingerMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:56:16 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:56:16 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 15:56:18 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 15:56:18 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3169 ms
+2022-06-10 15:56:18 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 15:56:18 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 15:56:18 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.267 seconds (JVM running for 5.879)
+2022-06-10 15:56:25 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 15:56:25 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 15:56:26 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 15:56:26 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 16:06:37 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 18228 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 16:06:37 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 16:06:37 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 16:06:37 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 16:06:40 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.AdminMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:06:40 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CollectMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:06:40 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CommentMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:06:40 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.RankListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:06:40 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SingerMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:06:41 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:06:41 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:06:43 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 16:06:43 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 5455 ms
+2022-06-10 16:06:44 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 16:06:44 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 16:06:44 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 7.168 seconds (JVM running for 9.732)
+2022-06-10 16:06:46 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 16:06:46 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 16:06:46 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 16:06:47 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 16:09:56 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-10 16:09:56 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-10 16:10:05 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 13104 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 16:10:05 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 16:10:05 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 16:10:05 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 16:10:07 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.AdminMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:10:07 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CollectMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:10:07 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CommentMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:10:07 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.RankListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:10:07 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SingerMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:10:08 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:10:08 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:10:09 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 16:10:09 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3556 ms
+2022-06-10 16:10:09 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 16:10:09 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 16:10:09 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.857 seconds (JVM running for 6.296)
+2022-06-10 16:10:15 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 16:10:15 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 2 ms
+2022-06-10 16:10:15 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 16:10:15 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 16:17:20 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-10 16:17:20 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-10 16:17:26 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 9088 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 16:17:26 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 16:17:26 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 16:17:26 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 16:17:28 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.AdminMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:17:28 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CollectMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:17:28 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CommentMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:17:28 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.RankListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:17:28 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SingerMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:17:28 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:17:28 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:17:29 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 16:17:29 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 2761 ms
+2022-06-10 16:17:30 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 16:17:30 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 16:17:30 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 3.974 seconds (JVM running for 5.368)
+2022-06-10 16:17:41 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 16:17:41 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 16:17:41 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 16:17:41 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 16:31:54 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 2596 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 16:31:54 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 16:31:54 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 16:31:54 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 16:31:56 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CommentMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:31:56 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.RankListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:31:56 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SingerMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:31:56 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:31:56 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:31:58 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 16:31:58 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3373 ms
+2022-06-10 16:31:58 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 16:31:58 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 16:31:58 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.466 seconds (JVM running for 6.02)
+2022-06-10 16:32:04 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 16:32:04 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 16:32:04 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 16:32:04 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 16:34:11 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-10 16:34:11 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-10 16:34:18 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 12696 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 16:34:18 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 16:34:18 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 16:34:18 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 16:34:20 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.CommentMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:34:20 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.RankListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:34:20 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SingerMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:34:20 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:34:20 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:34:21 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 16:34:21 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3218 ms
+2022-06-10 16:34:22 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 16:34:22 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 16:34:22 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.699 seconds (JVM running for 6.003)
+2022-06-10 16:34:28 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 16:34:28 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 16:34:28 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 16:34:28 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 16:37:54 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-10 16:37:54 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-10 16:48:36 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 17492 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 16:48:36 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 16:48:36 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 16:48:36 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 16:48:38 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongListMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:48:38 WARN [com.baomidou.mybatisplus.core.injector.AbstractMethod]: [com.example.yin.mapper.SongMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2022-06-10 16:48:40 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 16:48:40 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3371 ms
+2022-06-10 16:48:41 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 16:48:41 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 16:48:41 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 5.089 seconds (JVM running for 6.434)
+2022-06-10 16:48:41 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 16:48:41 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 16:48:41 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 16:48:41 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 16:59:07 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 13556 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 16:59:07 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 16:59:07 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 16:59:07 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 16:59:10 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 16:59:10 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 2584 ms
+2022-06-10 16:59:11 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 16:59:11 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 16:59:11 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 3.632 seconds (JVM running for 5.019)
+2022-06-10 16:59:20 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 16:59:20 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 16:59:20 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 16:59:20 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 17:00:04 WARN [org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver]: Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'multipart/form-data;boundary=----WebKitFormBoundary6fFgpzrTBq8V4nJx;charset=UTF-8' not supported]
+2022-06-10 17:00:09 WARN [org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver]: Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]
+2022-06-10 17:00:59 WARN [org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver]: Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'multipart/form-data;boundary=----WebKitFormBoundaryCMXNLmRnZEddhr2E;charset=UTF-8' not supported]
+2022-06-10 17:01:14 WARN [org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver]: Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'multipart/form-data;boundary=----WebKitFormBoundaryl2e0Altw3KbSCjyB;charset=UTF-8' not supported]
+2022-06-10 17:55:22 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-10 17:55:22 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-10 17:55:29 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 18092 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 17:55:29 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 17:55:29 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 17:55:29 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 17:55:32 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 17:55:32 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 2929 ms
+2022-06-10 17:55:33 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 17:55:33 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 17:55:33 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.473 seconds (JVM running for 6.055)
+2022-06-10 17:55:39 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 17:55:39 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 17:55:39 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 17:55:39 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 17:57:42 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-10 17:57:42 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-10 17:57:50 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 11120 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 17:57:50 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 17:57:50 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 17:57:50 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 17:57:54 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 17:57:54 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3331 ms
+2022-06-10 17:57:54 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 17:57:54 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 17:57:54 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.589 seconds (JVM running for 6.059)
+2022-06-10 17:58:59 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 17:58:59 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 17:58:59 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 17:58:59 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 18:00:09 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 936 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 18:00:09 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 18:00:09 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 18:00:09 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 18:00:13 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 18:00:13 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3489 ms
+2022-06-10 18:00:13 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 18:00:13 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 18:00:13 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.712 seconds (JVM running for 6.196)
+2022-06-10 18:00:19 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 18:00:19 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 18:00:20 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 18:00:20 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 18:01:44 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-10 18:01:44 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-10 18:01:48 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 9800 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 18:01:48 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 18:01:48 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 18:01:48 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 18:01:50 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 18:01:50 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 2570 ms
+2022-06-10 18:01:51 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 18:01:51 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 18:01:51 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 3.691 seconds (JVM running for 4.988)
+2022-06-10 18:01:59 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 18:01:59 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 18:01:59 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 18:01:59 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 18:04:48 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-10 18:04:48 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-10 18:04:52 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 9276 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 18:04:52 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 18:04:52 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 18:04:52 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 18:04:56 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 18:04:56 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3669 ms
+2022-06-10 18:04:56 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 18:04:56 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 18:04:56 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.852 seconds (JVM running for 6.366)
+2022-06-10 18:04:59 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 18:04:59 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 18:04:59 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 18:04:59 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 18:05:41 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-10 18:05:41 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-10 18:05:46 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 3484 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 18:05:46 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 18:05:46 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 18:05:46 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 18:05:48 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 18:05:48 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 2730 ms
+2022-06-10 18:05:49 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 18:05:49 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 18:05:49 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 3.881 seconds (JVM running for 5.558)
+2022-06-10 18:19:16 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 12028 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 18:19:16 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 18:19:16 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 18:19:16 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 18:19:21 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 18:19:21 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 4857 ms
+2022-06-10 18:19:22 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 18:19:22 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 18:19:22 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 6.956 seconds (JVM running for 9.181)
+2022-06-10 18:19:31 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 18:19:31 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 18:19:31 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 18:19:32 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 18:19:46 WARN [org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver]: Resolved [org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'avatarFile' is not present]
+2022-06-10 18:20:12 WARN [org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver]: Resolved [org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'avatarFile' is not present]
+2022-06-10 18:21:17 WARN [org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver]: Resolved [org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'avatarFile' is not present]
+2022-06-10 18:22:08 WARN [org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver]: Resolved [org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'avatarFile' is not present]
+2022-06-10 18:31:25 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 8872 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 18:31:25 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 18:31:25 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 18:31:25 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 18:31:32 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 18:31:32 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 6684 ms
+2022-06-10 18:31:33 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 18:31:33 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 18:31:33 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 10.343 seconds (JVM running for 14.362)
+2022-06-10 18:31:44 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 18:31:44 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 18:31:44 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 18:31:45 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 18:31:57 WARN [org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver]: Resolved [org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'avatarFile' is not present]
+2022-06-10 18:35:56 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 10948 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 18:35:56 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 18:35:56 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 18:35:56 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 18:36:00 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 18:36:00 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3529 ms
+2022-06-10 18:36:01 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 18:36:01 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 18:36:01 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.839 seconds (JVM running for 6.778)
+2022-06-10 18:36:04 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 18:36:04 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 18:36:04 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 18:36:04 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 18:42:39 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 15912 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 18:42:39 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 18:42:39 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 18:42:39 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 18:42:44 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 18:42:44 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 4607 ms
+2022-06-10 18:42:44 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 18:42:44 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 18:42:44 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 6.113 seconds (JVM running for 9.371)
+2022-06-10 18:42:49 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 18:42:49 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 18:42:49 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 18:42:50 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 18:43:57 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-10 18:43:57 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-10 18:51:59 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 2544 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 18:51:59 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 18:51:59 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 18:51:59 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 18:52:02 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 18:52:02 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3444 ms
+2022-06-10 18:52:03 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 18:52:03 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 18:52:03 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.846 seconds (JVM running for 6.14)
+2022-06-10 18:53:27 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 18:53:27 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 2 ms
+2022-06-10 18:53:28 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 18:53:28 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 19:03:38 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-10 19:03:38 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-10 19:04:28 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 8560 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 19:04:28 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 19:04:28 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 19:04:28 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 19:04:31 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 19:04:31 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3315 ms
+2022-06-10 19:04:32 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 19:04:32 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 19:04:32 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 5.456 seconds (JVM running for 7.489)
+2022-06-10 19:04:35 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 19:04:35 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 19:04:35 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 19:04:35 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-10 19:23:01 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-10 19:23:01 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-10 19:29:57 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 12504 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-10 19:29:57 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-10 19:29:57 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 19:29:57 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 19:30:00 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-10 19:30:00 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3014 ms
+2022-06-10 19:30:01 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-10 19:30:01 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-10 19:30:01 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.216 seconds (JVM running for 5.652)
+2022-06-10 19:30:26 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-10 19:30:26 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-10 19:30:26 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-10 19:30:27 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
