@@ -17,7 +17,8 @@
           <li class="content">{{ item.content }}</li>
         </ul>
       </div>
-      <div ref="up" class="comment-ctr" @click="setSupport(item.id, item.up, index)">
+      <!--这特么是直接拿到了评论的id-->
+      <div ref="up" class="comment-ctr" @click="setSupport(item.id, item.up,userId)">
         <div><yin-icon :icon="iconList.Support"></yin-icon> {{ item.up }}</div>
         <el-icon v-if="item.userId === userId" @click="deleteComment(item.id, index)"><delete /></el-icon>
       </div>
@@ -117,12 +118,30 @@ export default defineComponent({
       if (result.success) commentList.value.splice(index, 1);
     }
 
-    // 点赞
-    async function setSupport(id, up, index) {
+    // 点赞  还得再查一下
+    async function setSupport(id, up, userId) {
       if (!checkStatus()) return;
-      up = up + 1;
-      const result = (await HttpManager.setSupport({id,up})) as ResponseBody;
-      if (result.success) {
+      let result = null;
+      let operatorR = null;
+      const commentId = id;
+      //当然可以这么左 直接在判断的时候 进行点赞或者取消
+      const r = (await HttpManager.testAlreadySupport({commentId,userId})) as ResponseBody;
+      (proxy as any).$message({
+        message: r.message,
+        type: r.type,
+        date: r.data
+      });
+
+      if (r.data){
+        up = up - 1;
+        operatorR = (await HttpManager.deleteUserSupport({commentId,userId})) as ResponseBody;
+        result = (await HttpManager.setSupport({id,up})) as ResponseBody;
+      }else {
+        up = up + 1;
+        operatorR = (await HttpManager.insertUserSupport({commentId,userId})) as ResponseBody;
+        result = (await HttpManager.setSupport({id,up})) as ResponseBody;
+      }
+      if (result.success&&operatorR.success) {
         // proxy.$refs.up[index].children[0].style.color = "#2796dd";
         await getComment();
       }

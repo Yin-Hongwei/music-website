@@ -79,6 +79,17 @@ const HttpManager = {
   getSongOfSingerName: (keywords) => get(`song/singerName/detail?name=${keywords}`),
   // 下载音乐
   downloadMusic: (url) => get(url, { responseType: "blob" }),
+
+  //======================> 点赞api的优化 避免有些是重复的点赞！新增数据表了得
+
+  testAlreadySupport:({commentId,userId}) => post(`userSupport/test`, {commentId,userId}),
+
+  deleteUserSupport:({commentId,userId}) => post(`userSupport/delete`, {commentId,userId}),
+
+  insertUserSupport:({commentId,userId}) => post(`userSupport/insert`, {commentId,userId})
+
 };
+
+
 
 export { HttpManager };
