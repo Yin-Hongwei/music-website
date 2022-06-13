@@ -1,0 +1,564 @@
+2022-06-11 16:34:47 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 1668 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-11 16:34:47 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-11 16:34:48 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-11 16:34:48 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-11 16:34:54 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-11 16:34:55 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 6505 ms
+2022-06-11 16:34:56 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-11 16:34:56 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-11 16:34:56 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 9.65 seconds (JVM running for 12.986)
+2022-06-11 16:35:12 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-11 16:35:12 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-11 16:35:12 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-11 16:35:12 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-11 16:37:04 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:37:05 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for OPTIONS /userSupport/test
+2022-06-11 16:37:17 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for OPTIONS /userSupport/test
+2022-06-11 16:37:17 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for OPTIONS /userSupport/test
+2022-06-11 16:37:17 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for OPTIONS /userSupport/test
+2022-06-11 16:37:18 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for OPTIONS /userSupport/test
+2022-06-11 16:37:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for OPTIONS /userSupport/test
+2022-06-11 16:38:58 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-11 16:38:58 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-11 16:39:06 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 14648 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-11 16:39:06 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-11 16:39:06 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-11 16:39:06 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-11 16:39:10 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-11 16:39:10 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 4110 ms
+2022-06-11 16:39:10 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-11 16:39:10 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-11 16:39:10 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 5.504 seconds (JVM running for 7.289)
+2022-06-11 16:39:11 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-11 16:39:11 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-11 16:39:11 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-11 16:39:11 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-11 16:39:12 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:23 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:31 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:34 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:35 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:46 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:46 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:46 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:46 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:46 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:46 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:47 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:48 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:49 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:49 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:39:50 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:03 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:04 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:08 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:09 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:29 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:32 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:32 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:32 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:32 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:35 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:35 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:35 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:35 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:35 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:35 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:35 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:35 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:36 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:37 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:38 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:39 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:40 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:46 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:46 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:46 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:46 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:46 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:46 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:50 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:50 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:50 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:50 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:50 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:50 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:40:50 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:50 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:40:50 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:41:49 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-11 16:41:49 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-11 16:41:56 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 12404 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-11 16:41:56 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-11 16:41:56 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-11 16:41:56 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-11 16:41:59 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-11 16:41:59 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3137 ms
+2022-06-11 16:42:00 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-11 16:42:00 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-11 16:42:00 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 4.143 seconds (JVM running for 5.371)
+2022-06-11 16:42:18 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-11 16:42:18 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-11 16:42:18 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-11 16:42:18 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-11 16:42:18 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:18 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:42:18 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:18 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:20 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:20 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:42:20 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:20 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:20 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:22 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:22 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:42:22 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:22 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:24 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:24 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:42:24 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:24 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:24 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:24 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:42:24 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:24 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:24 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:25 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:25 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:42:25 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:25 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:25 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:25 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:25 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:42:26 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:26 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:26 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:26 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:42:26 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:26 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:26 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:26 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:42:26 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:27 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:27 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:27 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:42:27 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:27 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:27 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:27 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:42:27 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:27 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:28 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:28 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:42:28 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:28 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:28 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:28 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:42:28 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:28 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:42:54 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-11 16:42:54 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.
+2022-06-11 16:47:07 INFO [com.example.yin.YinMusicApplication]: Starting YinMusicApplication using Java 1.8.0_261 on DESKTOP-P7983E3 with PID 3764 (D:\Java_code\music-website\music-server\target\classes started by asus in D:\Java_code\music-website)
+2022-06-11 16:47:07 INFO [com.example.yin.YinMusicApplication]: No active profile set, falling back to default profiles: default
+2022-06-11 16:47:07 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-11 16:47:07 INFO [org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor]: For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-11 16:47:11 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat initialized with port(s): 8888 (http)
+2022-06-11 16:47:11 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]: Root WebApplicationContext: initialization completed in 3695 ms
+2022-06-11 16:47:12 INFO [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer]: LiveReload server is running on port 35729
+2022-06-11 16:47:12 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]: Tomcat started on port(s): 8888 (http) with context path ''
+2022-06-11 16:47:12 INFO [com.example.yin.YinMusicApplication]: Started YinMusicApplication in 5.205 seconds (JVM running for 6.743)
+2022-06-11 16:48:05 INFO [org.springframework.web.servlet.DispatcherServlet]: Initializing Servlet 'dispatcherServlet'
+2022-06-11 16:48:05 INFO [org.springframework.web.servlet.DispatcherServlet]: Completed initialization in 1 ms
+2022-06-11 16:48:06 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Starting...
+2022-06-11 16:48:07 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Start completed.
+2022-06-11 16:48:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:48:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:48:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:41 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:48:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:42 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:48:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:48:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:48:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:43 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:44 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:48:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:48:45 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:03 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:03 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:03 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:03 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:04 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:04 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:04 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:04 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:05 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:05 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:05 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:05 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:06 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:07 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:08 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:08 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:08 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:08 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:08 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:08 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1552354056660L1.jpg
+2022-06-11 16:49:08 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:49:08 WARN [org.springframework.web.servlet.PageNotFound]: No mapping for GET //img/avatarImages/1556202448064L1.jpg
+2022-06-11 16:52:05 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown initiated...
+2022-06-11 16:52:05 INFO [com.zaxxer.hikari.HikariDataSource]: HikariPool-1 - Shutdown completed.

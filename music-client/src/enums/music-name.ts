@@ -1,1 +1,1 @@
-export const MUSICNAME = "Zyt-music";
+export const MUSICNAME = "Yin-music";

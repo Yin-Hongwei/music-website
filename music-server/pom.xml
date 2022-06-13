@@ -22,7 +22,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-    <!--web启动  内嵌tomcat-->
+    <!--web启动 内嵌tomcat-->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -109,6 +109,19 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>2.6.6</version>
+        </dependency>
+        <!--<spring2.X集成redis所需common-pool2-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.11.1</version>
         </dependency>
 
     </dependencies>
