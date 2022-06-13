@@ -86,8 +86,10 @@ const HttpManager = {
 
   deleteUserSupport:({commentId,userId}) => post(`userSupport/delete`, {commentId,userId}),
 
-  insertUserSupport:({commentId,userId}) => post(`userSupport/insert`, {commentId,userId})
+  insertUserSupport:({commentId,userId}) => post(`userSupport/insert`, {commentId,userId}),
 
+  //获取所有的海报
+  getBannerList: () => get("banner/getAllBanner")
 };
 
 
