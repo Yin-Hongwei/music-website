@@ -22,7 +22,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-    <!--web启动  内嵌tomcat-->
+    <!--web启动 内嵌tomcat-->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
