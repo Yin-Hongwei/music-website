@@ -47,12 +47,11 @@ export default defineComponent({
       });
       if (!canRun) return;
 
-      const params = new URLSearchParams();
-      params.append("username", registerForm.username);
-      params.append("password", registerForm.password);
 
       try {
-        const result = (await HttpManager.signIn(params)) as ResponseBody;
+        const username = registerForm.username;
+        const password = registerForm.password;
+        const result = (await HttpManager.signIn({username,password})) as ResponseBody;
         (proxy as any).$message({
           message: result.message,
           type: result.type,

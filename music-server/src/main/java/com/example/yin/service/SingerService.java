@@ -1,22 +1,24 @@
 package com.example.yin.service;
 
-import com.example.yin.domain.Singer;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.yin.common.R;
+import com.example.yin.model.domain.Singer;
+import com.example.yin.model.request.SingerRequest;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+public interface SingerService extends IService<Singer> {
 
-public interface SingerService {
+    R addSinger (SingerRequest addSingerRequest);
 
-    boolean addSinger (Singer singer);
+    R updateSingerMsg(SingerRequest updateSingerRequest);
 
-    boolean updateSingerMsg(Singer singer);
+    R updateSingerPic(MultipartFile avatorFile, int id);
 
-    boolean updateSingerPic(Singer singer);
+    R deleteSinger(Integer id);
 
-    boolean deleteSinger(Integer id);
+    R allSinger();
 
-    List<Singer> allSinger();
+    R singerOfName(String name);
 
-    List<Singer> singerOfName(String name);
-
-    List<Singer> singerOfSex(Integer sex);
+    R singerOfSex(Integer sex);
 }

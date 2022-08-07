@@ -17,7 +17,8 @@
           <li class="content">{{ item.content }}</li>
         </ul>
       </div>
-      <div ref="up" class="comment-ctr" @click="setSupport(item.id, item.up, index)">
+      <!--这特么是直接拿到了评论的id-->
+      <div ref="up" class="comment-ctr" @click="setSupport(item.id, item.up,userId)">
         <div><yin-icon :icon="iconList.Support"></yin-icon> {{ item.up }}</div>
         <el-icon v-if="item.userId === userId" @click="deleteComment(item.id, index)"><delete /></el-icon>
       </div>
@@ -55,9 +56,9 @@ export default defineComponent({
     const iconList = reactive({
       Support: Icon.Support,
     });
-    const userId = computed(() => store.getters.userId);
-    const songId = computed(() => store.getters.songId);
-    watch(songId, () => {
+    const userIdVO = computed(() => store.getters.userId);
+    const songIdVO = computed(() => store.getters.songId);
+    watch(songIdVO, () => {
       getComment();
     });
 
@@ -82,17 +83,19 @@ export default defineComponent({
       if (!checkStatus()) return;
 
       // 0 代表歌曲， 1 代表歌单
-      const params = new URLSearchParams();
+      let songListId = null;
+      let songId = null;
+      let nowType = null;
       if (type.value === 1) {
-        params.append("songListId", `${playId.value}`);
+        nowType = 1;
+        songListId = `${playId.value}`;
       } else if (type.value === 0) {
-        params.append("songId", `${playId.value}`);
+        nowType = 0;
+        songId = `${playId.value}`;
       }
-      params.append("userId", userId.value);
-      params.append("type", `${type.value}`);
-      params.append("content", textarea.value);
-
-      const result = (await HttpManager.setComment(params)) as ResponseBody;
+      const userId = userIdVO.value;
+      const content = textarea.value;
+      const result = (await HttpManager.setComment({userId,content,songId,songListId,nowType})) as ResponseBody;
       (proxy as any).$message({
         message: result.message,
         type: result.type,
@@ -115,16 +118,30 @@ export default defineComponent({
       if (result.success) commentList.value.splice(index, 1);
     }
 
-    // 点赞
-    async function setSupport(id, up, index) {
+    // 点赞  还得再查一下
+    async function setSupport(id, up, userId) {
       if (!checkStatus()) return;
+      let result = null;
+      let operatorR = null;
+      const commentId = id;
+      //当然可以这么左 直接在判断的时候 进行点赞或者取消
+      const r = (await HttpManager.testAlreadySupport({commentId,userId})) as ResponseBody;
+      (proxy as any).$message({
+        message: r.message,
+        type: r.type,
+        date: r.data
+      });
 
-      const params = new URLSearchParams();
-      params.append("id", id);
-      params.append("up", up + 1);
-
-      const result = (await HttpManager.setSupport(params)) as ResponseBody;
-      if (result.success) {
+      if (r.data){
+        up = up - 1;
+        operatorR = (await HttpManager.deleteUserSupport({commentId,userId})) as ResponseBody;
+        result = (await HttpManager.setSupport({id,up})) as ResponseBody;
+      }else {
+        up = up + 1;
+        operatorR = (await HttpManager.insertUserSupport({commentId,userId})) as ResponseBody;
+        result = (await HttpManager.setSupport({id,up})) as ResponseBody;
+      }
+      if (result.success&&operatorR.success) {
         // proxy.$refs.up[index].children[0].style.color = "#2796dd";
         await getComment();
       }
@@ -135,7 +152,7 @@ export default defineComponent({
     });
 
     return {
-      userId,
+      userId: userIdVO,
       commentList,
       textarea,
       iconList,
