@@ -1,8 +1,8 @@
-/*SQLyog Ultimate v12.09 (64 bit)
+/*
+SQLyog Ultimate v12.09 (64 bit)
 MySQL - 5.7.19-log : Database - tp_music
 *********************************************************************
-*/
-
+*/
 
 /*!40101 SET NAMES utf8 */;
 
@@ -31,6 +31,20 @@ CREATE TABLE `admin` (
 /*Data for the table `admin` */
 
 insert  into `admin`(`id`,`name`,`password`) values (1,'admin','123'),(2,'admin1','565');
+
+/*Table structure for table `banner` */
+
+DROP TABLE IF EXISTS `banner`;
+
+CREATE TABLE `banner` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `pic` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+/*Data for the table `banner` */
+
+insert  into `banner`(`id`,`pic`) values (1,'/img/swiper/1.jpg'),(2,'img/swiper/2.jpg'),(3,'/img/swiper/3.jpg'),(4,'/img/swiper/4.jpg'),(5,'/img/swiper/5.jpg'),(6,'/img/swiper/6.jpg'),(7,'/img/swiper/7.jpg'),(8,'/img/swiper/8.jpg');
 
 /*Table structure for table `collect` */
 
