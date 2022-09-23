@@ -75,7 +75,7 @@
 
 ### 后端
 
-**SpringBoot + MyBatis**
+**SpringBoot + MyBatis + Redis**
 
 ### 前端
 
@@ -89,7 +89,9 @@ JDK： jdk-8u141
 
 mysql：mysql-5.7.21-1-macos10.13-x86_64（或者更高版本）
 
-node：v14.17.3
+redis：5.0.8
+
+node：14.17.3
 
 IDE：IntelliJ IDEA 2018、VSCode
 
@@ -113,7 +115,7 @@ git clone git@gitee.com:Yin-hongwei/music-website.git
 
 > 注意：资源整理了一下，按照下面的截图存放。
 
-<img src="https://tva1.sinaimg.cn/large/008i3skNly1gsk65seqd8j30y00ocjt4.jpg" height="200px"/>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h6gz1le9wxj20fo0gggmh.jpg" height="200px"/>
 
 ### 3、修改配置文件
 
@@ -134,6 +136,16 @@ git clone git@gitee.com:Yin-hongwei/music-website.git
 // 方法二
 mvn spring-boot:run // 前提装了 maven
 ```
+
+- **启动 redis**：直接在终端输入下面命令
+
+```
+redis-server
+```
+
+> 下载地址：https://redis.io/
+>
+> 安装使用示例：https://www.jianshu.com/p/ce27d9ab4f8c
 
 - **启动客户端**：进入 music-client 目录，运行下面命令
 
@@ -164,5 +176,4 @@ npm run serve // 启动后台管理项目
 ## License
 
 Copyright (c) 2018 Yin-Hongwei 
-
 
