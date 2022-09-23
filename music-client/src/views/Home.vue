@@ -1,6 +1,6 @@
 <template>
   <!--轮播图-->
-  <el-carousel class="swiper-container" type="card" height="20vw" :interval="4000">
+  <el-carousel v-if="swiperList.length" class="swiper-container" type="card" height="20vw" :interval="4000">
     <el-carousel-item v-for="(item, index) in swiperList" :key="index">
       <img :src="HttpManager.attachImageUrl(item.pic)" />
     </el-carousel-item>
