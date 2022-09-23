@@ -65,7 +65,7 @@ export default defineComponent({
     // 获取所有评论
     async function getComment() {
       try {
-        const result = (await HttpManager.getAllComment(type.value, playId.value)) as ResponseBody;
+        const result = (await HttpManager.getAllComment(type.value, songIdVO.value)) as ResponseBody;
         commentList.value = result.data;
         for (let index = 0; index < commentList.value.length; index++) {
           // 获取评论用户的昵称和头像
