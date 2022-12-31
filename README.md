@@ -109,11 +109,13 @@ git clone git@github.com:Yin-Hongwei/music-website.git
 git clone git@gitee.com:Yin-hongwei/music-website.git
 ```
 
+> **如果你想使用 vue2.0 的版本，在下载代码后，可以切到 vue@2.0 的分支，默认是使用的vue3.0。**
+
 ### 2、下载数据库中记录的资源
 
 去【链接: https://pan.baidu.com/s/1Qv0ohAIPeTthPK_CDwpfWg 提取码: gwa4 】下载网站依赖的歌曲及图片，将 data 夹里的文件放到 music-server 文件夹下。
 
-> 注意：资源整理了一下，按照下面的截图存放。
+> **注意：资源整理了一下，按照下面的截图存放。**
 
 <img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h6gz1le9wxj20fo0gggmh.jpg" height="200px"/>
 
@@ -145,7 +147,7 @@ redis-server
 
 > 下载地址：https://redis.io/
 >
-> 安装使用示例：https://www.jianshu.com/p/ce27d9ab4f8c
+> Mac 安装使用示例：https://www.jianshu.com/p/ce27d9ab4f8c
 
 - **启动客户端**：进入 music-client 目录，运行下面命令
 
@@ -163,13 +165,35 @@ npm install // 安装依赖
 npm run serve // 启动后台管理项目
 ```
 
+### 5、常见问题
+
+常见启动问题整理如下
+
+https://github.com/Yin-Hongwei/music-website/discussions/182
+
 <br/>
 
 ## 赞助
 
 如果此项目对你确实有帮助，欢迎给我打赏一杯咖啡～😄
 
-<img src="https://tva1.sinaimg.cn/large/008i3skNgy1gsgm6jokvaj30gs0feadd.jpg" height="300px"/>
+<img src="https://p.ipic.vip/vo0xfy.jpg" height="300px"/>
+
+<br/>
+
+
+
+## 联系方式
+
+**1、邮箱📮：[yinhongwei96@126.com](mailto:yinhongwei96@126.com)**
+
+**2、公众号👇：**
+
+> 目前公众号的定位主要是临时帮大家解决问题，不发表其他东西，有疑问可以临时联系。
+
+<img src="https://p.ipic.vip/1xx9md.png" height="280px"/>
+
+
 
 <br/>
 

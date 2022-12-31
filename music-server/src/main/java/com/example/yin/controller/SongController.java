@@ -33,7 +33,7 @@ public class SongController {
 
     // 添加歌曲
     @PostMapping("/song/add")
-    public R addSong(@RequestBody SongRequest addSongRequest, @RequestParam("file") MultipartFile mpfile) {
+    public R addSong(SongRequest addSongRequest, @RequestParam("file") MultipartFile mpfile) {
         return songService.addSong(addSongRequest,mpfile);
     }
 
