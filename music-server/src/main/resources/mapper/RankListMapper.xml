@@ -9,13 +9,13 @@
   </resultMap>
 
   <select id="selectScoreSum" resultType="java.lang.Integer">
-  SELECT COALESCE(sum(score),0) as score from rank_list where song_list_id = #{0} ;
+  SELECT COALESCE(sum(score), 0) as score from rank_list where song_list_id = #{0} ;
   </select>
 
   <select id="selectUserRank" resultType="java.lang.Integer" parameterType="com.example.yin.model.domain.RankList">
     select score
     from rank_list
-    where consumer_id = #{consumer_id, jdbcType=BIGINT} and song_list_id = #{song_list_id, jdbcType=INTEGER}
+    where consumer_id = #{consumer_id, jdbcType=BIGINT} and song_list_id = "#{song_list_id, jdbcType=BIGINT}"
   </select>
 
 
