@@ -187,12 +187,6 @@ https://github.com/Yin-Hongwei/music-website/discussions/182
 
 **1、邮箱📮：[yinhongwei96@126.com](mailto:yinhongwei96@126.com)**
 
-**2、公众号👇：**
-
-> 目前公众号的定位主要是临时帮大家解决问题，不发表其他东西，有疑问可以临时联系。
-
-<img src="https://p.ipic.vip/1xx9md.png"/>
-
 
 
 <br/>
