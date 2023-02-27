@@ -316,12 +316,14 @@ export default defineComponent({
       editVisible.value = true;
     }
     async function saveEdit() {
-      let id = editForm.id;
-      let singerId = editForm.singerId;
-      let name = editForm.name;
-      let introduction = editForm.introduction;
-      let lyric = editForm.lyric;
-      const result = (await HttpManager.updateSongMsg({id,singerId,name,introduction,lyric})) as ResponseBody;
+      const params = new URLSearchParams();
+      const songName = editForm.name;
+      params.append("id", editForm.id);
+      params.append("singerId", editForm.singerId);
+      params.append("name", songName);
+      params.append("introduction", editForm.introduction);
+      params.append("lyric", editForm.lyric);
+      const result = (await HttpManager.updateSongMsg(params)) as ResponseBody;
       (proxy as any).$message({
         message: result.message,
         type: result.type,

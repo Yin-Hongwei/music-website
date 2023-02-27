@@ -228,14 +228,14 @@ export default defineComponent({
 
     async function addsinger() {
       let datetime = getBirth(registerForm.birth);
+      let params = new URLSearchParams();
+      params.append("name", registerForm.name);
+      params.append("sex", registerForm.sex);
+      params.append("birth", datetime);
+      params.append("location", registerForm.location);
+      params.append("introduction", registerForm.introduction);
 
-      let name = registerForm.name;
-      let sex = registerForm.sex;
-      let birth = datetime;
-      let location = registerForm.location;
-      let introduction = registerForm.introduction;
-
-      const result = (await HttpManager.setSinger({name,sex,birth,location,introduction})) as ResponseBody;
+      const result = (await HttpManager.setSinger(params)) as ResponseBody;
       (proxy as any).$message({
         message: result.message,
         type: result.type,
@@ -279,15 +279,15 @@ export default defineComponent({
     async function saveEdit() {
       try {
         let datetime = getBirth(new Date(editForm.birth));
+        let params = new URLSearchParams();
+        params.append("id", editForm.id);
+        params.append("name", editForm.name);
+        params.append("sex", editForm.sex);
+        params.append("birth", datetime);
+        params.append("location", editForm.location);
+        params.append("introduction", editForm.introduction);
 
-        let id = editForm.id;
-        let name = editForm.name;
-        let sex = editForm.sex;
-        let birth = datetime;
-        let location = editForm.location;
-        let introduction = editForm.introduction;
-
-        const result = (await HttpManager.updateSingerMsg({id,name,sex,birth,location,introduction})) as ResponseBody;
+        const result = (await HttpManager.updateSingerMsg(params)) as ResponseBody;
         (proxy as any).$message({
           message: result.message,
           type: result.type,
@@ -320,7 +320,6 @@ export default defineComponent({
         message: result.message,
         type: result.type,
       });
-
       if (result.success) getData();
       delVisible.value = false;
     }
