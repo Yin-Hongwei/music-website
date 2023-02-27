@@ -1,16 +1,13 @@
 package com.example.yin.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.yin.common.R;
-import com.example.yin.model.domain.RankList;
-import com.example.yin.model.request.RankListRequest;
+import com.example.yin.domain.RankList;
 
-public interface RankListService extends IService<RankList> {
+public interface RankListService {
 
-    R addRank(RankListRequest rankListAddRequest);
+    boolean addRank(RankList rankList);
 
-    R rankOfSongListId(Long songListId);
+    int rankOfSongListId(Long songListId);
 
-    R getUserRank(Long consumerId, Long songListId);
+    int getUserRank(Long consumerId, Long songListId);
 
 }

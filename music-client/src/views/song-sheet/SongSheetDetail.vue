@@ -45,16 +45,16 @@ export default defineComponent({
     const { checkStatus } = mixin();
 
     const currentSongList = ref([]); // 存放的音乐
-    const nowSongListId = ref(""); // 歌单 ID
-    const nowScore = ref(0);
-    const nowRank = ref(0);
+    const songListId = ref(""); // 歌单 ID
+    const score = ref(0);
+    const rank = ref(0);
     const disabledRank = ref(false);
     const assistText = ref("评价");
     // const evaluateList = ref(["很差", "较差", "还行", "推荐", "力推"]);
     const songDetails = computed(() => store.getters.songDetails); // 单个歌单信息
-    const nowUserId = computed(() => store.getters.userId);
+    const userId = computed(() => store.getters.userId);
 
-    nowSongListId.value = songDetails.value.id; // 给歌单ID赋值
+    songListId.value = songDetails.value.id; // 给歌单ID赋值
 
     // 收集歌单里面的歌曲
     async function getSongId(id) {
@@ -69,11 +69,11 @@ export default defineComponent({
     // 获取评分
     async function getRank(id) {
       const result = (await HttpManager.getRankOfSongListId(id)) as ResponseBody;
-      nowRank.value = result.data / 2;
+      rank.value = result.data / 2;
     }
     async function getUserRank(userId, songListId) {
       const result = (await HttpManager.getUserRank(userId, songListId)) as ResponseBody;
-      nowScore.value = result.data / 2;
+      score.value = result.data / 2;
       disabledRank.value = true;
       assistText.value = "已评价";
     }
@@ -81,19 +81,20 @@ export default defineComponent({
     async function pushValue() {
       if (disabledRank.value || !checkStatus()) return;
 
-      const songListId = nowSongListId.value;
-      const consumerId = nowUserId.value;
-      const score = nowScore.value*2;
+      const params = new URLSearchParams();
+      params.append("songListId", songListId.value);
+      params.append("consumerId", userId.value);
+      params.append("score", (score.value * 2).toString());
 
       try {
-        const result = (await HttpManager.setRank({songListId,consumerId,score})) as ResponseBody;
+        const result = (await HttpManager.setRank(params)) as ResponseBody;
         (proxy as any).$message({
           message: result.message,
           type: result.type,
         });
 
         if (result.success) {
-          getRank(nowSongListId.value);
+          getRank(songListId.value);
           disabledRank.value = true;
           assistText.value = "已评价";
         }
@@ -102,18 +103,18 @@ export default defineComponent({
       }
     }
 
-    getUserRank(nowUserId.value, nowSongListId.value);
-    getRank(nowSongListId.value); // 获取评分
-    getSongId(nowSongListId.value); // 获取歌单里面的歌曲ID
+    getUserRank(userId.value, songListId.value);
+    getRank(songListId.value); // 获取评分
+    getSongId(songListId.value); // 获取歌单里面的歌曲ID
 
     return {
       songDetails,
-      rank: nowRank,
-      score: nowScore,
+      rank,
+      score,
       disabledRank,
       assistText,
       currentSongList,
-      songListId: nowSongListId,
+      songListId,
       attachImageUrl: HttpManager.attachImageUrl,
       pushValue,
     };
