@@ -1,33 +1,29 @@
 package com.example.yin.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.yin.common.R;
-import com.example.yin.model.domain.Consumer;
-import com.example.yin.model.request.ConsumerRequest;
-import org.springframework.web.multipart.MultipartFile;
+import com.example.yin.domain.Consumer;
 
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
-public interface ConsumerService extends IService<Consumer> {
+public interface ConsumerService {
 
-    R addUser(ConsumerRequest registryRequest);
+    boolean addUser(Consumer consumer);
 
-    R updateUserMsg(ConsumerRequest updateRequest);
+    boolean updateUserMsg(Consumer consumer);
 
-    R updateUserAvator(MultipartFile avatorFile, int id);
+    boolean updateUserAvator(Consumer consumer);
 
-    R updatePassword(ConsumerRequest updatePasswordRequest);
+    boolean updatePassword(Consumer consumer);
 
     boolean existUser(String username);
 
-    boolean verityPasswd(String username, String password);
+    boolean veritypasswd(String username, String password);
 
-    R deleteUser(Integer id);
+    boolean deleteUser(Integer id);
 
-    R allUser();
+    List<Consumer> allUser();
 
-    R userOfId(Integer id);
+    List<Consumer> userOfId(Integer id);
 
-    R loginStatus(ConsumerRequest loginRequest, HttpSession session);
+    List<Consumer> loginStatus(String username);
 
 }
