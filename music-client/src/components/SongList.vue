@@ -31,8 +31,9 @@
 <script lang="ts">
 import { defineComponent, getCurrentInstance, toRefs, computed, reactive } from "vue";
 import { useStore } from "vuex";
-import mixin from "@/mixins/mixin";
 import { MoreFilled, Delete, Download } from "@element-plus/icons-vue";
+
+import mixin from "@/mixins/mixin";
 import { HttpManager } from "@/api";
 import { Icon } from "@/enums";
 

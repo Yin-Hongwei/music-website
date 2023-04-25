@@ -1,6 +1,13 @@
 package com.example.yin.service;
 
-public interface AdminService {
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.yin.common.R;
+import com.example.yin.model.domain.Admin;
+import com.example.yin.model.request.AdminRequest;
 
-    boolean veritypasswd(String name, String password);
+import javax.servlet.http.HttpSession;
+
+public interface AdminService extends IService<Admin> {
+
+    R verityPasswd(AdminRequest adminRequest, HttpSession session);
 }

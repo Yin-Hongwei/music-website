@@ -10,8 +10,9 @@
       <el-table-column label="ID" prop="id" width="50" align="center"></el-table-column>
       <el-table-column label="歌单图片" width="110" align="center">
         <template v-slot="scope">
-          <img :src="attachImageUrl(scope.row.pic)" style="width: 80px" />
-          <el-upload :action="uploadUrl(scope.row.id)" :show-file-list="false" :on-success="handleImgSuccess" :before-upload="beforeImgUpload">
+          <img :src="attachImageUrl(scope.row.pic)" style="width: 80px"/>
+          <el-upload :action="uploadUrl(scope.row.id)" :show-file-list="false" :on-success="handleImgSuccess"
+                     :before-upload="beforeImgUpload">
             <el-button>更新图片</el-button>
           </el-upload>
         </template>
@@ -43,13 +44,13 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      class="pagination"
-      background
-      layout="total, prev, pager, next"
-      :current-page="currentPage"
-      :page-size="pageSize"
-      :total="tableData.length"
-      @current-change="handleCurrentChange"
+        class="pagination"
+        background
+        layout="total, prev, pager, next"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total="tableData.length"
+        @current-change="handleCurrentChange"
     >
     </el-pagination>
   </div>
@@ -101,10 +102,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, getCurrentInstance, watch, ref, reactive, computed } from "vue";
+import {computed, defineComponent, getCurrentInstance, reactive, ref, watch} from "vue";
 import mixin from "@/mixins/mixin";
-import { HttpManager } from "@/api/index";
-import { RouterName } from "@/enums";
+import {HttpManager} from "@/api/index";
+import {RouterName} from "@/enums";
 import YinDelDialog from "@/components/dialog/YinDelDialog.vue";
 
 export default defineComponent({
@@ -112,8 +113,8 @@ export default defineComponent({
     YinDelDialog,
   },
   setup() {
-    const { proxy } = getCurrentInstance();
-    const { routerManager, beforeImgUpload } = mixin();
+    const {proxy} = getCurrentInstance();
+    const {routerManager, beforeImgUpload} = mixin();
 
     const tableData = ref([]); // 记录歌曲，用于显示
     const tempDate = ref([]); // 记录歌曲，用于搜索时能临时记录一份歌曲列表
@@ -150,13 +151,16 @@ export default defineComponent({
       tempDate.value = result.data;
       currentPage.value = 1;
     }
+
     // 获取当前页
     function handleCurrentChange(val) {
       currentPage.value = val;
     }
+
     function uploadUrl(id) {
       return HttpManager.attachImageUrl(`/songList/img/update?id=${id}`);
     }
+
     // 更新图片
     function handleImgSuccess(response, file) {
       (proxy as any).$message({
@@ -181,8 +185,9 @@ export default defineComponent({
         },
       ]);
       proxy.$store.commit("setBreadcrumbList", breadcrumbList);
-      routerManager(RouterName.ListSong, { path: RouterName.ListSong, query: { id } });
+      routerManager(RouterName.ListSong, {path: RouterName.ListSong, query: {id}});
     }
+
     function goCommentPage(id) {
       const breadcrumbList = reactive([
         {
@@ -195,7 +200,7 @@ export default defineComponent({
         },
       ]);
       proxy.$store.commit("setBreadcrumbList", breadcrumbList);
-      routerManager(RouterName.Comment, { path: RouterName.Comment, query: { id, type: 1 } });
+      routerManager(RouterName.Comment, {path: RouterName.Comment, query: {id, type: 1}});
     }
 
     /**
@@ -209,11 +214,10 @@ export default defineComponent({
     });
 
     async function addsongList() {
-      let params = new URLSearchParams();
-      params.append("title", registerForm.title);
-      params.append("introduction", registerForm.introduction);
-      params.append("style", registerForm.style);
-      const result = (await HttpManager.setSongList(params)) as ResponseBody;
+      let title = registerForm.title;
+      let introduction = registerForm.introduction;
+      let style = registerForm.style;
+      const result = (await HttpManager.setSongList({title, introduction, style})) as ResponseBody;
       (proxy as any).$message({
         message: result.message,
         type: result.type,
@@ -249,14 +253,15 @@ export default defineComponent({
       editForm.style = row.style;
       editVisible.value = true;
     }
-    async function saveEdit() {
-      let params = new URLSearchParams();
-      params.append("id", editForm.id);
-      params.append("title", editForm.title);
-      params.append("introduction", editForm.introduction);
-      params.append("style", editForm.style);
 
-      const result = (await HttpManager.updateSongListMsg(params)) as ResponseBody;
+    async function saveEdit() {
+
+      let id = editForm.id;
+      let title = editForm.title;
+      let introduction = editForm.introduction;
+      let style = editForm.style;
+
+      const result = (await HttpManager.updateSongListMsg({id, title, introduction, style})) as ResponseBody;
       (proxy as any).$message({
         message: result.message,
         type: result.type,
@@ -282,13 +287,16 @@ export default defineComponent({
       if (result.success) getData();
       delVisible.value = false;
     }
+
     function deleteRow(id) {
       idx.value = id;
       delVisible.value = true;
     }
+
     function handleSelectionChange(val) {
       multipleSelection.value = val;
     }
+
     function deleteAll() {
       for (let item of multipleSelection.value) {
         deleteRow(item.id);
