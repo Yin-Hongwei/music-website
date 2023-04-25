@@ -1,8 +1,8 @@
 <template>
   <!--轮播图-->
-  <el-carousel class="swiper-container" type="card" height="20vw" :interval="4000">
+  <el-carousel v-if="swiperList.length" class="swiper-container" type="card" height="20vw" :interval="4000">
     <el-carousel-item v-for="(item, index) in swiperList" :key="index">
-      <img :src="item.picImg" />
+      <img :src="HttpManager.attachImageUrl(item.pic)" />
     </el-carousel-item>
   </el-carousel>
   <!--热门歌单-->
@@ -15,14 +15,20 @@
 import { ref, onMounted } from "vue";
 
 import PlayList from "@/components/PlayList.vue";
-import { swiperList, NavName } from "@/enums";
+import {  NavName } from "@/enums";
 import { HttpManager } from "@/api";
 import mixin from "@/mixins/mixin";
 
 const songList = ref([]); // 歌单列表
 const singerList = ref([]); // 歌手列表
+const swiperList = ref([]);// 轮播图 每次都在进行查询
 const { changeIndex } = mixin();
 try {
+
+  HttpManager.getBannerList().then((res) => {
+    swiperList.value = (res as ResponseBody).data.sort();
+  });
+
   HttpManager.getSongList().then((res) => {
     songList.value = (res as ResponseBody).data.sort().slice(0, 10);
   });

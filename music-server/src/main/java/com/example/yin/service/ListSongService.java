@@ -1,18 +1,22 @@
 package com.example.yin.service;
 
-import com.example.yin.domain.ListSong;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.yin.common.R;
+import com.example.yin.model.domain.ListSong;
+import com.example.yin.model.request.ListSongRequest;
 
 import java.util.List;
 
-public interface ListSongService {
+public interface ListSongService extends IService<ListSong> {
 
-    boolean addListSong(ListSong listSong);
+    R addListSong(ListSongRequest addListSongRequest);
 
-    boolean updateListSongMsg(ListSong listSong);
+    R updateListSongMsg(ListSongRequest updateListSongRequest);
 
-    boolean deleteListSong(Integer songId);
+    R deleteListSong(Integer songId);
 
+    //看看这啥
     List<ListSong> allListSong();
 
-    List<ListSong> listSongOfSongId(Integer songListId);
+    R listSongOfSongId(Integer songListId);
 }

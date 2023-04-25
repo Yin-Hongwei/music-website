@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.yin.dao.CollectMapper">
-  <resultMap id="BaseResultMap" type="com.example.yin.domain.Collect">
+<mapper namespace="com.example.yin.mapper.CollectMapper">
+  <resultMap id="BaseResultMap" type="com.example.yin.model.domain.Collect">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="TINYINT" />
@@ -12,76 +12,5 @@
   <sql id="Base_Column_List">
     id, user_id, type, song_id, song_list_id, create_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select
-    <include refid="Base_Column_List" />
-    from collect
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="existSongId" resultType="java.lang.Integer">
-    select count(*)
-    from collect
-    where user_id = #{userId, jdbcType=INTEGER} and song_id = #{songId, jdbcType=INTEGER}
-  </select>
-  <select id="collectionOfUser" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select *
-    from collect
-    where user_id = #{userId, jdbcType=INTEGER}
-  </select>
 
-  <delete id="deleteCollect" parameterType="java.lang.Integer">
-    delete from collect
-    where user_id = #{userId, jdbcType=INTEGER}
-    and song_id = #{songId, jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.example.yin.domain.Collect">
-    insert into collection (id, user_id, type, song_id, song_list_id, create_time)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, #{songId,jdbcType=INTEGER}, #{songListId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.example.yin.domain.Collect">
-    insert into collect
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="songId != null">
-        song_id,
-      </if>
-      <if test="songListId != null">
-        song_list_id,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null"> #{id,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null"> #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="type != null"> #{type,jdbcType=TINYINT},
-      </if>
-      <if test="songId != null"> #{songId,jdbcType=INTEGER},
-      </if>
-      <if test="songListId != null"> #{songListId,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null"> #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.example.yin.domain.Collect">
-    update collect
-    set user_id = #{userId,jdbcType=INTEGER},
-      type = #{type,jdbcType=TINYINT},
-      song_id = #{songId,jdbcType=INTEGER},
-      song_list_id = #{songListId,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>
