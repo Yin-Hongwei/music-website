@@ -15,8 +15,7 @@
   <select id="selectUserRank" resultType="java.lang.Integer" parameterType="com.example.yin.model.domain.RankList">
     select score
     from rank_list
-    where consumer_id = #{consumer_id, jdbcType=BIGINT} and song_list_id = "#{song_list_id, jdbcType=BIGINT}"
+    where consumer_id = #{consumer_id, jdbcType=BIGINT} and song_list_id = #{song_list_id, jdbcType=BIGINT}
   </select>
-
 
 </mapper>
