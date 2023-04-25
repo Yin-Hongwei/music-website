@@ -1,19 +1,20 @@
 package com.example.yin.service;
 
-import com.example.yin.domain.Comment;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.yin.common.R;
+import com.example.yin.model.domain.Comment;
+import com.example.yin.model.request.CommentRequest;
 
-import java.util.List;
+public interface CommentService extends IService<Comment> {
 
-public interface CommentService {
+    R addComment(CommentRequest addCommentRequest);
 
-    boolean addComment(Comment comment);
+    R updateCommentMsg(CommentRequest upCommentRequest);
 
-    boolean updateCommentMsg(Comment comment);
+    R deleteComment(Integer id);
 
-    boolean deleteComment(Integer id);
+    R commentOfSongId(Integer songId);
 
-    List<Comment> commentOfSongId(Integer songId);
-
-    List<Comment> commentOfSongListId(Integer songListId);
+    R commentOfSongListId(Integer songListId);
 
 }
