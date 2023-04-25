@@ -97,7 +97,7 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
     public R updateUserAvator(MultipartFile avatorFile, int id) {
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
         //路径 他这个会根据你的系统获取对应的文件分隔符
-        String filePath = Constants.PROJECT_PATH + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "avatorImages";
+        String filePath = Constants.ASSETS_PATH + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "avatorImages";
         File file = new File(filePath);
         if (!file.exists() && !file.mkdir()) {
             return R.fatal("创建文件失败");
