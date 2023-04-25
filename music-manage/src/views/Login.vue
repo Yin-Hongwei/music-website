@@ -38,10 +38,9 @@ export default defineComponent({
       password: [{ required: true, message: "请输入密码", trigger: "blur" }],
     });
     async function submitForm() {
-      let params = new URLSearchParams();
-      params.append("name", ruleForm.username);
-      params.append("password", ruleForm.password);
-      const result = (await HttpManager.getLoginStatus(params)) as ResponseBody;
+      let username = ruleForm.username;
+      let password = ruleForm.password;
+      const result = (await HttpManager.getLoginStatus({username,password})) as ResponseBody;
       (proxy as any).$message({
         message: result.message,
         type: result.type,
