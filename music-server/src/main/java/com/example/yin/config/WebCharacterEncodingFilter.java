@@ -13,13 +13,11 @@ import java.util.List;
 /**
  * 说明：解决以下问题
  * <p>
- *     因使用WebMvcConfigurer加载静态时urlencode编码无法解析为正常中文问题
+ *     因使用WebMvcConfigurer加载静态时 url encode编码无法解析为正常中文问题
  * </p>
  *
- * @Author: Winston.Li
- * @Create: 2022-03-13 13:50
- * @version: V 0.0.1
  */
+
 @EnableWebMvc
 @Configuration
 public class WebCharacterEncodingFilter implements WebMvcConfigurer {
@@ -40,7 +38,7 @@ public class WebCharacterEncodingFilter implements WebMvcConfigurer {
 
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        if (converters.size() > 0) {
+        if (!converters.isEmpty()) {
             converters.add(converters.get(0));
             converters.set(0, responseBodyConverter());
         } else {

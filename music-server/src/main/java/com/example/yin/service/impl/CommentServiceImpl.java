@@ -1,45 +1,65 @@
 package com.example.yin.service.impl;
 
-import com.example.yin.dao.CommentMapper;
-import com.example.yin.domain.Comment;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.yin.common.R;
+import com.example.yin.mapper.CommentMapper;
+import com.example.yin.model.domain.Comment;
+import com.example.yin.model.request.CommentRequest;
 import com.example.yin.service.CommentService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
     @Autowired
     private CommentMapper commentMapper;
 
     @Override
-    public boolean addComment(Comment comment) {
-        return commentMapper.insertSelective(comment) > 0 ? true:false;
+    public R addComment(CommentRequest addCommentRequest) {
+        Comment comment = new Comment();
+        BeanUtils.copyProperties(addCommentRequest, comment);
+        comment.setType(addCommentRequest.getNowType());
+        if (commentMapper.insert(comment) > 0) {
+            return R.success("评论成功");
+        } else {
+            return R.error("评论失败");
+        }
     }
 
     @Override
-    public boolean updateCommentMsg(Comment comment) {
-        return commentMapper.updateCommentMsg(comment) >0 ?true:false;
+    public R updateCommentMsg(CommentRequest addCommentRequest) {
+        Comment comment = new Comment();
+        BeanUtils.copyProperties(addCommentRequest, comment);
+        if (commentMapper.updateById(comment) > 0) {
+            return R.success("点赞成功");
+        } else {
+            return R.error("点赞失败");
+        }
     }
 
-//    删除评论
+    //    删除评论
     @Override
-    public boolean deleteComment(Integer id) {
-        return commentMapper.deleteComment(id) >0 ?true:false;
+    public R deleteComment(Integer id) {
+        if (commentMapper.deleteById(id) > 0) {
+            return R.success("删除成功");
+        } else {
+            return R.error("删除失败");
+        }
     }
 
     @Override
-    public List<Comment> commentOfSongId(Integer songId)
-
-    {
-        return commentMapper.commentOfSongId(songId);
+    public R commentOfSongId(Integer songId) {
+        QueryWrapper<Comment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("song_id",songId);
+        return R.success(null, commentMapper.selectList(queryWrapper));
     }
 
     @Override
-    public List<Comment> commentOfSongListId(Integer songListId)
-
-    {
-        return commentMapper.commentOfSongListId(songListId);
+    public R commentOfSongListId(Integer songListId) {
+        QueryWrapper<Comment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("song_list_id",songListId);
+        return R.success(null, commentMapper.selectList(queryWrapper));
     }
 }

@@ -70,6 +70,11 @@ export default defineComponent({
       const collectIDList = result.data || []; // 存放收藏的歌曲ID
       // 通过歌曲ID获取歌曲信息
       for (const item of collectIDList) {
+        if (!item.songId) {
+          console.error(`歌曲${item}异常`);
+          continue;
+        }
+
         const result = (await HttpManager.getSongOfId(item.songId)) as ResponseBody;
         collectSongList.value.push(result.data[0]);
       }

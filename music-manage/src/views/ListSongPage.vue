@@ -110,11 +110,10 @@ export default defineComponent({
       }
     }
     async function addSong(id) {
-      let params = new URLSearchParams();
-      params.append("songId", id);
-      params.append("songListId", proxy.$route.query.id as string);
+      let songId = id;
+      let songListId = proxy.$route.query.id as string;
 
-      const result = (await HttpManager.setListSong(params)) as ResponseBody;
+      const result = (await HttpManager.setListSong({songId,songListId})) as ResponseBody;
       (proxy as any).$message({
         message: result.message,
         type: result.type,

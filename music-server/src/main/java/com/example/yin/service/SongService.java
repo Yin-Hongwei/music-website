@@ -1,26 +1,28 @@
 package com.example.yin.service;
 
-import com.example.yin.domain.Song;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.yin.common.R;
+import com.example.yin.model.domain.Song;
+import com.example.yin.model.request.SongRequest;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+public interface SongService extends IService<Song> {
 
-public interface SongService {
+    R addSong (SongRequest addSongRequest,  MultipartFile mpfile);
 
-    boolean addSong (Song song);
+    R updateSongMsg(SongRequest updateSongRequest);
 
-    boolean updateSongMsg(Song song);
+    R updateSongUrl(MultipartFile urlFile, int id);
 
-    boolean updateSongUrl(Song song);
+    R updateSongPic(MultipartFile urlFile, int id);
 
-    boolean updateSongPic(Song song);
+    R deleteSong(Integer id);
 
-    boolean deleteSong(Integer id);
+    R allSong();
 
-    List<Song> allSong();
+    R songOfSingerId(Integer singerId);
 
-    List<Song> songOfSingerId(Integer singerId);
+    R songOfId(Integer id);
 
-    List<Song> songOfId(Integer id);
-
-    List<Song> songOfSingerName(String name);
+    R songOfSingerName(String name);
 }

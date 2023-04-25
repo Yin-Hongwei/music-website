@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.yin.dao.SingerMapper">
-  <resultMap id="BaseResultMap" type="com.example.yin.domain.Singer">
+<mapper namespace="com.example.yin.mapper.SingerMapper">
+  <resultMap id="BaseResultMap" type="com.example.yin.model.domain.Singer">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="TINYINT" />
@@ -13,118 +13,5 @@
   <sql id="Base_Column_List">
     id, name, sex, pic, birth, location, introduction
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select
-    <include refid="Base_Column_List" />
-    from singer
-    where id = #{id, jdbcType=INTEGER}
-  </select>
-  <select id="allSinger" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from singer
-  </select>
-  <select id="singerOfName" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select *
-    from singer
-    where name like #{name, jdbcType=VARCHAR}
-  </select>
-  <select id="singerOfSex" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select *
-    from singer
-    where sex = #{sex, jdbcType=INTEGER}
-  </select>
-  <delete id="deleteSinger" parameterType="java.lang.Integer">
-    delete from singer
-    where id = #{id, jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.example.yin.domain.Singer">
-    insert into singer (id, name, sex, pic, birth, location, introduction)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, #{pic,jdbcType=VARCHAR}, #{birth,jdbcType=TIMESTAMP}, #{location,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.example.yin.domain.Singer">
-    insert into singer
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="sex != null">
-        sex,
-      </if>
-      <if test="pic != null">
-        pic,
-      </if>
-      <if test="birth != null">
-        birth,
-      </if>
-      <if test="location != null">
-        location,
-      </if>
-      <if test="introduction != null">
-        introduction,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null"> #{id,jdbcType=INTEGER},
-      </if>
-      <if test="name != null"> #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null"> #{sex,jdbcType=TINYINT},
-      </if>
-      <if test="pic != null"> #{pic,jdbcType=VARCHAR},
-      </if>
-      <if test="birth != null"> #{birth,jdbcType=TIMESTAMP},
-      </if>
-      <if test="location != null"> #{location,jdbcType=VARCHAR},
-      </if>
-      <if test="introduction != null"> #{introduction,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateSingerMsg" parameterType="com.example.yin.domain.Singer">
-    update singer
-    <set >
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        sex = #{sex,jdbcType=TINYINT},
-      </if>
-      <if test="pic != null">
-        pic = #{pic,jdbcType=VARCHAR},
-      </if>
-      <if test="birth != null">
-        birth = #{birth,jdbcType=TIMESTAMP},
-      </if>
-      <if test="location != null">
-        location = #{location,jdbcType=VARCHAR},
-      </if>
-      <if test="introduction != null">
-        introduction = #{introduction,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateSingerPic" parameterType="com.example.yin.domain.Consumer">
-    update singer
-    <set >
-      <if test="pic != null">
-        pic = #{pic,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.yin.domain.Singer">
-    update singer
-    set name = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=TINYINT},
-      pic = #{pic,jdbcType=VARCHAR},
-      birth = #{birth,jdbcType=TIMESTAMP},
-      location = #{location,jdbcType=VARCHAR},
-      introduction = #{introduction,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
 </mapper>

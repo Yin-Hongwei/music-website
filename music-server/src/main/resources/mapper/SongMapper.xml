@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.yin.dao.SongMapper">
-  <resultMap id="BaseResultMap" type="com.example.yin.domain.Song">
+<mapper namespace="com.example.yin.mapper.SongMapper">
+  <resultMap id="BaseResultMap" type="com.example.yin.model.domain.Song">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="singer_id" property="singerId" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
@@ -11,7 +11,7 @@
     <result column="pic" property="pic" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.example.yin.domain.Song" extends="BaseResultMap">
+  <resultMap id="ResultMapWithBLOBs" type="com.example.yin.model.domain.Song" extends="BaseResultMap">
     <result column="lyric" property="lyric" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -20,155 +20,5 @@
   <sql id="Blob_Column_List">
     lyric
   </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
-    select
-    from song
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="allSong" resultMap="ResultMapWithBLOBs">
-    select *
-    from song
-  </select>
-  <select id="songOfSingerId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select *
-    from song
-    where singer_id = #{singerId, jdbcType=INTEGER}
-  </select>
-  <select id="songOfId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select *
-    from song
-    where id = #{id, jdbcType=INTEGER}
-  </select>
-  <select id="songOfSingerName" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select *
-    from song
-    where name like #{name, jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteSong" parameterType="java.lang.Integer">
-    delete from song
-    where id = #{id, jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.example.yin.domain.Song">
-    insert into song (id, singer_id, name, introduction, create_time, update_time, pic, lyric)
-    values (#{id,jdbcType=INTEGER}, #{singerId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{pic,jdbcType=VARCHAR}, #{lyric,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.example.yin.domain.Song">
-    insert into song
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="singerId != null">
-        singer_id,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="introduction != null">
-        introduction,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="pic != null">
-        pic,
-      </if>
-      <if test="lyric != null">
-        lyric,
-      </if>
-      <if test="url != null">
-            url,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null"> #{id,jdbcType=INTEGER},
-      </if>
-      <if test="singerId != null"> #{singerId,jdbcType=INTEGER},
-      </if>
-      <if test="name != null"> #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="introduction != null"> #{introduction,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null"> #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null"> #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="pic != null"> #{pic,jdbcType=VARCHAR},
-      </if>
-      <if test="lyric != null"> #{lyric,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="url != null"> #{url,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateSongMsg" parameterType="com.example.yin.domain.Song">
-    update song
-    <set >
-      <if test="singerId != null">
-        singer_id = #{singerId,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="introduction != null">
-        introduction = #{introduction,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="pic != null">
-        pic = #{pic,jdbcType=VARCHAR},
-      </if>
-      <if test="lyric != null">
-        lyric = #{lyric,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateSongUrl" parameterType="com.example.yin.domain.Consumer">
-    update song
-    <set >
-      <if test="url != null">
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateSongPic" parameterType="com.example.yin.domain.Consumer">
-    update song
-    <set >
-      <if test="pic != null">
-        pic = #{pic,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.yin.domain.Song">
-    update song
-    set singer_id = #{singerId,jdbcType=INTEGER},
-    name = #{name,jdbcType=VARCHAR},
-    introduction = #{introduction,jdbcType=VARCHAR},
-    create_time = #{createTime,jdbcType=TIMESTAMP},
-    update_time = #{updateTime,jdbcType=TIMESTAMP},
-    pic = #{pic,jdbcType=VARCHAR},
-    url = #{url,jdbcType=VARCHAR},
-    lyric = #{lyric,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.yin.domain.Song">
-    update song
-    set singer_id = #{singerId,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
-      introduction = #{introduction,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      pic = #{pic,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
 </mapper>

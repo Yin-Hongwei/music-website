@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.yin.dao.SongListMapper">
-  <resultMap id="BaseResultMap" type="com.example.yin.domain.SongList">
+<mapper namespace="com.example.yin.mapper.SongListMapper">
+  <resultMap id="BaseResultMap" type="com.example.yin.model.domain.SongList">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="pic" property="pic" jdbcType="VARCHAR" />
     <result column="style" property="style" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.example.yin.domain.SongList" extends="BaseResultMap">
+  <resultMap id="ResultMapWithBLOBs" type="com.example.yin.model.domain.SongList" extends="BaseResultMap">
     <result column="introduction" property="introduction" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -16,108 +16,5 @@
   <sql id="Blob_Column_List">
     introduction
   </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
-    select
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from song_list
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="allSongList" resultMap="ResultMapWithBLOBs">
-    select *
-    from song_list
-  </select>
-  <select id="likeTitle" resultMap="ResultMapWithBLOBs">
-    select *
-    from song_list
-    where title like #{title,jdbcType=VARCHAR}
-  </select>
-  <select id="likeStyle" resultMap="ResultMapWithBLOBs">
-    select *
-    from song_list
-    where style like #{style,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteSongList" parameterType="java.lang.Integer">
-    delete from song_list
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.example.yin.domain.SongList">
-    insert into song_list (id, title, pic, score, introduction)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{introduction,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.example.yin.domain.SongList">
-    insert into song_list
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="title != null">
-        title,
-      </if>
-      <if test="pic != null">
-        pic,
-      </if>
-      <if test="style != null">
-        style,
-      </if>
-      <if test="introduction != null">
-        introduction,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null"> #{id,jdbcType=INTEGER},
-      </if>
-      <if test="title != null"> #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="pic != null"> #{pic,jdbcType=VARCHAR},
-      </if>
-      <if test="style != null"> #{style,jdbcType=VARCHAR},
-      </if>
-      <if test="introduction != null"> #{introduction,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateSongListMsg" parameterType="com.example.yin.domain.SongList">
-    update song_list
-    <set >
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="pic != null">
-        pic = #{pic,jdbcType=VARCHAR},
-      </if>
-      <if test="style != null">
-        style = #{style,jdbcType=VARCHAR},
-      </if>
-      <if test="introduction != null">
-        introduction = #{introduction,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateSongListImg" parameterType="com.example.yin.domain.Consumer">
-    update song_list
-    <set >
-      <if test="pic != null">
-        pic = #{pic,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.yin.domain.SongList">
-    update song_list
-    set title = #{title,jdbcType=VARCHAR},
-      pic = #{pic,jdbcType=VARCHAR},
-    style = #{style,jdbcType=VARCHAR},
-      introduction = #{introduction,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.yin.domain.SongList">
-    update song_list
-    set title = #{title,jdbcType=VARCHAR},
-      pic = #{pic,jdbcType=VARCHAR},
-    style = #{style,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
 </mapper>

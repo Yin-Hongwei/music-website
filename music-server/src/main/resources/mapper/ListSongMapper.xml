@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.yin.dao.ListSongMapper">
-  <resultMap id="BaseResultMap" type="com.example.yin.domain.ListSong">
+<mapper namespace="com.example.yin.mapper.ListSongMapper">
+  <resultMap id="BaseResultMap" type="com.example.yin.model.domain.ListSong">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="song_id" property="songId" jdbcType="INTEGER" />
     <result column="song_list_id" property="songListId" jdbcType="INTEGER" />
@@ -9,66 +9,5 @@
   <sql id="Base_Column_List">
     id, song_id, song_list_id
   </sql>
-  <select id="allListSong" resultMap="BaseResultMap">
-    select *
-    from list_song
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select
-    <include refid="Base_Column_List" />
-    from list_song
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="listSongOfSongId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select *
-    <!--<include refid="Base_Column_List" />-->
-    <!--,-->
-    <!--<include refid="Blob_Column_List" />-->
-    from list_song
-    where song_list_id = #{songListId, jdbcType=INTEGER}
-  </select>
-  <delete id="deleteListSong" parameterType="java.lang.Integer">
-    delete from list_song
-    where song_id = #{song_id, jdbcType=INTEGER}
-  </delete>
-  <insert id="insertSelective" parameterType="com.example.yin.domain.ListSong">
-    insert into list_song
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="songId != null">
-        song_id,
-      </if>
-      <if test="songListId != null">
-        song_list_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null"> #{id,jdbcType=INTEGER},
-      </if>
-      <if test="songId != null"> #{songId,jdbcType=INTEGER},
-      </if>
-      <if test="songListId != null"> #{songListId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateListSongMsg" parameterType="com.example.yin.domain.ListSong">
-    update list_song
-    <set >
-      <if test="songId != null">
-        song_id = #{songId,jdbcType=INTEGER},
-      </if>
-      <if test="songListId != null">
-        song_list_id = #{songListId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id, jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.yin.domain.ListSong">
-    update list_song
-    set song_id = #{songId, jdbcType=INTEGER},
-      song_list_id = #{songListId, jdbcType=INTEGER}
-    where id = #{id, jdbcType=INTEGER}
-  </update>
+
 </mapper>
