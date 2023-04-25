@@ -17,33 +17,7 @@
   <select id="selectUserRank" resultType="java.lang.Integer" parameterType="com.example.yin.domain.RankList">
     select score
     from rank_list
-    where consumerId = #{consumerId, jdbcType=BIGINT} and songListId = #{songListId, jdbcType=INTEGER}
+    where consumer_id = #{consumer_id, jdbcType=BIGINT} and song_list_id = #{song_list_id, jdbcType=BIGINT}
   </select>
 
-  <insert id="insert" parameterType="com.example.yin.domain.RankList">
-    insert into rank_list (songListId, consumerId, score)
-    values (#{#{songListId,jdbcType=BIGINT}, #{consumerId,jdbcType=BIGINT}, #{score,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.example.yin.domain.RankList">
-    insert into rank_list
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="songListId != null">
-        songListId,
-      </if>
-      <if test="consumerId != null">
-        consumerId,
-      </if>
-      <if test="score != null">
-        score,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="songListId != null"> #{songListId,jdbcType=BIGINT},
-      </if>
-      <if test="consumerId != null"> #{consumerId,jdbcType=BIGINT},
-      </if>
-      <if test="score != null"> #{score,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
 </mapper>
