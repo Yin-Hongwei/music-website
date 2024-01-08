@@ -77,6 +77,10 @@
 
 **SpringBoot + MyBatis + Redis**
 
+### 部署
+
+**docker**
+
 ### 前端
 
 **Vue3.0 + TypeScript + Vue-Router + Vuex + Axios + ElementPlus + Echarts**
@@ -173,6 +177,26 @@ https://github.com/Yin-Hongwei/music-website/discussions/182
 
 <br/>
 
+### 6、部署在linux上，用docker
+
+将以下东西存储到Linux服务器上：
+
+![image-20240108131746139](./img/image-20240108131746139.png)
+
+还有编译好的jar包，都放到同一目录里面，如下：
+
+![image-20240108131824788](./img/image-20240108131824788.png)
+
+```
+docker compose up --build
+```
+
+运行结果：
+
+![image-20240108131927175](./img/image-20240108131927175.png)
+
+
+
 ## 赞助
 
 如果此项目对你确实有帮助，欢迎给我打赏一杯咖啡～😄
@@ -188,7 +212,6 @@ https://github.com/Yin-Hongwei/music-website/discussions/182
 > **目前公众号的定位主要是临时帮大家解决问题，不发表其他东西，有疑问可以临时联系。**
 
 <img src="https://p.ipic.vip/1xx9md.png"/>
-
 
 <br/>
 
