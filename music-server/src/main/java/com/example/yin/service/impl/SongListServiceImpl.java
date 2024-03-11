@@ -83,7 +83,19 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
             file1.mkdir();
         }
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String imgPath = "/img/songListPic/" + fileName;
+
+        String path="img";
+        File directory = new File(path);
+        if (!directory.exists()){
+            directory.mkdir();
+        }
+        path="img\\songListPic";
+        directory = new File(path);
+        if (!directory.exists()){
+            directory.mkdir();
+        }
+        path+="\\";
+        String imgPath = path + fileName;
         try {
             avatorFile.transferTo(dest);
         } catch (IOException e) {
