@@ -14,7 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements SongService {
@@ -28,7 +34,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
     }
 
     @Override
-    public R addSong(SongRequest addSongRequest, MultipartFile mpfile) {
+    public R addSong(SongRequest addSongRequest, MultipartFile lrcfile,MultipartFile mpfile){
         Song song = new Song();
         BeanUtils.copyProperties(addSongRequest, song);
         String pic = "/img/songPic/tubiao.jpg";
@@ -51,6 +57,19 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
         song.setUpdateTime(new Date());
         song.setPic(pic);
         song.setUrl(storeUrlPath);
+
+        if (lrcfile!=null&&(song.getLyric().equals("[00:00:00]暂无歌词"))){
+            byte[] fileContent = new byte[0];
+            try {
+                fileContent = lrcfile.getBytes();
+                String content = new String(fileContent, "GB2312");
+                song.setLyric(content);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+
+        }
         if (songMapper.insert(song) > 0) {
             return R.success("上传成功", storeUrlPath);
         } else {
