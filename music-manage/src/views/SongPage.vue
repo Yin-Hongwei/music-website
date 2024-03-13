@@ -81,8 +81,11 @@
       <el-form-item label="专辑">
         <el-input type="text" name="introduction" v-model="registerForm.introduction"></el-input>
       </el-form-item>
-      <el-form-item label="歌词">
+      <el-form-item label="歌词（有歌词lrc可以直接上传）">
         <el-input type="textarea" name="lyric" v-model="registerForm.lyric"></el-input>
+      </el-form-item>
+      <el-form-item label="歌词lrc上传">
+        <input type="file" name="lrcfile"/>
       </el-form-item>
       <el-form-item label="歌曲上传">
         <input type="file" name="file" />
@@ -278,9 +281,14 @@ export default defineComponent({
             registerForm.singerName = "";
             registerForm.introduction = "";
             registerForm.lyric = "";
+           
           }
         }
       };
+      console.log(registerForm.name)
+      console.log(registerForm.singerName)
+      console.log(registerForm.introduction)
+      console.log(registerForm.lyric)
       req.open("post", HttpManager.attachImageUrl(`/song/add`), false);
       req.send(addSongForm);
       centerDialogVisible.value = false;

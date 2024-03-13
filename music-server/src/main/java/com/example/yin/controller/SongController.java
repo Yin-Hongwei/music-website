@@ -6,12 +6,17 @@ import com.example.yin.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.unit.DataSize;
 import org.springframework.util.unit.DataUnit;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.MultipartConfigElement;
+import java.io.IOException;
 
 @RestController
 public class SongController {
@@ -31,10 +36,11 @@ public class SongController {
     }
 
 
+
     // 添加歌曲
     @PostMapping("/song/add")
-    public R addSong(SongRequest addSongRequest, @RequestParam("file") MultipartFile mpfile) {
-        return songService.addSong(addSongRequest,mpfile);
+    public R addSong(SongRequest addSongRequest,@RequestParam("lrcfile") MultipartFile lrcfile, @RequestParam("file") MultipartFile mpfile) {
+        return songService.addSong(addSongRequest,lrcfile,mpfile);
     }
 
     // 删除歌曲
@@ -61,6 +67,7 @@ public class SongController {
     public R songOfSingerId(@RequestParam int singerId) {
         return songService.songOfSingerId(singerId);
     }
+
 
     // 返回指定歌手名的歌曲
     @GetMapping("/song/singerName/detail")
