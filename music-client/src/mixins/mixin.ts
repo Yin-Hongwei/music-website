@@ -3,7 +3,7 @@ import { useStore } from "vuex";
 import { LocationQueryRaw } from "vue-router";
 import { RouterName } from "@/enums";
 import { HttpManager } from "@/api";
-
+import axios from 'axios'
 interface routerOptions {
   path?: string;
   query?: LocationQueryRaw;
@@ -62,6 +62,11 @@ export default function () {
     });
   }
 
+  function getFileName(path) {
+    const parts = path.split('/');
+    return parts[parts.length - 1];
+  }
+
   // 下载
   async function downloadMusic({ songUrl, songName }) {
     if (!songUrl) {
@@ -72,17 +77,41 @@ export default function () {
       console.error("下载链接为空！");
       return;
     }
+    const fileName = getFileName(songUrl);
+    const downUrl="/download/"+fileName
+   // const result = (await HttpManager.downloadMusic(downUrl)) as ResponseBody;
+   // console.log(result.data);
 
-    const result = (await HttpManager.downloadMusic(songUrl)) as ResponseBody;
-    const eleLink = document.createElement("a");
-    eleLink.download = `${songName}.mp3`;
-    eleLink.style.display = "none";
-    // 字符内容转变成 blob 地址
-    const blob = new Blob([result.data]);
-    eleLink.href = URL.createObjectURL(blob);
-    document.body.appendChild(eleLink); // 触发点击
-    eleLink.click();
-    document.body.removeChild(eleLink); // 移除
+    // const eleLink = document.createElement("a");
+    // eleLink.download = `${fileName}`;
+    // eleLink.style.display = "none";
+    // // 字符内容转变成 blob 地址
+    // const blob = new Blob([result.data]);
+    // console.log(blob)
+    // eleLink.href = URL.createObjectURL(blob);
+    // document.body.appendChild(eleLink); // 触发点击
+    // eleLink.click();
+    // document.body.removeChild(eleLink); // 移除
+
+      const response = await axios.get(downUrl, {
+        responseType: 'blob', // 指定响应类型为二进制数据
+      });
+      
+      // 创建一个Blob URL来下载文件
+      const blob = new Blob([response.data], { type: 'application/octet-stream' });
+      const url = window.URL.createObjectURL(blob);
+
+      // 创建一个隐藏的<a>标签来下载文件
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+
+      // 释放URL对象
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(link);
+
   }
 
   // 导航索引
