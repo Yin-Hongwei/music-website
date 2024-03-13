@@ -39,8 +39,8 @@ public class SongController {
 
     // 添加歌曲
     @PostMapping("/song/add")
-    public R addSong(SongRequest addSongRequest, @RequestParam("file") MultipartFile mpfile) {
-        return songService.addSong(addSongRequest,mpfile);
+    public R addSong(SongRequest addSongRequest,@RequestParam("lrcfile") MultipartFile lrcfile, @RequestParam("file") MultipartFile mpfile) {
+        return songService.addSong(addSongRequest,lrcfile,mpfile);
     }
 
     // 删除歌曲
