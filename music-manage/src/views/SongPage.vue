@@ -278,9 +278,14 @@ export default defineComponent({
             registerForm.singerName = "";
             registerForm.introduction = "";
             registerForm.lyric = "";
+           
           }
         }
       };
+      console.log(registerForm.name)
+      console.log(registerForm.singerName)
+      console.log(registerForm.introduction)
+      console.log(registerForm.lyric)
       req.open("post", HttpManager.attachImageUrl(`/song/add`), false);
       req.send(addSongForm);
       centerDialogVisible.value = false;
