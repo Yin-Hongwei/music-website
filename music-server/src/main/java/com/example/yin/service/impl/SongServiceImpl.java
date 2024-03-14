@@ -3,12 +3,15 @@ package com.example.yin.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
+import com.example.yin.controller.MinioUploadController;
 import com.example.yin.mapper.SongMapper;
 import com.example.yin.model.domain.Song;
 import com.example.yin.model.request.SongRequest;
 import com.example.yin.service.SongService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +31,9 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
     @Autowired
     private SongMapper songMapper;
 
+    @Value("${minio.bucket-name}")
+    private String bucketName;
+
     @Override
     public R allSong() {
         return R.success(null, songMapper.selectList(null));
@@ -40,14 +46,9 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
         String pic = "/img/songPic/tubiao.jpg";
         String fileName = mpfile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "song";
-        File file1 = new File(filePath);
-        if (!file1.exists()) {
-            if (!file1.mkdir()) {
-                return R.fatal("创建文件失败");
-            }
-        }
+        String s = MinioUploadController.uploadFile(mpfile);
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeUrlPath = "/song/" + fileName;
+        String storeUrlPath = "/"+bucketName+"/" + fileName;
         try {
             mpfile.transferTo(dest);
         } catch (IOException e) {
@@ -68,7 +69,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
                 throw new RuntimeException(e);
             }
         }
-        if (songMapper.insert(song) > 0) {
+        if (s.equals("File uploaded successfully!")&&songMapper.insert(song) > 0) {
             return R.success("上传成功", storeUrlPath);
         } else {
             return R.error("上传失败");
