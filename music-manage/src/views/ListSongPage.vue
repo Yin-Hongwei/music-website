@@ -36,7 +36,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="saveSong">确 定</el-button>
+        <el-button type="primary" @click="saveSong()">确 定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -107,6 +107,9 @@ export default defineComponent({
 
       if (result.success) {
         addSong(result.data[0].id);
+      }else{
+        alert(result.message);
+        centerDialogVisible.value = false;
       }
     }
     async function addSong(id) {
@@ -119,7 +122,10 @@ export default defineComponent({
         type: result.type,
       });
 
-      if (result.success) getData();
+      if (result.success) {
+         getData();
+      }
+      
       centerDialogVisible.value = false;
     }
 

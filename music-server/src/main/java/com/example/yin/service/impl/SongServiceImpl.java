@@ -67,8 +67,6 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-
         }
         if (songMapper.insert(song) > 0) {
             return R.success("上传成功", storeUrlPath);
@@ -170,6 +168,11 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
     public R songOfSingerName(String name) {
         QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("name",name);
+        List<Song> songs = songMapper.selectList(queryWrapper);
+        if (songs.isEmpty()){
+            return R.error("添加失败，没有找到该歌,无法加入该歌单");
+        }
+
         return R.success(null, songMapper.selectList(queryWrapper));
     }
 }
