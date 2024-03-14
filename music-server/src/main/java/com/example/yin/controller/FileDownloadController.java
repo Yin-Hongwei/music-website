@@ -1,5 +1,10 @@
 package com.example.yin.controller;
 
+import io.minio.GetObjectArgs;
+import io.minio.MinioClient;
+import io.minio.errors.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
@@ -13,27 +18,44 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 @Controller
 @RequestMapping("/download")
 public class FileDownloadController {
 
-    @GetMapping("/{fileName}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
-        // 加载文件作为资源
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "song\\"+fileName;
-        File file=new File(filePath);
+    @Autowired
+    private MinioClient minioClient;
+    @Value("${minio.bucket-name}")
+    private String bucketName;
 
-        byte[] musicBytes = getMusicBytesFromFileName(file);
+    @GetMapping("/{fileName}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+
+        GetObjectArgs args = GetObjectArgs.builder()
+                .bucket(bucketName)
+                .object(fileName)
+                .build();
+        InputStream inputStream = minioClient.getObject(args);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+        byte[] musicBytes = outputStream.toByteArray();
         // 创建一个ByteArrayResource对象，用于包装字节数组
         ByteArrayResource resource = new ByteArrayResource(musicBytes);
         // 构建响应头
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
-
         // 返回一个 ResponseEntity 对象
         return ResponseEntity.ok()
                 .headers(headers)
@@ -42,14 +64,4 @@ public class FileDownloadController {
                 .body(resource);
     }
 
-    // 这个方法需要根据你的实际情况来获取音乐文件的字节数组
-    private byte[] getMusicBytesFromFileName(File file) {
-        try {
-            return Files.readAllBytes(file.toPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-            // 如果发生异常，你可以返回一个空数组或者其他适当的错误处理
-            return new byte[0];
-        }
-    }
-}
+ }
