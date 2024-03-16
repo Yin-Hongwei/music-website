@@ -46,6 +46,10 @@
           <el-upload :action="updateSongUrl(scope.row.id)" :show-file-list="false" :on-success="handleSongSuccess" :before-upload="beforeSongUpload">
             <el-button>更新歌曲</el-button>
           </el-upload>
+            <br />
+           <el-upload :action="updateSongLrc(scope.row.id)" :show-file-list="false" :on-success="handleSongSuccess" :before-upload="beforeSongUpload">
+            <el-button>更新歌词</el-button>
+          </el-upload>
         </template>
       </el-table-column>
       <el-table-column label="评论" width="90" align="center">
@@ -204,6 +208,9 @@ export default defineComponent({
     function updateSongUrl(id) {
       return HttpManager.updateSongUrl(id);
     }
+     function updateSongLrc(id) {
+      return HttpManager.updateSongLrc(id);
+    }
     // 获取当前页
     function handleCurrentChange(val) {
       currentPage.value = val;
@@ -215,6 +222,14 @@ export default defineComponent({
       });
       if (res.success) getData();
     }
+     function handleLyricsSuccess(res) {
+      (proxy as any).$message({
+        message: res.message,
+        type: res.type,
+      });
+      if (res.success) getData();
+    }
+
     // 更新图片
     function handleImgSuccess(res, file) {
       (proxy as any).$message({
@@ -394,6 +409,7 @@ export default defineComponent({
       saveEdit,
       updateSongImg,
       updateSongUrl,
+      updateSongLrc,
       deleteRow,
       confirm,
       attachImageUrl: HttpManager.attachImageUrl,
@@ -401,7 +417,7 @@ export default defineComponent({
       editRow,
       handleSongSuccess,
       setSongUrl,
-      beforeSongUpload,
+      handleLyricsSuccess,
       goCommentPage,
     };
   },
