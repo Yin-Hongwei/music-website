@@ -53,15 +53,8 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
         BeanUtils.copyProperties(addSongRequest, song);
         String pic = "/img/songPic/tubiao.jpg";
         String fileName = mpfile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "song";
         String s = MinioUploadController.uploadFile(mpfile);
-        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
         String storeUrlPath = "/"+bucketName+"/" + fileName;
-        try {
-            mpfile.transferTo(dest);
-        } catch (IOException e) {
-            return R.fatal("上传失败" + e.getMessage());
-        }
         song.setCreateTime(new Date());
         song.setUpdateTime(new Date());
         song.setPic(pic);
@@ -97,25 +90,43 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
 
     @Override
     public R updateSongUrl(MultipartFile urlFile, int id) {
-        String fileName = urlFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "song";
-        File file1 = new File(filePath);
-        if (!file1.exists()) {
-            if (!file1.mkdir()) {
-                return R.fatal("创建目的文件夹失败");
-            }
-        }
-        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeUrlPath = "/song/" + fileName;
+        Song song = songMapper.selectById(id);
+        String path = song.getUrl();
+        String[] parts = path.split("/");
+        String fileName = parts[parts.length - 1];
+
+        RemoveObjectArgs removeObjectArgs=RemoveObjectArgs.builder()
+                .bucket(bucketName)
+                .object(fileName)
+                .build();
+        fileName = urlFile.getOriginalFilename();
+        String s = MinioUploadController.uploadFile(urlFile);
         try {
-            urlFile.transferTo(dest);
+            minioClient.removeObject(removeObjectArgs);
+        } catch (ErrorResponseException e) {
+            throw new RuntimeException(e);
+        } catch (InsufficientDataException e) {
+            throw new RuntimeException(e);
+        } catch (InternalException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeyException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidResponseException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            return R.fatal("更新失败" + e.getMessage());
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (ServerException e) {
+            throw new RuntimeException(e);
+        } catch (XmlParserException e) {
+            throw new RuntimeException(e);
         }
-        Song song = new Song();
+        String storeUrlPath = "/"+bucketName+"/" + fileName;
         song.setId(id);
         song.setUrl(storeUrlPath);
-        if (songMapper.updateById(song) > 0) {
+        song.setName(fileName);
+        if (s.equals("File uploaded successfully!")&&songMapper.updateById(song) > 0) {
             return R.success("更新成功", storeUrlPath);
         } else {
             return R.error("更新失败");
@@ -213,5 +224,25 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
         }
 
         return R.success(null, songMapper.selectList(queryWrapper));
+    }
+
+    @Override
+    public R updateSongLrc(MultipartFile lrcFile, int id) {
+        Song song = songMapper.selectById(id);
+        if (lrcFile!=null&&!(song.getLyric().equals("[00:00:00]暂无歌词"))){
+            byte[] fileContent = new byte[0];
+            try {
+                fileContent = lrcFile.getBytes();
+                String content = new String(fileContent, "GB2312");
+                song.setLyric(content);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (songMapper.updateById(song) > 0) {
+            return R.success("更新成功");
+        } else {
+            return R.error("更新失败");
+        }
     }
 }

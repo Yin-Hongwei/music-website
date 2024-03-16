@@ -71,6 +71,7 @@ const HttpManager = {
     }),
     updateSongUrl: (id) => `${getBaseURL()}/song/url/update?id=${id}`,
     updateSongImg: (id) => `${getBaseURL()}/song/img/update?id=${id}`,
+    updateSongLrc: (id) => `${getBaseURL()}/song/lrc/update?id=${id}`,
     // 删除歌曲
     deleteSong: (id) => deletes(`song/delete?id=${id}`),
 
