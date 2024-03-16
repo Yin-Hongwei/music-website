@@ -135,22 +135,9 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
 
     @Override
     public R updateSongPic(MultipartFile urlFile, int id) {
-        String fileName = System.currentTimeMillis() + urlFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "songPic";
-        File file1 = new File(filePath);
-        if (!file1.exists()) {
-            if (!file1.mkdir()) {
-                return R.fatal("创建文件夹失败");
-            }
-        }
-
-        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeUrlPath = "/img/songPic/" + fileName;
-        try {
-            urlFile.transferTo(dest);
-        } catch (IOException e) {
-            return R.fatal("上传失败" + e.getMessage());
-        }
+        String fileName =  urlFile.getOriginalFilename();
+        String storeUrlPath = "/user01/singer/song/" + fileName;
+        MinioUploadController.uploadSongImgFile(urlFile);
         Song song = new Song();
         song.setId(id);
         song.setPic(storeUrlPath);

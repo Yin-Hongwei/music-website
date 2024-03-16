@@ -44,4 +44,53 @@ public class MinioController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/user01/singer/img/{fileName:.+}")
+    public ResponseEntity<byte[]> getImage(@PathVariable String fileName) throws Exception {
+        InputStream stream = minioClient.getObject(
+                GetObjectArgs.builder()
+                        .bucket(bucketName)
+                        .object("singer/img/"+fileName)
+                        .build()
+        );
+
+        byte[] bytes = IOUtils.toByteArray(stream);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // 设置响应内容类型为图片类型，根据实际情况修改
+
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+    }
+    @GetMapping("/user01/songlist/{fileName:.+}")
+    public ResponseEntity<byte[]> getImage1(@PathVariable String fileName) throws Exception {
+        InputStream stream = minioClient.getObject(
+                GetObjectArgs.builder()
+                        .bucket(bucketName)
+                        .object("songlist/"+fileName)
+                        .build()
+        );
+
+        byte[] bytes = IOUtils.toByteArray(stream);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // 设置响应内容类型为图片类型，根据实际情况修改
+
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+    }
+    ///user01/singer/song/98329722.jfif
+    @GetMapping("/user01/singer/song/{fileName:.+}")
+    public ResponseEntity<byte[]> getImage2(@PathVariable String fileName) throws Exception {
+        InputStream stream = minioClient.getObject(
+                GetObjectArgs.builder()
+                        .bucket(bucketName)
+                        .object("singer/song/"+fileName)
+                        .build()
+        );
+
+        byte[] bytes = IOUtils.toByteArray(stream);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // 设置响应内容类型为图片类型，根据实际情况修改
+
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+    }
 }
