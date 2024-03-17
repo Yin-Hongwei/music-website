@@ -87,4 +87,5 @@ public class ConsumerController {
     public R updateUserPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
         return consumerService.updateUserAvator(avatorFile, id);
     }
+
 }

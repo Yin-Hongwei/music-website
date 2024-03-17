@@ -14,7 +14,6 @@ const HttpManager = {
     getUserOfId: (id) => get(`user/detail?id=${id}`),
     // 删除用户
     deleteUser: (id) => get(`user/delete?id=${id}`),
-
     // =======================> 收藏列表 API 完成
     // 返回的指定用户ID收藏列表
     getCollectionOfUser: (userId) => get(`collection/detail?userId=${userId}`),
