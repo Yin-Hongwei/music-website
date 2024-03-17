@@ -38,6 +38,20 @@
           <el-button type="danger" @click="deleteRow(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
+      <el-table-column label="修改" width="90" align="center">
+        
+    <template v-slot="scope">
+      <el-upload
+        :action="'http://localhost:8888/user/avatar/update?id=' + scope.row.id" 
+        :show-file-list="false"
+        :on-success="handleAvatarSuccess"
+        :before-upload="beforeAvatarUpload">
+        <el-button>更新头像</el-button>
+      </el-upload>
+   </template>
+
+        
+      </el-table-column>
     </el-table>
     <el-pagination
       class="pagination"
@@ -160,6 +174,14 @@ export default defineComponent({
       multipleSelection.value = [];
     }
 
+   //handleAvatarSuccess
+   function handleAvatarSuccess(){
+     location.reload();
+   }
+
+
+
+
     return {
       searchWord,
       data,
@@ -173,6 +195,7 @@ export default defineComponent({
       changeSex,
       getBirth,
       deleteRow,
+      handleAvatarSuccess,
       confirm,
       goCollectPage,
       attachImageUrl: HttpManager.attachImageUrl,
