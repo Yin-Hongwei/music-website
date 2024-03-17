@@ -130,4 +130,25 @@ public class MinioUploadController {
             throw new RuntimeException(e);
         }
     }
+
+    public static String uploadAtorImgFile(MultipartFile file) {
+        try {
+            init();
+            InputStream inputStream = file.getInputStream();
+            minioClient.putObject(
+                    PutObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object("/img/avatorImages/"+file.getOriginalFilename())
+                            .stream(inputStream, inputStream.available(), -1)
+                            .contentType(file.getContentType())
+                            .build()
+            );
+            return "File uploaded successfully!";
+        } catch (MinioException | IOException | NoSuchAlgorithmException | InvalidKeyException e) {
+            e.printStackTrace();
+            return "Error uploading file to MinIO: " + e.getMessage();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
