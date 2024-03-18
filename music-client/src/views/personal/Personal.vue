@@ -1,7 +1,9 @@
 <template>
   <div class="personal">
     <div class="personal-info">
-      <el-image class="personal-img" fit="contain" :src="attachImageUrl(userPic)" @click="dialogTableVisible = true" />
+      <div class="personal-img" @click="dialogTableVisible = true">
+        <el-image fit="contain" :src="attachImageUrl(userPic)"/>
+      </div>
       <div class="personal-msg">
         <div class="username">{{ personalInfo.username }}</div>
         <div class="introduction">{{ personalInfo.introduction }}</div>
