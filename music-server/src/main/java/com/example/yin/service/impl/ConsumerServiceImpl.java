@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.constant.Constants;
+import com.example.yin.controller.MinioUploadController;
 import com.example.yin.mapper.ConsumerMapper;
 import com.example.yin.model.domain.Consumer;
 import com.example.yin.model.request.ConsumerRequest;
@@ -95,24 +96,13 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
 
     @Override
     public R updateUserAvator(MultipartFile avatorFile, int id) {
-        String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
-        //路径 他这个会根据你的系统获取对应的文件分隔符
-        String filePath = Constants.ASSETS_PATH + System.getProperty("file.separator") + "img" + System.getProperty("file.separator") + "avatorImages";
-        File file = new File(filePath);
-        if (!file.exists() && !file.mkdir()) {
-            return R.fatal("创建文件失败");
-        }
-        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
+        String fileName = avatorFile.getOriginalFilename();
         String imgPath = "/img/avatorImages/" + fileName;
-        try {
-            avatorFile.transferTo(dest);
-        } catch (IOException e) {
-            return R.fatal("上传失败" + e.getMessage());
-        }
         Consumer consumer = new Consumer();
         consumer.setId(id);
         consumer.setAvator(imgPath);
-        if (consumerMapper.updateById(consumer) > 0) {
+        String s = MinioUploadController.uploadAtorImgFile(avatorFile);
+        if (s.equals("File uploaded successfully!")&&consumerMapper.updateById(consumer) > 0) {
             return R.success("上传成功", imgPath);
         } else {
             return R.error("上传失败");

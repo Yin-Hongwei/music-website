@@ -92,4 +92,11 @@ public class SongController {
     public R updateSongUrl(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {
         return songService.updateSongUrl(urlFile, id);
     }
+    ///song/lrc/update
+    //更新歌词
+    @PostMapping("/song/lrc/update")
+    public R updateSongLrc(@RequestParam("file") MultipartFile lrcFile, @RequestParam("id") int id) {
+        return songService.updateSongLrc(lrcFile, id);
+    }
+
 }
