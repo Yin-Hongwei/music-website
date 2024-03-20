@@ -4,6 +4,7 @@
       <el-button @click="deleteAll">批量删除</el-button>
       <el-input v-model="searchWord" placeholder="筛选关键词"></el-input>
       <el-button type="primary" @click="centerDialogVisible = true">添加歌单</el-button>
+      <el-button type="primary" @click="exportPlaylist">导出歌单</el-button>
     </div>
     <el-table height="550px" border size="small" :data="data" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="40" align="center"></el-table-column>
@@ -107,7 +108,7 @@ import mixin from "@/mixins/mixin";
 import {HttpManager} from "@/api/index";
 import {RouterName} from "@/enums";
 import YinDelDialog from "@/components/dialog/YinDelDialog.vue";
-
+import axios from 'axios';
 export default defineComponent({
   components: {
     YinDelDialog,
@@ -151,6 +152,26 @@ export default defineComponent({
       tempDate.value = result.data;
       currentPage.value = 1;
     }
+
+    function exportPlaylist() {
+      axios({
+        method: 'get',
+        url: 'http://localhost:8888/excle',
+        responseType: 'blob', // 设置响应类型为blob
+      })
+        .then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'SongList.xlsx'); // 设置下载的文件名
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        })
+        .catch((error) => {
+          console.error('导出歌单失败：', error);
+        });
+  }
 
     // 获取当前页
     function handleCurrentChange(val) {
@@ -326,6 +347,7 @@ export default defineComponent({
       uploadUrl,
       editRow,
       handleCurrentChange,
+      exportPlaylist,
       confirm,
       deleteRow,
       goContentPage,
