@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> implements SongListService {
@@ -50,6 +51,13 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     public R allSongList() {
         return R.success(null, songListMapper.selectList(null));
     }
+
+    @Override
+    public List<SongList> findAllSong() {
+        List<SongList> songLists = songListMapper.selectList(null);
+        return songLists;
+    }
+
 
     @Override
     public R likeTitle(String title) {
