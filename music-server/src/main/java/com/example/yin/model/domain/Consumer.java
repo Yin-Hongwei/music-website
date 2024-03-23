@@ -19,7 +19,7 @@ public class Consumer {
     private Byte sex;
 
     private String phoneNum;
-
+    @TableField(value = "email")
     private String email;
 
     private Date birth;

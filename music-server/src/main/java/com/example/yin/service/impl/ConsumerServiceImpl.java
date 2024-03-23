@@ -163,4 +163,12 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
             return R.error("用户名或密码错误");
         }
     }
+
+    @Override
+    public Consumer findByEmail(String email) {
+        QueryWrapper<Consumer> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("email",email);
+        Consumer consumer = consumerMapper.selectOne(queryWrapper);
+        return consumer;
+    }
 }
