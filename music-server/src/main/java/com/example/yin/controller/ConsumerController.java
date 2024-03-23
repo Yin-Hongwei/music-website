@@ -1,8 +1,11 @@
 package com.example.yin.controller;
 
 import com.example.yin.common.R;
+import com.example.yin.model.domain.Consumer;
+import com.example.yin.model.domain.Order;
 import com.example.yin.model.request.ConsumerRequest;
 import com.example.yin.service.ConsumerService;
+import com.example.yin.service.impl.SimpleOrderManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +18,8 @@ public class ConsumerController {
     @Autowired
     private ConsumerService consumerService;
 
+    @Autowired
+    private SimpleOrderManager simpleOrderManager;
 
     /**
      * TODO 前台页面调用 注册
@@ -32,6 +37,38 @@ public class ConsumerController {
     @PostMapping("/user/login/status")
     public R loginStatus(@RequestBody ConsumerRequest loginRequest, HttpSession session) {
         return consumerService.loginStatus(loginRequest, session);
+    }
+
+
+    /**
+     * 密码恢复（忘记密码）
+     */
+
+    @PostMapping("/user/forget")
+    public R resetPassword(@RequestBody String email){
+        String[] split = email.split(":");
+        email=split[1];
+        int index = email.indexOf("}");
+        email = email.substring(0, index);
+        // 去掉前面的双引号
+        if (email.startsWith("\"")) {
+            email = email.substring(1);
+        }
+        // 去掉后面的双引号
+        if (email.endsWith("\"")) {
+            email = email.substring(0, email.length() - 1);
+        }
+
+        Consumer user = consumerService.findByEmail(email);
+        user.getPassword();
+        if (user==null){
+            return R.fatal("用户不存在");
+        }
+        Order order=new Order();
+        order.setName(user.getUsername());
+        order.setPassword(user.getPassword());
+        simpleOrderManager.send(order,email);
+        return R.success("密码发送成功");
     }
 
     /**
