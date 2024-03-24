@@ -49,7 +49,13 @@ public class ConsumerController {
     public R loginStatus(@RequestBody ConsumerRequest loginRequest, HttpSession session) {
         return consumerService.loginStatus(loginRequest, session);
     }
-
+    /**
+     * email登录
+     */
+    @PostMapping("/user/email/status")
+    public R loginEmailStatus(@RequestBody ConsumerRequest loginRequest, HttpSession session) {
+        return consumerService.loginEmailStatus(loginRequest, session);
+    }
 
     /**
      * 密码恢复（忘记密码）
