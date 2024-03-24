@@ -6,6 +6,7 @@ const HttpManager = {
   // =======================> 用户 API 完成
   // 登录
   signIn: ({username,password}) => post(`user/login/status`, {username,password}),
+  signInByemail: ({email,password})=>post(`user/email/status`, {email,password}),
   // 注册
   SignUp: ({username,password,sex,phoneNum,email,birth,introduction,location}) => post(`user/add`, {username,password,sex,phoneNum,email,birth,introduction,location}),
   // 删除用户
