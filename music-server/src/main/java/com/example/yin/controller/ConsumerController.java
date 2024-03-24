@@ -3,14 +3,20 @@ package com.example.yin.controller;
 import com.example.yin.common.R;
 import com.example.yin.model.domain.Consumer;
 import com.example.yin.model.domain.Order;
+import com.example.yin.model.domain.ResetPasswordRequest;
 import com.example.yin.model.request.ConsumerRequest;
 import com.example.yin.service.ConsumerService;
+import com.example.yin.service.impl.ConsumerServiceImpl;
 import com.example.yin.service.impl.SimpleOrderManager;
+import com.example.yin.utils.RandomUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class ConsumerController {
@@ -19,8 +25,13 @@ public class ConsumerController {
     private ConsumerService consumerService;
 
     @Autowired
+    ConsumerServiceImpl consumerServiceimpl;
+
+    @Autowired
     private SimpleOrderManager simpleOrderManager;
 
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
     /**
      * TODO 前台页面调用 注册
      * 用户注册
@@ -44,32 +55,41 @@ public class ConsumerController {
      * 密码恢复（忘记密码）
      */
 
-    @PostMapping("/user/forget")
-    public R resetPassword(@RequestBody String email){
-        String[] split = email.split(":");
-        email=split[1];
-        int index = email.indexOf("}");
-        email = email.substring(0, index);
-        // 去掉前面的双引号
-        if (email.startsWith("\"")) {
-            email = email.substring(1);
+    @PostMapping("/user/resetPassword")
+    public R resetPassword(@RequestBody ResetPasswordRequest passwordRequest){
+        Consumer user = consumerService.findByEmail(passwordRequest.getEmail());
+        String code = stringRedisTemplate.opsForValue().get("code");
+        if (user==null){
+            return R.fatal("用户不存在");
+        }else if (!code.equals(passwordRequest.getCode())){
+            return R.fatal("验证码不存在或失效");
         }
-        // 去掉后面的双引号
-        if (email.endsWith("\"")) {
-            email = email.substring(0, email.length() - 1);
-        }
+        ConsumerRequest consumerRequest=new ConsumerRequest();
+        BeanUtils.copyProperties(user, consumerRequest);
+        System.out.println(user);
+        System.out.println(consumerRequest);
+        consumerRequest.setPassword(passwordRequest.getPassword());
+        consumerServiceimpl.updatePassword01(consumerRequest);
 
+        return R.success("密码修改成功");
+    }
+
+    /**
+     * 发送验证码功能
+     */
+    @GetMapping("/user/sendVerificationCode")
+    public R sendCode(@RequestParam String email){
         Consumer user = consumerService.findByEmail(email);
-        user.getPassword();
         if (user==null){
             return R.fatal("用户不存在");
         }
-        Order order=new Order();
-        order.setName(user.getUsername());
-        order.setPassword(user.getPassword());
-        simpleOrderManager.send(order,email);
-        return R.success("密码发送成功");
+        String code = RandomUtils.code();
+        simpleOrderManager.sendCode(code,email);
+        //保存在redis中
+        stringRedisTemplate.opsForValue().set("code",code,5, TimeUnit.MINUTES);
+        return R.success("发送成功");
     }
+
 
     /**
      * TODO 管理界面调用
