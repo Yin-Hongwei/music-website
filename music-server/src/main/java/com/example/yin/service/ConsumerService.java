@@ -29,6 +29,7 @@ public interface ConsumerService extends IService<Consumer> {
     R userOfId(Integer id);
 
     R loginStatus(ConsumerRequest loginRequest, HttpSession session);
+    R loginEmailStatus(ConsumerRequest loginRequest, HttpSession session);
     Consumer findByEmail (String email);
     R updatePassword01(ConsumerRequest updatePasswordRequest);
 }
