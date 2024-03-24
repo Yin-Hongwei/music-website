@@ -77,6 +77,11 @@ const routes: Array<RouteRecordRaw> = [
         component: ()=> import("@/views/FPassword.vue"),
       },
       {
+        path: "/loginByemail",
+        name: "loginByemail",
+        component: ()=> import("@/views/loginByemail.vue"),
+      },
+      {
         path: "/setting",
         name: "setting",
         meta: {
