@@ -24,28 +24,39 @@ public class SimpleOrderManager implements OrderManager {
 
     @Autowired
     private JavaMailSender mailSender;
- 
+
     public void setMailSender(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
-    public void send(Order order,String reciveAddress) {
+
+    public void sendPassword(Order order, String reciveAddress) {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
             public void prepare(@NotNull MimeMessage mimeMessage) throws Exception {
                 mimeMessage.setRecipient(Message.RecipientType.TO,
                         new InternetAddress(reciveAddress));
                 mimeMessage.setFrom(new InternetAddress(sendAddress));
-                mimeMessage.setText("Dear " + order.getName()  +"\n"+
-                        "Your  password is :" +  order.getPassword()  + ".");
+                mimeMessage.setText("Dear " + order.getName() + "\n" +
+                        "Your  password is :" + order.getPassword() + ".");
             }
         };
- 
+
         try {
             this.mailSender.send(preparator);
-        }
-        catch (MailException ex) {
+        } catch (MailException ex) {
 
             System.err.println(ex.getMessage());
         }
     }
- 
+
+    public void sendCode(String code, String reciveAddress) {
+        MimeMessagePreparator preparator = new MimeMessagePreparator() {
+            public void prepare(@NotNull MimeMessage mimeMessage) throws Exception {
+                mimeMessage.setRecipient(Message.RecipientType.TO,
+                        new InternetAddress(reciveAddress));
+                mimeMessage.setFrom(new InternetAddress(sendAddress));
+                mimeMessage.setText("Dear you code is " + code);
+            }
+        };
+        this.mailSender.send(preparator);
+    }
 }

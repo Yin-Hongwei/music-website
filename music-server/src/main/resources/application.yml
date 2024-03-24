@@ -2,8 +2,8 @@ spring:
   mail:
     host: smtp.163.com # 网站发送邮件邮箱服务 host
     port: 465
-    username:    # 开启那个服务的邮箱
-    password:   # 开启服务的那个认证码
+    username:   # 开启那个服务的邮箱
+    password:  # 开启服务的那个认证码
     properties:
       mail:
         smtp:

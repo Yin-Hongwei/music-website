@@ -94,6 +94,26 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
         }
     }
 
+    /**
+     * 缩减验证
+     * @param updatePasswordRequest
+     * @return
+     */
+    @Override
+    public R updatePassword01(ConsumerRequest updatePasswordRequest) {
+        Consumer consumer = new Consumer();
+        consumer.setId(updatePasswordRequest.getId());
+        String secretPassword = DigestUtils.md5DigestAsHex((SALT + updatePasswordRequest.getPassword()).getBytes(StandardCharsets.UTF_8));
+        consumer.setPassword(secretPassword);
+
+        if (consumerMapper.updateById(consumer) > 0) {
+            return R.success("密码修改成功");
+        } else {
+            return R.error("密码修改失败");
+        }
+    }
+
+
     @Override
     public R updateUserAvator(MultipartFile avatorFile, int id) {
         String fileName = avatorFile.getOriginalFilename();
@@ -171,4 +191,5 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
         Consumer consumer = consumerMapper.selectOne(queryWrapper);
         return consumer;
     }
+
 }
