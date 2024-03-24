@@ -146,6 +146,7 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
         return consumerMapper.selectCount(queryWrapper) > 0;
     }
 
+
     // 删除用户
     @Override
     public R deleteUser(Integer id) {
@@ -178,6 +179,21 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
             session.setAttribute("username", username);
             Consumer consumer = new Consumer();
             consumer.setUsername(username);
+            return R.success("登录成功", consumerMapper.selectList(new QueryWrapper<>(consumer)));
+        } else {
+            return R.error("用户名或密码错误");
+        }
+    }
+
+    @Override
+    public R loginEmailStatus(ConsumerRequest loginRequest, HttpSession session) {
+        String email = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
+        Consumer consumer1 = findByEmail(email);
+        if (this.verityPasswd(consumer1.getUsername(), password)) {
+            session.setAttribute("username", consumer1.getUsername());
+            Consumer consumer = new Consumer();
+            consumer.setUsername(consumer1.getUsername());
             return R.success("登录成功", consumerMapper.selectList(new QueryWrapper<>(consumer)));
         } else {
             return R.error("用户名或密码错误");
