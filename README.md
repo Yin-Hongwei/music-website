@@ -177,7 +177,7 @@ https://github.com/Yin-Hongwei/music-website/discussions/182
 
 <br/>
 
-### 6、部署在linux上，用docker
+### 6、部署在linux上，用 docker【本地运行可以忽略】
 
 将以下东西存储到Linux服务器上：
 
@@ -209,9 +209,8 @@ docker compose up --build
 
 ## 联系方式
 
-> **目前公众号的定位主要是临时帮大家解决问题，不发表其他东西，有疑问可以临时联系。**
-
 <img src="https://p.ipic.vip/1xx9md.png"/>
+
 
 <br/>
 
