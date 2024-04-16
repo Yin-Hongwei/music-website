@@ -171,9 +171,11 @@ npm run serve // 启动后台管理项目
 
 ### 5、常见问题
 
-常见启动问题整理如下
+1、图片、音乐加载失败
+把 music-website/music-server 目录下的 img、song 目录移动到 music-website 目录。
 
-https://github.com/Yin-Hongwei/music-website/discussions/182
+2、音乐播放不了
+可能是音乐损毁了，重新更换一下音乐资源。
 
 <br/>
 
