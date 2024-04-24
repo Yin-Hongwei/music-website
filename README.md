@@ -198,7 +198,6 @@ docker compose up --build
 ![image-20240108131927175](./img/image-20240108131927175.png)
 
 
-
 ## 赞助
 
 如果此项目对你确实有帮助，欢迎给我打赏一杯咖啡～😄
@@ -207,14 +206,6 @@ docker compose up --build
 
 <br/>
 
-
-
-## 联系方式
-
-<img src="https://p.ipic.vip/1xx9md.png"/>
-
-
-<br/>
 
 ## License
 
