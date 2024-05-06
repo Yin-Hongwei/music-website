@@ -21,5 +21,5 @@ public interface RankListMapper extends BaseMapper<RankList> {
      * @param songListId
      * @return
      */
-    int selectUserRank(@Param("consumer_id") Long consumerId, @Param("song_list_id")  Long songListId);
+    Integer selectUserRank(@Param("consumer_id") Long consumerId, @Param("song_list_id")  Long songListId);
 }
