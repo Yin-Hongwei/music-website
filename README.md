@@ -75,7 +75,7 @@
 
 ### 后端
 
-**SpringBoot + MyBatis + Redis**
+**SpringBoot + MyBatis + Redis** **+ minio**
 
 ### 部署
 
@@ -93,12 +93,13 @@ JDK： jdk-8u141
 
 mysql：mysql-5.7.21-1-macos10.13-x86_64（或者更高版本）
 
-redis：5.0.8
+redis：5.0.8 或 [docker启动redis | 想飞跃的鱼 (nanshaws.github.io)](https://nanshaws.github.io/docker/docker启动redis(完美过程).html)
 
 node：14.17.3
 
 IDE：IntelliJ IDEA 2018、VSCode
 
+minio: 下载本地最新 或者 [docker完美启动minio | 想飞跃的鱼 (nanshaws.github.io)](https://nanshaws.github.io/docker/docker完美启动minio(完美过程).html)
 
 <br/>
 

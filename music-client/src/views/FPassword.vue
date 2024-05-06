@@ -19,7 +19,9 @@
           <el-input id="confirmPassword" v-model="confirmPassword" type="password" required />
         </el-form-item>
         <el-form-item>
+          
           <el-button @click="handleSubmit" type="submit">提交</el-button>
+          
         </el-form-item>
       </el-form>
     </el-main>
