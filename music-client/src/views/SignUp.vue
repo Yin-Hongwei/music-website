@@ -36,7 +36,7 @@
         </el-select>
       </el-form-item>
       <el-form-item class="sign-btn">
-        <el-button @click="goBack()">登录</el-button>
+        <el-button @click="goBackRegist()">取消</el-button>
         <el-button type="primary" @click="handleSignUp(formRef)">确定</el-button>
       </el-form-item>
     </el-form>
@@ -69,6 +69,10 @@ export default defineComponent({
       introduction: "",
       location: "",
     });
+
+    async function goBackRegist() {
+       routerManager(RouterName.SignIn, { path: RouterName.SignIn });
+    }
 
     async function handleSignUp() {
       let canRun = true;
@@ -107,6 +111,7 @@ export default defineComponent({
       AREA,
       registerForm,
       handleSignUp,
+      goBackRegist,
     };
   },
 });
