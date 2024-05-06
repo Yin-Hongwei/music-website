@@ -43,6 +43,7 @@ public class RankListServiceImpl extends ServiceImpl<RankListMapper, RankList> i
 
     @Override
     public R getUserRank(Long consumerId, Long songListId) {
-        return R.success(null, rankMapper.selectUserRank(consumerId, songListId));
+        Integer i = rankMapper.selectUserRank(consumerId, songListId);
+        return R.success(null, i);
     }
 }
