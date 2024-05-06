@@ -53,9 +53,9 @@ export default defineComponent({
     // const evaluateList = ref(["很差", "较差", "还行", "推荐", "力推"]);
     const songDetails = computed(() => store.getters.songDetails); // 单个歌单信息
     const nowUserId = computed(() => store.getters.userId);
-
+  
     nowSongListId.value = songDetails.value.id; // 给歌单ID赋值
-
+  
     // 收集歌单里面的歌曲
     async function getSongId(id) {
       const result = (await HttpManager.getListSongOfSongId(id)) as ResponseBody;
@@ -82,9 +82,8 @@ export default defineComponent({
       if (disabledRank.value || !checkStatus()) return;
 
       const songListId = nowSongListId.value;
-      const consumerId = nowUserId.value;
+      var consumerId = nowUserId.value;
       const score = nowScore.value*2;
-
       try {
         const result = (await HttpManager.setRank({songListId,consumerId,score})) as ResponseBody;
         (proxy as any).$message({
