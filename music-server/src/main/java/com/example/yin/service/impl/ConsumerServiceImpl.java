@@ -54,6 +54,12 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
         }
         consumer.setAvator("img/avatorImages/user.jpg");
         try {
+            QueryWrapper<Consumer> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("email",consumer.getEmail());
+            Consumer one = consumerMapper.selectOne(queryWrapper);
+            if (one!=null){
+                return R.fatal("邮箱不允许重复");
+            }
             if (consumerMapper.insert(consumer) > 0) {
                 return R.success("注册成功");
             } else {
