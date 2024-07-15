@@ -13,6 +13,7 @@
       </el-form-item>
       <el-form-item class="sign-btn">
         <el-button type="primary" @click="handleLoginIn">登录</el-button>
+         <el-button type="primary" @click="handleLoginCancel">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -38,6 +39,10 @@ export default defineComponent({
       email: "",
       password: "",
     });
+
+    async function handleLoginCancel() {
+       routerManager(RouterName.SignIn, { path: RouterName.SignIn });
+    }
 
     async function handleLoginIn() {
       let canRun = true;
@@ -73,6 +78,7 @@ export default defineComponent({
       registerForm,
       SignInRules,
       handleLoginIn,
+      handleLoginCancel,
     };
   },
 });

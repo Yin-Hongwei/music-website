@@ -13,9 +13,11 @@
 import { defineComponent, ref, getCurrentInstance, computed, watch } from "vue";
 import { useStore } from "vuex";
 import { HttpManager } from "@/api";
+import { onMounted } from 'vue';
 
 export default defineComponent({
   setup() {
+
     const { proxy } = getCurrentInstance();
     const store = useStore();
     const divRef = ref<HTMLAudioElement>();
@@ -77,6 +79,8 @@ export default defineComponent({
       proxy.$store.commit("setCurTime", 0);
       proxy.$store.commit("setAutoNext", !autoNext.value);
     }
+
+
 
     return {
       songUrl,
