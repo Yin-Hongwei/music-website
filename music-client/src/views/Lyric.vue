@@ -125,6 +125,8 @@ export default defineComponent({
     overflow: auto;
     border-radius: 12px;
     background-color: $color-light-grey;
+    display: flex;
+    justify-content: center;
     .has-lyric {
       position: absolute;
       transition: all 1s;
