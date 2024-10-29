@@ -2,7 +2,7 @@
   <div class="content">
     <el-table highlight-current-row :data="dataList" @row-click="handleClick">
       <el-table-column prop="songName" label="歌曲" />
-      <el-table-column prop="singerName" label="歌手" />
+      <el-table-column prop="singerName" label="艺人" />
       <el-table-column prop="introduction" label="专辑" />
       <el-table-column label="编辑" width="80" align="center">
         <template #default="scope">

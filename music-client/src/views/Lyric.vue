@@ -2,7 +2,7 @@
   <div class="song-container">
     <el-image class="song-pic" fit="contain" :src="attachImageUrl(songPic)" />
     <ul class="song-info">
-      <li>歌手：{{ singerName }}</li>
+      <li>艺人：{{ singerName }}</li>
       <li>歌曲：{{ songTitle }}</li>
     </ul>
   </div>
@@ -49,7 +49,7 @@ export default defineComponent({
     const currentPlayIndex = computed(() => store.getters.currentPlayIndex); // 当前歌曲在歌曲列表的位置
     const curTime = computed(() => store.getters.curTime);
     const songTitle = computed(() => store.getters.songTitle); // 歌名
-    const singerName = computed(() => store.getters.singerName); // 歌手名
+    const singerName = computed(() => store.getters.singerName); // 艺人名
     const songPic = computed(() => store.getters.songPic); // 歌曲图片
     watch(songId, () => {
       lyricArr.value = parseLyric(currentPlayList.value[currentPlayIndex.value].lyric);

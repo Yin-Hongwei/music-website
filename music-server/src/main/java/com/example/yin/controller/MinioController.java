@@ -98,7 +98,7 @@ public class MinioController {
     }
     //获取头像
     ///img/avatorImages/
-    @GetMapping("/img/avatorImages/{fileName:.+}")
+    @GetMapping("/user01/img/avatorImages/{fileName:.+}")
     public ResponseEntity<byte[]> getImage3(@PathVariable String fileName) throws Exception {
         InputStream stream = minioClient.getObject(
                 GetObjectArgs.builder()
