@@ -29,10 +29,10 @@ const HttpManager = {
   // 返回歌单里指定歌单ID的歌曲
   getListSongOfSongId: (songListId) => get(`listSong/detail?songListId=${songListId}`),
 
-  // =======================> 歌手 API  完成
-  // 返回所有歌手
+  // =======================> 艺人 API  完成
+  // 返回所有艺人
   getAllSinger: () => get("singer"),
-  // 通过性别对歌手分类
+  // 通过性别对艺人分类
   getSingerOfSex: (sex) => get(`singer/sex/detail?sex=${sex}`),
 
   // =======================> 收藏 API 完成
@@ -74,9 +74,9 @@ const HttpManager = {
   // =======================> 歌曲 API
   // 返回指定歌曲ID的歌曲
   getSongOfId: (id) => get(`song/detail?id=${id}`),
-  // 返回指定歌手ID的歌曲
+  // 返回指定艺人ID的歌曲
   getSongOfSingerId: (id) => get(`song/singer/detail?singerId=${id}`),
-  // 返回指定歌手名的歌曲
+  // 返回指定艺人名的歌曲
   getSongOfSingerName: (keywords) => get(`song/singerName/detail?name=${keywords}`),
   // 下载音乐
   downloadMusic: (url) => get(url, { responseType: "blob" }),

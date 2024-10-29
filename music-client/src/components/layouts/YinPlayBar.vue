@@ -9,7 +9,7 @@
       <div class="info-box">
         <!--歌曲图片-->
       <div @click="goPlayerPage">
-         <el-image class="song-bar-img" fit="contain"/>
+         <el-image class="song-bar-img" fit="contain" :src="attachImageUrl(songPic)"/>
       </div>
         <!--播放开始结束时间-->
         <div v-if="songId">
@@ -166,7 +166,7 @@ export default defineComponent({
       "songId", // 音乐id
       "songUrl", // 音乐地址
       "songTitle", // 歌名
-      "singerName", // 歌手名
+      "singerName", // 艺人名
       "songPic", // 歌曲图片
       "curTime", // 当前音乐的播放位置
       "duration", // 音乐时长

@@ -89,8 +89,7 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     @Override
     public R updateSongListImg(MultipartFile avatorFile, @RequestParam("id") int id) {
         String fileName =avatorFile.getOriginalFilename();
-        String path="/"+bucketName+"/"+"songlist/";
-        String imgPath = path + fileName;
+        String imgPath = "img/songListPic/" + fileName;
         MinioUploadController.uploadSonglistImgFile(avatorFile);
         SongList songList = new SongList();
         songList.setId(id);
