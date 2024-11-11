@@ -8,7 +8,7 @@
     <div class="header-right">
       <div class="header-user-con">
         <div class="user-avator">
-          <img :src="attachImageUrl(userPic)" />
+          <img style="width: 100%;height: 40px;" :src="attachImageUrl(userPic)" />
         </div>
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
