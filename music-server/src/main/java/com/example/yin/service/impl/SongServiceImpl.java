@@ -53,23 +53,24 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
         BeanUtils.copyProperties(addSongRequest, song);
         String pic = "/img/songPic/tubiao.jpg";
         String fileName = mpfile.getOriginalFilename();
-        String storeUrlPath = "/song/" + fileName;
+        String s = MinioUploadController.uploadFile(mpfile);
+        String storeUrlPath = "/"+bucketName+"/" + fileName;
         song.setCreateTime(new Date());
         song.setUpdateTime(new Date());
         song.setPic(pic);
         song.setUrl(storeUrlPath);
 
-//        if (lrcfile!=null&&(song.getLyric().equals("[00:00:00]暂无歌词"))){
-//            byte[] fileContent = new byte[0];
-//            try {
-//                fileContent = lrcfile.getBytes();
-//                String content = new String(fileContent, "GB2312");
-//                song.setLyric(content);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-        if (songMapper.insert(song) > 0) {
+        if (lrcfile!=null&&(song.getLyric().equals("[00:00:00]暂无歌词"))){
+            byte[] fileContent = new byte[0];
+            try {
+                fileContent = lrcfile.getBytes();
+                String content = new String(fileContent, "GB2312");
+                song.setLyric(content);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (s.equals("File uploaded successfully!")&&songMapper.insert(song) > 0) {
             return R.success("上传成功", storeUrlPath);
         } else {
             return R.error("上传失败");
@@ -135,7 +136,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
     @Override
     public R updateSongPic(MultipartFile urlFile, int id) {
         String fileName =  urlFile.getOriginalFilename();
-        String storeUrlPath = "/img/songPic/" + fileName;
+        String storeUrlPath = "/user01/singer/song/" + fileName;
         MinioUploadController.uploadSongImgFile(urlFile);
         Song song = new Song();
         song.setId(id);
