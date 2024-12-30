@@ -150,7 +150,37 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
 
     @Override
     public R deleteSong(Integer id) {
+        Song song = songMapper.selectById(id);
+        String path = song.getUrl();
+        String[] parts = path.split("/");
+        String fileName = parts[parts.length - 1];
+        System.out.println(fileName);
+        RemoveObjectArgs removeObjectArgs=RemoveObjectArgs.builder()
+                .bucket(bucketName)
+                .object(fileName)
+                .build();
         if (songMapper.deleteById(id) > 0) {
+            try {
+                minioClient.removeObject(removeObjectArgs);
+            } catch (ErrorResponseException e) {
+                throw new RuntimeException(e);
+            } catch (InsufficientDataException e) {
+                throw new RuntimeException(e);
+            } catch (InternalException e) {
+                throw new RuntimeException(e);
+            } catch (InvalidKeyException e) {
+                throw new RuntimeException(e);
+            } catch (InvalidResponseException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            } catch (ServerException e) {
+                throw new RuntimeException(e);
+            } catch (XmlParserException e) {
+                throw new RuntimeException(e);
+            }
             return R.success("删除成功");
         } else {
             return R.error("删除失败");
