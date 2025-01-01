@@ -14,7 +14,7 @@
       <el-form-item class="sign-btn">
         <el-button @click="handleSignUp">注册</el-button>
         <el-button type="primary" @click="handleLoginIn">登录</el-button>
-<!--        <el-button @click="handleForgotPassword">忘记密码</el-button>-->
+        <el-button @click="handleForgotPassword">忘记密码</el-button>
         <el-button @click="handleEmail">邮箱登录</el-button>
       </el-form-item>
     </el-form>
