@@ -26,18 +26,18 @@ export default function () {
   }
 
   function beforeImgUpload(file) {
-    const ltCode = 2;
-    const isLt2M = file.size / 1024 / 1024 < ltCode;
+    const ltCode = 5;
+    const isLt5M = file.size / 1024 / 1024 < ltCode;
     const isExistFileType = uploadTypes.value.includes(file.type.replace(/image\//, ""));
 
     if (!isExistFileType) {
       (proxy as any).$message.error(`图片只支持 ${uploadTypes.value.join("、")} 格式!`);
     }
-    if (!isLt2M) {
+    if (!isLt5M) {
       (proxy as any).$message.error(`上传头像图片大小不能超过 ${ltCode}MB!`);
     }
-    
-    return isExistFileType && isLt2M;
+
+    return isExistFileType && isLt5M;
   }
 
   function beforeSongUpload(file) {
