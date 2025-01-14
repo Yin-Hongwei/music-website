@@ -67,7 +67,7 @@ public class ConsumerController {
         String code = stringRedisTemplate.opsForValue().get("code");
         if (user==null){
             return R.fatal("用户不存在");
-        }else if (code == null || !code.equals(passwordRequest.getCode())){
+        }else if (!code.equals(passwordRequest.getCode())){
             return R.fatal("验证码不存在或失效");
         }
         ConsumerRequest consumerRequest=new ConsumerRequest();
@@ -92,7 +92,7 @@ public class ConsumerController {
         String code = RandomUtils.code();
         simpleOrderManager.sendCode(code,email);
         //保存在redis中
-        stringRedisTemplate.opsForValue().set("code",code,1, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set("code",code,5, TimeUnit.MINUTES);
         return R.success("发送成功");
     }
 
