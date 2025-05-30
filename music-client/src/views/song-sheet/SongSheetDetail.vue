@@ -73,11 +73,9 @@ export default defineComponent({
     }
     async function getUserRank(userId, songListId) {
       const result = (await HttpManager.getUserRank(userId, songListId)) as ResponseBody;
-      if (result.data.data){
-        nowScore.value = result.data.data / 2;
-        disabledRank.value = true;
-        assistText.value = "已评价";
-      }
+      nowScore.value = result.data / 2;
+      disabledRank.value = true;
+      assistText.value = "已评价";
     }
     // 提交评分
     async function pushValue() {

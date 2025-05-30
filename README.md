@@ -207,8 +207,8 @@ docker compose up --build
 
 <br/>
 
-
 ## License
 
-Copyright (c) 2018 Yin-Hongwei 
+This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) license. The project cannot be used for commercial purposes.
 
+Copyright (c) 2018 Yin-Hongwei 

@@ -28,7 +28,7 @@ export default function () {
     return str.split("-")[1];
   }
 
-  // 获取艺人名
+  // 获取歌手名
   function getSingerName(str) {
     return str.split("-")[0];
   }

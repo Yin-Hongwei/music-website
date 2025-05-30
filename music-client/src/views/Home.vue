@@ -1,14 +1,14 @@
 <template>
   <!--轮播图-->
-  <el-carousel v-if="swiperList.length" class="swiper-container" type="card" height="20vw" :interval="2300">
+  <el-carousel v-if="swiperList.length" class="swiper-container" type="card" height="20vw" :interval="4000">
     <el-carousel-item v-for="(item, index) in swiperList" :key="index">
       <img :src="HttpManager.attachImageUrl(item.pic)" />
     </el-carousel-item>
   </el-carousel>
   <!--热门歌单-->
   <play-list class="play-list-container" title="歌单" path="song-sheet-detail" :playList="songList"></play-list>
-  <!--热门艺人-->
-  <play-list class="play-list-container" title="艺人" path="singer-detail" :playList="singerList"></play-list>
+  <!--热门歌手-->
+  <play-list class="play-list-container" title="歌手" path="singer-detail" :playList="singerList"></play-list>
 </template>
 
 <script lang="ts" setup>
@@ -20,7 +20,7 @@ import { HttpManager } from "@/api";
 import mixin from "@/mixins/mixin";
 
 const songList = ref([]); // 歌单列表
-const singerList = ref([]); // 艺人列表
+const singerList = ref([]); // 歌手列表
 const swiperList = ref([]);// 轮播图 每次都在进行查询
 const { changeIndex } = mixin();
 try {
