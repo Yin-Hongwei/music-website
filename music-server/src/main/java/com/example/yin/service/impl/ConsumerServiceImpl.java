@@ -127,7 +127,8 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
         Consumer consumer = new Consumer();
         consumer.setId(id);
         consumer.setAvator(imgPath);
-        if (consumerMapper.updateById(consumer) > 0) {
+        String s = MinioUploadController.uploadAtorImgFile(avatorFile);
+        if (s.equals("File uploaded successfully!")&&consumerMapper.updateById(consumer) > 0) {
             return R.success("上传成功", imgPath);
         } else {
             return R.error("上传失败");

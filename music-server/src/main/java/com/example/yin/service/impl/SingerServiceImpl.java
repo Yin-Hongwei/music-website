@@ -37,7 +37,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
     public R updateSingerPic(MultipartFile avatorFile, int id) {
         String fileName =  avatorFile.getOriginalFilename();
         MinioUploadController.uploadImgFile(avatorFile);
-        String imgPath = "/img/singerPic/" + fileName;
+        String imgPath = "/user01/singer/img/" + fileName;
         Singer singer = new Singer();
         singer.setId(id);
         singer.setPic(imgPath);
