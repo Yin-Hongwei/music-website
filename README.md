@@ -203,7 +203,7 @@ docker compose up --build
 
 如果此项目对你确实有帮助，欢迎给我打赏一杯咖啡～😄
 
-![image-20240108131927175](https://piccdn2.umiwi.com/fe-oss/default/MTc1NTU4NzU5MTQy.jpeg)
+<img src="https://piccdn2.umiwi.com/fe-oss/default/MTc1NTU4NzgxOTM3.png" width="300px"/>
 
 <br/>
 
