@@ -30,6 +30,7 @@ public class ConsumerController {
     @Autowired
     private SimpleOrderManager simpleOrderManager;
 
+
     @Autowired
     StringRedisTemplate stringRedisTemplate;
     /**
@@ -42,7 +43,7 @@ public class ConsumerController {
     }
 
     /**
-     * TODO 前台页面调用  登录
+     *
      * 登录判断
      */
     @PostMapping("/user/login/status")
@@ -89,10 +90,7 @@ public class ConsumerController {
         if (user==null){
             return R.fatal("用户不存在");
         }
-        String code = RandomUtils.code();
-        simpleOrderManager.sendCode(code,email);
-        //保存在redis中
-        stringRedisTemplate.opsForValue().set("code",code,5, TimeUnit.MINUTES);
+        simpleOrderManager.sendCode(email);
         return R.success("发送成功");
     }
 
@@ -135,7 +133,7 @@ public class ConsumerController {
     }
 
     /**
-     * TODO 前后台更新用户的密码
+     *
      * 更新用户密码
      */
     @PostMapping("/user/updatePassword")

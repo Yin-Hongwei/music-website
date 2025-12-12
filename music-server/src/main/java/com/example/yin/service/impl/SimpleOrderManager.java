@@ -5,13 +5,18 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import com.example.yin.model.domain.Order;
 import com.example.yin.service.OrderManager;
+import com.example.yin.utils.RandomUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
+
 /**
  * 邮箱信息的发送
  */
@@ -24,6 +29,9 @@ public class SimpleOrderManager implements OrderManager {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     public void setMailSender(JavaMailSender mailSender) {
         this.mailSender = mailSender;
@@ -48,7 +56,8 @@ public class SimpleOrderManager implements OrderManager {
         }
     }
 
-    public void sendCode(String code, String reciveAddress) {
+    public void sendCode(String reciveAddress) {
+        String code = RandomUtils.code();
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
             public void prepare(@NotNull MimeMessage mimeMessage) throws Exception {
                 mimeMessage.setRecipient(Message.RecipientType.TO,
@@ -57,6 +66,12 @@ public class SimpleOrderManager implements OrderManager {
                 mimeMessage.setText("Dear you code is " + code);
             }
         };
-        this.mailSender.send(preparator);
+        try {
+            this.mailSender.send(preparator);
+        } catch (MailException e) {
+            System.err.println(e.getMessage());
+        }
+        //将验证码保存在redis中
+        redisTemplate.opsForValue().set("code",code,5, TimeUnit.MINUTES);
     }
 }
