@@ -8,6 +8,7 @@ import com.example.yin.utils.TestFileUtil;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.errors.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -29,13 +30,12 @@ import java.nio.file.Files;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/download")
 public class FileDownloadController {
 
-    @Autowired
-    private MinioClient minioClient;
+    private final MinioClient minioClient;
     @Value("${minio.bucket-name}")
     private String bucketName;
 

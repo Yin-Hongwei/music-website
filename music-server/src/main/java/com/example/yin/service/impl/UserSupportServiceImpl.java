@@ -7,8 +7,8 @@ import com.example.yin.mapper.UserSupportMapper;
 import com.example.yin.model.domain.UserSupport;
 import com.example.yin.model.request.UserSupportRequest;
 import com.example.yin.service.UserSupportService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service;
  * @description 针对表【user_support】的数据库操作Service实现
  * @createDate 2022-06-11 16:06:28
  */
+@RequiredArgsConstructor
 @Service
 public class UserSupportServiceImpl extends ServiceImpl<UserSupportMapper, UserSupport>
         implements UserSupportService {
 
-    @Autowired
-    private UserSupportMapper userSupportMapper;
+    private final UserSupportMapper userSupportMapper;
 
     @Override
     public R isUserSupportComment(UserSupportRequest userSupportRequest) {

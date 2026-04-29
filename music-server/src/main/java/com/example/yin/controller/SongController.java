@@ -3,6 +3,7 @@ package com.example.yin.controller;
 import com.example.yin.common.R;
 import com.example.yin.model.request.SongRequest;
 import com.example.yin.service.SongService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
@@ -17,12 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.MultipartConfigElement;
 import java.io.IOException;
-
+@RequiredArgsConstructor
 @RestController
 public class SongController {
 
-    @Autowired
-    private SongService songService;
+    private final SongService songService;
 
 
     @Bean

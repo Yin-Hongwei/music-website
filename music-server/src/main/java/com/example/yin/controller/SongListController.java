@@ -3,15 +3,16 @@ package com.example.yin.controller;
 import com.example.yin.common.R;
 import com.example.yin.model.request.SongListRequest;
 import com.example.yin.service.SongListService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+@RequiredArgsConstructor
 @RestController
 public class SongListController {
 
-    @Autowired
-    private SongListService songListService;
+
+    private final SongListService songListService;
 
 
     // 添加歌单
