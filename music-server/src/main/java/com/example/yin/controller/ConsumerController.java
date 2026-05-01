@@ -9,6 +9,7 @@ import com.example.yin.service.ConsumerService;
 import com.example.yin.service.impl.ConsumerServiceImpl;
 import com.example.yin.service.impl.SimpleOrderManager;
 import com.example.yin.utils.RandomUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -17,21 +18,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.concurrent.TimeUnit;
-
+@RequiredArgsConstructor
 @RestController
 public class ConsumerController {
 
-    @Autowired
-    private ConsumerService consumerService;
+    private final ConsumerService consumerService;
 
-    @Autowired
-    ConsumerServiceImpl consumerServiceimpl;
+    private final ConsumerServiceImpl consumerServiceimpl;
 
-    @Autowired
-    private SimpleOrderManager simpleOrderManager;
+    private final SimpleOrderManager simpleOrderManager;
 
-    @Autowired
-    StringRedisTemplate stringRedisTemplate;
+    private final StringRedisTemplate stringRedisTemplate;
     /**
      * TODO 前台页面调用 注册
      * 用户注册

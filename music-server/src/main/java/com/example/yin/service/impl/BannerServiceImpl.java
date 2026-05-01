@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.mapper.BannerMapper;
 import com.example.yin.model.domain.Banner;
 import com.example.yin.service.BannerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -15,12 +16,13 @@ import java.util.List;
  * @description 针对表【banner】的数据库操作Service实现
  * @createDate 2022-06-13 13:13:42
  */
+@RequiredArgsConstructor
 @Service
 public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner>
         implements BannerService {
 
-    @Autowired
-    private BannerMapper bannerMapper;
+
+    private final BannerMapper bannerMapper;
 
     @Cacheable(value = "banner", key = "'list'")  //放在缓存中 redis 是以key-value进行存储的
     @Override

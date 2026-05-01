@@ -2,6 +2,7 @@ package com.example.yin.controller;
 
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,13 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.InputStream;
 
-
+@RequiredArgsConstructor
 @Controller
 public class MinioController {
     @Value("${minio.bucket-name}")
     private String bucketName;
-    @Autowired
-    private MinioClient minioClient;
+
+    private final  MinioClient minioClient;
     //获取歌曲
     @GetMapping("/user01/{fileName:.+}")
     public ResponseEntity<byte[]> getMusic(@PathVariable String fileName) {

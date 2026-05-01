@@ -8,8 +8,8 @@ import com.example.yin.mapper.SongListMapper;
 import com.example.yin.model.domain.SongList;
 import com.example.yin.model.request.SongListRequest;
 import com.example.yin.service.SongListService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,12 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
+@RequiredArgsConstructor
 @Service
 public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> implements SongListService {
 
-    @Autowired
-    private SongListMapper songListMapper;
+    private final SongListMapper songListMapper;
     @Value("${minio.bucket-name}")
     String bucketName;
 

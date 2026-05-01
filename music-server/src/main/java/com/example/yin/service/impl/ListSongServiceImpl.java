@@ -7,17 +7,18 @@ import com.example.yin.mapper.ListSongMapper;
 import com.example.yin.model.domain.ListSong;
 import com.example.yin.model.request.ListSongRequest;
 import com.example.yin.service.ListSongService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@RequiredArgsConstructor
 @Service
 public class ListSongServiceImpl extends ServiceImpl<ListSongMapper, ListSong> implements ListSongService {
 
-    @Autowired
-    private ListSongMapper listSongMapper;
+
+    private final ListSongMapper listSongMapper;
 
     @Override
     public List<ListSong> allListSong() {

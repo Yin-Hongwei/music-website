@@ -7,14 +7,15 @@ import com.example.yin.mapper.CollectMapper;
 import com.example.yin.model.domain.Collect;
 import com.example.yin.model.request.CollectRequest;
 import com.example.yin.service.CollectService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+@RequiredArgsConstructor
 @Service
 public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> implements CollectService {
-    @Autowired
-    private CollectMapper collectMapper;
+
+    private final CollectMapper collectMapper;
 
     @Override
     public R addCollection(CollectRequest addCollectRequest) {

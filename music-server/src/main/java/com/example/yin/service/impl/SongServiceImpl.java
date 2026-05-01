@@ -11,6 +11,7 @@ import com.example.yin.service.SongService;
 import io.minio.MinioClient;
 import io.minio.RemoveObjectArgs;
 import io.minio.errors.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,12 +30,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@RequiredArgsConstructor
 @Service
 public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements SongService {
 
-    @Autowired
-    private SongMapper songMapper;
+    private final SongMapper songMapper;
 
     @Value("${minio.bucket-name}")
     private String bucketName;

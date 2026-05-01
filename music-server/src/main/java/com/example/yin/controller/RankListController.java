@@ -3,14 +3,14 @@ package com.example.yin.controller;
 import com.example.yin.common.R;
 import com.example.yin.model.request.RankListRequest;
 import com.example.yin.service.RankListService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+@RequiredArgsConstructor
 @RestController
 public class RankListController {
 
-    @Autowired
-    private RankListService rankListService;
+    private final RankListService rankListService;
 
 
     // 提交评分
