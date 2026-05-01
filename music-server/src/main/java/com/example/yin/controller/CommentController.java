@@ -3,13 +3,13 @@ package com.example.yin.controller;
 import com.example.yin.common.R;
 import com.example.yin.model.request.CommentRequest;
 import com.example.yin.service.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+@RequiredArgsConstructor
 @RestController
 public class CommentController {
-    @Autowired
-    private CommentService commentService;
+    private final CommentService commentService;
 
 
     // 提交评论

@@ -7,6 +7,7 @@ import com.example.yin.model.request.ListSongRequest;
 import com.example.yin.service.ListSongService;
 import com.example.yin.service.SongListService;
 import com.example.yin.utils.TestFileUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -21,14 +22,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
-
+@RequiredArgsConstructor
 @RestController
 public class ListSongController {
 
-    @Autowired
-    private ListSongService listSongService;
-    @Autowired
-    private SongListService service;
+    private final ListSongService listSongService;
+    private final SongListService service;
     // 给歌单添加歌曲
     @PostMapping("/listSong/add")
     public R addListSong(@RequestBody ListSongRequest addListSongRequest) {

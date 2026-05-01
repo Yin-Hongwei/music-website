@@ -7,14 +7,15 @@ import com.example.yin.mapper.CommentMapper;
 import com.example.yin.model.domain.Comment;
 import com.example.yin.model.request.CommentRequest;
 import com.example.yin.service.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+@RequiredArgsConstructor
 @Service
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
-    @Autowired
-    private CommentMapper commentMapper;
+
+    private final CommentMapper commentMapper;
 
     @Override
     public R addComment(CommentRequest addCommentRequest) {

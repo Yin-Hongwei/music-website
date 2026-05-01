@@ -7,6 +7,7 @@ import com.example.yin.mapper.RankListMapper;
 import com.example.yin.model.domain.RankList;
 import com.example.yin.model.request.RankListRequest;
 import com.example.yin.service.RankListService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,13 @@ import org.springframework.stereotype.Service;
 /**
  * @author Administrator
  */
+@RequiredArgsConstructor
 @Service
 public class RankListServiceImpl extends ServiceImpl<RankListMapper, RankList> implements RankListService {
 
 
-    @Autowired
-    private RankListMapper rankMapper;
+
+    private final RankListMapper rankMapper;
 
     @Override
     public R addRank(RankListRequest rankListAddRequest) {

@@ -5,6 +5,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import com.example.yin.model.domain.Order;
 import com.example.yin.service.OrderManager;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,19 +16,15 @@ import org.springframework.stereotype.Service;
 /**
  * 邮箱信息的发送
  */
-
+@RequiredArgsConstructor
 @Service
 public class SimpleOrderManager implements OrderManager {
 
     @Value("${mail.address}")
     private String sendAddress;
 
-    @Autowired
-    private JavaMailSender mailSender;
 
-    public void setMailSender(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
+    private final JavaMailSender mailSender;
 
     public void sendPassword(Order order, String reciveAddress) {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {

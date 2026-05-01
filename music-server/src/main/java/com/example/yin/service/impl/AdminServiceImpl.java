@@ -7,16 +7,17 @@ import com.example.yin.mapper.AdminMapper;
 import com.example.yin.model.domain.Admin;
 import com.example.yin.model.request.AdminRequest;
 import com.example.yin.service.AdminService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-
+@RequiredArgsConstructor
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements AdminService {
 
-    @Autowired
-    private AdminMapper adminMapper;
+
+    private  final AdminMapper adminMapper;
 
     @Override
     public R verityPasswd(AdminRequest adminRequest, HttpSession session) {

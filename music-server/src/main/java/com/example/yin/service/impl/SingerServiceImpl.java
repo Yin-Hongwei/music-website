@@ -8,19 +8,18 @@ import com.example.yin.mapper.SingerMapper;
 import com.example.yin.model.domain.Singer;
 import com.example.yin.model.request.SingerRequest;
 import com.example.yin.service.SingerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-
+@RequiredArgsConstructor
 @Service
 public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> implements SingerService {
 
-    @Autowired
-    private SingerMapper singerMapper;
+    private final SingerMapper singerMapper;
 
     @Override
     public R updateSingerMsg(SingerRequest updateSingerRequest) {
