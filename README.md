@@ -193,6 +193,17 @@ docker compose up --build
 
 ![image-20240108131927175](https://i0.wp.com/tvax4.sinaimg.cn/large/007mxWTugy1icr99iumhpj319y0hjwyi.jpg)
 
+<br/>
+
+## 贡献者
+
+感谢所有为本仓库提交过代码与改进建议的贡献者。
+
+<a href="https://github.com/Yin-Hongwei/music-website/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Yin-Hongwei/music-website" alt="Contributors" />
+</a>
+
+<br/>
 
 ## 赞助
 

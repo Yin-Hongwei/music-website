@@ -186,6 +186,18 @@ Expected result:
 
 ![Docker run result](https://i0.wp.com/tvax4.sinaimg.cn/large/007mxWTugy1icr99iumhpj319y0hjwyi.jpg)
 
+<br/>
+
+## Contributors
+
+Thanks to everyone who has contributed code and improvement suggestions to this repository.
+
+<a href="https://github.com/Yin-Hongwei/music-website/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Yin-Hongwei/music-website" alt="Contributors" />
+</a>
+
+<br/>
+
 ## Support
 
 If this project helped you, you are welcome to buy the author a coffee.
