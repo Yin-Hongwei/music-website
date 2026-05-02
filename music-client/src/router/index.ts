@@ -6,27 +6,32 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/404",
-    component: () => import("@/views/error/404.vue"),
+    component: () => import("@/pages/error/404.vue"),
   },
   {
     path: "/",
-    name: "yin-container",
-    component: () => import("@/views/YinContainer.vue"),
+    name: "yin-app-layout",
+    component: () => import("@/components/layouts/YinAppLayout.vue"),
     children: [
       {
         path: "/",
         name: "home",
-        component: () => import("@/views/Home.vue"),
+        component: () => import("@/pages/home/Home.vue"),
       },
       {
         path: "/sign-in",
         name: "sign-in",
-        component: () => import("@/views/SignIn.vue"),
+        component: () => import("@/pages/auth/SignIn.vue"),
       },
       {
         path: "/sign-up",
         name: "sign-up",
-        component: () => import("@/views/SignUp.vue"),
+        component: () => import("@/pages/auth/SignUp.vue"),
+      },
+      {
+        path: "/forgot-password",
+        name: "forgot-password",
+        component: () => import("@/pages/auth/ForgotPassword.vue"),
       },
       {
         path: "/personal",
@@ -34,52 +39,42 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           requireAuth: true,
         },
-        component: () => import("@/views/personal/Personal.vue"),
+        component: () => import("@/pages/user/Personal.vue"),
       },
       {
         path: "/song-sheet",
         name: "song-sheet",
-        component: () => import("@/views/song-sheet/SongSheet.vue"),
+        component: () => import("@/pages/song-sheet/SongSheet.vue"),
       },
       {
         path: "/song-sheet-detail/:id",
         name: "song-sheet-detail",
-        component: () => import("@/views/song-sheet/SongSheetDetail.vue"),
+        component: () => import("@/pages/song-sheet/SongSheetDetail.vue"),
       },
       {
         path: "/singer",
         name: "singer",
-        component: () => import("@/views/singer/Singer.vue"),
+        component: () => import("@/pages/singer/Singer.vue"),
       },
       {
         path: "/singer-detail/:id",
         name: "singer-detail",
-        component: () => import("@/views/singer/SingerDetail.vue"),
+        component: () => import("@/pages/singer/SingerDetail.vue"),
       },
       {
         path: "/lyric/:id",
         name: "lyric",
-        component: () => import("@/views/Lyric.vue"),
+        component: () => import("@/pages/lyric/Lyric.vue"),
       },
       {
         path: "/search",
         name: "search",
-        component: () => import("@/views/search/Search.vue"),
+        component: () => import("@/pages/search/Search.vue"),
       },
       {
         path: "/personal-data",
         name: "personal-data",
-        component: () => import("@/views/setting/PersonalData.vue"),
-      },
-      {
-        path: "/FPassword",
-        name: "FPassword",
-        component: ()=> import("@/views/FPassword.vue"),
-      },
-      {
-        path: "/loginByemail",
-        name: "loginByemail",
-        component: ()=> import("@/views/loginByemail.vue"),
+        component: () => import("@/pages/user/PersonalData.vue"),
       },
       {
         path: "/setting",
@@ -87,7 +82,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           requireAuth: true,
         },
-        component: () => import("@/views/setting/Setting.vue"),
+        component: () => import("@/pages/user/Setting.vue"),
         children: [
           {
             path: "/setting/PersonalData",
@@ -95,7 +90,7 @@ const routes: Array<RouteRecordRaw> = [
             meta: {
               requireAuth: true,
             },
-            component: () => import("@/views/setting/PersonalData.vue"),
+            component: () => import("@/pages/user/PersonalData.vue"),
           }
         ]
       },

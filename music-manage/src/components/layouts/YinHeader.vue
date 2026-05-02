@@ -7,13 +7,13 @@
     <div class="logo">{{ nusicName }}</div>
     <div class="header-right">
       <div class="header-user-con">
-        <div class="user-avator">
+        <div class="user-avatar">
           <img :src="attachImageUrl(userPic)" />
         </div>
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
             {{ username }}
-            <i class="el-icon-caret-bottom"></i>
+            <el-icon class="dropdown-caret"><arrow-down /></el-icon>
           </span>
           <template #dropdown>
             <el-dropdown-menu>
@@ -27,25 +27,26 @@
 </template>
 <script lang="ts">
 import { defineComponent, computed, ref, onMounted } from "vue";
-import { useStore } from "vuex";
+import { useAppStore } from "@/stores/app";
 import mixin from "@/mixins/mixin";
-import { Expand, Fold } from "@element-plus/icons-vue";
+import { ArrowDown, Expand, Fold } from "@element-plus/icons-vue";
 import emitter from "@/utils/emitter";
-import { HttpManager } from "@/api";
+import { attachImageUrl } from "@/api/url";
 import { RouterName, MUSICNAME } from "@/enums";
 
 export default defineComponent({
   components: {
+    ArrowDown,
     Expand,
     Fold,
   },
   setup() {
     const { routerManager } = mixin();
-    const store = useStore();
+    const appStore = useAppStore();
 
     const collapse = ref(true);
     const username = ref("admin");
-    const userPic = computed(() => store.getters.userPic);
+    const userPic = computed(() => appStore.userPic);
     const nusicName = ref(MUSICNAME);
 
     onMounted(() => {
@@ -72,17 +73,18 @@ export default defineComponent({
       collapse,
       collapseChage,
       handleCommand,
-      attachImageUrl: HttpManager.attachImageUrl,
+      attachImageUrl,
     };
   },
 });
 </script>
 <style scoped>
 .header {
-  position: absolute;
+  position: relative;
   z-index: 100;
   width: 100%;
   height: 60px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   font-size: 20px;
@@ -117,7 +119,7 @@ export default defineComponent({
   margin-left: 10px;
 }
 
-.user-avator img {
+.user-avatar img {
   display: block;
   width: 40px;
   height: 40px;
@@ -126,6 +128,13 @@ export default defineComponent({
 
 .el-dropdown-link {
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dropdown-caret {
+  font-size: 12px;
 }
 
 .el-dropdown-menu__item {

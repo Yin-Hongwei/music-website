@@ -4,10 +4,10 @@
   <resultMap id="BaseResultMap" type="com.example.yin.model.domain.ListSong">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="song_id" property="songId" jdbcType="INTEGER" />
-    <result column="song_list_id" property="songListId" jdbcType="INTEGER" />
+    <result column="song_sheet_id" property="songListId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, song_id, song_list_id
+    id, song_id, song_sheet_id
   </sql>
 
 </mapper>

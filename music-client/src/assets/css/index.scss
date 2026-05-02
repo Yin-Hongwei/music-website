@@ -41,8 +41,12 @@ header {
   margin: 0;
 }
 
-html, body, #app {
+html,
+body,
+#app {
   height: 100%;
+  font-family: $font-family;
+  -webkit-font-smoothing: antialiased;
 }
 
 ul,

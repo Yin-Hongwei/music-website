@@ -18,7 +18,11 @@ public interface SingerService extends IService<Singer> {
 
     R allSinger();
 
+    R pageSinger(Integer page, Integer size);
+
     R singerOfName(String name);
 
     R singerOfSex(Integer sex);
+
+    R allSingerStyle();
 }

@@ -1,6 +1,10 @@
 package com.example.yin.model.domain;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -16,6 +20,7 @@ public class Comment {
 
     private Integer songId;
 
+    @TableField("song_sheet_id")
     private Integer songListId;
 
     private String content;
@@ -25,7 +30,8 @@ public class Comment {
 
     private Byte type;
 
-    private Integer up;
+    @TableField("like_count")
+    private Integer likeCount;
 
 
     @Override

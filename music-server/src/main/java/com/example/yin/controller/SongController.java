@@ -4,20 +4,15 @@ import com.example.yin.common.R;
 import com.example.yin.model.request.SongRequest;
 import com.example.yin.service.SongService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.util.unit.DataSize;
 import org.springframework.util.unit.DataUnit;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.MultipartConfigElement;
-import java.io.IOException;
+
 @RequiredArgsConstructor
 @RestController
 public class SongController {
@@ -36,11 +31,10 @@ public class SongController {
     }
 
 
-
     // 添加歌曲
     @PostMapping("/song/add")
-    public R addSong(SongRequest addSongRequest,@RequestParam("lrcfile") MultipartFile lrcfile, @RequestParam("file") MultipartFile mpfile) {
-        return songService.addSong(addSongRequest,lrcfile,mpfile);
+    public R addSong(SongRequest addSongRequest, @RequestParam("file") MultipartFile mpfile) {
+        return songService.addSong(addSongRequest,mpfile);
     }
 
     // 删除歌曲
@@ -55,6 +49,16 @@ public class SongController {
         return songService.allSong();
     }
 
+    @GetMapping("/song/page")
+    public R pageSong(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size
+    ) {
+        int safePage = Math.max(page, 1);
+        int safeSize = Math.max(size, 1);
+        return songService.pageSong(safePage, safeSize);
+    }
+
     //TODO ok
     // 返回指定歌曲ID的歌曲
     @GetMapping("/song/detail")
@@ -64,10 +68,12 @@ public class SongController {
 
     // 返回指定歌手ID的歌曲
     @GetMapping("/song/singer/detail")
-    public R songOfSingerId(@RequestParam int singerId) {
+    public R songOfSingerId(@RequestParam(value = "singerId", required = true) Integer singerId) {
+        if (singerId == null) {
+            return R.error("singerId参数不能为空");
+        }
         return songService.songOfSingerId(singerId);
     }
-
 
     // 返回指定歌手名的歌曲
     @GetMapping("/song/singerName/detail")
@@ -92,11 +98,4 @@ public class SongController {
     public R updateSongUrl(@RequestParam("file") MultipartFile urlFile, @RequestParam("id") int id) {
         return songService.updateSongUrl(urlFile, id);
     }
-    ///song/lrc/update
-    //更新歌词
-    @PostMapping("/song/lrc/update")
-    public R updateSongLrc(@RequestParam("file") MultipartFile lrcFile, @RequestParam("id") int id) {
-        return songService.updateSongLrc(lrcFile, id);
-    }
-
 }

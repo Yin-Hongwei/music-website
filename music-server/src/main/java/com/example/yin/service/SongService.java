@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface SongService extends IService<Song> {
 
-    R addSong (SongRequest addSongRequest,MultipartFile lrcfile,  MultipartFile mpfile);
+    R addSong (SongRequest addSongRequest,  MultipartFile mpfile);
 
     R updateSongMsg(SongRequest updateSongRequest);
 
@@ -20,11 +20,11 @@ public interface SongService extends IService<Song> {
 
     R allSong();
 
+    R pageSong(Integer page, Integer size);
+
     R songOfSingerId(Integer singerId);
 
     R songOfId(Integer id);
 
     R songOfSingerName(String name);
-
-    R updateSongLrc(MultipartFile lrcFile, int id);
 }

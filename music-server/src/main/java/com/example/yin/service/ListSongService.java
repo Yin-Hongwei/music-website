@@ -19,4 +19,6 @@ public interface ListSongService extends IService<ListSong> {
     List<ListSong> allListSong();
 
     R listSongOfSongId(Integer songListId);
+
+    R songDetailOfSongListId(Integer songListId);
 }

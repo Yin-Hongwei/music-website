@@ -4,21 +4,27 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.yin.common.R;
 import com.example.yin.mapper.ListSongMapper;
+import com.example.yin.mapper.SongMapper;
 import com.example.yin.model.domain.ListSong;
+import com.example.yin.model.domain.Song;
 import com.example.yin.model.request.ListSongRequest;
 import com.example.yin.service.ListSongService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 @RequiredArgsConstructor
 @Service
 public class ListSongServiceImpl extends ServiceImpl<ListSongMapper, ListSong> implements ListSongService {
 
-
     private final ListSongMapper listSongMapper;
+
+    private final SongMapper songMapper;
 
     @Override
     public List<ListSong> allListSong() {
@@ -61,8 +67,44 @@ public class ListSongServiceImpl extends ServiceImpl<ListSongMapper, ListSong> i
     @Override
     public R listSongOfSongId(Integer songListId) {
         QueryWrapper<ListSong> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("song_list_id",songListId);
+        queryWrapper.eq("song_sheet_id", songListId);
         return R.success("查询成功", listSongMapper.selectList(queryWrapper));
+    }
+
+    @Override
+    public R songDetailOfSongListId(Integer songListId) {
+        QueryWrapper<ListSong> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("song_sheet_id", songListId);
+        List<ListSong> listSongList = listSongMapper.selectList(queryWrapper);
+        List<Map<String, Object>> songList = new ArrayList<>();
+        for (ListSong listSong : listSongList) {
+            Song song = songMapper.selectById(listSong.getSongId());
+            if (song != null) {
+                String name = song.getName();
+                String singerName = "";
+                String songName = "";
+                if (name != null) {
+                    String[] splitName = name.split("-", 2);
+                    singerName = splitName[0].trim();
+                    songName = splitName.length > 1 ? splitName[1].trim() : splitName[0].trim();
+                }
+
+                Map<String, Object> songMap = new LinkedHashMap<>();
+                songMap.put("id", song.getId());
+                songMap.put("singerId", song.getSingerId());
+                songMap.put("name", song.getName());
+                songMap.put("songName", songName);
+                songMap.put("singerName", singerName);
+                songMap.put("introduction", song.getIntroduction());
+                songMap.put("createTime", song.getCreateTime());
+                songMap.put("updateTime", song.getUpdateTime());
+                songMap.put("pic", song.getPic());
+                songMap.put("lyric", song.getLyric());
+                songMap.put("url", song.getUrl());
+                songList.add(songMap);
+            }
+        }
+        return R.success("查询成功", songList);
     }
 
 }

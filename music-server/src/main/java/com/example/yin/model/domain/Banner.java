@@ -20,6 +20,16 @@ public class Banner implements Serializable {
      */
     private String pic;
 
+    /**
+     * 点击轮播图后的跳转地址（可为空）
+     */
+    private String url;
+
+    /**
+     * 轮播图标题（可为空）
+     */
+    private String title;
+
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -35,7 +45,9 @@ public class Banner implements Serializable {
         }
         Banner other = (Banner) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getPic() == null ? other.getPic() == null : this.getPic().equals(other.getPic()));
+            && (this.getPic() == null ? other.getPic() == null : this.getPic().equals(other.getPic()))
+            && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
+            && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()));
     }
 
     @Override
@@ -44,6 +56,8 @@ public class Banner implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getPic() == null) ? 0 : getPic().hashCode());
+        result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
+        result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
         return result;
     }
 
@@ -55,6 +69,8 @@ public class Banner implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", pic=").append(pic);
+        sb.append(", url=").append(url);
+        sb.append(", title=").append(title);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

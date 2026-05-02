@@ -17,4 +17,30 @@
     introduction
   </sql>
 
+  <select id="selectRecommendedSongLists" resultMap="ResultMapWithBLOBs">
+    SELECT
+      sl.id,
+      sl.title,
+      sl.pic,
+      sl.style,
+      sl.introduction
+    FROM song_sheet sl
+    LEFT JOIN (
+      SELECT song_sheet_id, COUNT(*) AS collect_count
+      FROM collect
+      WHERE song_sheet_id IS NOT NULL
+      GROUP BY song_sheet_id
+    ) c ON c.song_sheet_id = sl.id
+    LEFT JOIN (
+      SELECT song_sheet_id, COUNT(*) AS comment_count
+      FROM comment
+      WHERE song_sheet_id IS NOT NULL
+      GROUP BY song_sheet_id
+    ) cm ON cm.song_sheet_id = sl.id
+    ORDER BY
+      (COALESCE(c.collect_count, 0) * 0.7 + COALESCE(cm.comment_count, 0) * 0.3) DESC,
+      sl.id DESC
+    LIMIT #{limit}
+  </select>
+
 </mapper>

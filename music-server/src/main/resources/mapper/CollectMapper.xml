@@ -6,11 +6,11 @@
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="TINYINT" />
     <result column="song_id" property="songId" jdbcType="INTEGER" />
-    <result column="song_list_id" property="songListId" jdbcType="INTEGER" />
+    <result column="song_sheet_id" property="songListId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, type, song_id, song_list_id, create_time
+    id, user_id, type, song_id, song_sheet_id, create_time
   </sql>
 
 </mapper>

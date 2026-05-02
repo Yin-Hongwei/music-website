@@ -1,23 +1,26 @@
-export default {
-  state: {
-    userId: "", // ID
-    username: "", // 名字
-    userPic: "", // 图片
-  },
-  getters: {
-    userId: (state) => state.userId,
-    username: (state) => state.username,
-    userPic: (state) => state.userPic,
-  },
-  mutations: {
-    setUserId: (state, userId) => {
-      state.userId = userId;
+import { defineStore } from "pinia";
+
+interface UserState {
+  userId: string | number;
+  username: string;
+  userPic: string;
+}
+
+export const useUserStore = defineStore("user", {
+  state: (): UserState => ({
+    userId: "",
+    username: "",
+    userPic: "",
+  }),
+  actions: {
+    setUserId(userId: string | number) {
+      this.userId = userId;
     },
-    setUsername: (state, username) => {
-      state.username = username;
+    setUsername(username: string) {
+      this.username = username;
     },
-    setUserPic: (state, userPic) => {
-      state.userPic = userPic;
+    setUserPic(userPic: string) {
+      this.userPic = userPic;
     },
   },
-};
+});

@@ -4,13 +4,12 @@ import com.example.yin.common.R;
 import com.example.yin.model.request.SingerRequest;
 import com.example.yin.service.SingerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 @RequiredArgsConstructor
 @RestController
 public class SingerController {
-
 
     private final SingerService singerService;
 
@@ -22,7 +21,7 @@ public class SingerController {
     }
 
     // 删除歌手
-    @DeleteMapping("/singer/delete")
+    @GetMapping("/singer/delete")
     public R deleteSinger(@RequestParam int id) {
         return singerService.deleteSinger(id);
     }
@@ -31,6 +30,16 @@ public class SingerController {
     @GetMapping("/singer")
     public R allSinger() {
         return singerService.allSinger();
+    }
+
+    @GetMapping("/singer/page")
+    public R pageSinger(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size
+    ) {
+        int safePage = Math.max(page, 1);
+        int safeSize = Math.max(size, 1);
+        return singerService.pageSinger(safePage, safeSize);
     }
 
     // 根据歌手名查找歌手
@@ -43,6 +52,12 @@ public class SingerController {
     @GetMapping("/singer/sex/detail")
     public R singerOfSex(@RequestParam int sex) {
         return singerService.singerOfSex(sex);
+    }
+
+    // 返回歌手分类
+    @GetMapping("/singer/style/list")
+    public R singerStyleList() {
+        return singerService.allSingerStyle();
     }
 
     // 更新歌手信息

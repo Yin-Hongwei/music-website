@@ -31,6 +31,11 @@ public class Song {
 
     private String url;
 
+    /**
+     * Song duration in seconds.
+     */
+    private Integer duration;
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);

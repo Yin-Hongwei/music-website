@@ -79,7 +79,7 @@
 import { ref, reactive } from "vue";
 import * as echarts from "echarts";
 import { Mic, Document, User, Headset } from "@element-plus/icons-vue";
-import { HttpManager } from "@/api/index";
+import { getAllUser, getAllSong, getSongList, getAllSinger } from "@/api";
 
 // const { proxy } = getCurrentInstance();
 const userCount = ref(0);
@@ -172,7 +172,7 @@ function setSex(sex, arr) {
   }
   return { value, name };
 }
-HttpManager.getAllUser().then((res) => {
+getAllUser().then((res) => {
   const result = res as ResponseBody;
   userCount.value = result.data.length;
   userSex.series[0].data.push(setSex(0, result.data));
@@ -183,10 +183,10 @@ HttpManager.getAllUser().then((res) => {
   userSexChart.setOption(userSex);
 });
 
-HttpManager.getAllSong().then((res) => {
+getAllSong().then((res) => {
   songCount.value = (res as ResponseBody).data.length;
 });
-HttpManager.getSongList().then((res) => {
+getSongList().then((res) => {
   const result = res as ResponseBody;
   songListCount.value = result.data.length;
   for (let item of result.data) {
@@ -201,7 +201,7 @@ HttpManager.getSongList().then((res) => {
   songStyleChart.setOption(songStyle);
 });
 
-HttpManager.getAllSinger().then((res) => {
+getAllSinger().then((res) => {
   const result = res as ResponseBody;
   singerCount.value = result.data.length;
   singerSex.series[0].data.push(setSex(0, result.data));

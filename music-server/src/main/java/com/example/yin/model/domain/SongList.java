@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@TableName(value = "song_list")
+@TableName(value = "song_sheet")
 @Data
 public class SongList {
 

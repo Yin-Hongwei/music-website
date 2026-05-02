@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.nio.charset.StandardCharsets;
@@ -15,10 +14,9 @@ import java.util.List;
  * <p>
  *     因使用WebMvcConfigurer加载静态时 url encode编码无法解析为正常中文问题
  * </p>
- *
+ * 注意：移除了 @EnableWebMvc 以保持Spring Boot的自动静态资源处理
  */
 
-@EnableWebMvc
 @Configuration
 public class WebCharacterEncodingFilter implements WebMvcConfigurer {
 
@@ -33,7 +31,7 @@ public class WebCharacterEncodingFilter implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("*").allowedMethods("*").allowedHeaders("*");
+        registry.addMapping("/**").allowedOriginPatterns("*").allowedMethods("*").allowedHeaders("*").allowCredentials(true);
     }
 
     @Override

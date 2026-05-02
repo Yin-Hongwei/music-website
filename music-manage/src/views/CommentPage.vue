@@ -29,8 +29,8 @@
 
 <script lang="ts">
 import { defineComponent, getCurrentInstance, watch, ref, computed } from "vue";
-import { useStore } from "vuex";
-import { HttpManager } from "@/api";
+import { useAppStore } from "@/stores/app";
+import { getCommentOfSongId, getCommentOfSongListId, getUserOfId, deleteComment } from "@/api";
 import YinDelDialog from "@/components/dialog/YinDelDialog.vue";
 
 export default defineComponent({
@@ -39,11 +39,11 @@ export default defineComponent({
   },
   setup() {
     const { proxy } = getCurrentInstance();
-    const store = useStore();
+    const appStore = useAppStore();
 
     const tableData = ref([]); // 记录歌曲，用于显示
     const tempDate = ref([]); // 记录歌曲，用于搜索时能临时记录一份歌曲列表
-    const breadcrumbList = computed(() => store.getters.breadcrumbList);
+    const breadcrumbList = computed(() => appStore.breadcrumbList);
 
     const searchWord = ref(""); // 记录输入框输入的内容
     watch(searchWord, () => {
@@ -67,9 +67,9 @@ export default defineComponent({
       tempDate.value = [];
       let promise = null;
       if (proxy.$route.query.type == "0") {
-        promise = HttpManager.getCommentOfSongId(proxy.$route.query.id);
+        promise = getCommentOfSongId(proxy.$route.query.id);
       } else if (proxy.$route.query.type == "1") {
-        promise = HttpManager.getCommentOfSongListId(proxy.$route.query.id);
+        promise = getCommentOfSongListId(proxy.$route.query.id);
       }
 
       promise.then((res) => {
@@ -79,8 +79,8 @@ export default defineComponent({
       });
     }
     async function getUsers(id, item) {
-      const result = (await HttpManager.getUserOfId(id)) as ResponseBody;
-      item.username = result.data[0].username;
+      const result = (await getUserOfId(id)) as ResponseBody;
+      item.username = result && result.data ? result.data.username : "";
       tableData.value.push(item);
       tempDate.value.push(item);
     }
@@ -93,7 +93,7 @@ export default defineComponent({
     const delVisible = ref(false); // 显示删除框
 
     async function confirm() {
-      const result = (await HttpManager.deleteComment(idx.value)) as ResponseBody;
+      const result = (await deleteComment(idx.value)) as ResponseBody;
       (proxy as any).$message({
         message: result.message,
         type: result.type,

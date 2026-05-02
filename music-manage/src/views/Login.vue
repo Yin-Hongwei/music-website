@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <div class="title">{{ nusicName }}</div>
+    <div class="title">{{ musicName }}</div>
     <div class="login">
       <el-form :model="ruleForm" :rules="rules">
         <el-form-item prop="username">
@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent, getCurrentInstance, ref, reactive } from "vue";
 import mixin from "@/mixins/mixin";
-import { HttpManager } from "@/api/index";
+import { getLoginStatus } from "@/api/admin";
 import { RouterName, MUSICNAME } from "@/enums";
 
 export default defineComponent({
@@ -28,7 +28,7 @@ export default defineComponent({
     const { proxy } = getCurrentInstance();
     const { routerManager } = mixin();
 
-    const nusicName = ref(MUSICNAME);
+    const musicName = ref(MUSICNAME);
     const ruleForm = reactive({
       username: "admin",
       password: "123",
@@ -38,18 +38,27 @@ export default defineComponent({
       password: [{ required: true, message: "请输入密码", trigger: "blur" }],
     });
     async function submitForm() {
-      let username = ruleForm.username;
-      let password = ruleForm.password;
-      const result = (await HttpManager.getLoginStatus({username,password})) as ResponseBody;
-      (proxy as any).$message({
-        message: result.message,
-        type: result.type,
-      });
-
-      if (result.success) routerManager(RouterName.Info, { path: RouterName.Info });
+      const username = ruleForm.username;
+      const password = ruleForm.password;
+      try {
+        const result = (await getLoginStatus({ username, password })) as ResponseBody;
+        (proxy as any).$message({
+          message: result.message,
+          type: result.type,
+        });
+        if (result.success) routerManager(RouterName.Info, { path: RouterName.Info });
+      } catch (err) {
+        const body = (err as { data?: ResponseBody }).data;
+        const status = (err as { status?: number }).status;
+        const message =
+          body?.message ||
+          (typeof status === "number" ? `请求失败（${status}）` : "网络异常，请稍后重试");
+        const type = body?.type || "error";
+        (proxy as any).$message({ message, type });
+      }
     }
     return {
-      nusicName,
+      musicName,
       ruleForm,
       rules,
       submitForm,

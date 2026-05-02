@@ -1,3 +1,31 @@
+import { getBaseURL } from "@/utils/request";
+
+export function attachImageUrl(url) {
+  return url
+    ? `${getBaseURL()}${url}`
+    : "https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png";
+}
+
+// 解析歌曲标题（歌手-歌名 => 歌名）
+export function getSongTitle(name: string) {
+  if (typeof name !== "string") return "";
+  const splitName = name.split("-");
+  return splitName.length > 1 ? splitName[1].trim() : splitName[0].trim();
+}
+
+// 解析歌手名（歌手-歌名 => 歌手）
+export function getSingerName(name: string) {
+  if (typeof name !== "string") return "";
+  const splitName = name.split("-");
+  return splitName[0] ? splitName[0].trim() : "";
+}
+
+export function getUserSex(sex: number) {
+  if (sex === 0) return "女";
+  if (sex === 1) return "男";
+  return "";
+}
+
 // 解析日期
 export function getBirth(value) {
   if (value == null || value == "") return "";

@@ -9,10 +9,9 @@ export const enum RouterName {
   PersonalData = "/personal-data",
   SignIn = "/sign-in",
   SignUp = "/sign-up",
+  ForgotPassword = "/forgot-password",
   Search = "/search",
   Lyric = "/lyric",
   Error = "/404",
   SignOut = "0",
-  ForgotPassword="/FPassword",
-  loginByemail="/loginByemail",
 }

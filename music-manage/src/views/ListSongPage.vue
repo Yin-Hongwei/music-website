@@ -36,7 +36,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="saveSong()">确 定</el-button>
+        <el-button type="primary" @click="saveSong">确 定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -47,8 +47,14 @@
 
 <script lang="ts">
 import { defineComponent, getCurrentInstance, watch, ref, reactive, computed } from "vue";
-import { useStore } from "vuex";
-import { HttpManager } from "@/api";
+import { useAppStore } from "@/stores/app";
+import {
+  getListSongOfSongId,
+  getSongOfId,
+  getSongOfSingerName,
+  setListSong,
+  deleteListSong,
+} from "@/api";
 import YinDelDialog from "@/components/dialog/YinDelDialog.vue";
 
 export default defineComponent({
@@ -57,11 +63,11 @@ export default defineComponent({
   },
   setup() {
     const { proxy } = getCurrentInstance();
-    const store = useStore();
+    const appStore = useAppStore();
 
     const tableData = ref([]); // 记录歌曲，用于显示
     const tempDate = ref([]); // 记录歌曲，用于搜索时能临时记录一份歌曲列表
-    const breadcrumbList = computed(() => store.getters.breadcrumbList);
+    const breadcrumbList = computed(() => appStore.breadcrumbList);
 
     const searchWord = ref(""); // 记录输入框输入的内容
     watch(searchWord, () => {
@@ -83,11 +89,13 @@ export default defineComponent({
     async function getData() {
       tableData.value = [];
       tempDate.value = [];
-      const result = (await HttpManager.getListSongOfSongId(proxy.$route.query.id)) as ResponseBody;
+      const result = (await getListSongOfSongId(proxy.$route.query.id)) as ResponseBody;
       for (let item of result.data) {
-        const result = await HttpManager.getSongOfId(item.songId) as ResponseBody;
-        tableData.value.push(result.data[0]);
-        tempDate.value.push(result.data[0]);
+        const result = await getSongOfId(item.songId) as ResponseBody;
+        if (result && result.data) {
+          tableData.value.push(result.data);
+          tempDate.value.push(result.data);
+        }
       }
     }
 
@@ -103,29 +111,23 @@ export default defineComponent({
     // 获取要添加歌曲的ID
     async function saveSong() {
       const id = `${registerForm.singerName}-${registerForm.songName}`;
-      const result = (await HttpManager.getSongOfSingerName(id)) as ResponseBody;
+      const result = (await getSongOfSingerName(id)) as ResponseBody;
 
       if (result.success) {
         addSong(result.data[0].id);
-      }else{
-        alert(result.message);
-        centerDialogVisible.value = false;
       }
     }
     async function addSong(id) {
       let songId = id;
       let songListId = proxy.$route.query.id as string;
 
-      const result = (await HttpManager.setListSong({songId,songListId})) as ResponseBody;
+      const result = (await setListSong({ songId, songListId })) as ResponseBody;
       (proxy as any).$message({
         message: result.message,
         type: result.type,
       });
 
-      if (result.success) {
-         getData();
-      }
-      
+      if (result.success) getData();
       centerDialogVisible.value = false;
     }
 
@@ -137,7 +139,7 @@ export default defineComponent({
     const delVisible = ref(false); // 显示删除框
 
     async function confirm() {
-      const result = await HttpManager.deleteListSong(idx.value) as ResponseBody;
+      const result = await deleteListSong(idx.value) as ResponseBody;
       (proxy as any).$message({
         message: result.message,
         type: result.type,

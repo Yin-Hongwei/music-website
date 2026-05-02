@@ -1,6 +1,7 @@
 package com.example.yin.model.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -8,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
-@TableName(value = "list_song")
+@TableName(value = "song_sheet_song")
 @Data
 public class ListSong implements Serializable {
 
@@ -17,6 +18,7 @@ public class ListSong implements Serializable {
 
     private Integer songId;
 
+    @TableField("song_sheet_id")
     private Integer songListId;
 
     @Override

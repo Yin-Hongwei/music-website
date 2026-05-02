@@ -1,24 +1,13 @@
 <template>
-  <div class="yin-footer">
+  <el-footer class="yin-footer">
     <p v-for="(item, index) in footerList" :key="index">
       {{ item }}
     </p>
-  </div>
+  </el-footer>
 </template>
 
-<script lang="ts">
-import { defineComponent, readonly } from "vue";
-
-export default defineComponent({
-  setup() {
-    const footerList = readonly([
-      "关于 | 帮助 | 条款 | 反馈",
-      "Copyright © 2019 Yin-Hongwei",
-    ]);
-
-    return { footerList };
-  },
-});
+<script lang="ts" setup>
+const footerList = ["Copyright © 2018 Yin-Hongwei"];
 </script>
 
 <style lang="scss" scoped>
@@ -28,7 +17,7 @@ export default defineComponent({
 .yin-footer {
   width: 100%;
   height: $footer-height;
-  padding: 20px 0;
+  margin-bottom: 0;
   box-sizing: border-box;
   font-size: 14px;
   @include layout(center, center, column);

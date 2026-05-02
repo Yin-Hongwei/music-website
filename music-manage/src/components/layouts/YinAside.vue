@@ -8,30 +8,46 @@
       router
       :collapse="collapse"
     >
-      <el-menu-item index="info">
-        <el-icon><pie-chart /></el-icon>
-        <span>系统首页</span>
-      </el-menu-item>
-      <el-menu-item index="consumer">
-        <el-icon><User /></el-icon>
-        <span>用户管理</span>
-      </el-menu-item>
-      <el-menu-item index="singer">
-        <el-icon><mic /></el-icon>
-        <span>歌手管理</span>
-      </el-menu-item>
-      <el-menu-item index="songList">
-        <el-icon><Document /></el-icon>
-        <span>歌单管理</span>
+      <el-menu-item
+        v-for="item in menuItems"
+        :key="item.index"
+        :index="item.index"
+      >
+        <el-icon><component :is="item.icon" /></el-icon>
+        <span>{{ item.title }}</span>
       </el-menu-item>
     </el-menu>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-import { PieChart, Mic, Document, User } from "@element-plus/icons-vue";
+import { computed, ref } from "vue";
+import { PieChart, Mic, Document, User, Picture } from "@element-plus/icons-vue";
 import emitter from "@/utils/emitter";
+
+/** 侧栏菜单项：`index` 与 `el-menu` router 模式下的路径一致 */
+interface AsideMenuItem {
+  index: string;
+  title: string;
+  icon: typeof PieChart;
+}
+
+const defaultAsideMenuItems: AsideMenuItem[] = [
+  { index: "info", title: "系统首页", icon: PieChart },
+  { index: "consumer", title: "用户管理", icon: User },
+  { index: "singer", title: "歌手管理", icon: Mic },
+  { index: "songList", title: "歌单管理", icon: Document },
+  { index: "banner", title: "Banner管理", icon: Picture },
+];
+
+const props = defineProps<{
+  /** 不传则使用内置默认菜单 */
+  items?: AsideMenuItem[];
+}>();
+
+const menuItems = computed(() =>
+  props.items === undefined ? defaultAsideMenuItems : props.items,
+);
 
 const collapse = ref(false);
 emitter.on("collapse", (msg) => {
@@ -41,12 +57,11 @@ emitter.on("collapse", (msg) => {
 
 <style scoped>
 .sidebar {
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 60px;
-  bottom: 0;
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -54,7 +69,10 @@ emitter.on("collapse", (msg) => {
 }
 
 .sidebar > ul {
-  height: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  border-right: none;
 }
 
 .sidebar-el-menu:not(.el-menu--collapse) {

@@ -24,5 +24,6 @@ public class CommentRequest {
 
     private Byte nowType;
 
-    private Integer up;//点赞
+    /** 点赞数（更新评论点赞时传入） */
+    private Integer likeCount;
 }

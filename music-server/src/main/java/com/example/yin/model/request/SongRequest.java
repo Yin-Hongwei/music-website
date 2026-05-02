@@ -28,4 +28,6 @@ public class SongRequest {
     private String lyric;
 
     private String url;
+
+    private Integer duration;
 }

@@ -1,28 +1,31 @@
-export default {
-  state: {
-    token: false, // 用户是否登录
-    showAside: false, // 是否显示侧边栏
-    searchWord: "", // 搜索关键词
-    activeNavName: "", // 导航栏名称
+import { defineStore } from "pinia";
+
+interface ConfigureState {
+  token: boolean;
+  showAside: boolean;
+  showSongCommentDialog: boolean;
+  activeNavName: string;
+}
+
+export const useConfigureStore = defineStore("configure", {
+  state: (): ConfigureState => ({
+    token: false,
+    showAside: false,
+    showSongCommentDialog: false,
+    activeNavName: "首页",
+  }),
+  actions: {
+    setToken(token: boolean) {
+      this.token = token;
+    },
+    setActiveNavName(activeNavName: string) {
+      this.activeNavName = activeNavName;
+    },
+    setShowAside(showAside: boolean) {
+      this.showAside = showAside;
+    },
+    setShowSongCommentDialog(showSongCommentDialog: boolean) {
+      this.showSongCommentDialog = showSongCommentDialog;
+    },
   },
-  getters: {
-    token: (state) => state.token,
-    activeNavName: (state) => state.activeNavName,
-    showAside: (state) => state.showAside,
-    searchWord: (state) => state.searchWord,
-  },
-  mutations: {
-    setToken: (state, token) => {
-      state.token = token;
-    },
-    setActiveNavName: (state, activeNavName) => {
-      state.activeNavName = activeNavName;
-    },
-    setShowAside: (state, showAside) => {
-      state.showAside = showAside;
-    },
-    setSearchWord: (state, searchWord) => {
-      state.searchWord = searchWord;
-    },
-  },
-};
+});
