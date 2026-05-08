@@ -147,5 +147,9 @@ public class ConsumerController {
     public R updateUserPic(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
         return consumerService.updateUserAvator(avatorFile, id);
     }
-
+    @PostMapping("/user/logout")
+    public R logout(HttpSession session) {
+        session.invalidate();
+        return R.success("退出成功");
+    }
 }

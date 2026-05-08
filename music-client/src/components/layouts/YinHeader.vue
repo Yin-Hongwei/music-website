@@ -67,7 +67,11 @@ export default defineComponent({
 
     async function goMenuList(path) {
       if (path == RouterName.SignOut) {
-        await HttpManager.logout();
+        try {
+          await HttpManager.logout();
+        } catch (e) {
+          // 可选：忽略登出请求失败
+        }
         proxy.$store.commit("setToken", false);
         proxy.$store.commit("clearUser");
         sessionStorage.removeItem("dataStore");
