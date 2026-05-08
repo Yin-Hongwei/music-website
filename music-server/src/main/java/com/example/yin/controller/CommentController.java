@@ -6,11 +6,11 @@ import com.example.yin.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 @RequiredArgsConstructor
 @RestController
 public class CommentController {
     private final CommentService commentService;
-
 
     // 提交评论
     @PostMapping("/comment/add")

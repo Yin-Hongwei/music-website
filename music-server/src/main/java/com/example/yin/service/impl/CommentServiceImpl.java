@@ -19,6 +19,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public R addComment(CommentRequest addCommentRequest) {
+        if (addCommentRequest == null || addCommentRequest.getContent() == null || addCommentRequest.getContent().trim().isEmpty()) {
+            return R.error("评论不能为空");
+        }
         Comment comment = new Comment();
         BeanUtils.copyProperties(addCommentRequest, comment);
         comment.setType(addCommentRequest.getNowType());

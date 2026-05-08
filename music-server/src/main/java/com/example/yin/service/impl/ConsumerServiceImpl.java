@@ -183,9 +183,18 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer>
 
         if (this.verityPasswd(username, password)) {
             session.setAttribute("username", username);
-            Consumer consumer = new Consumer();
-            consumer.setUsername(username);
-            return R.success("登录成功", consumerMapper.selectList(new QueryWrapper<>(consumer)));
+
+            // 新增：存入 userId 供后续权限校验使用
+            QueryWrapper<Consumer> qw = new QueryWrapper<>();
+            qw.eq("username", username);
+            Consumer consumer = consumerMapper.selectOne(qw);
+            if (consumer != null) {
+                session.setAttribute("userId", consumer.getId());
+            }
+
+            Consumer c = new Consumer();
+            c.setUsername(username);
+            return R.success("登录成功", consumerMapper.selectList(new QueryWrapper<>(c)));
         } else {
             return R.error("用户名或密码错误");
         }

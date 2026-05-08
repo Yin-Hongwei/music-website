@@ -18,7 +18,8 @@ const HttpManager = {
   getUserOfId: (id) => get(`user/detail?id=${id}`),
   // 更新用户头像
   uploadUrl: (userId) => `${getBaseURL()}/user/avatar/update?id=${userId}`,
-
+    // 退出登录
+    logout: () => post(`user/logout`, {}),
   // =======================> 歌单 API 完成
   // 获取全部歌单
   getSongList: () => get("songList"),

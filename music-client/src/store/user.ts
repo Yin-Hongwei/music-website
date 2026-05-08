@@ -19,5 +19,10 @@ export default {
     setUserPic: (state, userPic) => {
       state.userPic = userPic;
     },
+    clearUser: (state) => {
+      state.userId = "";
+      state.username = "";
+      state.userPic = "";
+    },
   },
 };

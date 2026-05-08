@@ -65,9 +65,12 @@ export default defineComponent({
       }
     }
 
-    function goMenuList(path) {
+    async function goMenuList(path) {
       if (path == RouterName.SignOut) {
+        await HttpManager.logout();
         proxy.$store.commit("setToken", false);
+        proxy.$store.commit("clearUser");
+        sessionStorage.removeItem("dataStore");
         changeIndex(NavName.Home);
         routerManager(RouterName.Home, { path: RouterName.Home });
       } else {

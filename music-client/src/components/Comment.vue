@@ -20,7 +20,7 @@
       <!--这特么是直接拿到了评论的id-->
       <div ref="up" class="comment-ctr" @click="setSupport(item.id, item.up, userId)">
         <div><yin-icon :icon="iconList.Support"></yin-icon> {{ item.up }}</div>
-        <el-icon v-if="item.userId === userId" @click="deleteComment(item.id, index)"><delete /></el-icon>
+        <el-icon v-if="token && item.userId === userId" @click.stop="deleteComment(item.id, index)"><delete /></el-icon>
       </div>
     </li>
   </ul>
@@ -57,6 +57,7 @@ const iconList = reactive({
 });
 
 const userId = computed(() => store.getters.userId);
+const token = computed(() => store.getters.token);
 const songId = computed(() => store.getters.songId);
 
 watch(songId, () => {
@@ -87,6 +88,15 @@ async function getComment(id) {
 async function submitComment() {
   if (!checkStatus()) return;
 
+  const content = textarea.value.trim();
+  if (!content) {
+    (proxy as any).$message({
+      message: "评论不能为空",
+      type: "warning",
+    });
+    return;
+  }
+
   // 0 代表歌曲， 1 代表歌单
   let songListId = null;
   let songId = null;
@@ -99,7 +109,6 @@ async function submitComment() {
     songId = `${playId.value}`;
   }
 
-  const content = textarea.value;
   const result = (await HttpManager.setComment({ userId: userId.value, content, songId, songListId, nowType })) as ResponseBody;
   (proxy as any).$message({
     message: result.message,
