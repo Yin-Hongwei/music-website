@@ -266,6 +266,7 @@ CREATE TABLE `song` (
   `pic` varchar(255) DEFAULT NULL,
   `lyric` text,
   `url` varchar(255) NOT NULL,
+  `duration` int DEFAULT '0' COMMENT '歌曲时长(秒)',  -- 新增这一行
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
