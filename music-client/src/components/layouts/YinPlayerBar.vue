@@ -8,6 +8,7 @@
       class="playbar__progress"
       v-model="nowTime"
       :format-tooltip="formatProgressTooltip"
+      @input="dragStart"
       @change="changeTime"
       size="small"
     />
@@ -105,7 +106,7 @@ import { elMessageTypeFromResponse } from "@/api/types";
 import { formatSeconds } from "../../utils";
 import { RouterName } from "../../enums";
 import { useAppActions } from "../../composables/useAppActions";
-
+const isDragging = ref(false); // 新增标志位
 const configureStore = useConfigureStore();
 const userStore = useUserStore();
 const songStore = useSongStore();
@@ -148,8 +149,10 @@ watch(volume, (value) => {
   songStore.setVolume(value / 100);
 });
 watch([curTime, duration], () => {
+  // 如果用户正在拖动，则禁止回写覆盖，阻止闪烁回弹
+  if (isDragging.value) return;
   nowTime.value =
-    duration.value > 0 ? (curTime.value / duration.value) * 100 : 0;
+      duration.value > 0 ? (curTime.value / duration.value) * 100 : 0;
 }, { immediate: true });
 watch(autoNext, () => {
   next();
@@ -197,7 +200,14 @@ function togglePlay() {
   songStore.setIsPlay(!isPlay.value);
 }
 
+// 新增：开始拖拽时将标记设为 true
+function dragStart() {
+  isDragging.value = true;
+}
+
+// 修改原有的 changeTime 函数
 function changeTime() {
+  isDragging.value = false; // 拖动释放完毕，切回非拖动状态
   songStore.setChangeTime(duration.value * (nowTime.value * 0.01));
 }
 
