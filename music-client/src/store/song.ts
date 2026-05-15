@@ -1,5 +1,14 @@
 import { defineStore } from "pinia";
 
+export const PLAY_MODE_LIST_LOOP = "listLoop";
+export const PLAY_MODE_SINGLE_LOOP = "singleLoop";
+export const PLAY_MODE_SHUFFLE = "shuffle";
+
+export type PlayMode =
+  | typeof PLAY_MODE_LIST_LOOP
+  | typeof PLAY_MODE_SINGLE_LOOP
+  | typeof PLAY_MODE_SHUFFLE;
+
 export const useSongStore = defineStore("song", {
   state: () => ({
     songId: "" as string | number,
@@ -14,6 +23,7 @@ export const useSongStore = defineStore("song", {
     curTime: 0,
     changeTime: 0,
     autoNext: true,
+    playMode: PLAY_MODE_LIST_LOOP as PlayMode,
     currentPlayList: [] as any[],
     songDetails: null as any,
     currentPlayIndex: -1,
@@ -36,6 +46,9 @@ export const useSongStore = defineStore("song", {
     },
     setAutoNext(autoNext: boolean) {
       this.autoNext = autoNext;
+    },
+    setPlayMode(playMode: PlayMode) {
+      this.playMode = playMode;
     },
     setLyric(lyric: any[]) {
       this.lyric = lyric;

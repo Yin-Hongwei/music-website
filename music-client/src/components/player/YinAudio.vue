@@ -12,12 +12,13 @@
 <script lang="ts" setup>
 import { ref, computed, watch, onMounted } from "vue";
 
-import { useSongStore } from "../../store/song";
+import { PLAY_MODE_SINGLE_LOOP, useSongStore } from "../../store/song";
 import { attachImageUrl } from "../../utils";
 
 const songStore = useSongStore();
 const audioRef = ref<HTMLAudioElement | null>(null);
 const pendingUserGesturePlay = ref(false);
+const playMode = computed(() => songStore.playMode);
 
 const songUrl = computed(() => songStore.songUrl); // 音乐链接
 const isPlay = computed(() => songStore.isPlay); // 播放状态
@@ -36,6 +37,7 @@ watch(volume, (value) => {
     audioRef.value.volume = value;
   }
 });
+watch(playMode, syncAudioLoop, { immediate: true });
 
 async function tryPlay() {
   if (!audioRef.value) return;
@@ -63,6 +65,7 @@ function togglePlay() {
 // 获取歌曲链接后准备播放
 function canplay() {
   if (!audioRef.value) return;
+  syncAudioLoop();
   // 记录音乐时长
   songStore.setDuration(audioRef.value.duration);
   // 开始播放
@@ -77,9 +80,15 @@ function timeupdate() {
 
 // 音乐播放结束时触发
 function ended() {
+  if (playMode.value === PLAY_MODE_SINGLE_LOOP) return;
   songStore.setIsPlay(false);
   songStore.setCurTime(0);
   songStore.setAutoNext(!autoNext.value);
+}
+
+function syncAudioLoop() {
+  if (!audioRef.value) return;
+  audioRef.value.loop = playMode.value === PLAY_MODE_SINGLE_LOOP;
 }
 
 const retryAfterGesture = () => {
