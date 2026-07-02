@@ -49,6 +49,7 @@
 
 The public web client and admin console are built with **Vue**. The server uses **Spring Boot + MyBatis**, with **MySQL** as the database. For design notes, see **[Yuque (Chinese)](https://www.yuque.com/yinhongwei-ya0u7/bk3hhk/nu3i7emefxvetpz8)** or the **[blog post](https://yin-hongwei.github.io/2019/03/04/music/)**. Local setup steps are in [Quick start](#quick-start) below.
 
+<br/>
 
 ## Project structure
 
@@ -61,6 +62,7 @@ music-website/
 └── docs/             # Documentation
 ```
 
+<br/>
 
 ## Preview
 
@@ -110,6 +112,7 @@ music-website/
 
 </details>
 
+<br/>
 
 ## Features
 
@@ -121,6 +124,7 @@ music-website/
 | **Player** | Play, pause, seek, volume, synced lyrics, download |
 | **Admin** | Banners, users, songs, artists, playlists, comments |
 
+<br/>
 
 ## Stack
 
@@ -130,6 +134,7 @@ music-website/
 | **Frontend** | Vue 3 · TypeScript · Vue Router · Pinia · Axios · Element Plus |
 | **Deployment** | Docker · Docker Compose |
 
+<br/>
 
 ## Environment
 
@@ -142,6 +147,7 @@ music-website/
 | **MinIO** | Local install, or [Docker (Chinese guide)](https://nanshaws.github.io/docker/docker完美启动minio(完美过程).html) |
 | **IDE** | IntelliJ IDEA · VS Code |
 
+<br/>
 
 ## Quick start
 
@@ -207,6 +213,7 @@ mvn clean spring-boot:run
 
 </details>
 
+<br/>
 
 ## Troubleshooting
 
@@ -215,6 +222,7 @@ mvn clean spring-boot:run
 | Images or audio fail to load | Move the `img` and `song` folders from `music-server` to the repository root (`music-website/`) |
 | Playback issues | The file may be corrupt; replace it from the asset pack |
 
+<br/>
 
 ## Docker deployment
 
@@ -242,6 +250,7 @@ Run result:
   <img src="https://i0.wp.com/tvax4.sinaimg.cn/large/007mxWTugy1icr99iumhpj319y0hjwyi.jpg" height="280px" alt="Docker run result"/>
 </p>
 
+<br/>
 
 ## Contributors
 
@@ -251,6 +260,7 @@ Thanks to everyone who has contributed code and improvement suggestions to this 
   <img src="https://contrib.rocks/image?repo=Yin-Hongwei/music-website" alt="Contributors" />
 </a>
 
+<br/>
 
 ## Support
 
@@ -259,6 +269,7 @@ If this project helped you, consider buying the author a coffee.
 <img src="./docs/assets/sponsor-qr.png" height="300px" alt="WeChat tip QR code"/>
 
 <br/>
+
 
 ## Contact
 
