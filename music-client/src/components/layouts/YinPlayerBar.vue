@@ -25,8 +25,10 @@
       </div>
       <div class="playbar__controls">
         <component
-          :is="playStateIndex === 0 ? Repeat : Shuffle"
+          :is="playModeIcon"
           class="playbar__icon-btn hide-mobile"
+          :title="playModeLabel"
+          :aria-label="playModeLabel"
           @click="changePlayState"
         />
         <SkipBack class="playbar__icon-btn" @click="prev" />
@@ -87,6 +89,7 @@ import {
   Pause,
   Play,
   Repeat,
+  Repeat1,
   Shuffle,
   SkipBack,
   SkipForward,
@@ -96,7 +99,12 @@ import {
 import YinAudio from "@/components/player/YinAudio.vue";
 import { useConfigureStore } from "../../store/configure";
 import { useUserStore } from "../../store/user";
-import { useSongStore } from "../../store/song";
+import {
+  PLAY_MODE_LIST_LOOP,
+  PLAY_MODE_SHUFFLE,
+  PLAY_MODE_SINGLE_LOOP,
+  useSongStore,
+} from "../../store/song";
 import {
   fetchCollectionStatus,
   fetchDeleteCollection,
@@ -114,14 +122,20 @@ const { routerManager, playMusic, checkStatus, downloadMusic, attachImageUrl } =
   useAppActions();
 
 const COLLECTION_TYPE_SONG = "0";
-const PLAY_MODE_LOOP = "loop";
-const PLAY_MODE_SHUFFLE = "shuffle";
+const PLAY_MODE_LIST = [
+  PLAY_MODE_LIST_LOOP,
+  PLAY_MODE_SINGLE_LOOP,
+  PLAY_MODE_SHUFFLE,
+];
+const PLAY_MODE_LABEL_MAP = {
+  [PLAY_MODE_LIST_LOOP]: "列表循环",
+  [PLAY_MODE_SINGLE_LOOP]: "单曲循环",
+  [PLAY_MODE_SHUFFLE]: "随机播放",
+};
 
 const nowTime = ref(0);
 const toggle = ref(true);
 const volume = ref(50);
-const playStateList = [PLAY_MODE_LOOP, PLAY_MODE_SHUFFLE];
-const playStateIndex = ref(0);
 
 const isCollection = ref(false);
 const userId = computed(() => userStore.userId);
@@ -139,7 +153,13 @@ const endTime = computed(() => formatSeconds(duration.value));
 const currentPlayList = computed(() => songStore.currentPlayList);
 const currentPlayIndex = computed(() => songStore.currentPlayIndex);
 const autoNext = computed(() => songStore.autoNext);
-const playState = computed(() => playStateList[playStateIndex.value]);
+const playMode = computed(() => songStore.playMode);
+const playModeIcon = computed(() => {
+  if (playMode.value === PLAY_MODE_SINGLE_LOOP) return Repeat1;
+  if (playMode.value === PLAY_MODE_SHUFFLE) return Shuffle;
+  return Repeat;
+});
+const playModeLabel = computed(() => PLAY_MODE_LABEL_MAP[playMode.value]);
 
 watch(songId, initCollection);
 watch(token, (value) => {
@@ -216,10 +236,10 @@ function formatProgressTooltip(value: number) {
 }
 
 function changePlayState() {
-  playStateIndex.value =
-    playStateIndex.value >= playStateList.length - 1
-      ? 0
-      : playStateIndex.value + 1;
+  const currentIndex = PLAY_MODE_LIST.indexOf(playMode.value);
+  const nextIndex =
+    currentIndex >= PLAY_MODE_LIST.length - 1 ? 0 : currentIndex + 1;
+  songStore.setPlayMode(PLAY_MODE_LIST[nextIndex]);
 }
 
 function getRandomPlayIndex(listLength: number) {
@@ -246,7 +266,7 @@ function toPlay(url: string) {
 }
 
 function prev() {
-  if (playState.value === PLAY_MODE_SHUFFLE) {
+  if (playMode.value === PLAY_MODE_SHUFFLE) {
     const playIndex = getRandomPlayIndex(currentPlayList.value.length);
     songStore.setCurrentPlayIndex(playIndex);
     const targetSong = currentPlayList.value[playIndex];
@@ -266,7 +286,7 @@ function prev() {
 }
 
 function next() {
-  if (playState.value === PLAY_MODE_SHUFFLE) {
+  if (playMode.value === PLAY_MODE_SHUFFLE) {
     const playIndex = getRandomPlayIndex(currentPlayList.value.length);
     songStore.setCurrentPlayIndex(playIndex);
     const targetSong = currentPlayList.value[playIndex];
