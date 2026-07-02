@@ -49,6 +49,7 @@
 
 本音乐网站的客户端和管理端使用 **Vue** 框架来实现，服务端使用 **Spring Boot + MyBatis** 来实现，数据库使用了 **MySQL**。实现思路可参考 **[语雀文档](https://www.yuque.com/yinhongwei-ya0u7/bk3hhk/nu3i7emefxvetpz8)** 或 **[博客文章](https://yin-hongwei.github.io/2019/03/04/music/)**。本地启动步骤见下方 [快速开始](#快速开始)。
 
+<br/>
 
 ## 项目结构
 
@@ -61,6 +62,7 @@ music-website/
 └── docs/             # 文档
 ```
 
+<br/>
 
 ## 项目预览
 
@@ -110,6 +112,7 @@ music-website/
 
 </details>
 
+<br/>
 
 ## 项目主要功能
 
@@ -121,6 +124,7 @@ music-website/
 | **播放器** | 播放、暂停、进度拖动、音量控制、歌词同步、下载 |
 | **管理后台** | Banner、用户、歌曲、歌手、歌单、评论管理 |
 
+<br/>
 
 ## 技术栈
 
@@ -130,6 +134,7 @@ music-website/
 | **前端** | Vue 3 · TypeScript · Vue Router · Pinia · Axios · Element Plus |
 | **部署** | Docker · Docker Compose |
 
+<br/>
 
 ## 开发环境
 
@@ -142,6 +147,7 @@ music-website/
 | **MinIO** | 本地安装最新版，或使用 [Docker 启动 MinIO](https://nanshaws.github.io/docker/docker完美启动minio(完美过程).html) |
 | **IDE** | IntelliJ IDEA · VS Code |
 
+<br/>
 
 ## 快速开始
 
@@ -207,6 +213,7 @@ mvn clean spring-boot:run
 
 </details>
 
+<br/>
 
 ## 常见问题
 
@@ -215,6 +222,7 @@ mvn clean spring-boot:run
 | 图片或音乐加载失败 | 将 `music-server` 下的 `img`、`song` 目录移动到仓库根目录 `music-website/` |
 | 音乐无法播放 | 资源文件可能损坏，请从网盘重新下载并替换 |
 
+<br/>
 
 ## Docker 部署
 
@@ -242,6 +250,7 @@ docker compose up --build
   <img src="https://i0.wp.com/tvax4.sinaimg.cn/large/007mxWTugy1icr99iumhpj319y0hjwyi.jpg" height="280px" alt="Docker 运行结果"/>
 </p>
 
+<br/>
 
 ## 贡献者
 
@@ -251,6 +260,7 @@ docker compose up --build
   <img src="https://contrib.rocks/image?repo=Yin-Hongwei/music-website" alt="Contributors" />
 </a>
 
+<br/>
 
 ## 赞助
 
@@ -259,6 +269,7 @@ docker compose up --build
 <img src="./docs/assets/sponsor-qr.png" height="300px" alt="微信打赏二维码"/>
 
 <br/>
+
 
 ## 联系方式
 
@@ -270,6 +281,17 @@ docker compose up --build
 
 <br/>
 
+## Git History
+
+<a href="https://www.star-history.com/#Yin-Hongwei/music-website&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Yin-Hongwei/music-website&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Yin-Hongwei/music-website&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Yin-Hongwei/music-website&type=Date" />
+  </picture>
+</a>
+
+<br/>
 
 ## License
 

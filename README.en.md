@@ -270,6 +270,17 @@ If this project helped you, consider buying the author a coffee.
 
 <br/>
 
+## Git History
+
+<a href="https://www.star-history.com/#Yin-Hongwei/music-website&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Yin-Hongwei/music-website&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Yin-Hongwei/music-website&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Yin-Hongwei/music-website&type=Date" />
+  </picture>
+</a>
+
+<br/>
 
 ## License
 
