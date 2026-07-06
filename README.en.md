@@ -138,14 +138,14 @@ music-website/
 
 ## Environment
 
-| Dependency | Version / notes |
+| Environment | Version |
 | --- | --- |
-| **JDK** | 8+ (e.g. jdk-8u141) |
-| **MySQL** | 5.7.21+ |
-| **Redis** | 5.0.8+, or run via [Docker (Chinese guide)](https://nanshaws.github.io/docker/docker启动redis(完美过程).html) |
-| **Node.js** | 14+ |
-| **MinIO** | Local install, or [Docker (Chinese guide)](https://nanshaws.github.io/docker/docker完美启动minio(完美过程).html) |
-| **IDE** | IntelliJ IDEA · VS Code |
+| JDK | 8+ (e.g. jdk-8u141) |
+| MySQL | 8.0+ |
+| Redis | 5.0.8+, or run via [Docker (Chinese guide)](https://nanshaws.github.io/docker/docker启动redis(完美过程).html) |
+| Node.js | 14+ |
+| MinIO | Latest, or [Docker (Chinese guide)](https://nanshaws.github.io/docker/docker完美启动minio(完美过程).html) |
+| IDE | IntelliJ IDEA / VS Code |
 
 <br/>
 

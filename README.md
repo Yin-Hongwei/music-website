@@ -47,7 +47,7 @@
 
 ## 项目说明
 
-本音乐网站的客户端和管理端使用 **Vue** 框架来实现，服务端使用 **Spring Boot + MyBatis** 来实现，数据库使用了 **MySQL**。实现思路可参考 **[语雀文档](https://www.yuque.com/yinhongwei-ya0u7/bk3hhk/nu3i7emefxvetpz8)** 或 **[博客文章](https://yin-hongwei.github.io/2019/03/04/music/)**。本地启动步骤见下方 [快速开始](#快速开始)。
+本音乐网站的客户端和管理端使用 **Vue** 框架来实现，服务端使用 **Spring Boot + MyBatis** 来实现，数据库使用了 **MySQL**。实现思路可参考 **[博客文章](https://yin-hongwei.github.io/2019/03/04/music/)**。本地启动步骤见下方 [快速开始](#快速开始)。
 
 <br/>
 
@@ -138,14 +138,14 @@ music-website/
 
 ## 开发环境
 
-| 依赖 | 版本 / 说明 |
+| 环境 | 版本 |
 | --- | --- |
-| **JDK** | 8+（如 jdk-8u141） |
-| **MySQL** | 5.7.21+ |
-| **Redis** | 5.0.8+，或使用 [Docker 启动 Redis](https://nanshaws.github.io/docker/docker启动redis(完美过程).html) |
-| **Node.js** | 14+ |
-| **MinIO** | 本地安装最新版，或使用 [Docker 启动 MinIO](https://nanshaws.github.io/docker/docker完美启动minio(完美过程).html) |
-| **IDE** | IntelliJ IDEA · VS Code |
+| JDK | 8+（如 jdk-8u141） |
+| MySQL | 8.0+ |
+| Redis | 5.0.8+，或使用 [Docker 启动 Redis](https://nanshaws.github.io/docker/docker启动redis(完美过程).html) |
+| Node.js | 14+ |
+| MinIO | 最新版，或使用 [Docker 启动 MinIO](https://nanshaws.github.io/docker/docker完美启动minio(完美过程).html) |
+| IDE | IntelliJ IDEA / VS Code |
 
 <br/>
 
