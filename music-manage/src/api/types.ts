@@ -4,6 +4,6 @@ export interface ApiResponse<T = unknown> {
   message: string;
   success: boolean;
   data?: T;
-  /** Element Plus message type，部分接口仍返回 */
+  /** 消息语气：success / warning / info / error，部分接口仍返回 */
   type?: string;
 }

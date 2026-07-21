@@ -12,8 +12,8 @@ $color-blue-dark: #2796dd;
 $color-red: rgb(245, 108, 108);
 
 // Theme Global Color
-$theme-color: $color-blue;
-$theme-background-color: #e6ecf0;
+$theme-color: $color-blue-active;
+$theme-background-color: #f5f5f7;
 $theme-header-color: $color-light-white;
 $theme-footer-color: $theme-background-color;
 $theme-play-bar-color: $color-light-white;
@@ -21,19 +21,20 @@ $theme-play-bar-color: $color-light-white;
 // Fonts（与 element-plus/theme-chalk/src/reset.scss 一致）
 $font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,
   sans-serif;
+$font-display: "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 $font-size-default: 1rem;
 $font-size-logo: 1.5rem;
 $font-size-header: 1rem;
 
 // header
-$header-height: 60px;
+$header-height: 64px;
 $header-padding: 0 4%;
 $header-margin: 0;
 $header-logo-width: 10%;
 $header-logo-margin: 0 10px;
 $header-nav-padding: 0 0.5rem;
 $header-nav-margin: 0 0.5rem;
-$header-search-radius: 10px;
+$header-search-radius: 999px;
 $header-search-height: $header-height - 20px;
 $header-search-max-width: 25vw;
 $header-search-min-width: 200px;
@@ -57,13 +58,35 @@ $footer-height: 100px;
 $current-play: 350px;
 
 // play-bar
-$play-bar-height: 60px;
+$play-bar-height: 84px;
 
 // style
-$box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+$box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 
 // Media queries
 $sm: 668px;
 $bg: 1024px;
 $md: 1300px;
 $lg: 1450px;
+
+// Apple Music–style CSS tokens (accent = legacy blue, not Music red)
+:root {
+  --background: #f5f5f7;
+  --surface: #ffffff;
+  --surface-secondary: #f0f0f2;
+  --surface-tertiary: #e8e8ed;
+  --foreground: #1d1d1f;
+  --muted: #6e6e73;
+  --border: rgba(0, 0, 0, 0.08);
+  --accent: #{$color-blue-active};
+  --accent-hover: #{$color-blue-dark};
+  --header-height: #{$header-height};
+  --player-height: #{$play-bar-height};
+  --content-max-width: 1180px;
+  --el-color-primary: var(--accent);
+  --el-color-primary-light-3: #{$color-blue-light};
+  --el-color-primary-light-5: #{$color-blue};
+  --el-color-primary-light-7: #{$color-blue-shallow};
+  --el-color-primary-light-9: #e8f4fc;
+  --el-color-primary-dark-2: var(--accent-hover);
+}

@@ -44,7 +44,6 @@
 
 <br/>
 
-
 ## 项目说明
 
 本音乐网站的客户端和管理端使用 **Vue** 框架来实现，服务端使用 **Spring Boot + MyBatis** 来实现，数据库使用了 **MySQL**。实现思路可参考 **[博客文章](https://yin-hongwei.github.io/2019/03/04/music/)**。本地启动步骤见下方 [快速开始](#快速开始)。
@@ -58,6 +57,8 @@ music-website/
 ├── music-client/     # 前台 Web 客户端（Vue 3）
 ├── music-manage/     # 后台管理端（Vue 3）
 ├── music-server/     # 后端 API（Spring Boot）
+│   └── data/         # 本地媒体与日志（img / song / logs）
+├── deploy/           # Docker Compose 编排（镜像由各应用 Dockerfile 构建）
 ├── sql/              # 数据库初始化脚本
 └── docs/             # 文档
 ```
@@ -66,86 +67,68 @@ music-website/
 
 ## 项目预览
 
-<details open>
-<summary><b>前台截图</b> · 点击折叠 / 展开</summary>
-<br/>
-
+<b>前台截图</b>
 <table>
   <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax1.sinaimg.cn/large/007mxWTugy1icrcbfjswyj32c01ik4a1.jpg" width="100%" alt="前台首页"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax3.sinaimg.cn/large/007mxWTugy1icr7ma2nisj32c01ik7wi.jpg" width="100%" alt="歌单列表"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-161311.png" width="100%" alt="前台首页"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160603.png" width="100%" alt="歌单列表"/></td>
   </tr>
   <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax3.sinaimg.cn/large/007mxWTugy1icr7mwfp2sj32c01ikqv6.jpg" width="100%" alt="歌手详情"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax1.sinaimg.cn/large/007mxWTugy1icr7pxg6wlj32c01ik7tu.jpg" width="100%" alt="播放器"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160257.png" width="100%" alt="歌手详情"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160319.png" width="100%" alt="播放器"/></td>
   </tr>
   <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax4.sinaimg.cn/large/007mxWTugy1icr7nn7l7tj32c01ik1ky.jpg" width="100%" alt="歌词页"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax4.sinaimg.cn/large/007mxWTugy1icr7r9yn98j32c01iku0x.jpg" width="100%" alt="搜索页"/></td>
-  </tr>
-  <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax3.sinaimg.cn/large/007mxWTugy1icr7s5lnmjj32c01iknd9.jpg" width="100%" alt="个人中心"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax2.sinaimg.cn/large/007mxWTugy1icr7sv48ohj32c01ikqe5.jpg" width="100%" alt="登录注册"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160333.png" width="100%" alt="歌词页"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160525.png" width="100%" alt="搜索页"/></td>
   </tr>
 </table>
 
-</details>
-
-<details>
-<summary><b>后台截图</b> · 点击折叠 / 展开</summary>
 <br/>
-
+<b>后台截图</b>
 <table>
   <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h158xvsdvij21c00u0wi8.jpg" width="100%" alt="后台首页"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h159x0re56j21c00u077a.jpg" width="100%" alt="用户管理"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160704.png" width="100%" alt="后台首页"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160715.png" width="100%" alt="用户管理"/></td>
   </tr>
   <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h159xzbi85j21c00u0whn.jpg" width="100%" alt="歌曲管理"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h159zewsh4j21c00u079f.jpg" width="100%" alt="歌手管理"/></td>
-  </tr>
-  <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h159yz5x8hj21c00u0win.jpg" width="100%" alt="歌单管理"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h159yo2nzmj21c00u0djp.jpg" width="100%" alt="评论管理"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160724.png" width="100%" alt="歌曲管理"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160802.png" width="100%" alt="歌手管理"/></td>
   </tr>
 </table>
-
-</details>
 
 <br/>
 
 ## 项目主要功能
 
-| 模块 | 能力 |
-| --- | --- |
-| **用户** | 登录注册、资料编辑、个人中心 |
-| **发现** | 歌单推荐、歌单与歌手展示、歌曲/歌单搜索 |
-| **互动** | 歌单与歌曲评论、收藏 |
-| **播放器** | 播放、暂停、进度拖动、音量控制、歌词同步、下载 |
-| **管理后台** | Banner、用户、歌曲、歌手、歌单、评论管理 |
+| 模块         | 能力                                           |
+| ------------ | ---------------------------------------------- |
+| **用户**     | 登录注册、资料编辑、个人中心                   |
+| **发现**     | 歌单推荐、歌单与歌手展示、歌曲/歌单搜索        |
+| **互动**     | 歌单与歌曲评论、收藏                           |
+| **播放器**   | 播放、暂停、进度拖动、音量控制、歌词同步、下载 |
+| **管理后台** | Banner、用户、歌曲、歌手、歌单、评论管理       |
 
 <br/>
 
 ## 技术栈
 
-| 层级 | 技术 |
-| --- | --- |
-| **后端** | Spring Boot · MyBatis · Redis · MinIO |
-| **前端** | Vue 3 · TypeScript · Vue Router · Pinia · Axios · Element Plus |
-| **部署** | Docker · Docker Compose |
+| 层级     | 技术                                                                                         |
+| -------- | -------------------------------------------------------------------------------------------- |
+| **后端** | Spring Boot · MyBatis · Redis · 本地媒体存储（`music-server/data`）                          |
+| **前端** | Vue 3 · TypeScript · Vue Router · Pinia · Axios · Element Plus（客户端）/ Naive UI（管理端） |
+| **部署** | Docker · Docker Compose                                                                      |
 
 <br/>
 
 ## 开发环境
 
-| 环境 | 版本 |
-| --- | --- |
-| JDK | 8+（如 jdk-8u141） |
-| MySQL | 8.0+ |
-| Redis | 5.0.8+，或使用 [Docker 启动 Redis](https://nanshaws.github.io/docker/docker启动redis(完美过程).html) |
-| Node.js | 14+ |
-| MinIO | 最新版，或使用 [Docker 启动 MinIO](https://nanshaws.github.io/docker/docker完美启动minio(完美过程).html) |
-| IDE | IntelliJ IDEA / VS Code |
+| 环境    | 版本                                                                                                   |
+| ------- | ------------------------------------------------------------------------------------------------------ |
+| JDK     | 8+（如 jdk-8u141）                                                                                     |
+| MySQL   | 8.0+                                                                                                   |
+| Redis   | 5.0.8+，或使用 [Docker 启动 Redis](<https://nanshaws.github.io/docker/docker启动redis(完美过程).html>) |
+| Node.js | 16+                                                                                                    |
+| IDE     | IntelliJ IDEA / VS Code                                                                                |
 
 <br/>
 
@@ -160,34 +143,39 @@ cd music-website
 
 ### 2. 下载媒体资源
 
-从百度网盘下载歌曲与图片资源：
+下载歌曲与图片资源：
 
-- 链接：https://pan.baidu.com/s/1Qv0ohAIPeTthPK_CDwpfWg
-- 提取码：`gwa4`
+- 链接：https://pan.quark.cn/s/f64a22313775
+- 提取码：`21p9`
 
-将 `data` 文件夹中的内容放到 `music-server` 目录下，目录结构参考下方截图。
+将网盘中的 `data` 文件夹放到 `music-server` 下，得到：
 
-> **注意：** 请按截图所示路径存放资源文件。
+```
+music-server/data/img/
+music-server/data/song/
+```
+
+> **注意：** 请保持上述路径；本地日志默认写入 `music-server/data/logs/`。
 
 <p align="left">
-  <img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h6gz1le9wxj20fo0gggmh.jpg" height="200px" alt="资源目录结构"/>
+  <img src="./docs/assets/screenshot-20260721-162029.png" height="200px" alt="资源目录结构"/>
 </p>
 
 ### 3. 配置数据库
 
 1. 在 MySQL 中创建数据库，并导入 `sql/yin_music.sql`
-2. 编辑 `music-server/src/main/resources/application.properties`，修改 `spring.datasource.username` 与 `spring.datasource.password`
+2. 编辑 `music-server/src/main/resources/application-dev.properties`，修改 `spring.datasource.username` 与 `spring.datasource.password`（默认激活 `dev` profile，见 `application.properties`）
 
 ### 4. 启动服务
 
 按以下顺序启动各服务（可开多个终端窗口）：
 
-| 服务 | 目录 | 命令 |
-| --- | --- | --- |
-| **后端 API** | `music-server` | `./mvnw clean spring-boot:run`（Windows 使用 `mvnw.cmd`） |
-| **Redis** | — | `redis-server` |
-| **前台客户端** | `music-client` | `npm install && npm run serve` |
-| **管理后台** | `music-manage` | `npm install && npm run serve` |
+| 服务           | 目录           | 命令                                                      |
+| -------------- | -------------- | --------------------------------------------------------- |
+| **后端 API**   | `music-server` | `./mvnw clean spring-boot:run`（Windows 使用 `mvnw.cmd`） |
+| **Redis**      | —              | `redis-server`                                            |
+| **前台客户端** | `music-client` | `npm install && npm run serve`                            |
+| **管理后台**   | `music-manage` | `npm install && npm run serve`                            |
 
 <details>
 <summary><b>后端启动命令详情</b></summary>
@@ -217,10 +205,10 @@ mvn clean spring-boot:run
 
 ## 常见问题
 
-| 现象 | 处理方式 |
-| --- | --- |
-| 图片或音乐加载失败 | 将 `music-server` 下的 `img`、`song` 目录移动到仓库根目录 `music-website/` |
-| 音乐无法播放 | 资源文件可能损坏，请从网盘重新下载并替换 |
+| 现象               | 处理方式                                                                                             |
+| ------------------ | ---------------------------------------------------------------------------------------------------- |
+| 图片或音乐加载失败 | 确认资源位于 `music-server/data/img` 与 `music-server/data/song`，并在 `music-server` 目录下启动后端 |
+| 音乐无法播放       | 资源文件可能损坏，请从网盘重新下载并替换                                                             |
 
 <br/>
 
@@ -228,27 +216,22 @@ mvn clean spring-boot:run
 
 > 本地开发可跳过本节。适用于 Linux 服务器部署。
 
-将以下文件放到 Linux 服务器：
-
-<p align="left">
-  <img src="https://i0.wp.com/tvax2.sinaimg.cn/large/007mxWTugy1icr99ij9s5j30bs06hq4m.jpg" height="240px" alt="部署目录结构"/>
-</p>
-
-还有编译好的 jar 包，都放到同一目录里面，如下：
-
-<p align="left">
-  <img src="https://i0.wp.com/tvax4.sinaimg.cn/large/007mxWTugy1icr99ioipxj3082076my5.jpg" height="240px" alt="JAR 包放置"/>
-</p>
+镜像定义放在各应用目录（`music-server` / `music-client` / `music-manage` 的 `Dockerfile`），`deploy/docker-compose.yml` 只负责编排。
 
 ```bash
+cd deploy
 docker compose up --build
 ```
 
-运行结果：
+启动后：
 
-<p align="left">
-  <img src="https://i0.wp.com/tvax4.sinaimg.cn/large/007mxWTugy1icr99iumhpj319y0hjwyi.jpg" height="280px" alt="Docker 运行结果"/>
-</p>
+| 服务   | 地址                  |
+| ------ | --------------------- |
+| 前台   | http://localhost:8080 |
+| 管理端 | http://localhost:8081 |
+| API    | http://localhost:8888 |
+
+可选环境变量：`MYSQL_ROOT_PASSWORD`、`API_PUBLIC_URL`（前端构建时写入的后端地址，默认 `http://localhost:8888`）。
 
 <br/>
 
@@ -269,7 +252,6 @@ docker compose up --build
 <img src="./docs/assets/sponsor-qr.png" height="300px" alt="微信打赏二维码"/>
 
 <br/>
-
 
 ## 联系方式
 

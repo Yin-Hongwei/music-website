@@ -12,12 +12,14 @@
             url: item.url,
             pic: item.pic,
             index: index,
-            name: item.name,
+            name: item.songName || item.name,
+            singerName: item.singerName,
             lyric: item.lyric,
             currentSongList: currentPlayList,
+            duration: item.duration,
           })
           ">
-          {{ getSongTitle(item.name) }}
+          {{ item.songName || item.name }}
         </li>
       </ul>
     </div>
@@ -32,7 +34,7 @@ import { useAppActions } from "../../composables/useAppActions";
 
 const configureStore = useConfigureStore();
 const songStore = useSongStore();
-const { getSongTitle, playMusic } = useAppActions();
+const { playMusic } = useAppActions();
 
 const songId = computed(() => songStore.songId); // 音乐 ID
 const currentPlayList = computed(() => songStore.currentPlayList); // 当前播放
@@ -74,12 +76,14 @@ onMounted(() => {
   width: $current-play;
   position: fixed;
   right: 0;
-  top: $header-height;
-  bottom: 0;
-  padding-bottom: $footer-height;
+  top: var(--header-height);
+  bottom: var(--player-height);
   z-index: 99;
-  background-color: $color-white;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid var(--border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   overflow: hidden;
 }
 
@@ -92,34 +96,41 @@ onMounted(() => {
 
 .title {
   margin: 10px 0;
+  color: var(--foreground);
+  font-weight: 600;
 }
 
 .control {
   margin: 3px 0;
-  color: $color-grey;
+  color: var(--muted);
 }
 
 .menus {
   width: 100%;
-  height: calc(100% - 19px);
+  height: calc(100% - 52px);
   cursor: pointer;
   z-index: 100;
-  overflow: scroll;
+  overflow: auto;
   white-space: nowrap;
   li {
     display: block;
     width: 100%;
     height: 40px;
     line-height: 40px;
+    border-radius: 12px;
+    margin: 0 8px;
+    width: calc(100% - 16px);
+    padding-left: 12px;
+    color: var(--foreground);
     &:hover {
-      background-color: $color-light-grey;
+      background-color: rgba(0, 0, 0, 0.04);
     }
   }
 }
 
 .is-play {
-  color: $color-black;
-  font-weight: bold;
+  color: var(--accent);
+  font-weight: 600;
 }
 
 </style>

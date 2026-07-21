@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { useSongStore } from "@/store/song";
-import { getSingerName, getSongTitle } from "@/utils";
+import { resolveSingerName, resolveSongTitle } from "@/utils";
 
 type SongId = string | number;
 
@@ -10,6 +10,9 @@ export interface PlaySongItem {
   pic: string;
   lyric: unknown;
   name: string;
+  singerName?: string;
+  songName?: string;
+  duration?: number | null;
 }
 
 export interface PlaySongPayload {
@@ -19,7 +22,9 @@ export interface PlaySongPayload {
   lyric: unknown;
   index: number;
   name: string;
+  singerName?: string;
   currentSongList: PlaySongItem[];
+  duration?: number | null;
 }
 
 export const usePlayerStore = defineStore("player", {
@@ -31,7 +36,17 @@ export const usePlayerStore = defineStore("player", {
       this.lastPlayedId = id;
     },
     playSong(payload: PlaySongPayload) {
-      const { id, url, pic, lyric, index, name, currentSongList } = payload;
+      const {
+        id,
+        url,
+        pic,
+        lyric,
+        index,
+        name,
+        singerName,
+        currentSongList,
+        duration,
+      } = payload;
       const songStore = useSongStore();
       this.setLastPlayedId(id);
       songStore.playMusic({
@@ -39,10 +54,11 @@ export const usePlayerStore = defineStore("player", {
         url,
         pic,
         index,
-        songTitle: getSongTitle(name),
-        singerName: getSingerName(name),
+        songTitle: resolveSongTitle(name),
+        singerName: resolveSingerName(singerName),
         lyric,
         currentSongList,
+        duration,
       });
     },
   },

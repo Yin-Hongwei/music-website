@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-/** 与面包屑 `el-breadcrumb-item` 的 `to` 字段对齐 */
+/** 与 `PageBreadcrumb` 导航项对齐 */
 export type BreadcrumbItem = {
   name: string;
   path: string;
@@ -10,7 +10,7 @@ export type BreadcrumbItem = {
 
 export const useAppStore = defineStore("app", {
   state: () => ({
-    userPic: "/img/avatorImages/user.jpg",
+    userPic: "/img/avatarImages/user.jpg",
     isPlay: false,
     url: "",
     id: "",

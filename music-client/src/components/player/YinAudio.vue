@@ -62,13 +62,16 @@ function togglePlay() {
   }
 }
 
-// 获取歌曲链接后准备播放
+// 获取歌曲链接后准备播放；优先用后端 duration，缺失时回退 audio.duration
 function canplay() {
   if (!audioRef.value) return;
   syncAudioLoop();
-  // 记录音乐时长
-  songStore.setDuration(audioRef.value.duration);
-  // 开始播放
+  if (!songStore.duration) {
+    const audioDuration = audioRef.value.duration;
+    if (Number.isFinite(audioDuration) && audioDuration > 0) {
+      songStore.setDuration(audioDuration);
+    }
+  }
   tryPlay();
 }
 

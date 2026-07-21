@@ -5,14 +5,20 @@ import { getBaseURL } from "@/utils/request";
  */
 export function attachImageUrl(url: string | undefined | null): string {
   const rawUrl = typeof url === "string" ? url.trim() : "";
-  const fallbackPath = "/img/avatorImages/user.jpg";
+  const fallbackPath = "/img/avatarImages/user.jpg";
   const normalizedPath = rawUrl || fallbackPath;
   if (/^https?:\/\//i.test(normalizedPath)) {
     return normalizedPath;
   }
   const baseUrl = (getBaseURL() || "").replace(/\/+$/, "");
   const path = normalizedPath.startsWith("/") ? normalizedPath : `/${normalizedPath}`;
-  return `${baseUrl}${path}`;
+  // Encode each segment for Chinese / spaces; keep `=` unencoded — seed covers
+  // often use base64-like names (…==_….jpg) and Spring static resources 404 on %3D.
+  const encodedPath = path
+    .split("/")
+    .map((seg) => (seg ? encodeURIComponent(seg).replace(/%3D/gi, "=") : ""))
+    .join("/");
+  return `${baseUrl}${encodedPath}`;
 }
 
 export function getBannerAddUploadUrl(): string {
@@ -23,14 +29,4 @@ export function getBannerAddUploadUrl(): string {
 export function getBannerUpdatePicUploadUrl(id: string | number): string {
   const base = (getBaseURL() || "").replace(/\/+$/, "");
   return `${base}/banner/updatePic?id=${id}`;
-}
-
-export function getSongUrlUpdateUploadUrl(id: string | number): string {
-  const base = (getBaseURL() || "").replace(/\/+$/, "");
-  return `${base}/song/url/update?id=${id}`;
-}
-
-export function getSongImgUpdateUploadUrl(id: string | number): string {
-  const base = (getBaseURL() || "").replace(/\/+$/, "");
-  return `${base}/song/img/update?id=${id}`;
 }

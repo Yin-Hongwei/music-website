@@ -47,6 +47,8 @@ body,
   height: 100%;
   font-family: $font-family;
   -webkit-font-smoothing: antialiased;
+  background: var(--background);
+  color: var(--foreground);
 }
 
 ul,
@@ -60,9 +62,166 @@ li {
   transform: translateY(15px);
 }
 
+/* Page shell & typography */
+.page-shell {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 24px 28px calc(var(--player-height) + 24px);
+  background: var(--background);
+  color: var(--foreground);
+  box-sizing: border-box;
+}
+
+.section-title {
+  margin: 0 0 1.25rem;
+  font-family: $font-display;
+  font-size: clamp(1.75rem, 2.4vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  line-height: 1.2;
+}
+
+.cover-lift {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  background: var(--surface-tertiary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.pill-chip {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--surface);
+  color: var(--muted);
+  transition: color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    color: var(--foreground);
+  }
+
+  &.is-active {
+    background: var(--foreground);
+    color: #fff;
+  }
+}
+
+.pill-filters {
+  margin-bottom: 1.25rem;
+}
+
+/* Apple Music–style segmented tabs (Element Plus el-tabs override) */
+.segment-tabs {
+  .el-tabs__header {
+    margin-bottom: 1.25rem;
+  }
+
+  .el-tabs__nav-wrap::after {
+    display: none;
+  }
+
+  .el-tabs__nav-wrap,
+  .el-tabs__nav-scroll {
+    overflow: visible;
+  }
+
+  .el-tabs__nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    float: none;
+    padding: 4px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--surface-secondary);
+  }
+
+  .el-tabs__active-bar {
+    display: none !important;
+  }
+
+  .el-tabs__item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 16px !important;
+    margin: 0 !important;
+    border: 0;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--muted);
+    white-space: nowrap;
+    transition: color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover {
+      color: var(--foreground);
+    }
+
+    &.is-active {
+      color: var(--foreground);
+      background: var(--surface);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    }
+
+    &:first-child,
+    &:last-child {
+      padding: 0 16px !important;
+    }
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .segment-tabs {
+    .el-tabs__nav {
+      display: flex;
+      width: 100%;
+    }
+
+    .el-tabs__item {
+      flex: 1;
+      min-width: 0;
+      padding: 0 10px !important;
+
+      &:first-child,
+      &:last-child {
+        padding: 0 10px !important;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-shell,
+  .cover-lift,
+  .pill-chip {
+    transition: none !important;
+  }
+
+  .cover-lift:hover {
+    transform: none;
+  }
+}
+
+/* Legacy container — prefer .page-shell on new pages */
 @media screen and (min-width: $sm) {
   .play-list-container {
-    margin: 0 8% 30px 8%;
+    margin: 0;
   }
 }
 

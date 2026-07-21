@@ -5,19 +5,31 @@ declare module "*.vue" {
   export default component;
 }
 
-declare module "vue/types/vue" {
-  import VueRouter, { Route } from "vue-router";
-
-  interface Vue {
-    $router: VueRouter;
-    $route: Route;
-  }
+declare module "*.jpg" {
+  const src: string;
+  export default src;
 }
 
+declare module "*.jpeg" {
+  const src: string;
+  export default src;
+}
+
+declare module "*.png" {
+  const src: string;
+  export default src;
+}
+
+declare module "*.webp" {
+  const src: string;
+  export default src;
+}
+
+/** @deprecated 优先使用 `@/api` 的 ApiResponse */
 interface ResponseBody {
-  code: string;
+  code: number | string;
   success: boolean;
   message: string;
-  type: string;
+  type?: string;
   data?: any;
 }

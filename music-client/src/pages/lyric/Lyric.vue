@@ -114,27 +114,18 @@ function splitIntoSingleSentences(text: string): string[] {
   return [trimmed];
 }
 
-function resolveCurrentLyric() {
-  if (typeof window !== "undefined") {
-    lyricLineHeight.value = window.matchMedia("(max-width: 668px)").matches
-      ? 46
-      : 54;
+function resolveLyricText(): string {
+  if (typeof lyric.value === "string" && lyric.value.trim()) {
+    return lyric.value;
   }
-  let parsed: LyricLine[] = [];
-  if (lyric.value) {
-    parsed = parseLyric(lyric.value);
-  } else {
-    const currentSong = currentPlayList.value[currentPlayIndex.value];
-    parsed =
-      currentSong && currentSong.lyric ? parseLyric(currentSong.lyric) : [];
+  const currentSong = currentPlayList.value[currentPlayIndex.value];
+  if (currentSong?.lyric && typeof currentSong.lyric === "string") {
+    return currentSong.lyric;
   }
-  lyricArr.value = expandLyricOneSentencePerLine(parsed);
-  activeLyricIndex.value = -1;
+  return "";
 }
 
-watch(songId, resolveCurrentLyric, { immediate: true });
-
-watch(curTime, (value) => {
+function syncActiveLyricIndex(time: number) {
   if (!lyricArr.value.length) {
     activeLyricIndex.value = -1;
     return;
@@ -142,13 +133,29 @@ watch(curTime, (value) => {
 
   let index = -1;
   for (let i = lyricArr.value.length - 1; i >= 0; i--) {
-    if (value >= lyricArr.value[i][0]) {
+    if (time >= lyricArr.value[i][0]) {
       index = i;
       break;
     }
   }
   activeLyricIndex.value = index;
-});
+}
+
+function resolveCurrentLyric() {
+  if (typeof window !== "undefined") {
+    lyricLineHeight.value = window.matchMedia("(max-width: 668px)").matches
+      ? 46
+      : 54;
+  }
+  const lyricText = resolveLyricText();
+  const parsed = lyricText ? parseLyric(lyricText) : [];
+  lyricArr.value = expandLyricOneSentencePerLine(parsed);
+  syncActiveLyricIndex(curTime.value);
+}
+
+watch([songId, lyric], resolveCurrentLyric, { immediate: true });
+
+watch(curTime, syncActiveLyricIndex, { immediate: true });
 
 function seekToLyric(seconds: number) {
   if (Number.isNaN(seconds) || seconds < 0) return;
@@ -161,9 +168,9 @@ function seekToLyric(seconds: number) {
 @import "@/assets/css/global.scss";
 
 .lyric-page {
-  height: calc(100vh - 100px);
-  padding: 36px 56px 44px;
-  background: linear-gradient(180deg, #e8f0fb 0%, #dbe9f8 100%);
+  height: calc(100vh - var(--header-height) - var(--player-height));
+  padding: 36px 56px calc(var(--player-height) + 24px);
+  background: linear-gradient(180deg, #f5f5f7 0%, #e8f0fb 100%);
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -194,14 +201,14 @@ function seekToLyric(seconds: number) {
   margin: 0;
   font-size: 30px;
   line-height: 1.25;
-  color: #1d1f25;
+  color: var(--foreground);
   font-weight: 700;
 }
 
 .song-singer {
   margin: 8px 0 0;
   font-size: 18px;
-  color: rgba(29, 31, 37, 0.7);
+  color: var(--muted);
 }
 
 .lyric-panel {
@@ -236,11 +243,15 @@ function seekToLyric(seconds: number) {
   li {
     height: 54px;
     line-height: 54px;
-    font-size: 32px;
-    color: rgba(24, 24, 24, 0.36);
+    font-size: 24px;
+    color: rgba(29, 29, 31, 0.32);
     font-weight: 500;
     letter-spacing: 0.01em;
-    transition: all 0.25s ease;
+    transition:
+      color 0.25s ease,
+      font-size 0.25s ease,
+      font-weight 0.25s ease,
+      opacity 0.25s ease;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -248,9 +259,9 @@ function seekToLyric(seconds: number) {
     cursor: pointer;
 
     &.is-active {
-      color: #222;
+      font-size: 34px;
+      color: var(--foreground);
       font-weight: 700;
-      text-shadow: none;
     }
   }
 }
@@ -345,9 +356,13 @@ function seekToLyric(seconds: number) {
   }
 
   .has-lyric li {
-    font-size: 26px;
     height: 46px;
     line-height: 46px;
+    font-size: 20px;
+
+    &.is-active {
+      font-size: 28px;
+    }
   }
 
   .lyric-panel {

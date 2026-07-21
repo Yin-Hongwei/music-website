@@ -31,8 +31,8 @@
           filterable />
       </el-form-item>
       <el-form-item class="sign-btn">
-        <el-button @click="goBack">返回登录</el-button>
-        <el-button type="primary" @click="handleSignUp">确定</el-button>
+        <el-button round @click="goBack">返回登录</el-button>
+        <el-button type="primary" round @click="handleSignUp">确定</el-button>
       </el-form-item>
     </el-form>
   </AuthLayout>
@@ -120,6 +120,10 @@ function goBack() {
 </script>
 
 <style lang="scss" scoped>
+.sign-btn {
+  margin-top: 8px;
+}
+
 .sign-btn:deep(.el-form-item__content) {
   display: flex;
   gap: 12px;

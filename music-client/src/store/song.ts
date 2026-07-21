@@ -16,7 +16,7 @@ export const useSongStore = defineStore("song", {
     songUrl: "",
     songPic: "/img/songPic/tubiao.jpg",
     singerName: "",
-    lyric: [] as any[],
+    lyric: "",
     isPlay: false,
     volume: 0,
     duration: 0,
@@ -50,7 +50,7 @@ export const useSongStore = defineStore("song", {
     setPlayMode(playMode: PlayMode) {
       this.playMode = playMode;
     },
-    setLyric(lyric: any[]) {
+    setLyric(lyric: any) {
       this.lyric = lyric;
     },
     setIsPlay(isPlay: boolean) {
@@ -77,7 +77,27 @@ export const useSongStore = defineStore("song", {
     setCurrentPlayIndex(currentPlayIndex: number) {
       this.currentPlayIndex = currentPlayIndex;
     },
-    playMusic({ id, url, pic, index, songTitle, singerName, lyric, currentSongList }) {
+    playMusic({
+      id,
+      url,
+      pic,
+      index,
+      songTitle,
+      singerName,
+      lyric,
+      currentSongList,
+      duration,
+    }: {
+      id: string | number;
+      url: string;
+      pic: string;
+      index: number;
+      songTitle: string;
+      singerName: string;
+      lyric: any;
+      currentSongList: any[];
+      duration?: number | null;
+    }) {
       this.setSongId(id);
       this.setSongUrl(url);
       this.setSongPic(pic);
@@ -86,6 +106,10 @@ export const useSongStore = defineStore("song", {
       this.setSingerName(singerName);
       this.setLyric(lyric);
       this.setCurrentPlayList(currentSongList);
+      const seconds = Number(duration);
+      this.setDuration(Number.isFinite(seconds) && seconds > 0 ? seconds : 0);
+      this.setCurTime(0);
+      this.setChangeTime(0);
     },
   },
 });

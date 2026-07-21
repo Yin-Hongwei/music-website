@@ -1,0 +1,5 @@
+target/
+data/logs/
+.git/
+*.iml
+.idea/

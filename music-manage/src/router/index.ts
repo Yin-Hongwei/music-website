@@ -3,52 +3,62 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/info",
-    component: () => import("@/views/InfoPage.vue"),
+    name: "info",
+    component: () => import("@/pages/InfoPage.vue"),
     meta: { title: "Info" },
   },
   {
     path: "/song",
-    component: () => import("@/views/singer/SongPage.vue"),
+    name: "song",
+    component: () => import("@/pages/singer/SongPage.vue"),
     meta: { title: "Song" },
   },
   {
     path: "/singer",
-    component: () => import("@/views/singer/SingerPage.vue"),
+    name: "singer",
+    component: () => import("@/pages/singer/SingerPage.vue"),
     meta: { title: "Singer" },
   },
   {
     path: "/songList",
-    component: () => import("@/views/songSheet/SongSheetPage.vue"),
+    name: "songList",
+    component: () => import("@/pages/song-sheet/SongSheetPage.vue"),
     meta: { title: "SongList" },
   },
   {
     path: "/listSong",
-    component: () => import("@/views/ListSongPage.vue"),
+    name: "listSong",
+    component: () => import("@/pages/song-sheet/ListSongPage.vue"),
     meta: { title: "ListSong" },
   },
   {
     path: "/comment",
-    component: () => import("@/views/CommentPage.vue"),
+    name: "comment",
+    component: () => import("@/pages/comment/CommentPage.vue"),
     meta: { title: "Comment" },
   },
   {
     path: "/consumer",
-    component: () => import("@/views/user/ConsumerPage.vue"),
+    name: "consumer",
+    component: () => import("@/pages/user/ConsumerPage.vue"),
     meta: { title: "Consumer" },
   },
   {
     path: "/collect",
-    component: () => import("@/views/CollectPage.vue"),
+    name: "collect",
+    component: () => import("@/pages/collect/CollectPage.vue"),
     meta: { title: "Collect" },
   },
   {
     path: "/banner",
-    component: () => import("@/views/BannerPage.vue"),
+    name: "banner",
+    component: () => import("@/pages/banner/BannerPage.vue"),
     meta: { title: "Banner" },
   },
   {
     path: "/",
-    component: () => import("@/views/Login.vue"),
+    name: "signIn",
+    component: () => import("@/pages/Login.vue"),
   },
 ];
 

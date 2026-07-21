@@ -1,75 +1,124 @@
 <template>
-  <div class="playbar" :class="{ 'is-collapsed': !toggle }">
+  <div class="playbar">
     <YinAudio />
-    <div class="playbar__toggle" :class="{ 'is-rotated': toggle }">
-      <ChevronDown class="playbar__icon-btn" @click="toggle = !toggle" />
+    <div class="playbar__progress-wrap">
+      <el-slider
+        class="playbar__progress"
+        v-model="nowTime"
+        :show-tooltip="false"
+        @input="dragStart"
+        @change="changeTime"
+        size="small"
+      />
     </div>
-    <el-slider
-      class="playbar__progress"
-      v-model="nowTime"
-      :format-tooltip="formatProgressTooltip"
-      @input="dragStart"
-      @change="changeTime"
-      size="small"
-    />
     <div class="playbar__content">
       <div class="playbar__meta">
-        <div class="playbar__cover-wrap" @click="goPlayerPage">
-          <el-image class="playbar__cover" fit="contain" :src="attachImageUrl(songPic)" />
-          <Maximize2 class="playbar__cover-hover-icon" />
-        </div>
-        <div v-if="songId">
-          <div class="playbar__song">{{ songTitle }} - {{ singerName }}</div>
-          <div class="playbar__time">{{ startTime }} / {{ endTime }}</div>
+        <button
+          type="button"
+          class="playbar__cover-wrap"
+          aria-label="查看歌词"
+          @click="goPlayerPage"
+        >
+          <el-image class="playbar__cover" fit="cover" :src="attachImageUrl(songPic)" />
+        </button>
+        <div class="playbar__meta-text">
+          <p class="playbar__song">
+            {{ songId ? `${songTitle} · ${singerName}` : "未选择歌曲" }}
+          </p>
+          <p class="playbar__time">{{ startTime }} / {{ endTime }}</p>
         </div>
       </div>
+
       <div class="playbar__controls">
-        <component
-          :is="playModeIcon"
+        <button
+          type="button"
           class="playbar__icon-btn hide-mobile"
+          :class="{ 'is-accent': playMode !== PLAY_MODE_LIST_LOOP }"
           :title="playModeLabel"
           :aria-label="playModeLabel"
           @click="changePlayState"
-        />
-        <SkipBack class="playbar__icon-btn" @click="prev" />
-        <component :is="isPlay ? Pause : Play" class="playbar__icon-btn" @click="togglePlay" />
-        <SkipForward class="playbar__icon-btn" @click="next" />
-        <ListMusic class="playbar__icon-btn playbar__toggle-aside-btn hide-mobile" @click="changeAside" />
+        >
+          <component :is="playModeIcon" />
+        </button>
+        <button type="button" class="playbar__icon-btn" aria-label="上一首" @click="prev">
+          <SkipBack />
+        </button>
+        <button
+          type="button"
+          class="playbar__play-btn"
+          aria-label="播放/暂停"
+          @click="togglePlay"
+        >
+          <component :is="isPlay ? Pause : Play" class="playbar__play-icon" />
+        </button>
+        <button type="button" class="playbar__icon-btn" aria-label="下一首" @click="next">
+          <SkipForward />
+        </button>
+        <div
+          class="playbar__volume hide-mobile"
+          @mouseenter="showVolume = true"
+          @mouseleave="onVolumeLeave"
+        >
+          <button
+            type="button"
+            class="playbar__icon-btn"
+            aria-label="音量"
+            :aria-expanded="showVolume"
+            @click="showVolume = !showVolume"
+          >
+            <component :is="volume !== 0 ? Volume2 : VolumeX" />
+          </button>
+          <div v-if="showVolume" class="playbar__volume-popup">
+            <el-slider
+              class="playbar__volume-slider"
+              v-model="volume"
+              :show-tooltip="false"
+              @mousedown="volumeDragging = true"
+              @mouseup="onVolumeDragEnd"
+            />
+          </div>
+        </div>
       </div>
+
       <div class="playbar__actions">
-        <span class="playbar__action-item playbar__lyric-entry show-mobile" @click="goPlayerPage">词</span>
-        <span class="playbar__action-item" :class="{ 'is-active': isCollection }" @click="changeCollection">
-          <Heart class="playbar__action-icon" :fill="isCollection ? 'currentColor' : 'none'" />
-        </span>
-        <span class="playbar__action-item hide-mobile" @click="openCommentDialog">
-          <MessageCircle class="playbar__action-icon" />
-        </span>
-        <el-dropdown class="playbar__action-item hide-mobile" trigger="click">
-          <component :is="volume !== 0 ? Volume2 : VolumeX" class="playbar__action-icon" />
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-slider class="playbar__volume-slider" style="height: 150px; margin: 10px 0" v-model="volume"
-                :vertical="true" />
-              <div class="playbar__volume-percent">{{ volume }}%</div>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-        <el-dropdown class="playbar__action-item hide-mobile" trigger="click">
-          <Ellipsis class="playbar__action-icon" />
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item @click="
-                downloadMusic({
-                  songUrl,
-                  songName: singerName + '-' + songTitle,
-                })
-                ">
-                <Download class="playbar__menu-icon" />
-                <span>下载</span>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
+        <button
+          type="button"
+          class="playbar__icon-btn"
+          :class="{ 'is-accent': isCollection }"
+          aria-label="喜欢"
+          @click="changeCollection"
+        >
+          <Heart :fill="isCollection ? 'currentColor' : 'none'" />
+        </button>
+        <button
+          type="button"
+          class="playbar__icon-btn hide-mobile"
+          aria-label="评论"
+          @click="openCommentDialog"
+        >
+          <MessageCircle />
+        </button>
+        <button
+          type="button"
+          class="playbar__icon-btn hide-mobile"
+          aria-label="下载"
+          @click="
+            downloadMusic({
+              songUrl,
+              songName: singerName + '-' + songTitle,
+            })
+          "
+        >
+          <Download />
+        </button>
+        <button
+          type="button"
+          class="playbar__icon-btn"
+          aria-label="播放列表"
+          @click="changeAside"
+        >
+          <ListMusic />
+        </button>
       </div>
     </div>
   </div>
@@ -80,12 +129,9 @@ import { computed, onMounted, ref, watch } from "vue";
 import { ElMessage } from "element-plus";
 import {
   Download,
-  Ellipsis,
   Heart,
-  ChevronDown,
   ListMusic,
   MessageCircle,
-  Maximize2,
   Pause,
   Play,
   Repeat,
@@ -114,7 +160,10 @@ import { elMessageTypeFromResponse } from "@/api/types";
 import { formatSeconds } from "../../utils";
 import { RouterName } from "../../enums";
 import { useAppActions } from "../../composables/useAppActions";
-const isDragging = ref(false); // 新增标志位
+
+const isDragging = ref(false);
+const showVolume = ref(false);
+const volumeDragging = ref(false);
 const configureStore = useConfigureStore();
 const userStore = useUserStore();
 const songStore = useSongStore();
@@ -134,7 +183,6 @@ const PLAY_MODE_LABEL_MAP = {
 };
 
 const nowTime = ref(0);
-const toggle = ref(true);
 const volume = ref(50);
 
 const isCollection = ref(false);
@@ -168,12 +216,15 @@ watch(token, (value) => {
 watch(volume, (value) => {
   songStore.setVolume(value / 100);
 });
-watch([curTime, duration], () => {
-  // 如果用户正在拖动，则禁止回写覆盖，阻止闪烁回弹
-  if (isDragging.value) return;
-  nowTime.value =
+watch(
+  [curTime, duration],
+  () => {
+    if (isDragging.value) return;
+    nowTime.value =
       duration.value > 0 ? (curTime.value / duration.value) * 100 : 0;
-}, { immediate: true });
+  },
+  { immediate: true },
+);
 watch(autoNext, () => {
   next();
 });
@@ -193,10 +244,10 @@ async function changeCollection() {
   const result = isCollection.value
     ? await fetchDeleteCollection(userId.value, songId.value)
     : await fetchSetCollection({
-      userId: userId.value,
-      type: COLLECTION_TYPE_SONG,
-      songId: songId.value,
-    });
+        userId: userId.value,
+        type: COLLECTION_TYPE_SONG,
+        songId: songId.value,
+      });
   ElMessage({
     message: result.message,
     type: elMessageTypeFromResponse(result),
@@ -220,19 +271,23 @@ function togglePlay() {
   songStore.setIsPlay(!isPlay.value);
 }
 
-// 新增：开始拖拽时将标记设为 true
 function dragStart() {
   isDragging.value = true;
 }
 
-// 修改原有的 changeTime 函数
 function changeTime() {
-  isDragging.value = false; // 拖动释放完毕，切回非拖动状态
+  isDragging.value = false;
   songStore.setChangeTime(duration.value * (nowTime.value * 0.01));
 }
 
-function formatProgressTooltip(value: number) {
-  return `${Math.round(value)}%`;
+function onVolumeLeave() {
+  if (volumeDragging.value) return;
+  showVolume.value = false;
+}
+
+function onVolumeDragEnd() {
+  volumeDragging.value = false;
+  showVolume.value = false;
 }
 
 function changePlayState() {
@@ -262,6 +317,7 @@ function toPlay(url: string) {
     name: song.name,
     lyric: song.lyric,
     currentSongList: currentPlayList.value,
+    duration: song.duration,
   });
 }
 
@@ -274,8 +330,7 @@ function prev() {
     return;
   }
 
-  if (currentPlayIndex.value === -1 || currentPlayList.value.length <= 1)
-    return;
+  if (currentPlayIndex.value === -1 || currentPlayList.value.length <= 1) return;
   const playIndex =
     currentPlayIndex.value > 0
       ? currentPlayIndex.value - 1
@@ -294,8 +349,7 @@ function next() {
     return;
   }
 
-  if (currentPlayIndex.value === -1 || currentPlayList.value.length <= 1)
-    return;
+  if (currentPlayIndex.value === -1 || currentPlayList.value.length <= 1) return;
   const playIndex =
     currentPlayIndex.value < currentPlayList.value.length - 1
       ? currentPlayIndex.value + 1
@@ -306,6 +360,7 @@ function next() {
 }
 
 function goPlayerPage() {
+  if (!songId.value) return;
   routerManager(RouterName.Lyric, {
     path: `${RouterName.Lyric}/${songId.value}`,
   });
@@ -320,37 +375,77 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 @import "@/assets/css/var.scss";
-@import "@/assets/css/global.scss";
 
 .playbar {
   position: fixed;
   z-index: 100;
+  left: 0;
+  right: 0;
   bottom: 0;
-  width: 100%;
-  transition: all 0.5s;
+  border-top: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
-.playbar__toggle {
-  position: absolute;
-  bottom: $play-bar-height + 5px;
-  left: 10px;
+.playbar__progress-wrap {
+  position: relative;
+  z-index: 1;
+  height: 16px;
+  margin-top: -8px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
 }
 
 .playbar__progress {
-  position: absolute;
-  margin-top: -10px;
+  width: 100%;
+  height: 16px;
+  margin: 0;
+
+  :deep(.el-slider__runway) {
+    height: 4px;
+    margin: 0;
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  :deep(.el-slider__bar) {
+    height: 4px;
+    border-radius: 0;
+    background-color: var(--accent);
+  }
+
+  :deep(.el-slider__button-wrapper) {
+    top: -14px;
+    width: 28px;
+    height: 28px;
+  }
+
+  :deep(.el-slider__button) {
+    width: 12px;
+    height: 12px;
+    border-color: var(--accent);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  &:hover :deep(.el-slider__button),
+  &:active :deep(.el-slider__button) {
+    opacity: 1;
+  }
 }
 
 .playbar__content {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  height: $play-bar-height;
-  width: 100%;
-  padding: 0 20px;
+  gap: 12px;
+  height: calc(var(--player-height) - 4px);
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 16px;
   box-sizing: border-box;
-  background-color: $theme-play-bar-color;
 }
 
 .playbar__meta,
@@ -358,249 +453,175 @@ onMounted(() => {
 .playbar__actions {
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .playbar__meta {
-  width: 32%;
-  min-width: 200px;
-  margin-left: 0;
+  gap: 12px;
   justify-content: flex-start;
+}
+
+.playbar__meta-text {
+  min-width: 0;
+}
+
+.playbar__cover-wrap {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--surface-tertiary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 .playbar__cover {
   width: 100%;
   height: 100%;
-  border-radius: 4px;
-  margin-right: 0;
   display: block;
-}
-
-.playbar__cover-wrap {
-  position: relative;
-  width: calc($play-bar-height - 15px);
-  height: calc($play-bar-height - 15px);
-  flex: 0 0 calc($play-bar-height - 15px);
-  margin-right: 10px;
-  cursor: pointer;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.playbar__cover-hover-icon {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0.92);
-  width: 26px;
-  height: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  stroke-width: 2.4;
-  opacity: 0;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  pointer-events: none;
-}
-
-.playbar__cover-wrap::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.35);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.playbar__cover-wrap:hover::before {
-  opacity: 1;
-}
-
-.playbar__cover-wrap:hover .playbar__cover-hover-icon {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-  z-index: 2;
 }
 
 .playbar__song {
-  font-size: 14px;
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .playbar__time {
-  font-size: 12px;
-  color: $color-grey;
+  margin: 2px 0 0;
+  font-size: 0.75rem;
+  color: var(--muted);
 }
 
 .playbar__controls {
-  flex: 1;
   justify-content: center;
-  gap: 28px;
+  gap: 4px;
 }
 
 .playbar__actions {
-  width: 32%;
   justify-content: flex-end;
-  gap: 16px;
+  gap: 4px;
 }
 
-.playbar__action-item {
+.playbar__icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
-  margin: 0;
-  line-height: 1;
-  vertical-align: middle;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--foreground);
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &.is-accent {
+    color: var(--accent);
+  }
 }
 
-.playbar__action-icon,
-.playbar__action-item svg {
-  display: block;
-  width: 16px;
-  height: 16px;
-  color: inherit;
+.playbar__controls .playbar__icon-btn svg {
+  width: 18px;
+  height: 18px;
 }
 
-.playbar__action-item.is-active .playbar__action-icon {
-  color: #ff4d4f;
-}
-
-.playbar__menu-icon {
-  width: 14px;
-  height: 14px;
-  margin-right: 6px;
-}
-
-.playbar__volume-percent {
-  width: 100%;
-  text-align: center;
-}
-
-.playbar__icon-btn,
-.playbar__icon-btn svg {
-  width: 24px;
-  height: 24px;
+.playbar__play-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 0 2px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--foreground);
+  color: #fff;
   cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: #000;
+  }
 }
 
-.playbar__controls .playbar__icon-btn:nth-child(3),
-.playbar__controls .playbar__icon-btn:nth-child(3) svg {
-  width: 30px;
-  height: 30px;
+.playbar__play-icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
 }
 
-.show-mobile {
-  display: none;
+.playbar__volume {
+  position: relative;
+}
+
+.playbar__volume-popup {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  z-index: 10;
+  width: 7rem;
+  padding-bottom: 8px;
+  transform: translateX(-50%);
+}
+
+.playbar__volume-slider {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  :deep(.el-slider__bar) {
+    background-color: var(--accent);
+  }
+
+  :deep(.el-slider__button) {
+    border-color: var(--accent);
+  }
 }
 
 .hide-mobile {
   display: inline-flex;
 }
 
-.playbar__lyric-entry {
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #409eff;
-  border: 1px solid rgba(64, 158, 255, 0.4);
-  background: rgba(64, 158, 255, 0.1);
-  line-height: 1;
-}
-
-.is-rotated {
-  transform: rotate(180deg);
-}
-
-.is-collapsed {
-  bottom: -($play-bar-height) + 5px;
-}
-
-.icon {
-  @include icon(1.1em, $color-black);
-}
-
-.is-active.icon {
-  color: $color-red;
-}
-
 @media screen and (min-width: 769px) {
   .playbar__content {
     padding: 0 28px;
   }
-
-  .playbar__meta {
-    width: 30%;
-  }
-
-  .playbar__controls {
-    gap: 48px;
-  }
-
-  .playbar__actions {
-    width: 30%;
-    gap: 20px;
-  }
-
-  .playbar__icon-btn,
-  .playbar__icon-btn svg {
-    width: 30px;
-    height: 30px;
-  }
-
-  .playbar__controls .playbar__icon-btn:nth-child(3),
-  .playbar__controls .playbar__icon-btn:nth-child(3) svg {
-    width: 38px;
-    height: 38px;
-  }
 }
 
 @media screen and (max-width: 768px) {
-  .playbar__toggle {
-    left: 10px;
-  }
-
   .playbar__content {
-    display: grid;
     grid-template-columns: minmax(0, 1fr) auto auto;
-    align-items: center;
-    column-gap: 10px;
+    gap: 8px;
     padding: 0 10px;
   }
 
-  .playbar__meta {
-    width: auto;
-    min-width: 0;
-    margin-left: 14px;
-    overflow: hidden;
-  }
-
-  .playbar__cover {
-    width: 100%;
-    height: 100%;
-  }
-
   .playbar__cover-wrap {
-    width: 26px;
-    height: 26px;
-    flex: 0 0 26px;
-    margin-right: 8px;
-  }
-
-  .playbar__song {
-    max-width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-size: 16px;
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+    border-radius: 8px;
   }
 
   .playbar__time {
@@ -608,25 +629,17 @@ onMounted(() => {
   }
 
   .playbar__controls {
-    flex: 0 0 auto;
-    gap: 28px;
-    margin: 0;
-    justify-content: center;
+    gap: 0;
   }
 
-  .playbar__actions {
-    width: auto;
-    gap: 8px;
-    margin-right: 2px;
-    justify-content: flex-end;
+  .playbar__play-btn {
+    width: 40px;
+    height: 40px;
   }
 
-  .show-mobile {
-    display: inline-flex !important;
-  }
-
-  .playbar__actions .playbar__action-item:not(:first-child) {
-    display: none !important;
+  .playbar__play-icon {
+    width: 18px;
+    height: 18px;
   }
 
   .hide-mobile {

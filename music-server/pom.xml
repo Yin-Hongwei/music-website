@@ -8,7 +8,7 @@
         <version>2.6.2</version>
         <relativePath/>
     </parent>
-    <groupId>com.example</groupId>
+    <groupId>com.yin</groupId>
     <artifactId>yin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Yin-music</name>

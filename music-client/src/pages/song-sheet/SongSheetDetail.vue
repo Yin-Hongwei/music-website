@@ -1,36 +1,38 @@
 <template>
-  <div class="sheet-detail-page">
-    <el-row :gutter="24" class="sheet-detail-layout">
-      <el-col :xs="24" :sm="9" :md="8" :lg="7" :xl="6">
-        <el-card class="left-card" shadow="never">
+  <div class="page-shell">
+    <el-row :gutter="40" class="detail-layout">
+      <el-col :xs="24" :lg="7">
+        <aside class="detail-aside">
           <el-image
-            class="cover-image"
+            class="detail-cover cover-lift"
             fit="cover"
             :src="attachImageUrl(songDetails.pic)"
           />
-          <div class="meta-text">Created by {{ creatorName }}</div>
-          <div class="meta-text">Last updated {{ lastUpdated }}</div>
-          <el-space class="action-row" wrap>
-            <el-button type="primary" :icon="VideoPlay" :disabled="!currentSongList.length" @click="handlePlayAll">
+          <p class="detail-aside__meta">Created by {{ creatorName }}</p>
+          <p class="detail-aside__meta">Last updated {{ lastUpdated }}</p>
+          <el-space class="detail-aside__actions" wrap>
+            <el-button type="primary" round :disabled="!currentSongList.length" @click="handlePlayAll">
+              <Play class="btn-icon" />
               播放全部
             </el-button>
-            <el-button :icon="Star" :class="{ 'collect-btn--active': isCollection }" @click="handleCollectSongList">
+            <el-button round :class="{ 'collect-btn--active': isCollection }" @click="handleCollectSongList">
+              <Star class="btn-icon" :fill="isCollection ? 'currentColor' : 'none'" />
               {{ isCollection ? "已收藏" : "收藏" }}
             </el-button>
           </el-space>
-        </el-card>
+        </aside>
       </el-col>
 
-      <el-col :xs="24" :sm="15" :md="16" :lg="17" :xl="18">
-        <el-card class="right-card" shadow="never">
-          <h1 class="sheet-title">{{ songDetails.title || "未命名歌单" }}</h1>
-          <p class="sheet-intro">{{ songDetails.introduction || "暂无简介" }}</p>
+      <el-col :xs="24" :lg="17">
+        <section class="detail-main">
+          <h1 class="section-title">{{ songDetails.title || "未命名歌单" }}</h1>
+          <p class="detail-meta">{{ songDetails.introduction || "暂无简介" }}</p>
 
           <el-tabs v-model="activeTab" class="sheet-tabs">
-            <el-tab-pane :label="`歌曲 (${ currentSongList.length })`" name="songs">
-              <SongList class="tab-content" :songList="currentSongList"></SongList>
+            <el-tab-pane :label="`歌曲 (${currentSongList.length})`" name="songs">
+              <SongList class="tab-content" :songList="currentSongList" />
             </el-tab-pane>
-            <el-tab-pane :label="`评论 (${ commentList.length })`" name="comments">
+            <el-tab-pane :label="`评论 (${commentList.length})`" name="comments">
               <Comment
                 class="tab-content"
                 :playId="songListId"
@@ -42,17 +44,17 @@
             <el-tab-pane :label="`收藏者 (${collectorTotal})`" name="collectors">
               <div v-if="collectorList.length" class="collector-list">
                 <div v-for="collector in collectorList" :key="collector.id" class="collector-item">
-                  <el-avatar :size="42" :src="attachImageUrl(collector.avatar)"></el-avatar>
+                  <el-avatar :size="42" :src="attachImageUrl(collector.avatar)" />
                   <div class="collector-meta">
                     <div class="collector-name">{{ collector.username || "匿名用户" }}</div>
                     <div class="collector-intro">{{ collector.introduction || "这个人很懒，什么都没写" }}</div>
                   </div>
                 </div>
               </div>
-              <el-empty v-else description="暂无收藏者数据"></el-empty>
+              <el-empty v-else description="暂无收藏者数据" />
             </el-tab-pane>
           </el-tabs>
-        </el-card>
+        </section>
       </el-col>
     </el-row>
   </div>
@@ -60,7 +62,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, watch } from "vue";
-import { Star, VideoPlay } from "@element-plus/icons-vue";
+import { Play, Star } from "lucide-vue-next";
 import { ElMessage } from "element-plus";
 import SongList from "@/components/business/SongList.vue";
 import Comment from "@/components/business/Comment.vue";
@@ -84,17 +86,16 @@ const songStore = useSongStore();
 const userStore = useUserStore();
 const { checkStatus } = useAppActions();
 
-const currentSongList = ref<any[]>([]); // 存放的音乐
+const currentSongList = ref<any[]>([]);
 const commentList = ref<any[]>([]);
-const songListId = ref(""); // 歌单 ID
+const songListId = ref("");
 const activeTab = ref("songs");
 const isCollection = ref(false);
 const collectorTotal = ref(0);
 const collectorList = ref<any[]>([]);
-const songDetails = computed(() => songStore.songDetails || {}); // 单个歌单信息
+const songDetails = computed(() => songStore.songDetails || {});
 const userId = computed(() => userStore.userId);
 
-// 后端接口直接返回歌单中的歌曲详情列表
 async function getSongListBySongListId(id: string | number | undefined) {
   if (!id) {
     currentSongList.value = [];
@@ -155,9 +156,9 @@ async function handleCollectSongList() {
   const result = isCollection.value
     ? await fetchDeleteSongListCollection(userId.value, songListId.value)
     : await fetchSetSongListCollection({
-      userId: userId.value,
-      songListId: songListId.value,
-    });
+        userId: userId.value,
+        songListId: songListId.value,
+      });
 
   ElMessage({
     message: result.message,
@@ -178,8 +179,10 @@ function handlePlayAll() {
     pic: firstSong.pic,
     lyric: firstSong.lyric,
     index: 0,
-    name: firstSong.name || firstSong.songName || "",
+    name: firstSong.songName || firstSong.name || "",
+    singerName: firstSong.singerName || "",
     currentSongList: currentSongList.value,
+    duration: firstSong.duration,
   });
 }
 
@@ -196,60 +199,53 @@ const lastUpdated = computed(() => {
 <style lang="scss" scoped>
 @import "@/assets/css/var.scss";
 
-.sheet-detail-page {
-  padding: 20px 16px;
-}
-
-.sheet-detail-layout {
-  max-width: 1320px;
-  margin: 0 auto;
-  padding: 0;
-}
-
-.left-card {
-  border-radius: 14px;
-}
-
-.cover-image {
+.detail-layout {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 12px;
 }
 
-.meta-text {
-  margin-top: 14px;
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 14px;
+.detail-aside {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
 }
 
-.action-row {
-  margin-top: 18px;
+.detail-cover {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 24px;
+}
+
+.detail-aside__meta {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.detail-aside__actions {
+  margin-top: 1.25rem;
+}
+
+.btn-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
 }
 
 .collect-btn--active {
-  color: #f59e0b;
-  border-color: #f59e0b;
-  background: rgba(245, 158, 11, 0.12);
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(48, 164, 252, 0.1);
 }
 
-.right-card {
-  border-radius: 14px;
-}
-
-.sheet-title {
-  margin: 0;
-  font-size: 42px;
-  line-height: 1.2;
-  font-weight: 700;
-}
-
-.sheet-intro {
-  margin: 12px 0 4px;
-  color: rgba(0, 0, 0, 0.55);
+.detail-meta {
+  margin: -0.5rem 0 1rem;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
 }
 
 .sheet-tabs {
-  margin-top: 12px;
+  margin-top: 0.5rem;
 }
 
 .tab-content {
@@ -265,7 +261,7 @@ const lastUpdated = computed(() => {
   align-items: center;
   gap: 12px;
   padding: 10px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid var(--border);
 }
 
 .collector-meta {
@@ -275,26 +271,21 @@ const lastUpdated = computed(() => {
 .collector-name {
   font-size: 15px;
   font-weight: 600;
+  color: var(--foreground);
 }
 
 .collector-intro {
   margin-top: 4px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--muted);
   font-size: 13px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-@media screen and (min-width: $sm) {
-  .sheet-detail-page {
-    padding: 28px 22px;
-  }
-}
-
 @media screen and (max-width: $sm) {
-  .sheet-title {
-    font-size: 30px;
+  .detail-cover {
+    max-width: 100%;
   }
 }
 </style>

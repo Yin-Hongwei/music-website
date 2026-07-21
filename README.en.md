@@ -3,7 +3,7 @@
 <h1 align="center">music-website</h1>
 
 <p align="center">
-  <strong>Full-stack music website with Vue 3 + Spring Boot · For learning</strong>
+  <strong>Full-stack music website built with Vue 3 + Spring Boot · For learning and sharing</strong>
 </p>
 
 <br/>
@@ -40,24 +40,25 @@
 
 <h3 align="center"><font color="red">Notice</font></h3>
 
-**This project is shared for learning and technical discussion only (copyright remains with the author). You are welcome to use it for study and exchange; commercial use is not permitted. Please respect the work that went into it—thank you.**
+**I have always shared this project for technical learning purposes and do not charge for it (copyright belongs to me personally; you are welcome to use it for learning and sharing, but commercial use is not allowed). Please respect my work—thank you.**
 
 <br/>
 
+## About
 
-## Project overview
-
-The public web client and admin console are built with **Vue**. The server uses **Spring Boot + MyBatis**, with **MySQL** as the database. For design notes, see **[Yuque (Chinese)](https://www.yuque.com/yinhongwei-ya0u7/bk3hhk/nu3i7emefxvetpz8)** or the **[blog post](https://yin-hongwei.github.io/2019/03/04/music/)**. Local setup steps are in [Quick start](#quick-start) below.
+The client and admin panels of this music website are built with **Vue**, the server uses **Spring Boot + MyBatis**, and the database is **MySQL**. For implementation details, see the **[blog post](https://yin-hongwei.github.io/2019/03/04/music/)**. For local setup, see [Quick Start](#quick-start) below.
 
 <br/>
 
-## Project structure
+## Project Structure
 
 ```
 music-website/
 ├── music-client/     # Public web client (Vue 3)
-├── music-manage/     # Admin console (Vue 3)
+├── music-manage/     # Admin panel (Vue 3)
 ├── music-server/     # Backend API (Spring Boot)
+│   └── data/         # Local media and logs (img / song / logs)
+├── deploy/           # Docker Compose orchestration (images built from each app's Dockerfile)
 ├── sql/              # Database initialization scripts
 └── docs/             # Documentation
 ```
@@ -66,90 +67,72 @@ music-website/
 
 ## Preview
 
-<details open>
-<summary><b>Public site</b> · click to collapse / expand</summary>
-<br/>
-
+<b>Client screenshots</b>
 <table>
   <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax1.sinaimg.cn/large/007mxWTugy1icrcbfjswyj32c01ik4a1.jpg" width="100%" alt="Home"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax3.sinaimg.cn/large/007mxWTugy1icr7ma2nisj32c01ik7wi.jpg" width="100%" alt="Playlists"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-161311.png" width="100%" alt="Home"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160603.png" width="100%" alt="Song sheets"/></td>
   </tr>
   <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax3.sinaimg.cn/large/007mxWTugy1icr7mwfp2sj32c01ikqv6.jpg" width="100%" alt="Artist detail"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax1.sinaimg.cn/large/007mxWTugy1icr7pxg6wlj32c01ik7tu.jpg" width="100%" alt="Player"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160257.png" width="100%" alt="Singer detail"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160319.png" width="100%" alt="Player"/></td>
   </tr>
   <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax4.sinaimg.cn/large/007mxWTugy1icr7nn7l7tj32c01ik1ky.jpg" width="100%" alt="Lyrics"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax4.sinaimg.cn/large/007mxWTugy1icr7r9yn98j32c01iku0x.jpg" width="100%" alt="Search"/></td>
-  </tr>
-  <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax3.sinaimg.cn/large/007mxWTugy1icr7s5lnmjj32c01iknd9.jpg" width="100%" alt="Profile"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tvax2.sinaimg.cn/large/007mxWTugy1icr7sv48ohj32c01ikqe5.jpg" width="100%" alt="Sign in"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160333.png" width="100%" alt="Lyrics"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160525.png" width="100%" alt="Search"/></td>
   </tr>
 </table>
 
-</details>
-
-<details>
-<summary><b>Admin console</b> · click to collapse / expand</summary>
 <br/>
-
+<b>Admin screenshots</b>
 <table>
   <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h158xvsdvij21c00u0wi8.jpg" width="100%" alt="Admin home"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h159x0re56j21c00u077a.jpg" width="100%" alt="Users"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160704.png" width="100%" alt="Admin home"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160715.png" width="100%" alt="User management"/></td>
   </tr>
   <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h159xzbi85j21c00u0whn.jpg" width="100%" alt="Songs"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h159zewsh4j21c00u079f.jpg" width="100%" alt="Artists"/></td>
-  </tr>
-  <tr>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h159yz5x8hj21c00u0win.jpg" width="100%" alt="Playlists"/></td>
-    <td width="50%" align="center"><img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h159yo2nzmj21c00u0djp.jpg" width="100%" alt="Comments"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160724.png" width="100%" alt="Song management"/></td>
+    <td width="50%" align="center"><img src="./docs/assets/screenshot-20260721-160802.png" width="100%" alt="Singer management"/></td>
   </tr>
 </table>
-
-</details>
 
 <br/>
 
 ## Features
 
-| Module | Capabilities |
-| --- | --- |
-| **Users** | Sign-in, sign-up, profile editing, personal center |
-| **Discovery** | Playlist recommendations, playlists and artists, song/playlist search |
-| **Interaction** | Comments and favorites on playlists and songs |
-| **Player** | Play, pause, seek, volume, synced lyrics, download |
-| **Admin** | Banners, users, songs, artists, playlists, comments |
+| Module        | Capabilities                                                                 |
+| ------------- | ---------------------------------------------------------------------------- |
+| **Users**     | Sign in / sign up, profile editing, personal center                          |
+| **Discovery** | Song sheet recommendations, song sheets & singers, song/sheet search         |
+| **Social**    | Comments on song sheets and songs, favorites                                 |
+| **Player**    | Play, pause, seek, volume control, synced lyrics, download                   |
+| **Admin**     | Banner, user, song, singer, song sheet, and comment management               |
 
 <br/>
 
-## Stack
+## Tech Stack
 
-| Layer | Technologies |
-| --- | --- |
-| **Backend** | Spring Boot · MyBatis · Redis · MinIO |
-| **Frontend** | Vue 3 · TypeScript · Vue Router · Pinia · Axios · Element Plus |
-| **Deployment** | Docker · Docker Compose |
-
-<br/>
-
-## Environment
-
-| Environment | Version |
-| --- | --- |
-| JDK | 8+ (e.g. jdk-8u141) |
-| MySQL | 8.0+ |
-| Redis | 5.0.8+, or run via [Docker (Chinese guide)](https://nanshaws.github.io/docker/docker启动redis(完美过程).html) |
-| Node.js | 14+ |
-| MinIO | Latest, or [Docker (Chinese guide)](https://nanshaws.github.io/docker/docker完美启动minio(完美过程).html) |
-| IDE | IntelliJ IDEA / VS Code |
+| Layer        | Technologies                                                                                          |
+| ------------ | ----------------------------------------------------------------------------------------------------- |
+| **Backend**  | Spring Boot · MyBatis · Redis · Local media storage (`music-server/data`)                             |
+| **Frontend** | Vue 3 · TypeScript · Vue Router · Pinia · Axios · Element Plus (client) / Naive UI (admin)          |
+| **Deploy**   | Docker · Docker Compose                                                                               |
 
 <br/>
 
-## Quick start
+## Development Environment
+
+| Tool    | Version                                                                                                |
+| ------- | ------------------------------------------------------------------------------------------------------ |
+| JDK     | 8+ (e.g. jdk-8u141)                                                                                    |
+| MySQL   | 8.0+                                                                                                   |
+| Redis   | 5.0.8+, or [run Redis with Docker](<https://nanshaws.github.io/docker/docker启动redis(完美过程).html>) |
+| Node.js | 16+                                                                                                    |
+| IDE     | IntelliJ IDEA / VS Code                                                                                |
+
+<br/>
+
+## Quick Start
 
 ### 1. Clone the repository
 
@@ -160,46 +143,51 @@ cd music-website
 
 ### 2. Download media assets
 
-Download songs and images from Baidu Netdisk:
+Download songs and images:
 
-- Link: https://pan.baidu.com/s/1Qv0ohAIPeTthPK_CDwpfWg
-- Code: `gwa4`
+- Link: https://pan.quark.cn/s/f64a22313775
+- Extraction code: `21p9`
 
-Place the contents of the `data` folder under the `music-server` directory, following the layout in the screenshot below.
+Place the `data` folder from the cloud drive under `music-server` so you have:
 
-> **Note:** Match the directory layout shown in the screenshot.
+```
+music-server/data/img/
+music-server/data/song/
+```
+
+> **Note:** Keep the paths above. Local logs are written to `music-server/data/logs/` by default.
 
 <p align="left">
-  <img src="https://i0.wp.com/tva1.sinaimg.cn/large/e6c9d24ely1h6gz1le9wxj20fo0gggmh.jpg" height="200px" alt="Asset directory layout"/>
+  <img src="./docs/assets/screenshot-20260721-162029.png" height="200px" alt="Asset directory structure"/>
 </p>
 
 ### 3. Configure the database
 
-1. Create a MySQL database and import `sql/yin_music.sql`
-2. Edit `music-server/src/main/resources/application.properties` and set `spring.datasource.username` and `spring.datasource.password`
+1. Create a database in MySQL and import `sql/yin_music.sql`
+2. Edit `music-server/src/main/resources/application-dev.properties` and update `spring.datasource.username` and `spring.datasource.password` (the `dev` profile is active by default; see `application.properties`)
 
 ### 4. Start services
 
-Start each service in order (use separate terminal windows):
+Start each service in the following order (you can use separate terminal windows):
 
-| Service | Directory | Command |
-| --- | --- | --- |
-| **Backend API** | `music-server` | `./mvnw clean spring-boot:run` (Windows: `mvnw.cmd`) |
-| **Redis** | — | `redis-server` |
-| **Public client** | `music-client` | `npm install && npm run serve` |
-| **Admin console** | `music-manage` | `npm install && npm run serve` |
+| Service          | Directory      | Command                                                   |
+| ---------------- | -------------- | --------------------------------------------------------- |
+| **Backend API**  | `music-server` | `./mvnw clean spring-boot:run` (use `mvnw.cmd` on Windows) |
+| **Redis**        | —              | `redis-server`                                            |
+| **Web client**   | `music-client` | `npm install && npm run serve`                            |
+| **Admin panel**  | `music-manage` | `npm install && npm run serve`                            |
 
 <details>
 <summary><b>Backend startup commands</b></summary>
 
 ```bash
-# macOS / Linux (recommended: project Maven Wrapper)
+# macOS / Linux (recommended — uses the project's Maven Wrapper)
 ./mvnw clean spring-boot:run
 
 # Windows (recommended)
 mvnw.cmd clean spring-boot:run
 
-# Alternative: system Maven
+# Alternative: if Maven is installed locally
 mvn clean spring-boot:run
 ```
 
@@ -208,53 +196,48 @@ mvn clean spring-boot:run
 <details>
 <summary><b>Redis installation references</b></summary>
 
-- Downloads: https://redis.io/
-- macOS setup example (Chinese): https://www.jianshu.com/p/ce27d9ab4f8c
+- Download: https://redis.io/
+- Mac install example: https://www.jianshu.com/p/ce27d9ab4f8c
 
 </details>
 
 <br/>
 
-## Troubleshooting
+## FAQ
 
-| Symptom | Fix |
-| --- | --- |
-| Images or audio fail to load | Move the `img` and `song` folders from `music-server` to the repository root (`music-website/`) |
-| Playback issues | The file may be corrupt; replace it from the asset pack |
+| Symptom                      | Solution                                                                                                      |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Images or music fail to load | Ensure assets are in `music-server/data/img` and `music-server/data/song`, and start the backend from `music-server` |
+| Music won't play             | Asset files may be corrupted—re-download from the cloud drive and replace them                                |
 
 <br/>
 
-## Docker deployment
+## Docker Deployment
 
-> Optional for local development. Intended for Linux server deployment.
+> You can skip this section for local development. It is intended for Linux server deployment.
 
-Copy the items below onto your Linux host:
-
-<p align="left">
-  <img src="https://i0.wp.com/tvax2.sinaimg.cn/large/007mxWTugy1icr99ij9s5j30bs06hq4m.jpg" height="240px" alt="Deploy layout"/>
-</p>
-
-Place the built JAR in the same directory, as shown below:
-
-<p align="left">
-  <img src="https://i0.wp.com/tvax4.sinaimg.cn/large/007mxWTugy1icr99ioipxj3082076my5.jpg" height="240px" alt="JAR placement"/>
-</p>
+Image definitions live in each app directory (`Dockerfile` under `music-server` / `music-client` / `music-manage`); `deploy/docker-compose.yml` handles orchestration only.
 
 ```bash
+cd deploy
 docker compose up --build
 ```
 
-Run result:
+After startup:
 
-<p align="left">
-  <img src="https://i0.wp.com/tvax4.sinaimg.cn/large/007mxWTugy1icr99iumhpj319y0hjwyi.jpg" height="280px" alt="Docker run result"/>
-</p>
+| Service | URL                   |
+| ------- | --------------------- |
+| Client  | http://localhost:8080 |
+| Admin   | http://localhost:8081 |
+| API     | http://localhost:8888 |
+
+Optional environment variables: `MYSQL_ROOT_PASSWORD`, `API_PUBLIC_URL` (backend URL baked into the frontend build at compile time; default `http://localhost:8888`).
 
 <br/>
 
 ## Contributors
 
-Thanks to everyone who has contributed code and improvement suggestions to this repository.
+Thanks to everyone who has contributed code and improvements to this repository.
 
 <a href="https://github.com/Yin-Hongwei/music-website/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Yin-Hongwei/music-website" alt="Contributors" />
@@ -262,22 +245,21 @@ Thanks to everyone who has contributed code and improvement suggestions to this 
 
 <br/>
 
-## Support
+## Sponsorship
 
-If this project helped you, consider buying the author a coffee.
+If this project has been helpful to you, feel free to buy me a coffee.
 
-<img src="./docs/assets/sponsor-qr.png" height="300px" alt="WeChat tip QR code"/>
+<img src="./docs/assets/sponsor-qr.png" height="300px" alt="WeChat sponsorship QR code"/>
 
 <br/>
-
 
 ## Contact
 
 **1. Email: [yinhongwei96@126.com](mailto:yinhongwei96@126.com)**
 
-**2. WeChat official account**
+**2. WeChat Official Account**
 
-<img src="./docs/assets/wechat-official-account-qr.png" alt="WeChat official account YinHongwei"/>
+<img src="./docs/assets/wechat-official-account-qr.png" alt="WeChat Official Account YinHongwei"/>
 
 <br/>
 

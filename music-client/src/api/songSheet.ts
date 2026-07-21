@@ -38,9 +38,9 @@ export async function fetchSongSheetListPage(page: number, size: number): Promis
   }
 }
 
-export async function fetchSongSheetListByStyle(style: string): Promise<HomeCardItem[]> {
+export async function fetchSongSheetListByStyle(styleId: number): Promise<HomeCardItem[]> {
   try {
-    const result = await api({ url: `songList/style/detail?style=${style}` });
+    const result = await api({ url: `songList/style/detail?styleId=${styleId}` });
     return ensureArray<HomeCardItem>(result?.data);
   } catch {
     return [];
@@ -48,13 +48,13 @@ export async function fetchSongSheetListByStyle(style: string): Promise<HomeCard
 }
 
 export async function fetchSongSheetListByStylePage(
-  style: string,
+  styleId: number,
   page: number,
   size: number,
 ): Promise<PagedResult<HomeCardItem>> {
   try {
     const result = await api({
-      url: `songList/style/page/detail?style=${style}&page=${page}&size=${size}`,
+      url: `songList/style/page/detail?styleId=${styleId}&page=${page}&size=${size}`,
     });
     return normalizePagedResult<HomeCardItem>(result?.data, page, size);
   } catch {

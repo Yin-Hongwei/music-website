@@ -11,11 +11,15 @@
 .sts4-cache
 target/
 .DS_Store
-../img/
-../song/
-img/
-song/
-logs/
+
+### Runtime media & logs (under data/) ###
+/data/img/
+/data/song/
+/data/logs/
+# legacy locations (pre-data/ layout)
+/img/
+/song/
+/logs/
 
 ### IntelliJ IDEA ###
 .idea

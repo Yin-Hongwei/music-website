@@ -1,49 +1,131 @@
-html, body, div, span,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-dl, dt, dd, ol, ul, li,hr,img,a,
-form, label, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header {
-  padding: 0;
-  margin: 0;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html,
 body,
-#app,
-.wrapper {
+#app {
   width: 100%;
   height: 100%;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
-}
-
-ul,
-li {
-  list-style: none;
-  display: inline-block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #333;
+  background: #f0f2f5;
 }
 
 a {
   text-decoration: none;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
 }
 
 .crumbs {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .pagination {
   display: flex;
-  justify-content: center;
-  margin: 20px 0;
+  justify-content: flex-end;
+  margin: 16px 0 0;
 }
 
 .handle-box {
-  margin-bottom: 20px;
-  font-size: 12px;
   display: flex;
-  width: 30%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  width: 100%;
 }
 
-.handle-box input {
-  margin: 0 10px;
+/* n-input 默认 width:100%，需提高选择器优先级并限制伸缩 */
+.handle-box > .n-input {
+  width: 240px;
+  max-width: 240px;
+  min-width: 160px;
+  flex: 0 1 240px;
+}
+
+.container {
+  padding: 16px 20px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+/* CRUD 页通用面板 */
+.page-root {
+  height: calc(100vh - 60px - 40px);
+  min-height: 420px;
+}
+
+.page-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.page-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.page-toolbar__left {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 12px;
+  margin-right: auto;
+}
+
+/* n-input 默认 width:100%，需提高优先级；固定宽度避免挤换行 */
+.page-toolbar__left > .n-input.page-toolbar__search {
+  width: 240px;
+  max-width: 240px;
+  flex: 0 0 240px;
+}
+
+.page-toolbar__left > .n-select.page-toolbar__select {
+  width: 110px;
+  max-width: 110px;
+  flex: 0 0 110px;
+}
+
+.table-wrap {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.page-pagination {
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  margin: 0;
+  padding-top: 4px;
+}
+
+.ops-cell {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  white-space: nowrap;
 }

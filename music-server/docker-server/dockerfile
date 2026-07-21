@@ -1,8 +1,0 @@
-# 使用官方的Java基础镜像
-FROM openjdk:8-jdk-alpine
-# 将本地的jar文件复制到容器中
-COPY yin-0.0.1-SNAPSHOT.jar yin-0.0.1-SNAPSHOT.jar
-# 暴露端口
-EXPOSE 8888
-# 运行命令
-ENTRYPOINT ["java", "-jar", "/yin-0.0.1-SNAPSHOT.jar"]

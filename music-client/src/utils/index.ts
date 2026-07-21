@@ -6,23 +6,49 @@ export function attachImageUrl(url) {
     : "https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png";
 }
 
-// 解析歌曲标题（歌手-歌名 => 歌名）
-export function getSongTitle(name: string) {
-  if (typeof name !== "string") return "";
-  const splitName = name.split("-");
-  return splitName.length > 1 ? splitName[1].trim() : splitName[0].trim();
+/** Display title from song payload (`name` is pure title; `songName` kept for playlist detail). */
+export function resolveSongTitle(song: {
+  name?: string;
+  songName?: string;
+  songTitle?: string;
+} | string | null | undefined) {
+  if (typeof song === "string") return song.trim();
+  if (!song) return "";
+  return String(song.songName || song.songTitle || song.name || "").trim();
 }
 
-// 解析歌手名（歌手-歌名 => 歌手）
-export function getSingerName(name: string) {
-  if (typeof name !== "string") return "";
-  const splitName = name.split("-");
-  return splitName[0] ? splitName[0].trim() : "";
+/** Singer label from API `singerName` (resolved via singerId). */
+export function resolveSingerName(song: {
+  singerName?: string;
+} | string | null | undefined) {
+  if (typeof song === "string") return song.trim();
+  if (!song) return "";
+  return String(song.singerName || "").trim();
 }
 
 export function getUserSex(sex: number) {
   if (sex === 0) return "女";
   if (sex === 1) return "男";
+  return "";
+}
+
+/** 歌手性别：0女 1男 2保密（仅个人） */
+export function getSingerSexLabel(sex: number | string | null | undefined) {
+  if (sex === null || sex === undefined || sex === "") return "";
+  const value = typeof sex === "string" ? Number(sex) : sex;
+  if (value === 0) return "女";
+  if (value === 1) return "男";
+  if (value === 2) return "保密";
+  return "";
+}
+
+/** 歌手类型：0个人 1组合 2其他 */
+export function getSingerKindLabel(kind: number | string | null | undefined) {
+  if (kind === null || kind === undefined || kind === "") return "";
+  const value = typeof kind === "string" ? Number(kind) : kind;
+  if (value === 0) return "个人";
+  if (value === 1) return "组合";
+  if (value === 2) return "其他";
   return "";
 }
 

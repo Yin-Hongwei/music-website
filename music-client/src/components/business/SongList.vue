@@ -1,10 +1,10 @@
 <template>
-  <div class="content">
+  <div class="song-list">
     <el-table
       v-if="dataList.length"
       highlight-current-row
       :data="dataList"
-      :header-cell-style="{ background: '#f7f7f7', color: '#666', fontWeight: 600 }"
+      :show-header="true"
       @row-click="handleClick"
     >
       <el-table-column label="#" width="60" align="center">
@@ -45,9 +45,12 @@
                     @click="
                       downloadMusic({
                         songUrl: scope.row.url,
-                        songName: scope.row.name,
+                        songName: [scope.row.singerName, scope.row.songName]
+                          .filter(Boolean)
+                          .join(' - '),
                       })
-                    ">
+                    "
+                  >
                     <Download class="dropdown-item-icon" />
                     <span>下载</span>
                   </el-dropdown-item>
@@ -67,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "@vue/reactivity";
+import { computed } from "vue";
 import { ElMessage } from "element-plus";
 import { Download, Ellipsis, Trash2 } from "lucide-vue-next";
 
@@ -94,7 +97,7 @@ const emit = defineEmits<{
   (e: "changeData", payload: any): void;
 }>();
 
-const { getSongTitle, getSingerName, playMusic, checkStatus, downloadMusic } = useAppActions();
+const { playMusic, checkStatus, downloadMusic } = useAppActions();
 const userStore = useUserStore();
 
 const show = computed(() => props.show);
@@ -104,11 +107,10 @@ const dataList = computed(() => {
   if (!Array.isArray(props.songList)) return list;
 
   props.songList.forEach((item: SongListItem, index: number) => {
-    const songName = (item && (item.name || item.songName)) || "";
     list.push({
       ...item,
-      songName: getSongTitle(songName),
-      singerName: getSingerName(songName),
+      songName: item.songName || item.name || "",
+      singerName: item.singerName || "",
       index,
     });
   });
@@ -121,9 +123,11 @@ function handleClick(row: any) {
     url: row.url,
     pic: row.pic,
     index: row.index,
-    name: row.name,
+    name: row.songName || row.name,
+    singerName: row.singerName,
     lyric: row.lyric,
     currentSongList: props.songList,
+    duration: row.duration,
   });
 }
 
@@ -146,10 +150,10 @@ async function deleteCollection({ id }: { id: any }) {
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
 
-.content {
-  background-color: $color-white;
-  border-radius: $border-radius-songlist;
-  padding: 10px 12px;
+.song-list {
+  background-color: var(--surface);
+  border-radius: 12px;
+  padding: 4px 8px;
 }
 
 .song-info {
@@ -163,40 +167,43 @@ async function deleteCollection({ id }: { id: any }) {
   height: 48px;
   border-radius: 8px;
   flex-shrink: 0;
+  overflow: hidden;
+  background: var(--surface-tertiary);
 }
 
 .song-meta {
   display: flex;
   flex-direction: column;
   line-height: 1.3;
+  min-width: 0;
 }
 
 .song-name {
   margin: 0;
-  color: #303133;
-  font-size: 16px;
+  color: var(--foreground);
+  font-size: 0.9375rem;
   font-weight: 600;
   line-height: 1.3;
 }
 
 .singer-name {
   margin: 4px 0 0;
-  color: #606266;
-  font-size: 13px;
+  color: var(--muted);
+  font-size: 0.8125rem;
 }
 
 .album-name {
-  color: #303133;
-  font-size: 14px;
+  color: var(--foreground);
+  font-size: 0.875rem;
 }
 
 .row-index {
-  color: #606266;
-  font-size: 13px;
+  color: var(--muted);
+  font-size: 0.8125rem;
 }
 
 .more-btn {
-  color: #909399;
+  color: var(--muted);
   font-size: 16px;
 }
 
@@ -211,24 +218,38 @@ async function deleteCollection({ id }: { id: any }) {
   margin-right: 6px;
 }
 
-.content:deep(.el-table__row.current-row) {
-  color: $color-black;
-  font-weight: bold;
+.song-list:deep(.el-table) {
+  --el-table-bg-color: transparent;
+  --el-table-tr-bg-color: transparent;
+  --el-table-header-bg-color: transparent;
+  --el-table-row-hover-bg-color: rgba(0, 0, 0, 0.03);
+  background: transparent;
 }
 
-.content:deep(.el-table__row) {
+.song-list:deep(.el-table__inner-wrapper::before) {
+  display: none;
+}
+
+.song-list:deep(.el-table th.el-table__cell) {
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+
+.song-list:deep(.el-table td.el-table__cell) {
+  border-bottom: 1px solid var(--border);
+}
+
+.song-list:deep(.el-table__row) {
   cursor: pointer;
   height: 72px;
 }
 
-.content:deep(.el-table th.el-table__cell) {
-  background: #f7f7f7;
-  color: #666;
-  font-size: 14px;
+.song-list:deep(.el-table__row.current-row) {
+  color: var(--accent);
   font-weight: 600;
-}
-
-.icon {
-  @include icon(1.2em, $color-black);
+  background: rgba(48, 164, 252, 0.06) !important;
 }
 </style>

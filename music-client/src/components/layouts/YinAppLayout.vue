@@ -81,7 +81,9 @@ window.addEventListener("beforeunload", saveStoreToSession);
 @import "@/assets/css/global.scss";
 
 .yin-layout {
-  min-height: calc(100vh - 60px);
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
 }
 .yin-layout-header {
   padding: 0;
@@ -93,11 +95,13 @@ window.addEventListener("beforeunload", saveStoreToSession);
   min-height: 0;
   padding: 0;
   margin: 0;
+  background: var(--background);
 }
 
 .main-content {
   flex: 1;
   min-height: 0;
-  padding-top: 56px;
+  padding-top: var(--header-height);
+  background: var(--background);
 }
 </style>

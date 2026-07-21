@@ -1,10 +1,9 @@
 import { createApp } from "vue";
 import type { Plugin } from "vue";
 import { createPinia } from "pinia";
-import ElementPlus from "element-plus";
+import naive from "naive-ui";
 import App from "./App.vue";
 import router from "./router";
-import "element-plus/dist/index.css";
 import "./assets/css/main.css";
 
 const pinia = createPinia();
@@ -13,5 +12,5 @@ const pinia = createPinia();
 createApp(App)
   .use(pinia as unknown as Plugin)
   .use(router)
-  .use(ElementPlus)
+  .use(naive)
   .mount("#app");

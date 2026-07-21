@@ -9,7 +9,10 @@
         <el-image class="comment-list__avatar" fit="contain" :src="attachImageUrl(item.avatar)" />
         <div class="comment-list__content">
         <ul>
-            <li class="comment-list__name">{{ item.username }}</li>
+            <li
+              class="comment-list__name"
+              :class="{ 'is-deleted': isDeletedUser(item) }"
+            >{{ displayUsername(item) }}</li>
             <li class="comment-list__time">{{ formatDate(item.createTime) }}</li>
             <li class="comment-list__text">{{ item.content }}</li>
         </ul>
@@ -62,6 +65,14 @@ const textarea = ref(""); // 存放输入内容
 
 const userId = computed(() => userStore.userId);
 const supportCommentIdSet = ref<Set<string | number>>(new Set());
+
+function isDeletedUser(item: { userDeleted?: boolean; username?: string }) {
+  return item?.userDeleted === true || item?.username === "已注销";
+}
+
+function displayUsername(item: { userDeleted?: boolean; username?: string }) {
+  return isDeletedUser(item) ? "已注销" : item?.username || "";
+}
 
 function isSupported(commentId: string | number) {
   return supportCommentIdSet.value.has(commentId);
@@ -232,6 +243,11 @@ async function setSupport(id, likeCount, userId) {
       }
       .comment-list__name {
         color: rgba(0, 0, 0, 0.5);
+
+        &.is-deleted {
+          color: var(--muted, #6e6e73);
+          opacity: 0.72;
+        }
       }
       .comment-list__text {
         font-size: 1rem;

@@ -1,78 +1,94 @@
 <template>
-  <div class="play-list-container">
-    <el-menu
-      class="singer-style-menu"
-      mode="horizontal"
-      :ellipsis="false"
-      :default-active="activeName"
-      @select="onSingerMenuSelect"
-    >
-      <el-menu-item v-for="item in singerStyle" :key="`${item.id}-${item.name}`" :index="item.name">
+  <div class="page-shell">
+    <!-- <h1 class="section-title">歌手</h1> -->
+
+    <el-space wrap class="pill-filters">
+      <button
+        v-for="item in singerStyle"
+        :key="`${item.id}-${item.name}`"
+        type="button"
+        class="pill-chip"
+        :class="{ 'is-active': item.type === activeType }"
+        @click="handleChangeView(item)"
+      >
         {{ item.name }}
-      </el-menu-item>
-    </el-menu>
-    <CoverCardGrid :playList="visiblePlayList" path="singer-detail"></CoverCardGrid>
-    <div class="loading-tip loading" v-if="loading">加载中...</div>
-    <div class="loading-tip no-more" v-else-if="!hasMore && visiblePlayList.length > 0">没有更多了</div>
+      </button>
+    </el-space>
+
+    <div v-if="initialLoading" class="browse-skeleton">
+      <el-skeleton animated>
+        <template #template>
+          <div class="browse-skeleton__grid">
+            <el-skeleton-item
+              v-for="n in 10"
+              :key="n"
+              variant="image"
+              class="browse-skeleton__cover"
+            />
+          </div>
+        </template>
+      </el-skeleton>
+    </div>
+
+    <template v-else>
+      <CoverCardGrid :playList="visiblePlayList" path="singer-detail" />
+      <div class="loading-tip loading" v-if="loading">加载中…</div>
+      <div class="loading-tip no-more" v-else-if="!hasMore && visiblePlayList.length > 0">没有更多了</div>
+    </template>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, watch, onMounted, onUnmounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import CoverCardGrid from "@/components/business/CoverCardGrid.vue";
 import type { SingerStyleItem } from "@/api/models";
-import { fetchAllSingerList, fetchSingerListBySex, fetchSingerStyleList } from "@/api/singer";
+import { fetchAllSingerList, fetchSingerListByType, fetchSingerStyleList } from "@/api/singer";
 
-// data
-const activeName = ref("全部歌手");
+const route = useRoute();
+const router = useRouter();
+
+const ALL_TYPE = -1;
+const activeType = ref(ALL_TYPE);
 const pageSize = 15;
 const currentPage = ref(1);
 const allPlayList = ref<any[]>([]);
 const visiblePlayList = ref<any[]>([]);
-const singerStyle = ref<SingerStyleItem[]>([{ id: 0, name: "全部歌手", type: -1 }]);
+const singerStyle = ref<SingerStyleItem[]>([{ id: 0, name: "全部歌手", type: ALL_TYPE }]);
 const hasMore = ref(true);
 const loading = ref(false);
+const initialLoading = ref(true);
 
-// 获取所有歌手
+function parseType(value: unknown): number {
+  if (value == null || value === "") return ALL_TYPE;
+  const raw = Array.isArray(value) ? value[0] : value;
+  const type = Number(raw);
+  return Number.isFinite(type) ? type : ALL_TYPE;
+}
+
+function resolveType(value: unknown): number {
+  const type = parseType(value);
+  return singerStyle.value.some((item) => item.type === type) ? type : ALL_TYPE;
+}
+
+function syncTypeToRoute(type: number) {
+  const currentType = parseType(route.query.type);
+  if (currentType === type) return;
+  const nextQuery = { ...route.query };
+  if (type === ALL_TYPE) {
+    delete nextQuery.type;
+  } else {
+    nextQuery.type = String(type);
+  }
+  router.replace({ query: nextQuery });
+}
+
 async function getAllSinger() {
   allPlayList.value = await fetchAllSingerList();
 }
 
-async function loadSingerData() {
-  try {
-    singerStyle.value = await fetchSingerStyleList();
-    await getAllSinger();
-  } catch (error) {
-    console.error("[Singer] loadSingerData failed:", error);
-  }
-  resetVisibleList();
-}
-
-function onSingerMenuSelect(index: string) {
-  const item = singerStyle.value.find((s) => s.name === index);
-  if (item) {
-    void handleChangeView(item);
-  }
-}
-
-async function handleChangeView(item: SingerStyleItem) {
-  activeName.value = item.name;
-  visiblePlayList.value = [];
-  try {
-    if (Number(item.type) === -1) {
-      await getAllSinger();
-    } else {
-      await getSingerSex(item.type);
-    }
-  } catch (error) {
-    console.error("[Singer] handleChangeView failed:", error);
-  }
-}
-
-// 通过性别对歌手分类
-async function getSingerSex(sex: string | number) {
-  allPlayList.value = await fetchSingerListBySex(sex);
-  resetVisibleList();
+async function getSingerByType(type: string | number) {
+  allPlayList.value = await fetchSingerListByType(type);
 }
 
 function resetVisibleList() {
@@ -94,8 +110,31 @@ function loadMoreSinger() {
   loading.value = false;
 }
 
+async function applyType(type: number) {
+  activeType.value = type;
+  visiblePlayList.value = [];
+  initialLoading.value = true;
+  try {
+    if (type === ALL_TYPE) {
+      await getAllSinger();
+    } else {
+      await getSingerByType(type);
+    }
+    resetVisibleList();
+  } catch (error) {
+    console.error("[Singer] applyType failed:", error);
+  } finally {
+    initialLoading.value = false;
+  }
+}
+
+function handleChangeView(item: SingerStyleItem) {
+  if (item.type === activeType.value) return;
+  syncTypeToRoute(item.type);
+}
+
 function handleScroll() {
-  if (loading.value || !hasMore.value) return;
+  if (loading.value || !hasMore.value || initialLoading.value) return;
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
   const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
   const fullHeight = document.documentElement.scrollHeight;
@@ -104,9 +143,37 @@ function handleScroll() {
   }
 }
 
-onMounted(() => {
+async function loadSingerStyle() {
+  try {
+    const styles = await fetchSingerStyleList();
+    singerStyle.value =
+      styles.length > 0 ? styles : [{ id: 0, name: "全部歌手", type: ALL_TYPE }];
+  } catch (error) {
+    console.error("[Singer] loadSingerStyle failed:", error);
+  }
+}
+
+watch(
+  () => route.query.type,
+  (value) => {
+    const type = resolveType(value);
+    if (type !== parseType(value)) {
+      syncTypeToRoute(type);
+      return;
+    }
+    if (type === activeType.value) return;
+    void applyType(type);
+  },
+);
+
+onMounted(async () => {
   window.addEventListener("scroll", handleScroll, { passive: true });
-  loadSingerData();
+  await loadSingerStyle();
+  const type = resolveType(route.query.type);
+  if (type !== parseType(route.query.type)) {
+    syncTypeToRoute(type);
+  }
+  await applyType(type);
 });
 
 onUnmounted(() => {
@@ -115,36 +182,16 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.singer-style-menu {
-  width: 100%;
-  height: auto;
-  min-height: 48px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  flex-wrap: nowrap;
-  background-color: transparent !important;
-  border-bottom: none !important;
-  border-right: none !important;
+.browse-skeleton__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.singer-style-menu::-webkit-scrollbar {
-  display: none;
-}
-
-.singer-style-menu :deep(.el-menu-item) {
-  cursor: pointer;
-  background-color: transparent !important;
-  border-bottom: none !important;
-}
-
-.singer-style-menu :deep(.el-menu-item.is-active) {
-  border-bottom: none !important;
-  background-color: transparent !important;
-}
-
-.singer-style-menu :deep(.el-menu-item:hover),
-.singer-style-menu :deep(.el-menu-item:focus) {
-  background-color: transparent !important;
+.browse-skeleton__cover {
+  width: calc(20% - 0.8rem);
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
 }
 
 .loading-tip {
@@ -159,11 +206,17 @@ onUnmounted(() => {
 }
 
 .loading {
-  color: #409eff;
-  background: rgba(64, 158, 255, 0.12);
+  color: var(--accent);
+  background: rgba(48, 164, 252, 0.12);
 }
 
 .no-more {
-  color: #909399;
+  color: var(--muted);
+}
+
+@media screen and (max-width: 668px) {
+  .browse-skeleton__cover {
+    width: calc(50% - 0.5rem);
+  }
 }
 </style>

@@ -1,23 +1,19 @@
 <template>
-  <div class="play-list">
-    <div class="play-title" v-if="title">{{ title }}</div>
-    <ul v-if="playList.length" class="play-body">
-      <li class="card-frame" v-for="(item, index) in playList" :key="index">
-        <div class="card" @click="goAlbum(item)">
-          <el-image class="card-img" fit="contain" :src="attachImageUrl(item.pic)" />
-          <div class="mask" @click="goAlbum(item)">
-            <Play class="mask-icon" />
-          </div>
-        </div>
-        <p class="card-name">{{ item.name || item.title }}</p>
+  <div class="cover-grid">
+    <h2 v-if="title" class="cover-grid__caption">{{ title }}</h2>
+    <ul v-if="playList.length" class="cover-grid__body">
+      <li class="cover-tile" v-for="(item, index) in playList" :key="item.id ?? index">
+        <button type="button" class="cover-tile__btn" @click="goAlbum(item)">
+          <el-image class="cover-lift" fit="cover" :src="attachImageUrl(item.pic)" />
+          <p class="cover-tile__title">{{ item.name || item.title }}</p>
+        </button>
       </li>
     </ul>
-    <el-empty v-else description="暂无歌单数据" />
+    <el-empty v-else description="暂无数据" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { Play } from "lucide-vue-next";
 import { useSongStore } from "../../store/song";
 import { useAppActions } from "../../composables/useAppActions";
 import { attachImageUrl } from "../../utils";
@@ -51,86 +47,74 @@ function goAlbum(item: CoverCardItem) {
 @import "@/assets/css/var.scss";
 @import "@/assets/css/global.scss";
 
-.play-list {
-  // padding: 0 1rem;
-  .play-title {
-    height: 60px;
-    line-height: 60px;
-    font-size: 28px;
-    font-weight: 500;
-    text-align: center;
-    color: $color-black;
-    box-sizing: border-box;
-  }
-
-  .play-body {
-    @include layout(flex-start, stretch, row, wrap);
-  }
-}
-
-.card-frame {
-  .card {
-    position: relative;
-    height: 0;
-    padding-bottom: 100%;
-    overflow: hidden;
-    border-radius: 5px;
-
-    .card-img {
-      width: 100%;
-      transition: all 0.4s ease;
-    }
-  }
-
-  .card-name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    margin: 0.5rem 0;
-  }
-
-  &:hover .card-img {
-    // transform: scale(1.2);
-  }
-}
-
-.mask {
-  position: absolute;
-  top: 0;
+.cover-grid {
   width: 100%;
-  height: 100%;
+}
+
+.cover-grid__caption {
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+}
+
+.cover-grid__body {
+  @include layout(flex-start, stretch, row, wrap);
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.cover-tile {
+  display: block;
+  box-sizing: border-box;
+}
+
+.cover-tile__btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cover-tile__title {
+  margin: 0.625rem 0 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--foreground);
   overflow: hidden;
-  border-radius: 5px;
-  background-color: rgba(52, 47, 41, 0.4);
-  @include layout(center, center);
-  transition: all 0.3s ease-in-out;
-  opacity: 0;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
 
-  .mask-icon {
-    width: 32px;
-    height: 32px;
-    color: rgba(240, 240, 240, 1);
-  }
-
-  &:hover {
-    opacity: 1;
-    cursor: pointer;
+.cover-lift {
+  :deep(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 
 @media screen and (min-width: $sm) {
-  .card-frame {
+  .cover-tile {
     width: 18%;
-    margin: 0.5rem 1%;
+    margin: 0 1% 1.25rem;
   }
 }
 
 @media screen and (max-width: $sm) {
-  .card-frame {
+  .cover-tile {
     width: 46%;
-    margin: 0.5rem 2%;
+    margin: 0 2% 1rem;
   }
 }
 </style>

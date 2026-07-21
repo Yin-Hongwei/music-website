@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yin.music.mapper.SongListStyleRelMapper">
+
+  <select id="selectStylesBySongListId" resultType="com.yin.music.model.response.StyleOptionResponse">
+    SELECT sst.id, sst.name
+    FROM song_sheet_style_rel rel
+    INNER JOIN song_sheet_style sst ON sst.id = rel.style_id
+    WHERE rel.song_sheet_id = #{songListId}
+    ORDER BY sst.id ASC
+  </select>
+
+  <select id="selectStylesBySongListIds" resultType="com.yin.music.model.response.SongListStyleLink">
+    SELECT
+      rel.song_sheet_id AS songListId,
+      sst.id AS id,
+      sst.name AS name
+    FROM song_sheet_style_rel rel
+    INNER JOIN song_sheet_style sst ON sst.id = rel.style_id
+    WHERE rel.song_sheet_id IN
+    <foreach collection="songListIds" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    ORDER BY rel.song_sheet_id ASC, sst.id ASC
+  </select>
+
+  <delete id="deleteBySongListId">
+    DELETE FROM song_sheet_style_rel WHERE song_sheet_id = #{songListId}
+  </delete>
+
+  <insert id="insertBatch">
+    INSERT INTO song_sheet_style_rel (song_sheet_id, style_id)
+    VALUES
+    <foreach collection="rows" item="row" separator=",">
+      (#{row.songListId}, #{row.styleId})
+    </foreach>
+  </insert>
+</mapper>

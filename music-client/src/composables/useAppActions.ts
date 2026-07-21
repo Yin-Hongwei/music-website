@@ -6,7 +6,7 @@ import { useConfigureStore } from "@/store/configure";
 import { useSongStore } from "@/store/song";
 import { RouterName } from "@/enums";
 import { fetchDownloadMusic } from "@/api/song";
-import { attachImageUrl, getSingerName, getSongTitle } from "@/utils";
+import { attachImageUrl, resolveSingerName, resolveSongTitle } from "@/utils";
 
 interface RouterOptions {
   path?: string;
@@ -62,16 +62,37 @@ export function useAppActions() {
     router.go(step);
   }
 
-  function playMusic({ id, url, pic, index, name, lyric, currentSongList }: any) {
+  function playMusic({
+    id,
+    url,
+    pic,
+    index,
+    name,
+    singerName,
+    lyric,
+    currentSongList,
+    duration,
+  }: {
+    id: string | number;
+    url: string;
+    pic: string;
+    index: number;
+    name?: string;
+    singerName?: string;
+    lyric: unknown;
+    currentSongList: unknown[];
+    duration?: number | null;
+  }) {
     songStore.playMusic({
       id,
       url,
       pic,
       index,
-      songTitle: getSongTitle(name),
-      singerName: getSingerName(name),
+      songTitle: resolveSongTitle(name),
+      singerName: resolveSingerName(singerName),
       lyric,
       currentSongList,
+      duration,
     });
   }
 
@@ -103,8 +124,8 @@ export function useAppActions() {
   }
 
   return {
-    getSongTitle,
-    getSingerName,
+    resolveSongTitle,
+    resolveSingerName,
     attachImageUrl,
     checkStatus,
     routerManager,

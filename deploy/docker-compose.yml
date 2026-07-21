@@ -1,0 +1,68 @@
+# Orchestration only — images build from each app's Dockerfile.
+# Usage (from this directory):
+#   docker compose up --build
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
+      MYSQL_DATABASE: yin_music
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../sql/yin_music.sql:/docker-entrypoint-initdb.d/yin_music.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  server:
+    build:
+      context: ../music-server
+    ports:
+      - "8888:8888"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/yin_music?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      APP_SECURITY_CORS_ALLOWED_ORIGINS: http://localhost:8080,http://127.0.0.1:8080,http://localhost:8081,http://127.0.0.1:8081
+    volumes:
+      - ../music-server/data:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  client:
+    build:
+      context: ../music-client
+      args:
+        NODE_HOST: ${API_PUBLIC_URL:-http://localhost:8888}
+    ports:
+      - "8080:80"
+    depends_on:
+      - server
+
+  manage:
+    build:
+      context: ../music-manage
+      args:
+        NODE_HOST: ${API_PUBLIC_URL:-http://localhost:8888}
+    ports:
+      - "8081:80"
+    depends_on:
+      - server
+
+volumes:
+  db-data:

@@ -15,7 +15,7 @@
         <el-input type="password" placeholder="密码" v-model="registerForm.password" @keyup.enter="handleLoginIn" />
       </el-form-item>
       <el-form-item class="sign-btn--submit">
-        <el-button type="primary" class="sign-submit-btn" @click="handleLoginIn">返回登录</el-button>
+        <el-button type="primary" round class="sign-submit-btn" @click="handleLoginIn">登录</el-button>
       </el-form-item>
       <div class="sign-switch sign-switch--footer">
         <div class="sign-switch__left">
@@ -35,7 +35,7 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref } from "vue";
-import { KeyRound, UserPlus } from "lucide-vue-next";
+import { KeyRound } from "lucide-vue-next";
 import { ElMessage } from "element-plus";
 import AuthLayout from "@/components/auth/AuthLayout.vue";
 import { useConfigureStore } from "@/store/configure";
@@ -228,14 +228,14 @@ function handleForgotPassword() {
 }
 
 .sign-switch__text {
-  color: #909399;
+  color: var(--muted);
 }
 
 .sign-switch__link {
   padding: 0;
   border: 0;
   background: transparent;
-  color: #409eff;
+  color: var(--accent);
   font-size: 14px;
   line-height: 20px;
   cursor: pointer;
@@ -254,6 +254,6 @@ function handleForgotPassword() {
 }
 
 .sign-switch__link:hover {
-  color: #66b1ff;
+  color: var(--accent-hover);
 }
 </style>

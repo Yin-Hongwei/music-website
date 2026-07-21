@@ -42,8 +42,8 @@
 
         <el-form-item class="fp__actions">
           <div class="fp__actions-row">
-            <el-button class="fp__action-btn" @click="goSignIn">返回登录</el-button>
-            <el-button type="primary" class="fp__action-btn" native-type="submit" :loading="submitting">
+            <el-button round class="fp__action-btn" @click="goSignIn">返回登录</el-button>
+            <el-button type="primary" round class="fp__action-btn" native-type="submit" :loading="submitting">
               重置密码
             </el-button>
           </div>
@@ -250,13 +250,13 @@ function goSignIn() {
   padding: 0 2px;
   font-size: 13px;
   line-height: 1.45;
-  color: #909399;
+  color: var(--muted);
   text-align: center;
 }
 
 .fp__dev {
   margin-bottom: 10px;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 .fp__dev-title {
@@ -267,6 +267,7 @@ function goSignIn() {
   font-size: 22px;
   letter-spacing: 0.12em;
   font-variant-numeric: tabular-nums;
+  color: var(--accent);
 }
 
 .fp__form:deep(.el-form-item) {
@@ -279,7 +280,7 @@ function goSignIn() {
 
 .fp__form:deep(.el-form-item__label) {
   font-weight: 500;
-  color: #606266;
+  color: var(--foreground);
   line-height: var(--el-component-size-large);
   padding-bottom: 0;
   padding-right: 6px;
@@ -300,11 +301,11 @@ function goSignIn() {
 .fp__send {
   flex-shrink: 0;
   min-width: 96px;
-  border-radius: 8px;
 }
 
 .fp__actions {
   margin-bottom: 0;
+  margin-top: 8px;
 }
 
 .fp__actions:deep(.el-form-item__content) {
@@ -314,7 +315,7 @@ function goSignIn() {
 
 .fp__actions-row {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   width: 100%;
   align-items: stretch;
 }
@@ -322,7 +323,6 @@ function goSignIn() {
 .fp__action-btn {
   flex: 1;
   min-width: 0;
-  border-radius: 8px;
   font-weight: 500;
   letter-spacing: 0.02em;
 }
@@ -336,13 +336,5 @@ function goSignIn() {
     width: 100%;
     min-width: 0;
   }
-}
-</style>
-
-<style lang="scss">
-.forgot-password-page .sign {
-  width: min(440px, 92vw);
-  max-width: 440px;
-  box-shadow: 0 12px 40px rgba(64, 158, 255, 0.07);
 }
 </style>
