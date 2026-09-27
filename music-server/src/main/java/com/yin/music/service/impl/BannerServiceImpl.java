@@ -7,6 +7,8 @@ import com.yin.music.mapper.BannerMapper;
 import com.yin.music.model.domain.Banner;
 import com.yin.music.model.response.BannerResponse;
 import com.yin.music.service.BannerService;
+import com.yin.music.support.BannerUrls;
+import com.yin.music.support.SafeFilenames;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -41,7 +43,8 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner>
     @CacheEvict(value = "banner", allEntries = true)
     @Override
     public R<?> addBanner(MultipartFile bannerFile) {
-        String fileName = System.currentTimeMillis() + bannerFile.getOriginalFilename();
+        SafeFilenames.requireAllowed(bannerFile, SafeFilenames.Kind.IMAGE);
+        String fileName = SafeFilenames.uniqueImage(bannerFile.getOriginalFilename(), "banner.jpg");
         Path folder = mediaProperties.imgDir("swiper");
         try {
             Files.createDirectories(folder);
@@ -65,7 +68,8 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner>
     @CacheEvict(value = "banner", allEntries = true)
     @Override
     public R<?> updateBannerPic(MultipartFile bannerFile, Integer id) {
-        String fileName = System.currentTimeMillis() + bannerFile.getOriginalFilename();
+        SafeFilenames.requireAllowed(bannerFile, SafeFilenames.Kind.IMAGE);
+        String fileName = SafeFilenames.uniqueImage(bannerFile.getOriginalFilename(), "banner.jpg");
         Path folder = mediaProperties.imgDir("swiper");
         try {
             Files.createDirectories(folder);
@@ -90,7 +94,7 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner>
     public R<?> updateBannerMeta(Integer id, String url, String title) {
         Banner banner = new Banner();
         banner.setId(id);
-        banner.setUrl(url == null ? "" : url.trim());
+        banner.setUrl(BannerUrls.normalizeOrThrow(url));
         banner.setTitle(title == null ? "" : title.trim());
         if (bannerMapper.updateById(banner) > 0) {
             return R.success("更新成功");

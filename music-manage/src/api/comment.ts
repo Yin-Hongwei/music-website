@@ -10,5 +10,5 @@ export function getCommentOfSongListId(songListId: unknown) {
 }
 
 export function deleteComment(id: string | number) {
-  return api({ url: `comment/delete?id=${id}` });
+  return api({ method: "delete", url: `comment/delete?id=${id}` });
 }

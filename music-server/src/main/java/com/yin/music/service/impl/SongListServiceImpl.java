@@ -18,6 +18,7 @@ import com.yin.music.model.response.SongListStyleLink;
 import com.yin.music.model.response.StyleOptionResponse;
 import com.yin.music.model.response.UploadResponse;
 import com.yin.music.service.SongListService;
+import com.yin.music.support.SafeFilenames;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -175,7 +176,8 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     @Override
     public R<?> updateSongListImg(MultipartFile avatorFile, int id) {
         // Song list covers are /img/songListPic/** (local media), same as seed data & WebMvcConfig.
-        String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
+        SafeFilenames.requireAllowed(avatorFile, SafeFilenames.Kind.IMAGE);
+        String fileName = SafeFilenames.uniqueImage(avatorFile.getOriginalFilename(), "songList.jpg");
         Path folder = mediaProperties.imgDir("songListPic");
         try {
             Files.createDirectories(folder);

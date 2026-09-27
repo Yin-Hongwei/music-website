@@ -33,9 +33,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     private final AppUserMapper appUserMapper;
 
     @Override
-    public R<?> addComment(CommentRequest addCommentRequest) {
+    public R<?> addComment(CommentRequest addCommentRequest, Integer currentUserId) {
         Comment comment = new Comment();
         BeanUtils.copyProperties(addCommentRequest, comment);
+        comment.setUserId(currentUserId);
         comment.setType(addCommentRequest.getNowType());
         if (commentMapper.insert(comment) > 0) {
             return R.success("评论成功");
@@ -44,20 +45,18 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         }
     }
 
-    @Override
-    public R<?> updateCommentMsg(CommentRequest addCommentRequest) {
-        Comment comment = new Comment();
-        BeanUtils.copyProperties(addCommentRequest, comment);
-        if (commentMapper.updateById(comment) > 0) {
-            return R.success("点赞成功");
-        } else {
-            return R.error("点赞失败");
-        }
-    }
-
     //    删除评论
     @Override
-    public R<?> deleteComment(Integer id) {
+    public R<?> deleteComment(Integer id, Integer currentUserId, boolean asAdmin) {
+        Comment existing = commentMapper.selectById(id);
+        if (existing == null) {
+            return R.error("评论不存在");
+        }
+        if (!asAdmin) {
+            if (currentUserId == null || !currentUserId.equals(existing.getUserId())) {
+                return R.error("无权删除该评论");
+            }
+        }
         if (commentMapper.deleteById(id) > 0) {
             return R.success("删除成功");
         } else {

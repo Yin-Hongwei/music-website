@@ -79,7 +79,7 @@ public class MediaController {
         }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", fileName);
+        headers.setContentDispositionFormData("attachment", sanitizeContentDispositionFilename(fileName));
         return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
 
@@ -121,7 +121,7 @@ public class MediaController {
         }
         ByteArrayResource resource = new ByteArrayResource(musicBytes);
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
+        headers.setContentDispositionFormData("attachment", sanitizeContentDispositionFilename(fileName));
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentLength(musicBytes.length)
@@ -240,5 +240,19 @@ public class MediaController {
 
     private static String recodeIso88591ToUtf8(String value) {
         return new String(value.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+    }
+
+    /** Strip CR/LF and quotes to avoid Content-Disposition header injection. */
+    private static String sanitizeContentDispositionFilename(String fileName) {
+        if (fileName == null || fileName.isBlank()) {
+            return "download";
+        }
+        String base = fileName;
+        int slash = Math.max(base.lastIndexOf('/'), base.lastIndexOf('\\'));
+        if (slash >= 0) {
+            base = base.substring(slash + 1);
+        }
+        base = base.replaceAll("[\\r\\n\"\\\\]", "_").trim();
+        return base.isEmpty() ? "download" : base;
     }
 }

@@ -84,7 +84,7 @@ export async function fetchSongListCollectors(songListId: string | number): Prom
 }
 
 export async function fetchDeleteUser(id: string | number): Promise<ApiResponse> {
-  return await api({ url: `user/delete?id=${id}` });
+  return await api({ method: "delete", url: `user/delete?id=${id}` });
 }
 
 export async function fetchUpdateUserMsg(payload: {

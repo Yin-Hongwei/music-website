@@ -7,17 +7,18 @@ import com.yin.music.model.request.CollectRequest;
 
 public interface CollectService extends IService<Collect> {
 
-    R<?> addCollection(CollectRequest addCollectRequest);
 
-    R<?> addSongListCollection(CollectRequest addCollectRequest);
+    R<?> addCollection(CollectRequest addCollectRequest, Integer currentUserId);
 
-    R<?> existSongId(CollectRequest isCollectRequest);
+    R<?> addSongListCollection(CollectRequest addCollectRequest, Integer currentUserId);
 
-    R<?> deleteCollect(Integer userId,Integer songId);
+    R<?> existSongId(CollectRequest isCollectRequest, Integer currentUserId);
 
-    R<?> existSongListId(CollectRequest isCollectRequest);
+    R<?> deleteCollect(Integer currentUserId, Integer songId);
 
-    R<?> deleteSongListCollect(Integer userId, Integer songListId);
+    R<?> existSongListId(CollectRequest isCollectRequest, Integer currentUserId);
+
+    R<?> deleteSongListCollect(Integer currentUserId, Integer songListId);
 
     R<?> collectionUsersOfSongList(Integer songListId);
 

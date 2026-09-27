@@ -9,13 +9,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import lombok.RequiredArgsConstructor;
 
 /**
- * Web MVC：CORS、本地静态资源、UTF-8 字符串响应。
+ * Web MVC：CORS、本地静态资源、UTF-8 字符串响应、管理端鉴权与 CSRF 来源校验。
  */
 @Configuration
 @RequiredArgsConstructor
@@ -23,8 +24,43 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     private final MediaProperties mediaProperties;
 
+    private final AdminAuthInterceptor adminAuthInterceptor;
+
+    private final CsrfOriginInterceptor csrfOriginInterceptor;
+
     @Value("${app.security.cors.allowed-origins:http://localhost:3000}")
     private String allowedOriginsCsv;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(csrfOriginInterceptor).addPathPatterns("/**");
+        registry.addInterceptor(adminAuthInterceptor)
+                .addPathPatterns(
+                        "/song/add",
+                        "/song/delete",
+                        "/song/update",
+                        "/song/img/update",
+                        "/song/url/update",
+                        "/singer/add",
+                        "/singer/delete",
+                        "/singer/update",
+                        "/singer/avatar/update",
+                        "/songList/add",
+                        "/songList/delete",
+                        "/songList/update",
+                        "/songList/img/update",
+                        "/listSong/add",
+                        "/listSong/delete",
+                        "/listSong/update",
+                        "/banner/add",
+                        "/banner/updatePic",
+                        "/banner/updateUrl",
+                        "/banner/delete",
+                        "/user",
+                        "/user/page",
+                        "/admin/session"
+                );
+    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -42,6 +78,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Images only under these handlers; upload allowlist excludes html/svg/js.
         registry.addResourceHandler("/img/avatarImages/**")
                 .addResourceLocations(mediaProperties.resourceLocation(mediaProperties.imgDir("avatarImages")))
                 .setCachePeriod(3600);

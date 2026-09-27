@@ -18,6 +18,20 @@ import com.yin.music.model.R;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<R<?>> handleUnauthorized(UnauthorizedException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(R.error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<R<?>> handleBadRequest(IllegalArgumentException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(R.error(ex.getMessage() != null ? ex.getMessage() : "请求参数不合法"));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public R<?> handleValidationException(MethodArgumentNotValidException ex) {
         log.warn("Request validation failed: {}", ex.getMessage());

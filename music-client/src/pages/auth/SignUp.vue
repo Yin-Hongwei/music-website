@@ -65,7 +65,9 @@ const registerForm = reactive({
 
 const SignUpRules = {
   username: [{ required: true, trigger: "blur", min: 3 }],
-  password: [{ required: true, trigger: "blur", min: 3 }],
+  password: [
+    { required: true, trigger: "blur", min: 6, message: "密码至少 6 位" },
+  ],
   sex: [{ required: true, message: "请选择性别", trigger: "change" }],
   phoneNum: [{ message: "请输入手机号码", trigger: "blur" }],
   email: [

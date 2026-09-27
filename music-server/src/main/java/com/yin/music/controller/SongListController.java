@@ -19,7 +19,7 @@ public class SongListController {
         return songListService.addSongList(addSongListRequest);
     }
 
-    @GetMapping("/songList/delete")
+    @DeleteMapping("/songList/delete")
     public R<?> deleteSongList(@RequestParam int id) {
         return songListService.deleteSongList(id);
     }

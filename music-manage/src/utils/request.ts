@@ -24,6 +24,7 @@ axios.interceptors.response.use(
     if (res.status) {
       switch (res.status) {
         case 401:
+          sessionStorage.removeItem("adminAuth");
           router.replace({ path: "/", query: {} });
           break;
         case 403:

@@ -1,6 +1,7 @@
 package com.yin.music.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,7 +49,7 @@ public class BannerController {
         return bannerService.updateBannerMeta(banner.getId(), banner.getUrl(), banner.getTitle());
     }
 
-    @GetMapping("/delete")
+    @DeleteMapping("/delete")
     public R<?> deleteBanner(@RequestParam("id") Integer id) {
         return bannerService.deleteBanner(id);
     }

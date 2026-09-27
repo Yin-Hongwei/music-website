@@ -5,9 +5,9 @@ import com.yin.music.model.R;
 import com.yin.music.model.domain.Admin;
 import com.yin.music.model.request.AdminRequest;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 public interface AdminService extends IService<Admin> {
 
-    R<?> verityPasswd(AdminRequest adminRequest, HttpSession session);
+    R<?> verityPasswd(AdminRequest adminRequest, HttpServletRequest request);
 }

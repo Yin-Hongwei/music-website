@@ -39,6 +39,7 @@ import type { DropdownOption } from "naive-ui";
 import { ChevronDown, PanelLeftClose, PanelLeftOpen } from "lucide-vue-next";
 import { useAppStore } from "@/stores/app";
 import { attachImageUrl } from "@/api/url";
+import { fetchAdminLogout } from "@/api/admin";
 import { MUSICNAME } from "@/enums";
 
 defineProps<{
@@ -63,9 +64,15 @@ const dropdownOptions: DropdownOption[] = [
   },
 ];
 
-function handleSelect(key: string | number) {
+async function handleSelect(key: string | number) {
   if (key === "logout") {
+    try {
+      await fetchAdminLogout();
+    } catch {
+      /* still clear local auth */
+    }
     sessionStorage.removeItem("dataStore");
+    sessionStorage.removeItem("adminAuth");
     router.push({ name: "signIn" });
   }
 }

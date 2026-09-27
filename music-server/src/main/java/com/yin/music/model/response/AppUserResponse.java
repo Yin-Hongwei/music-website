@@ -34,10 +34,29 @@ public class AppUserResponse {
         return target;
     }
 
+    /** Public profile: no email / phone / birth. */
+    public static AppUserResponse toPublic(AppUser source) {
+        AppUserResponse target = from(source);
+        if (target == null) {
+            return null;
+        }
+        target.setPhoneNum(null);
+        target.setEmail(null);
+        target.setBirth(null);
+        return target;
+    }
+
     public static List<AppUserResponse> fromList(List<AppUser> sources) {
         if (sources == null || sources.isEmpty()) {
             return Collections.emptyList();
         }
         return sources.stream().map(AppUserResponse::from).collect(Collectors.toList());
+    }
+
+    public static List<AppUserResponse> toPublicList(List<AppUser> sources) {
+        if (sources == null || sources.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return sources.stream().map(AppUserResponse::toPublic).collect(Collectors.toList());
     }
 }

@@ -9,5 +9,9 @@ export const validatePassword = (
     callback(new Error("密码不能为空"));
     return;
   }
+  if (value.length < 6) {
+    callback(new Error("密码至少 6 位"));
+    return;
+  }
   callback();
 };

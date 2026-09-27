@@ -14,6 +14,7 @@ import com.yin.music.model.response.PageResponse;
 import com.yin.music.model.response.UploadResponse;
 import com.yin.music.service.SongService;
 import com.yin.music.service.support.SongAssembler;
+import com.yin.music.support.SafeFilenames;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +71,8 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
         if (mpfile == null || mpfile.isEmpty()) {
             return R.error("请上传音频文件");
         }
-        String fileName = uniqueFileName(mpfile.getOriginalFilename(), "audio.mp3");
+        SafeFilenames.requireAllowed(mpfile, SafeFilenames.Kind.AUDIO);
+        String fileName = SafeFilenames.uniqueAudio(mpfile.getOriginalFilename(), "audio.mp3");
         Path dest = mediaProperties.songDir().resolve(fileName);
         try {
             Files.createDirectories(dest.getParent());
@@ -122,7 +124,8 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
             return R.error("歌曲不存在");
         }
 
-        String fileName = uniqueFileName(urlFile.getOriginalFilename(), "audio.mp3");
+        SafeFilenames.requireAllowed(urlFile, SafeFilenames.Kind.AUDIO);
+        String fileName = SafeFilenames.uniqueAudio(urlFile.getOriginalFilename(), "audio.mp3");
         Path dest = mediaProperties.songDir().resolve(fileName);
         try {
             Files.createDirectories(dest.getParent());
@@ -155,7 +158,8 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
         if (songMapper.selectById(id) == null) {
             return R.error("歌曲不存在");
         }
-        String fileName = uniqueFileName(urlFile.getOriginalFilename(), "cover.jpg");
+        SafeFilenames.requireAllowed(urlFile, SafeFilenames.Kind.IMAGE);
+        String fileName = SafeFilenames.uniqueImage(urlFile.getOriginalFilename(), "cover.jpg");
         Path dest = mediaProperties.imgDir("songPic").resolve(fileName);
         try {
             Files.createDirectories(dest.getParent());
@@ -251,39 +255,6 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
             return 0;
         }
         return durationSeconds;
-    }
-
-    /**
-     * Build a filesystem-safe object name. Tomcat {@code ResourceHandler} cannot
-     * reliably serve non-ASCII path segments under {@code /img/songPic/**}, so we
-     * keep only a timestamp + ASCII extension (matching seed data naming).
-     */
-    private static String uniqueFileName(String originalName, String fallback) {
-        String ext = asciiExtension(originalName, fallback);
-        return System.currentTimeMillis() + ext;
-    }
-
-    private static String asciiExtension(String originalName, String fallback) {
-        String name = originalName == null || originalName.isBlank() ? fallback : originalName;
-        int slash = Math.max(name.lastIndexOf('/'), name.lastIndexOf('\\'));
-        if (slash >= 0) {
-            name = name.substring(slash + 1);
-        }
-        if (name.isBlank() || name.contains("..")) {
-            name = fallback;
-        }
-        int dot = name.lastIndexOf('.');
-        if (dot >= 0 && dot < name.length() - 1) {
-            String ext = name.substring(dot).toLowerCase();
-            if (ext.matches("\\.[a-z0-9]{1,8}")) {
-                return ext;
-            }
-        }
-        int fallbackDot = fallback.lastIndexOf('.');
-        if (fallbackDot >= 0) {
-            return fallback.substring(fallbackDot).toLowerCase();
-        }
-        return ".bin";
     }
 
     private void deleteLocalSongFile(String url) {

@@ -37,6 +37,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+-- DEMO ONLY: username admin / password 123 (BCrypt). Change before any public deploy.
 INSERT INTO `admin` VALUES (1,'admin','$2a$10$bvkwMsWJk0AxovNY/jaGqe7Yd3vVdF2CqZiG3nWj.lRW5Py4DSe.6');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -351,6 +352,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+-- DEMO ONLY: seed users share weak password 123 (legacy MD5(salt+pwd)); reset after install.
 INSERT INTO `user` VALUES (5,'momo','24c14f112462b440c3de9523b05c4c59',1,NULL,NULL,'2019-01-08 00:00:00','今天很开心啊','山西','/img/avatarImages/17846186193311784616300543IMG_2066.JPG','2019-01-07 16:16:42','2026-07-21 15:26:07'),(12,'yoona','24c14f112462b440c3de9523b05c4c59',0,NULL,'1236795@qq.com','2019-04-25 00:00:00','好好吃饭','北京','/img/avatarImages/17846187105371649527868607author.jpg','2019-04-25 10:56:54','2026-07-21 15:25:45'),(61,'Yin','24c14f112462b440c3de9523b05c4c59',2,NULL,'yinhongwei96@126.com','2019-12-01 00:00:00','早起早睡','山西','/img/avatarImages/1784619833310L1.jpg','2022-09-23 22:41:52','2026-07-21 15:43:53');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;

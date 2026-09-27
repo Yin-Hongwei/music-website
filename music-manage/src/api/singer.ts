@@ -30,7 +30,7 @@ export function updateSingerMsg(params: {
 }
 
 export function deleteSinger(id: string | number) {
-  return api({ url: `singer/delete?id=${id}` });
+  return api({ method: "delete", url: `singer/delete?id=${id}` });
 }
 
 /** 上传歌手头像（multipart）；由编辑弹窗在点「确定」时调用 */

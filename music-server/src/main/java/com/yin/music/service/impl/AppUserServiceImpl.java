@@ -13,6 +13,8 @@ import com.yin.music.model.response.AppUserResponse;
 import com.yin.music.model.response.PageResponse;
 import com.yin.music.model.response.UploadResponse;
 import com.yin.music.service.AppUserService;
+import com.yin.music.support.SafeFilenames;
+import com.yin.music.support.SessionUser;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
@@ -49,14 +52,21 @@ public class AppUserServiceImpl extends ServiceImpl<AppUserMapper, AppUser>
     @Value("${app.security.password-salt:zyt}")
     private String passwordSalt;
 
+    @Value("${app.security.allow-legacy-md5:true}")
+    private boolean allowLegacyMd5;
+
     @Override
     public R<?> addUser(AppUserRequest registryRequest) {
         if (this.existUser(registryRequest.getUsername())) {
             return R.warning("用户名已注册");
         }
+        String rawPassword = registryRequest.getPassword();
+        if (StringUtils.isBlank(rawPassword) || rawPassword.length() < 6) {
+            return R.error("密码至少 6 位");
+        }
         AppUser appUser = new AppUser();
         BeanUtils.copyProperties(registryRequest, appUser);
-        String password = passwordEncoder.encode(registryRequest.getPassword());
+        String password = passwordEncoder.encode(rawPassword);
         appUser.setPassword(password);
         if (StringUtils.isBlank(appUser.getPhoneNum())) {
             appUser.setPhoneNum(null);
@@ -81,12 +91,13 @@ public class AppUserServiceImpl extends ServiceImpl<AppUserMapper, AppUser>
     }
 
     @Override
-    public R<?> updateUserMsg(AppUserRequest updateRequest) {
+    public R<?> updateUserMsg(AppUserRequest updateRequest, Integer currentUserId) {
         // updateById 默认忽略 null，清空手机号/邮箱必须用 UpdateWrapper 显式 set
         String phoneNum = StringUtils.isBlank(updateRequest.getPhoneNum()) ? null : updateRequest.getPhoneNum().trim();
         String email = StringUtils.isBlank(updateRequest.getEmail()) ? null : updateRequest.getEmail().trim();
         UpdateWrapper<AppUser> wrapper = new UpdateWrapper<>();
-        wrapper.eq("id", updateRequest.getId())
+        // Target account must be the authenticated session user — ignore client id.
+        wrapper.eq("id", currentUserId)
                 .set("username", updateRequest.getUsername())
                 .set("sex", updateRequest.getSex())
                 .set("phone_num", phoneNum)
@@ -107,15 +118,23 @@ public class AppUserServiceImpl extends ServiceImpl<AppUserMapper, AppUser>
     }
 
     @Override
-    public R<?> updatePassword(AppUserRequest updatePasswordRequest) {
-
-        if (!this.verityPasswd(updatePasswordRequest.getUsername(), updatePasswordRequest.getOldPassword())) {
+    public R<?> updatePassword(AppUserRequest updatePasswordRequest, Integer currentUserId) {
+        AppUser currentUser = appUserMapper.selectById(currentUserId);
+        if (currentUser == null) {
+            return R.error("用户不存在");
+        }
+        // Verify old password against the session user only — never trust body id/username as target.
+        if (!matchesStoredPassword(currentUser, updatePasswordRequest.getOldPassword())) {
             return R.error("密码输入错误");
+        }
+        String newPassword = updatePasswordRequest.getPassword();
+        if (StringUtils.isBlank(newPassword) || newPassword.length() < 6) {
+            return R.error("密码至少 6 位");
         }
 
         AppUser appUser = new AppUser();
-        appUser.setId(updatePasswordRequest.getId());
-        appUser.setPassword(passwordEncoder.encode(updatePasswordRequest.getPassword()));
+        appUser.setId(currentUserId);
+        appUser.setPassword(passwordEncoder.encode(newPassword));
 
         if (appUserMapper.updateById(appUser) > 0) {
             return R.success("密码修改成功");
@@ -125,9 +144,10 @@ public class AppUserServiceImpl extends ServiceImpl<AppUserMapper, AppUser>
     }
 
     @Override
-    public R<?> updateUserAvatar(MultipartFile avatarFile, int id) {
+    public R<?> updateUserAvatar(MultipartFile avatarFile, Integer currentUserId) {
         // Avatar URLs are /img/avatarImages/** (local media), same as banner/swiper.
-        String fileName = System.currentTimeMillis() + avatarFile.getOriginalFilename();
+        SafeFilenames.requireAllowed(avatarFile, SafeFilenames.Kind.IMAGE);
+        String fileName = SafeFilenames.uniqueImage(avatarFile.getOriginalFilename(), "avatar.jpg");
         Path folder = mediaProperties.imgDir("avatarImages");
         try {
             Files.createDirectories(folder);
@@ -137,7 +157,7 @@ public class AppUserServiceImpl extends ServiceImpl<AppUserMapper, AppUser>
         }
         String imgPath = "/img/avatarImages/" + fileName;
         AppUser appUser = new AppUser();
-        appUser.setId(id);
+        appUser.setId(currentUserId);
         appUser.setAvatar(imgPath);
         if (appUserMapper.updateById(appUser) > 0) {
             return R.success("上传成功", UploadResponse.of(imgPath));
@@ -170,6 +190,10 @@ public class AppUserServiceImpl extends ServiceImpl<AppUserMapper, AppUser>
         String storedPassword = appUser.getPassword();
         if (passwordEncoder.matches(password, storedPassword)) {
             return true;
+        }
+
+        if (!allowLegacyMd5) {
+            return false;
         }
 
         String legacyPassword = DigestUtils.md5DigestAsHex(
@@ -217,12 +241,14 @@ public class AppUserServiceImpl extends ServiceImpl<AppUserMapper, AppUser>
     }
 
     @Override
-    public R<?> userOfId(Integer id) {
-        return R.success(null, AppUserResponse.from(appUserMapper.selectById(id)));
+    public R<?> userOfId(Integer id, Integer viewerId, boolean asAdmin) {
+        AppUser appUser = appUserMapper.selectById(id);
+        boolean fullAccess = asAdmin || (viewerId != null && viewerId.equals(id));
+        return R.success(null, fullAccess ? AppUserResponse.from(appUser) : AppUserResponse.toPublic(appUser));
     }
 
     @Override
-    public R<?> loginStatus(AppUserRequest loginRequest, HttpSession session) {
+    public R<?> loginStatus(AppUserRequest loginRequest, HttpServletRequest request) {
 
         String account = loginRequest.getUsername();
         String password = loginRequest.getPassword();
@@ -231,7 +257,8 @@ public class AppUserServiceImpl extends ServiceImpl<AppUserMapper, AppUser>
             return R.error("用户名或密码错误");
         }
         AppUser appUser = findAppUserByLoginAccount(account);
-        session.setAttribute("username", appUser.getUsername());
+        HttpSession session = SessionUser.rotate(request);
+        SessionUser.bind(session, appUser.getId(), appUser.getUsername());
         return R.success("登录成功", AppUserResponse.from(appUser));
     }
 }

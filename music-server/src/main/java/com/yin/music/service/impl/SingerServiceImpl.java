@@ -16,6 +16,7 @@ import com.yin.music.model.response.StyleOptionResponse;
 import com.yin.music.config.MediaProperties;
 import com.yin.music.model.response.UploadResponse;
 import com.yin.music.service.SingerService;
+import com.yin.music.support.SafeFilenames;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -65,7 +66,8 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
     @Override
     public R<?> updateSingerPic(MultipartFile avatorFile, int id) {
         // Singer pics are /img/singerPic/** (local media), same as seed data & WebMvcConfig.
-        String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
+        SafeFilenames.requireAllowed(avatorFile, SafeFilenames.Kind.IMAGE);
+        String fileName = SafeFilenames.uniqueImage(avatorFile.getOriginalFilename(), "singer.jpg");
         Path folder = mediaProperties.imgDir("singerPic");
         try {
             Files.createDirectories(folder);

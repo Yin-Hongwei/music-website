@@ -59,9 +59,9 @@ const validateCheck = (_rule: any, value: any, callback: any) => {
   }
 };
 const rules = reactive({
-  oldPassword: [{ validator: validatePassword, trigger: "blur", min: 3 }],
-  newPassword: [{ validator: validatePassword, trigger: "blur", min: 3 }],
-  confirmPassword: [{ validator: validateCheck, trigger: "blur", min: 3 }],
+  oldPassword: [{ validator: validatePassword, trigger: "blur" }],
+  newPassword: [{ validator: validatePassword, trigger: "blur" }],
+  confirmPassword: [{ validator: validateCheck, trigger: "blur" }],
 });
 
 async function confirm() {

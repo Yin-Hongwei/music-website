@@ -70,12 +70,15 @@ loadHomeData();
 
 function handleBannerClick(url?: string) {
   const target = (url || "").trim();
-  if (!target) return;
+  if (!target || target.includes("\\") || target.includes("\0")) return;
+  // Reject protocol-relative //evil.com open redirects
   if (/^https?:\/\//i.test(target)) {
-    window.open(target, "_blank");
+    window.open(target, "_blank", "noopener,noreferrer");
     return;
   }
-  window.location.href = target.startsWith("/") ? target : `/${target}`;
+  if (/^\/(?!\/)/.test(target)) {
+    window.location.assign(target);
+  }
 }
 </script>
 

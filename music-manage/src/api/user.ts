@@ -24,7 +24,7 @@ export function updateUserMsg(params: {
 }
 
 export function deleteUser(id: string | number) {
-  return api({ url: `user/delete?id=${id}` });
+  return api({ method: "delete", url: `user/delete?id=${id}` });
 }
 
 /** 上传用户头像（multipart）；由编辑弹窗在点「确定」时调用 */

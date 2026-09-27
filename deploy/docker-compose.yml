@@ -32,10 +32,13 @@ services:
       SPRING_PROFILES_ACTIVE: prod
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/yin_music?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true
       SPRING_DATASOURCE_USERNAME: root
+      # 正式环境务必覆盖 MYSQL_ROOT_PASSWORD，勿使用默认 123456
       SPRING_DATASOURCE_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
       APP_SECURITY_CORS_ALLOWED_ORIGINS: http://localhost:8080,http://127.0.0.1:8080,http://localhost:8081,http://127.0.0.1:8081
+      # 本地 compose + 种子数据含旧 MD5 口令；对外生产应设 false 并重置用户密码
+      APP_SECURITY_ALLOW_LEGACY_MD5: ${APP_SECURITY_ALLOW_LEGACY_MD5:-true}
     volumes:
       - ../music-server/data:/app/data
     depends_on:

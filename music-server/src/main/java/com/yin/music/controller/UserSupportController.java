@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yin.music.model.R;
 import com.yin.music.model.request.UserSupportRequest;
 import com.yin.music.service.UserSupportService;
+import com.yin.music.support.SessionUser;
 
-/**
- * @Author 祝英台炸油条
- * @Time : 2022/6/11 16:07
- **/
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/userSupport")
@@ -22,17 +21,20 @@ public class UserSupportController {
     private final UserSupportService userSupportService;
 
     @PostMapping("/test")
-    public R<?> isUserSupportComment(@RequestBody UserSupportRequest userSupportRequest) {
-        return userSupportService.isUserSupportComment(userSupportRequest);
+    public R<?> isUserSupportComment(@RequestBody UserSupportRequest userSupportRequest, HttpSession session) {
+        Integer currentUserId = SessionUser.requireUserId(session);
+        return userSupportService.isUserSupportComment(userSupportRequest, currentUserId);
     }
 
     @PostMapping("/insert")
-    public R<?> insertCommentSupport(@RequestBody UserSupportRequest userSupportRequest) {
-        return userSupportService.insertCommentSupport(userSupportRequest);
+    public R<?> insertCommentSupport(@RequestBody UserSupportRequest userSupportRequest, HttpSession session) {
+        Integer currentUserId = SessionUser.requireUserId(session);
+        return userSupportService.insertCommentSupport(userSupportRequest, currentUserId);
     }
 
     @PostMapping("/delete")
-    public R<?> deleteCommentSupport(@RequestBody UserSupportRequest userSupportRequest) {
-        return userSupportService.deleteCommentSupport(userSupportRequest);
+    public R<?> deleteCommentSupport(@RequestBody UserSupportRequest userSupportRequest, HttpSession session) {
+        Integer currentUserId = SessionUser.requireUserId(session);
+        return userSupportService.deleteCommentSupport(userSupportRequest, currentUserId);
     }
 }

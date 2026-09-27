@@ -9,5 +9,5 @@ export function updateBannerUrl(params: { id: string | number; url: string; titl
 }
 
 export function deleteBanner(id: string | number) {
-  return api({ url: `banner/delete?id=${id}` });
+  return api({ method: "delete", url: `banner/delete?id=${id}` });
 }

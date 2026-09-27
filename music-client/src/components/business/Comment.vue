@@ -17,7 +17,7 @@
             <li class="comment-list__text">{{ item.content }}</li>
         </ul>
         </div>
-        <div class="comment-list__actions" :class="{ 'is-active': isSupported(item.id) }" @click="setSupport(item.id, item.likeCount, userId)">
+        <div class="comment-list__actions" :class="{ 'is-active': isSupported(item.id) }" @click="setSupport(item.id, userId)">
           <div class="comment-like"><ThumbsUp class="comment-like-icon" /> {{ item.likeCount }}</div>
           <Trash2 v-if="item.userId === userId" class="comment-delete-icon" @click.stop="deleteComment(item.id)" />
         </div>
@@ -37,7 +37,6 @@ import {
   fetchDeleteUserSupport,
   fetchInsertUserSupport,
   fetchSetComment,
-  fetchSetSupport,
   fetchTestAlreadySupport,
 } from "../../api/comment";
 import { elMessageTypeFromResponse } from "@/api/types";
@@ -156,34 +155,34 @@ async function deleteComment(id) {
   }
 }
 
-async function setSupport(id, likeCount, userId) {
+async function setSupport(id, userId) {
   if (!checkStatus()) return;
   if (!userId) return;
 
   try {
-    let result = null;
-    let operatorR = null;
     const commentId = id;
-    // 先查询当前用户是否已点赞，再执行点赞/取消点赞
+    // 先查询当前用户是否已点赞，再执行点赞/取消点赞（点赞数由服务端按 user_support 重算）
     const r = await fetchTestAlreadySupport({ commentId, userId });
     ElMessage({
       message: r.message,
       type: elMessageTypeFromResponse(r),
     });
 
+    let operatorR = null;
     if (r.data) {
-      likeCount = likeCount - 1;
       operatorR = await fetchDeleteUserSupport({ commentId, userId });
-      result = await fetchSetSupport({ id, likeCount });
       supportCommentIdSet.value.delete(id);
     } else {
-      likeCount = likeCount + 1;
       operatorR = await fetchInsertUserSupport({ commentId, userId });
-      result = await fetchSetSupport({ id, likeCount });
       supportCommentIdSet.value.add(id);
     }
-    if (result.success && operatorR.success) {
+    if (operatorR.success) {
       emit("refresh");
+    } else {
+      ElMessage({
+        message: operatorR.message,
+        type: elMessageTypeFromResponse(operatorR),
+      });
     }
   } catch (error) {
     const err = error as { data?: { message?: string }; response?: { data?: { message?: string } } };

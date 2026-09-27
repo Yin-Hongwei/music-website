@@ -22,16 +22,7 @@ export async function fetchSetComment(payload: {
 }
 
 export async function fetchDeleteComment(id: string | number): Promise<ApiResponse> {
-  return await api({ url: `comment/delete?id=${id}` });
-}
-
-export async function fetchSetSupport(payload: { id: string | number; likeCount: number }): Promise<ApiResponse> {
-  return await api({
-    method: "post",
-    url: "comment/like",
-    data: payload,
-    config: jsonRequestConfig,
-  });
+  return await api({ method: "delete", url: `comment/delete?id=${id}` });
 }
 
 export async function fetchTestAlreadySupport(payload: {

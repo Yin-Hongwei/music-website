@@ -35,6 +35,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
 
     private static final String REDIS_CODE_PREFIX = "yin:pwd-reset:code:";
     private static final String REDIS_COOL_PREFIX = "yin:pwd-reset:cool:";
+    private static final String REDIS_FAIL_PREFIX = "yin:pwd-reset:fail:";
 
     private final StringRedisTemplate stringRedisTemplate;
     private final AppUserMapper appUserMapper;
@@ -52,12 +53,21 @@ public class PasswordResetServiceImpl implements PasswordResetService {
     @Value("${app.password-reset.send-cooldown-seconds:60}")
     private int sendCooldownSeconds;
 
+    @Value("${app.password-reset.max-verify-attempts:5}")
+    private int maxVerifyAttempts;
+
+    @Value("${app.password-reset.verify-lock-minutes:15}")
+    private int verifyLockMinutes;
+
     @Value("${app.password-reset.expose-code:false}")
     private boolean exposeCode;
 
     /** 本地开发：不配 SMTP 也发码，接口 data.debugCode 直出（生产务必 false） */
     @Value("${app.password-reset.mock-without-mail:false}")
     private boolean mockWithoutMail;
+
+    @Value("${spring.profiles.active:}")
+    private String activeProfiles;
 
     private static final String DEFAULT_MAIL_SUBJECT = "【音乐网站】找回密码验证码";
 
@@ -138,6 +148,12 @@ public class PasswordResetServiceImpl implements PasswordResetService {
         stringRedisTemplate.opsForValue().set(codeKey, code, codeTtlMinutes, TimeUnit.MINUTES);
 
         if (mockWithoutMail) {
+            if (activeProfiles != null && activeProfiles.toLowerCase().contains("prod")) {
+                stringRedisTemplate.delete(codeKey);
+                stringRedisTemplate.delete(coolKey);
+                log.error("Refusing mock-without-mail under prod profile");
+                return R.fatal("生产环境未配置邮件服务，无法发送验证码");
+            }
             log.warn("Password reset code issued without email (mock-without-mail) for {}", emailNorm);
             return R.success("本地开发：未发邮件，请使用页面上的验证码", Collections.singletonMap("debugCode", code));
         }
@@ -168,7 +184,10 @@ public class PasswordResetServiceImpl implements PasswordResetService {
             return R.error("邮件发送失败，请稍后重试");
         }
 
-        Object data = exposeCode ? Collections.singletonMap("debugCode", code) : null;
+        boolean canExpose = exposeCode
+                && activeProfiles != null
+                && !activeProfiles.toLowerCase().contains("prod");
+        Object data = canExpose ? Collections.singletonMap("debugCode", code) : null;
         return R.success("验证码已发送至您的邮箱，请查收（含垃圾箱）", data);
     }
 
@@ -194,9 +213,31 @@ public class PasswordResetServiceImpl implements PasswordResetService {
             return R.warning("两次输入的密码不一致");
         }
 
+        String failKey = REDIS_FAIL_PREFIX + emailNorm;
+        String failCountRaw = stringRedisTemplate.opsForValue().get(failKey);
+        int failCount = 0;
+        if (StringUtils.isNotBlank(failCountRaw)) {
+            try {
+                failCount = Integer.parseInt(failCountRaw);
+            } catch (NumberFormatException ignored) {
+                failCount = 0;
+            }
+        }
+        if (failCount >= maxVerifyAttempts) {
+            return R.error("验证失败次数过多，请稍后再试");
+        }
+
         String codeKey = REDIS_CODE_PREFIX + emailNorm;
         String stored = stringRedisTemplate.opsForValue().get(codeKey);
         if (stored == null || !stored.equals(code)) {
+            Long newCount = stringRedisTemplate.opsForValue().increment(failKey);
+            if (newCount != null && newCount == 1L) {
+                stringRedisTemplate.expire(failKey, verifyLockMinutes, TimeUnit.MINUTES);
+            }
+            if (newCount != null && newCount >= maxVerifyAttempts) {
+                stringRedisTemplate.delete(codeKey);
+                return R.error("验证失败次数过多，请稍后再试");
+            }
             return R.error("验证码错误或已过期");
         }
 
@@ -211,6 +252,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
         if (appUserMapper.updateById(update) > 0) {
             stringRedisTemplate.delete(codeKey);
             stringRedisTemplate.delete(REDIS_COOL_PREFIX + emailNorm);
+            stringRedisTemplate.delete(failKey);
             return R.success("密码已重置，请使用新密码登录");
         }
         return R.error("重置失败，请稍后重试");

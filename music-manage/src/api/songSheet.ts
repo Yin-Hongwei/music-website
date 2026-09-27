@@ -33,7 +33,7 @@ export function updateSongListMsg(params: {
 }
 
 export function deleteSongList(id: string | number) {
-  return api({ url: `songList/delete?id=${id}` });
+  return api({ method: "delete", url: `songList/delete?id=${id}` });
 }
 
 /** 上传歌单封面（multipart）；添加/编辑弹窗在点「确定」时调用 → POST /songList/img/update */

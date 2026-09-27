@@ -72,7 +72,7 @@ import { message, notifyResult } from "@/utils";
 const { routerManager } = useAdminNav();
 const formRef = ref<FormInst | null>(null);
 const submitting = ref(false);
-const ruleForm = reactive({ username: "admin", password: "123" });
+const ruleForm = reactive({ username: "", password: "" });
 const rules: FormRules = {
   username: { required: true, message: "请输入用户名", trigger: "blur" },
   password: { required: true, message: "请输入密码", trigger: "blur" },
@@ -88,7 +88,10 @@ async function submitForm() {
   try {
     const result = (await getLoginStatus(ruleForm)) as ApiResponse;
     notifyResult(result);
-    if (result.success) routerManager("info");
+    if (result.success) {
+      sessionStorage.setItem("adminAuth", ruleForm.username.trim() || "1");
+      routerManager("info");
+    }
   } catch (error) {
     const body = (error as { data?: ApiResponse }).data;
     message.error(body?.message || "网络异常，请稍后重试");

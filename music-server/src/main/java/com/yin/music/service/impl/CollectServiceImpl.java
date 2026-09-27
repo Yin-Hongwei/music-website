@@ -41,10 +41,11 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     private final SongAssembler songAssembler;
 
     @Override
-    public R<?> addCollection(CollectRequest addCollectRequest) {
+    public R<?> addCollection(CollectRequest addCollectRequest, Integer currentUserId) {
         //作者用type来判断收藏的是歌还是歌单
         Collect collect = new Collect();
         BeanUtils.copyProperties(addCollectRequest, collect);
+        collect.setUserId(currentUserId);
         if (collectMapper.insert(collect) > 0) {
             return R.success("收藏成功", true);
         } else {
@@ -53,9 +54,9 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     }
 
     @Override
-    public R<?> addSongListCollection(CollectRequest addCollectRequest) {
+    public R<?> addSongListCollection(CollectRequest addCollectRequest, Integer currentUserId) {
         QueryWrapper<Collect> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("user_id", addCollectRequest.getUserId());
+        queryWrapper.eq("user_id", currentUserId);
         queryWrapper.eq("song_sheet_id", addCollectRequest.getSongListId());
         queryWrapper.eq("type", 1);
         if (collectMapper.selectCount(queryWrapper) > 0) {
@@ -63,7 +64,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
         }
 
         Collect collect = new Collect();
-        collect.setUserId(addCollectRequest.getUserId());
+        collect.setUserId(currentUserId);
         collect.setType((byte) 1);
         collect.setSongListId(addCollectRequest.getSongListId());
         collect.setSongId(null);
@@ -75,9 +76,9 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     }
 
     @Override
-    public R<?> existSongId(CollectRequest isCollectRequest) {
+    public R<?> existSongId(CollectRequest isCollectRequest, Integer currentUserId) {
         QueryWrapper<Collect> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("user_id", isCollectRequest.getUserId());
+        queryWrapper.eq("user_id", currentUserId);
         queryWrapper.eq("song_id", isCollectRequest.getSongId());
         queryWrapper.eq("type", 0);
         if (collectMapper.selectCount(queryWrapper) > 0) {
@@ -88,9 +89,9 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     }
 
     @Override
-    public R<?> deleteCollect(Integer userId, Integer songId) {
+    public R<?> deleteCollect(Integer currentUserId, Integer songId) {
         QueryWrapper<Collect> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("user_id", userId);
+        queryWrapper.eq("user_id", currentUserId);
         queryWrapper.eq("song_id", songId);
         queryWrapper.eq("type", 0);
         if (collectMapper.delete(queryWrapper) > 0) {
@@ -101,9 +102,9 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     }
 
     @Override
-    public R<?> existSongListId(CollectRequest isCollectRequest) {
+    public R<?> existSongListId(CollectRequest isCollectRequest, Integer currentUserId) {
         QueryWrapper<Collect> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("user_id", isCollectRequest.getUserId());
+        queryWrapper.eq("user_id", currentUserId);
         queryWrapper.eq("song_sheet_id", isCollectRequest.getSongListId());
         queryWrapper.eq("type", 1);
         if (collectMapper.selectCount(queryWrapper) > 0) {
@@ -114,9 +115,9 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     }
 
     @Override
-    public R<?> deleteSongListCollect(Integer userId, Integer songListId) {
+    public R<?> deleteSongListCollect(Integer currentUserId, Integer songListId) {
         QueryWrapper<Collect> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("user_id", userId);
+        queryWrapper.eq("user_id", currentUserId);
         queryWrapper.eq("song_sheet_id", songListId);
         queryWrapper.eq("type", 1);
         if (collectMapper.delete(queryWrapper) > 0) {
@@ -204,6 +205,6 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
                 ? Collections.emptyList()
                 : appUserMapper.selectBatchIds(userIds);
 
-        return R.success("收藏者列表", CollectorsResponse.of(AppUserResponse.fromList(users)));
+        return R.success("收藏者列表", CollectorsResponse.of(AppUserResponse.toPublicList(users)));
     }
 }

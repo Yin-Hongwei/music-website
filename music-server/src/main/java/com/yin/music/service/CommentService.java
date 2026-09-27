@@ -7,11 +7,9 @@ import com.yin.music.model.request.CommentRequest;
 
 public interface CommentService extends IService<Comment> {
 
-    R<?> addComment(CommentRequest addCommentRequest);
+    R<?> addComment(CommentRequest addCommentRequest, Integer currentUserId);
 
-    R<?> updateCommentMsg(CommentRequest upCommentRequest);
-
-    R<?> deleteComment(Integer id);
+    R<?> deleteComment(Integer id, Integer currentUserId, boolean asAdmin);
 
     R<?> commentOfSongId(Integer songId);
 

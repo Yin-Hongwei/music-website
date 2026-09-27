@@ -22,7 +22,7 @@ public class SingerController {
     }
 
     // 删除歌手
-    @GetMapping("/singer/delete")
+    @DeleteMapping("/singer/delete")
     public R<?> deleteSinger(@RequestParam int id) {
         return singerService.deleteSinger(id);
     }
