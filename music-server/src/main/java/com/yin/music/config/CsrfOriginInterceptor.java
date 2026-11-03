@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Locale;
@@ -67,12 +67,7 @@ public class CsrfOriginInterceptor implements HandlerInterceptor {
     }
 
     private boolean isAllowedOrigin(String origin) {
-        String normalized = origin.toLowerCase(Locale.ROOT);
-        if (allowedOrigins.contains(normalized)) {
-            return true;
-        }
-        // Support patterns like http://localhost:* already expanded in config as concrete origins.
-        return false;
+        return allowedOrigins.contains(origin.toLowerCase(Locale.ROOT));
     }
 
     private boolean isAllowedReferer(String referer) {

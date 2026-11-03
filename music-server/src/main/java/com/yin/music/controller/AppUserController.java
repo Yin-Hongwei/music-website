@@ -11,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @RestController
@@ -71,6 +71,32 @@ public class AppUserController {
         int safePage = Math.max(page, 1);
         int safeSize = Math.max(size, 1);
         return appUserService.pageUser(safePage, safeSize);
+    }
+
+    /**
+     * 客户端 SPA 路由守卫的软会话探测：匿名返回 success=false（不抛 401，避免守卫侧噪音），
+     * 已登录返回当前用户信息，用于刷新后恢复前端登录态。
+     */
+    @GetMapping("/user/session")
+    public R<?> session(HttpSession session) {
+        Integer userId = SessionUser.getUserId(session);
+        if (userId == null) {
+            return R.error("未登录");
+        }
+        return appUserService.userOfId(userId, userId, false);
+    }
+
+    @PostMapping("/user/logout")
+    public R<?> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            try {
+                session.invalidate();
+            } catch (IllegalStateException ignored) {
+                // already invalidated
+            }
+        }
+        return R.success("已退出登录");
     }
 
     @GetMapping("/user/detail")

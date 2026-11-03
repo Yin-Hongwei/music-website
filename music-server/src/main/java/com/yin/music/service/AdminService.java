@@ -5,7 +5,7 @@ import com.yin.music.model.R;
 import com.yin.music.model.domain.Admin;
 import com.yin.music.model.request.AdminRequest;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface AdminService extends IService<Admin> {
 

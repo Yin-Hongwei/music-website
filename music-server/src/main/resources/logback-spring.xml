@@ -5,7 +5,7 @@
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yy-MM-dd HH:mm:ss,SSS} %5level %logger{36}:%line - %msg%n</pattern>
+            <pattern>%d{yy-MM-dd HH:mm:ss.SSS} %5level %logger{36}:%line - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -17,6 +17,8 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_FILE}-%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
+            <!-- 总日志大小上限，防止磁盘打满 -->
+            <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
     </appender>
 

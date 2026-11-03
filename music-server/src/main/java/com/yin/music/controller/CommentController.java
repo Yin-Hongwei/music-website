@@ -8,7 +8,7 @@ import com.yin.music.model.request.CommentRequest;
 import com.yin.music.service.CommentService;
 import com.yin.music.support.SessionUser;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @RestController

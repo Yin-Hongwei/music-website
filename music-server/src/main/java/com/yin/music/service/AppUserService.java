@@ -7,7 +7,7 @@ import com.yin.music.model.request.AppUserRequest;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface AppUserService extends IService<AppUser> {
 

@@ -46,11 +46,6 @@ public final class SafeFilenames {
         return unique(originalName, fallback, Kind.AUDIO);
     }
 
-    /** @deprecated Prefer {@link #uniqueImage} / {@link #uniqueAudio}. */
-    public static String unique(String originalName, String fallback) {
-        return uniqueImage(originalName, fallback);
-    }
-
     public static String unique(String originalName, String fallback, Kind kind) {
         requireAllowed(originalName, null, kind);
         String ext = asciiExtension(originalName, fallback, allowedExts(kind));
