@@ -3,3 +3,4 @@
 .cursor
 .agents
 skills-lock.json
+data/*

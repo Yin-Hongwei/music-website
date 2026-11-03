@@ -122,3 +122,13 @@ export async function fetchUpdateUserPassword(payload: {
 export function fetchUploadUrl(userId: string | number): string {
   return `${getBaseURL()}/user/avatar/update?id=${userId}`;
 }
+
+/** 软会话探测：未登录时后端返回 success=false，用于路由守卫与刷新后恢复登录态 */
+export async function fetchUserSession(): Promise<ApiResponse> {
+  return await api({ url: "user/session" });
+}
+
+/** 退出登录：作废服务端会话（幂等，未登录时也返回成功） */
+export function fetchUserLogout(): Promise<ApiResponse> {
+  return api({ method: "post", url: "user/logout" });
+}

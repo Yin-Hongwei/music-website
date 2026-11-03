@@ -3,8 +3,8 @@ package com.yin.music.support;
 import com.yin.music.exception.UnauthorizedException;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * App-user / admin identity bound to {@link HttpSession} after login.

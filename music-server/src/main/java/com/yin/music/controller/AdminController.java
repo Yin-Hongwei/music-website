@@ -12,8 +12,8 @@ import com.yin.music.service.AdminService;
 import com.yin.music.support.LoginAttemptService;
 import com.yin.music.support.SessionUser;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import java.util.Collections;
 
 /**

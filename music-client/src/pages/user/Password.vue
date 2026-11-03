@@ -28,7 +28,7 @@
 import { computed, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { useUserStore } from "@/store/user";
-import { fetchUpdateUserPassword } from "@/api/user";
+import { fetchUpdateUserPassword, fetchUserLogout } from "@/api/user";
 import { elMessageTypeFromResponse } from "@/api/types";
 import { validatePassword } from "@/utils/validate";
 import { RouterName } from "@/enums";
@@ -88,6 +88,10 @@ async function confirm() {
       form.oldPassword = "";
       form.newPassword = "";
       form.confirmPassword = "";
+      // 密码修改后前端即登出，需作废服务端会话，避免路由守卫探测到旧会话自动恢复登录
+      fetchUserLogout().catch(() => {
+        // 忽略：会话可能已失效或服务暂不可达
+      });
       configureStore.setToken(false);
       userStore.setUserId("");
       routerManager(RouterName.SignIn, { path: RouterName.SignIn });

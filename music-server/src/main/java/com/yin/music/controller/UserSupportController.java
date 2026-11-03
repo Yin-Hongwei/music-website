@@ -11,7 +11,7 @@ import com.yin.music.model.request.UserSupportRequest;
 import com.yin.music.service.UserSupportService;
 import com.yin.music.support.SessionUser;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @RestController

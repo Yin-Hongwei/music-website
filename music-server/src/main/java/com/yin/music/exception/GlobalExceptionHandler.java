@@ -1,10 +1,10 @@
 package com.yin.music.exception;
 
-import java.io.IOException;
-import java.net.ConnectException;
-import javax.servlet.http.HttpServletResponse;
+import com.yin.music.model.R;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.connector.ClientAbortException;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.yin.music.model.R;
+import java.io.IOException;
 
 @Slf4j
 @RestControllerAdvice
@@ -43,6 +43,20 @@ public class GlobalExceptionHandler {
         log.debug("Client closed connection before response finished: {}", ex.getMessage());
     }
 
+    @ExceptionHandler(RedisConnectionFailureException.class)
+    public ResponseEntity<R<?>> handleRedisFailure(RedisConnectionFailureException ex) {
+        log.warn("Redis unavailable: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(R.error("缓存服务不可用，请检查 Redis 配置"));
+    }
+
+    /**
+     * 兜底异常处理：
+     * - 客户端断开连接（非错误）：记录日志，不返回响应
+     * - 响应已提交：记录警告，不返回响应
+     * - 其他异常：记录错误日志，返回 500 错误
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<R<?>> handleGenericException(Exception ex, HttpServletResponse response) {
         if (isBenignClientDisconnect(ex)) {
@@ -53,25 +67,10 @@ public class GlobalExceptionHandler {
             log.warn("Exception after response committed; skipping JSON error body: {}", ex.toString());
             return null;
         }
-        if (findCause(ex, ConnectException.class) != null) {
-            log.warn("Upstream connection refused (e.g. MinIO not running): {}", ex.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(R.error("存储服务不可用，请检查 MinIO 是否已启动"));
-        }
         log.error("Unhandled server exception", ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(R.fatal("服务器内部错误，请稍后重试"));
-    }
-
-    private static <T extends Throwable> T findCause(Throwable ex, Class<T> type) {
-        for (Throwable t = ex; t != null; t = t.getCause()) {
-            if (type.isInstance(t)) {
-                return type.cast(t);
-            }
-        }
-        return null;
     }
 
     private static boolean isBenignClientDisconnect(Throwable ex) {

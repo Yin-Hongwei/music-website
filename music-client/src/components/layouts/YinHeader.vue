@@ -81,6 +81,7 @@ import { useRouter } from "vue-router";
 import { useConfigureStore } from "../../store/configure";
 import { useSearchStore } from "../../store/search";
 import { useUserStore } from "../../store/user";
+import { fetchUserLogout } from "../../api/user";
 import { attachImageUrl } from "../../utils";
 
 const router = useRouter();
@@ -121,11 +122,15 @@ function goHome() {
 
 function goMenuList(path: string) {
   if (path === SIGN_OUT) {
+    // 作废服务端会话，避免路由守卫探测到会话后自动恢复登录态
+    fetchUserLogout().catch(() => {
+      // 会话已失效或服务不可达时忽略，本地状态照常清理
+    });
     configureStore.setToken(false);
     userStore.setUserId("");
     userStore.setUsername("");
     userStore.setUserPic("");
-    goPage(HOME_PATH, HOME_NAME);
+    router.push({ path: "/sign-in" });
   } else {
     router.push({ path });
   }

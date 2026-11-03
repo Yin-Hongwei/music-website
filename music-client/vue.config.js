@@ -1,6 +1,10 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
+  devServer: {
+    // 指定music-client的端口，与后端CORS白名单(app.security.cors.allowed-origins)保持一致
+    port: 3000,
+  },
   chainWebpack: config => {
     config.plugin('define').tap(definitions => {
       Object.assign(definitions[0]['process.env'], {

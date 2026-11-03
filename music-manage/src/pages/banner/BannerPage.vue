@@ -3,66 +3,30 @@
     <div class="page-panel">
       <div class="page-toolbar">
         <div class="page-toolbar__left">
-          <n-button :disabled="!checkedRowKeys.length" @click="deleteAll"
-            >批量删除</n-button
-          >
+          <n-button :disabled="!checkedRowKeys.length" @click="deleteAll">批量删除</n-button>
         </div>
         <n-button type="primary" @click="openAddDialog">新增轮播图</n-button>
       </div>
 
       <div class="table-wrap">
-        <n-data-table
-          :columns="columns"
-          :data="pageRows"
-          :row-key="(row) => row.id"
-          :checked-row-keys="checkedRowKeys"
-          flex-height
-          style="height: 100%"
-          @update:checked-row-keys="onCheckedKeys"
-        />
+        <n-data-table :columns="columns" :data="pageRows" :row-key="(row) => row.id" :checked-row-keys="checkedRowKeys"
+          flex-height style="height: 100%" @update:checked-row-keys="onCheckedKeys" />
       </div>
 
-      <n-pagination
-        class="page-pagination"
-        :page="currentPage"
-        :page-size="pageSize"
-        :item-count="filteredRows.length"
-        :page-sizes="[10, 20, 50]"
-        show-size-picker
-        @update:page="handlePageChange"
-        @update:page-size="handlePageSizeChange"
-      />
+      <n-pagination class="page-pagination" :page="currentPage" :page-size="pageSize" :item-count="filteredRows.length"
+        :page-sizes="[10, 20, 50]" show-size-picker @update:page="handlePageChange"
+        @update:page-size="handlePageSizeChange" />
     </div>
 
-    <n-modal
-      v-model:show="formVisible"
-      preset="card"
-      :title="editing ? '编辑轮播图' : '新增轮播图'"
-      style="width: 520px"
-      @after-leave="resetFormDraft"
-    >
-      <n-form
-        ref="formRef"
-        label-placement="left"
-        label-width="80"
-        :model="form"
-        :rules="rules"
-      >
+    <n-modal v-model:show="formVisible" preset="card" :title="editing ? '编辑轮播图' : '新增轮播图'" style="width: 520px"
+      @after-leave="resetFormDraft">
+      <n-form ref="formRef" label-placement="left" label-width="80" :model="form" :rules="rules">
         <n-form-item label="图片">
           <n-space align="center">
-            <n-image
-              v-if="previewSrc"
-              class="preview"
-              :src="previewSrc"
-              object-fit="cover"
-            />
+            <n-image v-if="previewSrc" class="preview" :src="previewSrc" object-fit="cover" />
             <div v-else class="preview empty">未上传</div>
-            <n-upload
-              :action="editing ? updatePicUrl(form.id) : uploadUrl"
-              :show-file-list="false"
-              @before-upload="beforeFormUpload"
-              @finish="handleFormUploadFinish"
-            >
+            <n-upload :action="editing ? updatePicUrl(form.id) : uploadUrl" :show-file-list="false"
+              @before-upload="beforeFormUpload" @finish="handleFormUploadFinish">
               <n-button>{{
                 previewSrc ? "更换图片" : "上传图片"
               }}</n-button>
@@ -70,34 +34,20 @@
           </n-space>
         </n-form-item>
         <n-form-item label="标题" path="title">
-          <n-input
-            v-model:value="form.title"
-            maxlength="50"
-            show-count
-            placeholder="请输入轮播图标题"
-          />
+          <n-input v-model:value="form.title" maxlength="50" show-count placeholder="请输入轮播图标题" />
         </n-form-item>
         <n-form-item label="跳转地址" path="url">
-          <n-input
-            v-model:value="form.url"
-            placeholder="例如：https://example.com"
-          />
+          <n-input v-model:value="form.url" placeholder="例如：https://example.com" />
         </n-form-item>
       </n-form>
       <template #footer>
         <n-space justify="end">
           <n-button @click="formVisible = false">取 消</n-button>
-          <n-button type="primary" :loading="saving" @click="saveForm"
-            >确 定</n-button
-          >
+          <n-button type="primary" :loading="saving" @click="saveForm">确 定</n-button>
         </n-space>
       </template>
     </n-modal>
-    <YinDelDialog
-      :del-visible="delVisible"
-      @confirm="confirmDelete"
-      @cancel-row="delVisible = $event"
-    />
+    <YinDelDialog :del-visible="delVisible" @confirm="confirmDelete" @cancel-row="delVisible = $event" />
   </div>
 </template>
 <script setup lang="ts">
@@ -268,8 +218,13 @@ function handleFormUploadFinish({ file }: { file: UploadFileInfo }) {
 }
 
 async function getData() {
-  const result = (await getAllBanner()) as ApiResponse<Banner[]>;
-  setRows(Array.isArray(result.data) ? result.data : []);
+  try {
+    const result = (await getAllBanner()) as ApiResponse<Banner[]>;
+    setRows(Array.isArray(result.data) ? result.data : []);
+  } catch {
+    // 错误时清空列表
+    setRows([]);
+  }
 }
 
 function askDelete(ids: number[]) {

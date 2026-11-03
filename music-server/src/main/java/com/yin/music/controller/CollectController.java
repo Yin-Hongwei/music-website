@@ -9,7 +9,7 @@ import com.yin.music.service.CollectService;
 import com.yin.music.exception.UnauthorizedException;
 import com.yin.music.support.SessionUser;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @RestController
